@@ -11,6 +11,9 @@ public class Ennemy_Navigation : MonoBehaviour
     //Serialized Fields
     [SerializeField]
     private GameObject target;
+    [SerializeField]
+    private Vector3 targetLastSeenPosition;
+
 
 
     // Start is called before the first frame update
