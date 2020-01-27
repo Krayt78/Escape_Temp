@@ -27,22 +27,16 @@ public class EnnemyNavigation : MonoBehaviour
 
     }
 
-    //we listen to events 
-    private void Awake()
-    {
-        GetComponent<FieldOfView>().OnTargetSighted += HandleDestinationSet;
-        GetComponent<FieldOfView>().OnTargetLost += HandleTargetLost;
-    }
 
     //Reacts to the event OnTargetSighted and takes the first target in the array to start the chase
-    private void HandleDestinationSet()
+    public void ChaseTarget()
     {
         target = GetComponent<FieldOfView>().visibleTargets[0].gameObject;
         StartCoroutine(SetDestinationWithDelay(.2f));
     }
 
     //Reacts to the event OnTargetLost and nulls the target and sets his LastSeenPosition
-    private void HandleTargetLost()
+    public void HandleTargetLost()
     {
         targetLastSeenPosition = target.transform.position;
         target = null;

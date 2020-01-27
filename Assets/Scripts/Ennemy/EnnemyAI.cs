@@ -8,6 +8,7 @@ public class EnnemyAI : MonoBehaviour
 
     private FieldOfView fieldOfView;
     private EnnemyNavigation ennemyNavigation;
+    private EnnemyPatrol ennemyPatrol;
 
     public enum State {Default, Patrolling, Seen, Attacking, LostSight, Dead};
 
@@ -17,6 +18,9 @@ public class EnnemyAI : MonoBehaviour
     void Start()
     {
         fieldOfView = GetComponent<FieldOfView>();
+        ennemyNavigation = GetComponent<EnnemyNavigation>();
+        ennemyPatrol = GetComponent<EnnemyPatrol>();
+
         visibleTargets = fieldOfView.visibleTargets;
 
         StartCoroutine("FindTargetsWithDelay", .2f);
@@ -30,6 +34,26 @@ public class EnnemyAI : MonoBehaviour
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
     }
 
+    private void Update()
+    {
+        switch (state)
+        {
+            case State.Patrolling:
+                if (ennemyPatrol.DestinationReached())
+                   ennemyPatrol.GoToNextCheckpoint();
+                break;
+            case State.Attacking:
+                ennemyNavigation.ChaseTarget();
+                break;
+            case State.LostSight:
+                state = State.Patrolling;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     private void OnTargetSighted()
     {
         state = State.Attacking;
@@ -38,7 +62,7 @@ public class EnnemyAI : MonoBehaviour
     private void OnTargetLost()
     {
         state = State.LostSight;
-        state = State.Patrolling;
+        ennemyNavigation.HandleTargetLost();
     }
 
     IEnumerator FindTargetsWithDelay(float delay)

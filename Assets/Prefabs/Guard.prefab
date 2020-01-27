@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 6713252307952649645}
   - component: {fileID: 6713252307952649644}
   - component: {fileID: 6713252307952649642}
+  - component: {fileID: 622702844}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -106,7 +107,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6713252307952649638}
-  m_LocalRotation: {x: -0, y: 0.9939784, z: -0, w: -0.109576695}
+  m_LocalRotation: {x: 0, y: 0.9939782, z: -0, w: -0.10957784}
   m_LocalPosition: {x: 2.2371428, y: 1.22, z: -5.8779135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -184,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibleTargets: []
+  state: 0
 --- !u!114 &6713252307952649642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +200,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetLastSeenPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &622702844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713252307952649638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f9ce5d4212d1544bfcba72c51a1250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointPatrolList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

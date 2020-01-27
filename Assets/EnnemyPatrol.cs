@@ -19,23 +19,12 @@ public class EnnemyPatrol : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        state = GetComponent<EnnemyAI>().state;
         m_navMeshAgent = GetComponent<NavMeshAgent>();
 
         GoToNextCheckpoint();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (state.Equals(EnnemyAI.State.Patrolling) && DestinationReached())
-            GoToNextCheckpoint();
-
-
-    }
-
-    private void GoToNextCheckpoint()
+    public void GoToNextCheckpoint()
     {
         if (WaypointPatrolList.Count == (currentWaypointNumber + 1))
             currentWaypointNumber = 0;
@@ -44,7 +33,7 @@ public class EnnemyPatrol : MonoBehaviour
         m_navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
     }
 
-    private bool DestinationReached()
+    public bool DestinationReached()
     {
         // Check if we've reached the destination
         if (!m_navMeshAgent.pathPending)
