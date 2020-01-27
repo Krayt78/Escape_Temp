@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -13,11 +14,16 @@ public class FieldOfView : MonoBehaviour
     public LayerMask obstacleMask;
 
     public List<Transform> visibleTargets = new List<Transform>();
+    private int previousVisibleTargetCount=0;
+
+    public event Action OnTargetSighted = delegate { };
+    public event Action OnTargetLost = delegate { };
 
     void Start()
     {
         StartCoroutine("FindTargetsWithDelay", .2f);
     }
+
 
 
     IEnumerator FindTargetsWithDelay(float delay)
@@ -42,12 +48,25 @@ public class FieldOfView : MonoBehaviour
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
 
+                
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
+
                 }
+
             }
         }
+
+
+        //if the target is visible and first in the array we activate the event so that the ai can walk to it
+        if (visibleTargets.Count == 1 && !(visibleTargets.Count == previousVisibleTargetCount))
+            OnTargetSighted();
+        //if we just lost track of the target fire event
+       else if (visibleTargets.Count == 0 && !(visibleTargets.Count==previousVisibleTargetCount))
+            OnTargetLost();
+
+        previousVisibleTargetCount = visibleTargets.Count;
     }
 
 
