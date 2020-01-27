@@ -7,9 +7,11 @@ public class EnnemyAI : MonoBehaviour
     public List<Transform> visibleTargets;
 
     private FieldOfView fieldOfView;
-    private Ennemy_Navigation ennemy_Navigation;
+    private EnnemyNavigation ennemyNavigation;
 
-    private enum State {Default, Patrolling, Attacking, LostSight, Dead};
+    public enum State {Default, Patrolling, Seen, Attacking, LostSight, Dead};
+
+    public State state = State.Default;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,25 @@ public class EnnemyAI : MonoBehaviour
         visibleTargets = fieldOfView.visibleTargets;
 
         StartCoroutine("FindTargetsWithDelay", .2f);
+
+        state = State.Patrolling;
+    }
+
+    private void Awake()
+    {
+        GetComponent<FieldOfView>().OnTargetSighted += OnTargetSighted;
+        GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
+    }
+
+    private void OnTargetSighted()
+    {
+        state = State.Attacking;
+    }
+
+    private void OnTargetLost()
+    {
+        state = State.LostSight;
+        state = State.Patrolling;
     }
 
     IEnumerator FindTargetsWithDelay(float delay)

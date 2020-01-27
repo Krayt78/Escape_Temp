@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Ennemy_Navigation : MonoBehaviour
+public class EnnemyNavigation : MonoBehaviour
 {
 
     private NavMeshAgent m_navMeshAgent;
@@ -14,11 +14,14 @@ public class Ennemy_Navigation : MonoBehaviour
     [SerializeField]
     private Vector3 targetLastSeenPosition;
 
+    private EnnemyAI.State state;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        state = GetComponent<EnnemyAI>().state;
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_navMeshAgent.Warp(transform.position);
 
@@ -54,4 +57,6 @@ public class Ennemy_Navigation : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
     }
+
+
 }
