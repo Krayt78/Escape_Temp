@@ -10,6 +10,8 @@ public class EnnemyAI : MonoBehaviour
     private EnnemyNavigation ennemyNavigation;
     private EnnemyPatrol ennemyPatrol;
 
+    
+
     public enum State {Default, Patrolling, Seen, Attacking, LostSight, Dead};
 
     public State state = State.Default;
