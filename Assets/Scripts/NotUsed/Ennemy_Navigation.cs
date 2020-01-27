@@ -24,6 +24,7 @@ public class Ennemy_Navigation : MonoBehaviour
 
     }
 
+    //we listen to events 
     private void Awake()
     {
         GetComponent<FieldOfView>().OnTargetSighted += HandleDestinationSet;
@@ -37,6 +38,7 @@ public class Ennemy_Navigation : MonoBehaviour
         StartCoroutine(SetDestinationWithDelay(.2f));
     }
 
+    //Reacts to the event OnTargetLost and nulls the target and sets his LastSeenPosition
     private void HandleTargetLost()
     {
         targetLastSeenPosition = target.transform.position;
