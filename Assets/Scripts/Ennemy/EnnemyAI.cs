@@ -45,7 +45,7 @@ public class EnnemyAI : MonoBehaviour
                    ennemyPatrol.GoToNextCheckpoint();
                 break;
             case State.Attacking:
-                ennemyNavigation.ChaseTarget();
+                //ennemyNavigation.ChaseTarget();
                 break;
             case State.LostSight:
                 state = State.Patrolling;
@@ -64,7 +64,7 @@ public class EnnemyAI : MonoBehaviour
     private void OnTargetLost()
     {
         state = State.LostSight;
-        ennemyNavigation.HandleTargetLost();
+        //ennemyNavigation.HandleTargetLost();
     }
 
     IEnumerator FindTargetsWithDelay(float delay)

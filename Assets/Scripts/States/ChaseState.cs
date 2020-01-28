@@ -15,6 +15,11 @@ public class ChaseState : BaseState
 
     public override Type Tick()
     {
+        if (!m_Guard.Target)
+            return typeof(PatrollState);
+
+        m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.Target);
+
         return null;
     }
 }
