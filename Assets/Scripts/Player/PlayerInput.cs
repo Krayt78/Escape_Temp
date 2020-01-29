@@ -10,7 +10,7 @@ public class PlayerInput : MonoBehaviour
     public float LookUp { get; private set; }
     public float LookRight { get; private set; }
 
-    public event Action OnAttack = delegate { };
+    public event Action OnAction = delegate { };
     public event Action OnGrapplin = delegate { };
 
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
 
 
         if (Input.GetButtonDown("Fire1"))
-            OnAttack();
+            OnAction();
 
         if (Input.GetButtonDown("Fire2"))
             OnGrapplin();
