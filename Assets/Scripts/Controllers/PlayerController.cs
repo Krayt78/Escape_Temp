@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update () {
-		Vector3 mousePos = viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, viewCamera.transform.position.y));
-		transform.LookAt (mousePos + Vector3.up * transform.position.y);
+		//Vector3 mousePos = viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, viewCamera.transform.position.y));
+		//transform.LookAt (mousePos + Vector3.up * transform.position.y);
 		velocity = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized * moveSpeed;
 	}
 
