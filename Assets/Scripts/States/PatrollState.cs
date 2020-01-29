@@ -20,7 +20,12 @@ public class PatrollState : BaseState
     {
 
         if (m_Guard.Target)
-            return typeof(ChaseState);
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            m_Guard.ChangeMatYellow();
+            return typeof(SightedState);
+        }
+            
 
         if (m_Guard.EnnemyPatrol.DestinationReached())
             m_Guard.EnnemyPatrol.GoToNextCheckpoint();

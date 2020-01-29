@@ -21,7 +21,6 @@ public class EnnemyPatrol : MonoBehaviour
     {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
 
-        GoToNextCheckpoint();
     }
 
     public void GoToNextCheckpoint()
@@ -31,6 +30,16 @@ public class EnnemyPatrol : MonoBehaviour
         else currentWaypointNumber++;
 
         m_navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
+    }
+
+    public void StopMoving()
+    {
+        m_navMeshAgent.isStopped = true;
+    }
+
+    public void ResumeMoving()
+    {
+        m_navMeshAgent.isStopped = false;
     }
 
     public bool DestinationReached()

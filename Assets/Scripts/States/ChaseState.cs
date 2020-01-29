@@ -16,7 +16,11 @@ public class ChaseState : BaseState
     public override Type Tick()
     {
         if (!m_Guard.Target)
-            return typeof(PatrollState);
+        {
+            m_Guard.ChangeMatOrange();
+            return typeof(LostState);
+        }
+           
 
         m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.Target);
 

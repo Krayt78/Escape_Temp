@@ -11,6 +11,8 @@ public class Guard : MonoBehaviour
     public EnnemyNavigation EnnemyNavigation { get; private set; }
     public EnnemyPatrol EnnemyPatrol { get; private set; }
 
+    public Material mat;
+
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
     [SerializeField]
@@ -35,6 +37,12 @@ public class Guard : MonoBehaviour
         var states = new Dictionary<Type, BaseState>()
         {
             {typeof(PatrollState), new PatrollState(this)},
+            
+            {typeof(IdleState), new IdleState(this)},
+            {typeof(LostState), new LostState(this)},
+            {typeof(SightedState), new SightedState(this)},
+           // {typeof(StunnedState), new StunnedState(this)},
+
             {typeof(ChaseState), new ChaseState(this)}
         };
 
@@ -51,11 +59,38 @@ public class Guard : MonoBehaviour
         SetTarget(null);
     }
 
-
-
     public void SetTarget(Transform target)
     {
         Target = target;
-        Debug.Log(target);
+    }
+
+
+
+
+
+
+    //Test stuff
+
+    public void ChangeMatRed()
+    {
+        
+        mat.color = Color.red;
+        Debug.Log(mat.color);
+    }
+    public void ChangeMatBlue()
+    {
+        mat.color = new Color(3, 97, 189);
+        Debug.Log(mat.color);
+    }
+
+    public void ChangeMatOrange()
+    {
+        mat.color = new Color(189,105,3);
+        Debug.Log(mat.color);
+    }
+    public void ChangeMatYellow()
+    {
+        mat.color = Color.yellow;
+        Debug.Log(mat.color);
     }
 }
