@@ -74,23 +74,23 @@ public class Guard : MonoBehaviour
     public void ChangeMatRed()
     {
         
-        mat.color = Color.red;
+        mat.SetColor("_BaseColor", Color.red);
         Debug.Log(mat.color);
     }
     public void ChangeMatBlue()
     {
-        mat.color = new Color(3, 97, 189);
+        mat.SetColor("_BaseColor", Color.blue);
         Debug.Log(mat.color);
     }
 
     public void ChangeMatOrange()
     {
-        mat.color = new Color(189,105,3);
+        mat.SetColor("_BaseColor", Color.magenta);
         Debug.Log(mat.color);
     }
     public void ChangeMatYellow()
     {
-        mat.color = Color.yellow;
+        mat.SetColor("_BaseColor", Color.yellow);
         Debug.Log(mat.color);
     }
 }
