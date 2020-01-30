@@ -14,15 +14,24 @@ public class PlayerCameraController : MonoBehaviour
     private float playerOrientation = 0;
     private float cameraYaw = 0;
 
+
+    [SerializeField] private Texture2D reticuleTexture;
+    private Rect reticulePosition;
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
+        reticulePosition = new Rect((Screen.width - reticuleTexture.width) / 2, (Screen.height -
+         reticuleTexture.height) / 2, reticuleTexture.width, reticuleTexture.height);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -37,21 +46,13 @@ public class PlayerCameraController : MonoBehaviour
 
         playerOrientation += playerInput.LookRight * cameraSpeed * Time.deltaTime;
         cameraYaw = Mathf.Clamp(cameraYaw + playerInput.LookUp * cameraSpeed * Time.deltaTime, xRotationLimit.x, xRotationLimit.y);
-        
 
-        //playerCamera.Rotate(Vector3.right, playerInput.LookUp * cameraSpeed * Time.deltaTime);
         playerCamera.rotation = Quaternion.Euler(Vector3.up * playerOrientation) * Quaternion.Euler(Vector3.right * cameraYaw);
 
-        //ClampCameraAngle();
     }
 
-    private void ClampCameraAngle()
+    private void OnGUI()
     {
-        Vector3 cameraAngle = playerCamera.localRotation.eulerAngles;
-        if(cameraAngle.x < xRotationLimit.x || cameraAngle.x > xRotationLimit.y)
-        {
-            cameraAngle = new Vector3(Mathf.Clamp(cameraAngle.x, xRotationLimit.x, xRotationLimit.y), cameraAngle.y, cameraAngle.z);
-            playerCamera.localRotation = Quaternion.Euler(cameraAngle);
-        }
+        GUI.DrawTexture(reticulePosition, reticuleTexture);
     }
 }
