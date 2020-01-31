@@ -10,6 +10,8 @@ public class Guard : MonoBehaviour
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
     public EnnemyPatrol EnnemyPatrol { get; private set; }
+    public EnnemyAttack EnnemyAttack { get; private set; }
+    public EnnemyOrientation EnnemyOrientation { get; private set; }
 
     public Material mat;
 
@@ -23,7 +25,10 @@ public class Guard : MonoBehaviour
         FieldOfView = GetComponent<FieldOfView>();
         EnnemyNavigation = GetComponent<EnnemyNavigation>();
         EnnemyPatrol = GetComponent<EnnemyPatrol>();
+        EnnemyAttack = GetComponent<EnnemyAttack>();
+        EnnemyOrientation = GetComponent<EnnemyOrientation>();
     }
+
     private void Awake()
     {
         InitializeStateMachine();
@@ -41,6 +46,7 @@ public class Guard : MonoBehaviour
             {typeof(IdleState), new IdleState(this)},
             {typeof(LostState), new LostState(this)},
             {typeof(SightedState), new SightedState(this)},
+
            // {typeof(StunnedState), new StunnedState(this)},
 
             {typeof(AttackState), new AttackState(this)}

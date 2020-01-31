@@ -23,6 +23,7 @@ public class LostState : BaseState
 
         if (m_Guard.Target)
         {
+            m_Guard.EnnemyPatrol.StopMoving();
             m_Guard.ChangeMatRed();
             return typeof(AttackState);
         }
