@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnnemyOrientation : MonoBehaviour
 {
-
+    [SerializeField]
     private float rotationSpeed = 30f;
     private float step;
     private Quaternion targetRotation;
