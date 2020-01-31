@@ -19,6 +19,8 @@ public class PlayerCameraController : MonoBehaviour
     private Rect reticulePosition;
 
 
+    OutlineObjectController outlinedObject;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -31,12 +33,30 @@ public class PlayerCameraController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     private void Update()
     {
-
+        //TEMP///////////////////////////////////
+        RaycastHit ray;
+        Debug.DrawRay(playerCamera.position, playerCamera.forward);
+        if (Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, 5))
+        {
+            GameObject hitObject = ray.transform.gameObject;
+            if (hitObject.GetComponent<OutlineObjectController>() && outlinedObject != hitObject.GetComponent<OutlineObjectController>())
+            {
+                outlinedObject = hitObject.GetComponent<OutlineObjectController>();
+                outlinedObject.OutlineObject();
+            }
+        }
+        else if(outlinedObject != null)
+        {
+            outlinedObject.UnoutlineObject();
+            outlinedObject = null;
+        }
+           
+        //TEMP/////////////////////////////////////
     }
 
     // Update is called once per frame
@@ -53,6 +73,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.DrawTexture(reticulePosition, reticuleTexture);
+        //GUI.DrawTexture(reticulePosition, reticuleTexture);
     }
 }

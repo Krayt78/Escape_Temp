@@ -182,8 +182,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 8.458945, z: 5.8183584}
-  m_Center: {x: 0, y: 0.7238984, z: -0.33727407}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &12709767
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -748,9 +748,6 @@ GameObject:
   - component: {fileID: 897447139}
   - component: {fileID: 897447138}
   - component: {fileID: 897447137}
-  - component: {fileID: 897447136}
-  - component: {fileID: 897447135}
-  - component: {fileID: 897447134}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -758,48 +755,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &897447134
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897447133}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &897447135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897447133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e421da892e754439b2ad5c46c8cd0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodValue: 1
---- !u!135 &897447136
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897447133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &897447137
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -817,7 +772,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e4605d1531009d442b873d76c9f4c4c5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -853,49 +808,104 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897447133}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1011769377}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1011769373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011769377}
+  - component: {fileID: 1011769376}
+  - component: {fileID: 1011769375}
+  - component: {fileID: 1011769374}
+  - component: {fileID: 1011769378}
+  m_Layer: 0
+  m_Name: Food
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1011769374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011769373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e421da892e754439b2ad5c46c8cd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodValue: 1
+--- !u!54 &1011769375
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011769373}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1011769376
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011769373}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1011769377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011769373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.24, y: 0.74, z: -11.6023445}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 897447139}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &941263637 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1674202032261348087, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-    type: 3}
-  m_PrefabInstance: {fileID: 1674202031234566436}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &941263638
+--- !u!114 &1011769378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941263637}
+  m_GameObject: {fileID: 1011769373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e085a0a4a545b104b94e869ff451130e, type: 3}
+  m_Script: {fileID: 11500000, guid: f6526c7e9706574449d8d42eeaa4e0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelingSpeed: 10
---- !u!114 &941263644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941263637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 890669e3d7229a64ebd5a8d91f0bc6e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifePoint: 10
-  food: 0
-  playerCamera: {fileID: 0}
-  actionDistance: 3
-  playerDamages: 1
+  outlineColor: {r: 1, g: 0.4768409, b: 0, a: 1}
+  lerpFactor: 10
 --- !u!1 &1226496024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,11 +1413,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Character
-      objectReference: {fileID: 0}
-    - target: {fileID: 1674202032261348087, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1674202032261348094, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
