@@ -24,7 +24,7 @@ public class LostState : BaseState
         if (m_Guard.Target)
         {
             m_Guard.ChangeMatRed();
-            return typeof(ChaseState);
+            return typeof(AttackState);
         }
             
 

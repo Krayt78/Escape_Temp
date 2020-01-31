@@ -9,8 +9,7 @@ public class EnnemyNavigation : MonoBehaviour
     private NavMeshAgent m_navMeshAgent;
 
     //Serialized Fields
-    [SerializeField]
-    private Vector3 targetLastSeenPosition;
+    public Vector3 targetLastSeenPosition;
 
 
 
@@ -21,15 +20,14 @@ public class EnnemyNavigation : MonoBehaviour
         m_navMeshAgent.Warp(transform.position);
     }
 
-    public void ChaseTarget(Transform target)
+    public void ChaseTarget(Vector3 targetPosition)
     {
-        target = GetComponent<FieldOfView>().visibleTargets[0];
-        SetDestination(target);
+        SetDestination(targetPosition);
     }
 
-    private void SetDestination(Transform target)
+    private void SetDestination(Vector3 targetPosition)
     {
-            m_navMeshAgent.SetDestination(target.position);
+            m_navMeshAgent.SetDestination(targetPosition);
     }
 
 

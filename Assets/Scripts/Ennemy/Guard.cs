@@ -43,7 +43,7 @@ public class Guard : MonoBehaviour
             {typeof(SightedState), new SightedState(this)},
            // {typeof(StunnedState), new StunnedState(this)},
 
-            {typeof(ChaseState), new ChaseState(this)}
+            {typeof(AttackState), new AttackState(this)}
         };
 
         GetComponent<StateMachine>().SetStates(states);
@@ -56,6 +56,7 @@ public class Guard : MonoBehaviour
 
     private void OnTargetLost()
     {
+        EnnemyNavigation.targetLastSeenPosition = Target.transform.position;
         SetTarget(null);
     }
 
@@ -69,28 +70,29 @@ public class Guard : MonoBehaviour
 
 
 
+
+
     //Test stuff
 
     public void ChangeMatRed()
     {
-        
         mat.SetColor("_BaseColor", Color.red);
-        Debug.Log(mat.color);
     }
     public void ChangeMatBlue()
     {
         mat.SetColor("_BaseColor", Color.blue);
-        Debug.Log(mat.color);
     }
 
     public void ChangeMatOrange()
     {
         mat.SetColor("_BaseColor", Color.magenta);
-        Debug.Log(mat.color);
     }
     public void ChangeMatYellow()
     {
         mat.SetColor("_BaseColor", Color.yellow);
-        Debug.Log(mat.color);
+    }
+    private void OnDestroy()
+    {
+        ChangeMatBlue();
     }
 }

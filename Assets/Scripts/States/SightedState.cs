@@ -27,8 +27,8 @@ public class SightedState : BaseState
         {
             ResetTimer();
             m_Guard.EnnemyPatrol.ResumeMoving();
-
             m_Guard.ChangeMatOrange();
+            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
             return typeof(LostState);
         }
 
@@ -38,7 +38,7 @@ public class SightedState : BaseState
             ResetTimer();
             m_Guard.EnnemyPatrol.ResumeMoving();
             m_Guard.ChangeMatRed();
-            return typeof(ChaseState);
+            return typeof(AttackState);
         }
 
        

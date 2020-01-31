@@ -58,7 +58,6 @@ public class FieldOfView : MonoBehaviour
             }
         }
 
-
         //if the target is visible and first in the array we activate the event so that the ai can walk to it
         if (visibleTargets.Count == 1 && !(visibleTargets.Count == previousVisibleTargetCount))
             OnTargetSighted();

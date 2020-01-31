@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : BaseState
+public class AttackState : BaseState
 {
 
     private Guard m_Guard;
 
-    public ChaseState(Guard guard) : base(guard.gameObject)
+    public AttackState(Guard guard) : base(guard.gameObject)
     {
         m_Guard = guard;
     }
@@ -17,12 +17,13 @@ public class ChaseState : BaseState
     {
         if (!m_Guard.Target)
         {
+            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
             m_Guard.ChangeMatOrange();
             return typeof(LostState);
         }
            
 
-        m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.Target);
+        
 
         return null;
     }
