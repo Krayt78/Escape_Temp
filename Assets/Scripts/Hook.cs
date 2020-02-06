@@ -26,10 +26,13 @@ public class Hook : MonoBehaviour
     void Update()
     {
         CheckPosition();
-        UseGrapplin();
+        
         
     }
-
+    private void FixedUpdate()
+    {
+        UseGrapplin();
+    }
     private void CheckPosition()
     {
         if (Landed())
@@ -55,17 +58,21 @@ public class Hook : MonoBehaviour
                 Debug.DrawRay(ray.origin, hit.point);
                 
                 destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
-                Debug.Log(destination);
+                //Debug.Log(destination);
                 bezierControlPoint = destination;
                 bezierControlPoint.y += 15;
                 hitGrap = true;
-               
+                coroutine = false;
+                time = 0;
             }
         }
         if (hitGrap)
         {
-
-            CreateBezier(destination, bezierControlPoint);
+            if (!coroutine)
+            {
+                CreateBezier(destination, bezierControlPoint);
+            }
+           
             // StartCoroutine( MoveOnBezier());
             //camera.transform.position = Vector3.MoveTowards(camera.transform.position, hit.point, Time.deltaTime*travelingSpeed);  
         }
@@ -76,12 +83,21 @@ public class Hook : MonoBehaviour
     {
         //for (int i = 1; i < nbPoints + 1; i++)
         //{
-        time += 0.2f*Time.deltaTime;
-            camera.transform.position = CalculateBezierPoint(time, transform.position, bezierCP, destination);
-          //  Debug.Log(i-1+" "+positions[i - 1]);
+
+        /* if (time < 0.6)
+         {
+
+         }*/
+
+        StartCoroutine(MoveOnBezier());
+        /*time += Time.fixedDeltaTime;
+        camera.transform.position = CalculateBezierPoint(time, transform.position, bezierCP, destination);*/
+
+       // Debug.Log("time : " + time);
+        //  Debug.Log(i-1+" "+positions[i - 1]);
         //}
         //lr.SetPositions(positions);
-       // coroutine = true;
+        // coroutine = true;
     }
 
     private IEnumerator MoveOnBezier()
@@ -89,12 +105,14 @@ public class Hook : MonoBehaviour
         coroutine = true;
         
         
-        for (int i = 0; i < nbPoints; i++)
-         {
+        for (float i = 0; i < 1; i+=0.05f)
+        {
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             yield return MoveCoroutine;
-         }
-         
+        }
+       // hitGrap = false;
+        
+        Debug.Log("we finished");
     }
 
     void OnCollisionEnter(Collision col)
@@ -114,15 +132,14 @@ public class Hook : MonoBehaviour
         return p;
     }
 
-    IEnumerator MoveAlongBezier(int i)
+    IEnumerator MoveAlongBezier(float t)
     {
-        while(transform.position != positions[i])
-        {
-            camera.transform.position = Vector3.MoveTowards(camera.transform.position, positions[i], Time.deltaTime*0.001f );
-            //camera.transform.LookAt(positions[i]);
-        }
-        coroutine = false;
-        yield return null;
+        yield return new WaitForSeconds(0.02f);
+        camera.transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
+        //camera.transform.LookAt(CalculateBezierPoint(t, transform.position, bezierControlPoint, destination));
+
+        
+        //yield return null;
     }
 
 }
