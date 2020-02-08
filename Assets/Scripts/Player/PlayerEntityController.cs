@@ -35,7 +35,7 @@ public class PlayerEntityController : EntityController
     private void PlayerAction()
     {
         RaycastHit ray;
-        Debug.DrawRay(playerCamera.position, playerCamera.forward);
+        //Debug.DrawRay(playerCamera.position, playerCamera.forward);
         if(Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, actionDistance))
         {
             GameObject hitObject = ray.transform.gameObject;
