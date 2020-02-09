@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
     private new Rigidbody rigidbody;
 
+    public Vector3 movement { get; private set; }
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -28,7 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 movement = transform.forward * playerInput.Forward + transform.right * playerInput.Right;
-        rigidbody.MovePosition(rigidbody.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        movement = transform.forward * playerInput.Forward + transform.right * playerInput.Right;
+        movement = movement.normalized * moveSpeed;
+        //rigidbody.velocity = movement * moveSpeed;
+        rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
     }
 }
