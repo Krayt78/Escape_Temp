@@ -5,15 +5,15 @@ using UnityEngine;
 
 public abstract class EntityController : MonoBehaviour
 {
-    public event Action OnTakeDamages = delegate { };
+    public event Action<float> OnTakeDamages = delegate { };
     public event Action OnDies = delegate { };
 
     public abstract void TakeDamages(float damages);
     protected abstract void Dies();
 
-    protected void CallOnTakeDamages()
+    protected void CallOnTakeDamages(float value)
     {
-        OnTakeDamages();
+        OnTakeDamages(value);
     }
 
     protected void CallOnDies()

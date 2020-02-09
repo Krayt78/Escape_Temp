@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerEntityController : EntityController
 {
     public float lifePoint = 10;
-    public float food = 0;
 
     private PlayerInput playerInput;
     [SerializeField] Transform playerCamera;
@@ -14,16 +13,20 @@ public class PlayerEntityController : EntityController
     [SerializeField] private float actionDistance = 3;
     [SerializeField] private float playerDamages = 1;
 
+    private PlayerDNALevel playerDNALevel;
+
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.OnAction += PlayerAction;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.OnAction += PlayerAction;
+        playerDNALevel = GetComponent<PlayerDNALevel>();
+        playerDNALevel.OnDies += Dies;
     }
 
     // Update is called once per frame
@@ -57,19 +60,13 @@ public class PlayerEntityController : EntityController
 
     }
 
-    public void Eat(float foodValue)
-    {
-        food += foodValue;
-        Debug.Log("Food value: " + food);
-    }
-
     public override void TakeDamages(float damages)
     {
-        lifePoint -= damages;
-        CallOnTakeDamages();
+        //lifePoint -= damages;
+        CallOnTakeDamages(damages);
 
-        if (lifePoint < 0)
-            Dies();
+        //if (lifePoint < 0)
+        //    Dies();
     }
 
     protected override void Dies()

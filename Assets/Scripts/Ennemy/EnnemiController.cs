@@ -9,7 +9,7 @@ public class EnnemiController : EntityController
     public override void TakeDamages(float damages)
     {
         lifePoint -= damages;
-        CallOnTakeDamages();
+        CallOnTakeDamages(damages);
 
         if (lifePoint < 0)
             Dies();
