@@ -7,11 +7,14 @@ public class Guard : MonoBehaviour
 {
     [SerializeField]
     public Transform Target { get; private set; }
+
+    public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
     public EnnemyPatrol EnnemyPatrol { get; private set; }
     public EnnemyAttack EnnemyAttack { get; private set; }
     public EnnemyOrientation EnnemyOrientation { get; private set; }
+    public NoiseReceiver NoiseReceiver { get; private set; }
 
     public Material mat;
 
@@ -27,6 +30,7 @@ public class Guard : MonoBehaviour
         EnnemyPatrol = GetComponent<EnnemyPatrol>();
         EnnemyAttack = GetComponent<EnnemyAttack>();
         EnnemyOrientation = GetComponent<EnnemyOrientation>();
+        NoiseReceiver = GetComponent<NoiseReceiver>();
     }
 
     private void Awake()
@@ -35,6 +39,8 @@ public class Guard : MonoBehaviour
 
         GetComponent<FieldOfView>().OnTargetSighted += OnTargetSighted;
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
+
+        GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
     }
 
     private void InitializeStateMachine()
@@ -42,7 +48,7 @@ public class Guard : MonoBehaviour
         var states = new Dictionary<Type, BaseState>()
         {
             {typeof(PatrollState), new PatrollState(this)},
-            
+            {typeof(NoiseHeardState), new NoiseHeardState(this)},
             {typeof(IdleState), new IdleState(this)},
             {typeof(LostState), new LostState(this)},
             {typeof(SightedState), new SightedState(this)},
@@ -66,10 +72,20 @@ public class Guard : MonoBehaviour
         SetTarget(null);
     }
 
+    private void OnNoiseReceived(Noise noise)
+    {
+        NoiseHeard = noise.emitter.transform;
+    }
+
     public void SetTarget(Transform target)
     {
         Target = target;
     }
+    public void ResetNoise()
+    {
+        NoiseHeard = null;
+    }
+
 
 
 
@@ -96,6 +112,10 @@ public class Guard : MonoBehaviour
     public void ChangeMatYellow()
     {
         mat.SetColor("_BaseColor", Color.yellow);
+    }
+    public void ChangeMatGreen()
+    {
+        mat.SetColor("_BaseColor", Color.green);
     }
     private void OnDestroy()
     {

@@ -25,7 +25,14 @@ public class PatrollState : BaseState
             m_Guard.ChangeMatYellow();
             return typeof(SightedState);
         }
-            
+
+        if (m_Guard.NoiseHeard)
+        {
+            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
+            m_Guard.ChangeMatGreen();
+            return typeof(NoiseHeardState);
+        }
+
 
         if (m_Guard.EnnemyPatrol.DestinationReached())
             m_Guard.EnnemyPatrol.GoToNextCheckpoint();
