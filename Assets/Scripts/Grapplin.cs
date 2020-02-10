@@ -32,7 +32,7 @@ public class Grapplin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Cursor.visible = true;
+        //Cursor.visible = true;
         CheckPosition();
     }
     private void FixedUpdate()
