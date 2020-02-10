@@ -19,6 +19,8 @@ public class PlayerCameraController : MonoBehaviour
     private Rect reticulePosition;
     private float reticuleSize = 5;
 
+    private GameObject focusedObject;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -40,7 +42,21 @@ public class PlayerCameraController : MonoBehaviour
         Debug.DrawRay(playerCamera.position, playerCamera.forward);
         if (Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, 5))
         {
+            if(ray.transform.gameObject != focusedObject)
+            {
+                if (focusedObject != null && focusedObject.GetComponent<OutlineObjectController>())
+                    focusedObject.GetComponent<OutlineObjectController>().EnableOutline(false);
 
+                focusedObject = ray.transform.gameObject;
+                if (focusedObject.GetComponent<OutlineObjectController>())
+                    focusedObject.GetComponent<OutlineObjectController>().EnableOutline(true);
+            }
+        }
+        else if (focusedObject != null)
+        {
+            if(focusedObject.GetComponent<OutlineObjectController>())
+                focusedObject.GetComponent<OutlineObjectController>().EnableOutline(false);
+            focusedObject = null;
         }
     }
 
