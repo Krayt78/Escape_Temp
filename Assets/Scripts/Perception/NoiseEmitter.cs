@@ -29,7 +29,7 @@ public class NoiseEmitter : MonoBehaviour
             NoiseManager.Instance.NoiseEmitted(ComputeNoise());
     }
 
-    private Noise ComputeNoise()
+    protected virtual Noise ComputeNoise()
     {
         return new Noise(playerMovement.movement.magnitude * speedRangeMultiplier * GetSurfaceNoiseMultiplier(),
                             rigidbody.position,
