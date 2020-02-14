@@ -10,7 +10,7 @@ public class FoodController : Interactable
     {
         if(user.CompareTag("Player"))
         {
-            user.GetComponent<PlayerDNALevel>().Eat(foodValue);
+            user.GetComponent<PlayerEntityController>().Eat(foodValue);
             Destroy(gameObject);
         }
     }

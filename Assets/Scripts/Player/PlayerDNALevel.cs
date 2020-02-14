@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerDNALevel : MonoBehaviour
 {
-    private EntityController entityController;
+    private PlayerEntityController playerEntityController;
 
     private float dnaLevel;
     private int currentLevel;
@@ -26,14 +26,15 @@ public class PlayerDNALevel : MonoBehaviour
 
     private void Start()
     {
-        entityController = GetComponent<EntityController>();
-        entityController.OnTakeDamages += TakeDamages;
+        playerEntityController = GetComponent<PlayerEntityController>();
+        playerEntityController.OnTakeDamages += TakeDamages;
+        playerEntityController.OnEat += Eat;
 
         OnDnaLevelChanged(dnaLevel);
         OnCurrentLevelChanged(currentLevel);
     }
 
-    public void Eat(float value)
+    private void Eat(float value)
     {
         dnaLevel += value * foodToDnaRatio[currentLevel];
 
@@ -43,7 +44,7 @@ public class PlayerDNALevel : MonoBehaviour
         OnDnaLevelChanged(dnaLevel);
     }
 
-    public void TakeDamages(float value)
+    private void TakeDamages(float value)
     {
         dnaLevel -= value * damagesToDnaRatio[currentLevel];
 

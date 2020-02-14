@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class PlayerEntityController : EntityController
     [SerializeField] private float playerDamages = 1;
 
     private PlayerDNALevel playerDNALevel;
+
+    public event Action<float> OnEat = delegate { };
 
     private void Awake()
     {
@@ -58,6 +61,11 @@ public class PlayerEntityController : EntityController
             }
         }
 
+    }
+
+    public void Eat(float value)
+    {
+        OnEat(value);
     }
 
     public override void TakeDamages(float damages)
