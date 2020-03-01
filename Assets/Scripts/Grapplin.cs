@@ -116,7 +116,7 @@ public class Grapplin : MonoBehaviour
     {
         coroutine = true;
 
-        for (float i = 0; i < 0.2; i += 0.005f)
+        for (float i = 0; i <= 1; i += 0.005f)
         {
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             yield return MoveCoroutine;
