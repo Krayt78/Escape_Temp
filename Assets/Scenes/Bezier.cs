@@ -8,8 +8,8 @@ public class Bezier : MonoBehaviour
     public LineRenderer lineRenderer;
     public Transform point1, point2, point3;
 
-    private int nbPoints = 50;
-    private Vector3 [] positions = new Vector3[50];
+    private int nbPoints = 4;
+    private Vector3 [] positions = new Vector3[4];
     // Start is called before the first frame update
     
     private void Start()
@@ -25,10 +25,12 @@ public class Bezier : MonoBehaviour
 
     private void DrawBezierCurve()
     {
-        for (int i = 1; i < nbPoints+1; i++)
+        float time = 0;
+        for (int i = 1; i < 5; i++)
         {
-            float time = i / (float)nbPoints;
+            
             positions[i-1] = CalculateBezierPoint(time, point1.position, point2.position, point3.position);
+            time += 0.25f;
         }
         lineRenderer.SetPositions(positions);
     }

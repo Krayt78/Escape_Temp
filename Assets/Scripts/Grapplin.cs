@@ -16,7 +16,7 @@ public class Grapplin : MonoBehaviour
     bool coroutine = false;
 
     public float travelingSpeed = 10;
-
+    Rigidbody m_rigibody;
     Vector3 destination = new Vector3();
     Vector3 bezierControlPoint = new Vector3();
     
@@ -26,6 +26,7 @@ public class Grapplin : MonoBehaviour
 
     private void Awake()
     {
+        m_rigibody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         playerInput.OnGrapplin += UseGrapplin;
     }
@@ -46,13 +47,15 @@ public class Grapplin : MonoBehaviour
         if (Landed())
         {
             hitGrap = false;
+            m_rigibody.constraints = RigidbodyConstraints.None;
+            m_rigibody.freezeRotation = true;
         }
     }
 
     private bool Landed()
     {
 
-        return transform.position == destination;
+        return Vector3.Distance(transform.position,destination)<0.1f;
     }
 
     void UseGrapplin()
@@ -77,6 +80,9 @@ public class Grapplin : MonoBehaviour
         {
             if (!coroutine)
             {
+                m_rigibody.constraints = RigidbodyConstraints.FreezePositionY;
+                m_rigibody.freezeRotation = true;
+                
                 CreateBezier(destination, bezierControlPoint);
             }
             // StartCoroutine( MoveOnBezier());
@@ -110,7 +116,7 @@ public class Grapplin : MonoBehaviour
     {
         coroutine = true;
 
-        for (float i = 0; i < 1; i += 0.005f)
+        for (float i = 0; i <= 1; i += 0.005f)
         {
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             yield return MoveCoroutine;
@@ -123,7 +129,9 @@ public class Grapplin : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         hitGrap = false;
-
+        m_rigibody.constraints = RigidbodyConstraints.None;
+        m_rigibody.freezeRotation = true;
+       
     }
 
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
@@ -140,6 +148,7 @@ public class Grapplin : MonoBehaviour
     IEnumerator MoveAlongBezier(float t)
     {
         yield return new WaitForSeconds(0.03f);
+        Debug.Log(t);
         transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
         //camera.transform.LookAt(CalculateBezierPoint(t, transform.position, bezierControlPoint, destination));
 
