@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class NoiseEmitter : MonoBehaviour
 {
-    private new Rigidbody rigidbody;
+    //private new Rigidbody rigidbody;
     private PlayerMovement playerMovement;
     [SerializeField] float speedRangeMultiplier = 1.5f;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -32,7 +32,7 @@ public class NoiseEmitter : MonoBehaviour
     protected virtual Noise ComputeNoise()
     {
         return new Noise(playerMovement.movement.magnitude * speedRangeMultiplier * GetSurfaceNoiseMultiplier(),
-                            rigidbody.position,
+                            transform.position,
                             gameObject);
     }
 
