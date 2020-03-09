@@ -13,9 +13,22 @@ public class VRPlayerController : MonoBehaviour
 
     private Vector3 direction;
 
+    [SerializeField]
+    private Echo echo;
+
     void Update()
     {
         direction = Player.instance.hmdTransform.TransformDirection(new Vector3(input.axis.x, 0, input.axis.y));
+
+        if(input.axis == Vector2.zero && !echo.isActive)
+        {
+            echo.ActivateXray();
+        }
+        else if(input.axis != Vector2.zero && echo.isActive)
+        {
+            Debug.Log("fuck");
+            echo.DeactivateXray();
+        }
     }
 
     void FixedUpdate()
