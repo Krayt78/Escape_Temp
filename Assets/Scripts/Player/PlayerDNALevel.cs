@@ -16,6 +16,14 @@ public class PlayerDNALevel : MonoBehaviour
     public event Action<int> OnCurrentLevelChanged = delegate { };
     public event Action OnDies = delegate { };
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            TakeDamages(.3f);
+        }
+    }
+
     private void Awake()
     {
         dnaLevel = 0;

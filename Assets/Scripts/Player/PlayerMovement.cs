@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 6;
+    public float moveSpeed = 6;
 
     private PlayerInput playerInput;
     private new Rigidbody rigidbody;
@@ -34,5 +34,10 @@ public class PlayerMovement : MonoBehaviour
         movement = movement.normalized * moveSpeed;
         //rigidbody.velocity = movement * moveSpeed;
         rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
+    }
+
+    public float GetSpeedRatio()
+    {
+        return movement.magnitude / moveSpeed;
     }
 }

@@ -7,6 +7,7 @@ public class NoiseEmitter : MonoBehaviour
 {
     //private new Rigidbody rigidbody;
     private PlayerMovement playerMovement;
+    public float noiseEmitted = 6;
     [SerializeField] float speedRangeMultiplier = 1.5f;
 
     private void Awake()
@@ -31,7 +32,7 @@ public class NoiseEmitter : MonoBehaviour
 
     protected virtual Noise ComputeNoise()
     {
-        return new Noise(playerMovement.movement.magnitude * speedRangeMultiplier * GetSurfaceNoiseMultiplier(),
+        return new Noise(playerMovement.GetSpeedRatio() * noiseEmitted * speedRangeMultiplier * GetSurfaceNoiseMultiplier(),
                             transform.position,
                             gameObject);
     }
