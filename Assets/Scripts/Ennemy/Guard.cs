@@ -18,7 +18,7 @@ public class Guard : MonoBehaviour
     public EnnemyOrientation EnnemyOrientation { get; private set; }
     public NoiseReceiver NoiseReceiver { get; private set; }
 
-    //public Material mat;
+    public Material mat;
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
