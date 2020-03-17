@@ -15,7 +15,6 @@ public class Grapplin : MonoBehaviour
     bool hitGrap = false;
     bool coroutine = false;
 
-    public float travelingSpeed = 10;
     Rigidbody m_rigibody;
     Vector3 destination = new Vector3();
     Vector3 bezierControlPoint = new Vector3();
