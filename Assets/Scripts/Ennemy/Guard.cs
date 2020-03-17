@@ -6,6 +6,8 @@ using UnityEngine;
 public class Guard : MonoBehaviour
 {
     [SerializeField]
+    private bool debugMode;
+    [SerializeField]
     public Transform Target { get; private set; }
 
     public Transform NoiseHeard { get; private set; }
@@ -16,7 +18,7 @@ public class Guard : MonoBehaviour
     public EnnemyOrientation EnnemyOrientation { get; private set; }
     public NoiseReceiver NoiseReceiver { get; private set; }
 
-    public Material mat;
+    //public Material mat;
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
@@ -41,6 +43,11 @@ public class Guard : MonoBehaviour
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
+
+        if (debugMode)
+        {
+            DebugMode();
+        }
     }
 
     private void InitializeStateMachine()
@@ -84,6 +91,11 @@ public class Guard : MonoBehaviour
     public void ResetNoise()
     {
         NoiseHeard = null;
+    }
+
+    private void DebugMode()
+    {
+        
     }
 
 
