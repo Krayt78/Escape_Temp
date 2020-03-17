@@ -71,7 +71,7 @@ public class Grapplin : MonoBehaviour
             destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
             //Debug.Log(destination);
             bezierControlPoint = destination;
-            bezierControlPoint.y += 15;
+            bezierControlPoint.y += 5;
             hitGrap = true;
             coroutine = false;
             time = 0;
@@ -93,30 +93,15 @@ public class Grapplin : MonoBehaviour
 
     private void CreateBezier(Vector3 destination, Vector3 bezierCP)
     {
-        //for (int i = 1; i < nbPoints + 1; i++)
-        //{
-
-        /* if (time < 0.6)
-         {
-
-         }*/
-
-        StartCoroutine(MoveOnBezier());
-        /*time += Time.fixedDeltaTime;
-        camera.transform.position = CalculateBezierPoint(time, transform.position, bezierCP, destination);*/
-
-        // Debug.Log("time : " + time);
-        //  Debug.Log(i-1+" "+positions[i - 1]);
-        //}
-        //lr.SetPositions(positions);
-        // coroutine = true;
+       
+        StartCoroutine(MoveOnBezier()); 
     }
 
     private IEnumerator MoveOnBezier()
     {
         coroutine = true;
 
-        for (float i = 0; i <= 1; i += 0.005f)
+        for (float i = 0; i <= 1; i += 0.02f)
         {
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             yield return MoveCoroutine;
@@ -147,7 +132,7 @@ public class Grapplin : MonoBehaviour
 
     IEnumerator MoveAlongBezier(float t)
     {
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSecondsRealtime(0.03f);
         Debug.Log(t);
         transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
         //camera.transform.LookAt(CalculateBezierPoint(t, transform.position, bezierControlPoint, destination));
