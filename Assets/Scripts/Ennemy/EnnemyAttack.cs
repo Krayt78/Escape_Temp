@@ -40,7 +40,7 @@ public class EnnemyAttack : MonoBehaviour
     {
         if (RollADice.RollPercentage(accuracy, 100))
         {
-            // target.GetComponent<EntityController>().TakeDamages(Damages);
+            target.GetComponent<EntityController>().TakeDamages(damages);
             Debug.Log("Hit");
         }
         else
