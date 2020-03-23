@@ -7,9 +7,9 @@ public class Guard : MonoBehaviour
 {
     [SerializeField]
     private bool debugMode;
+
     [SerializeField]
     public Transform Target { get; private set; }
-
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
@@ -44,10 +44,12 @@ public class Guard : MonoBehaviour
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
 
-        if (debugMode)
-        {
-            DebugMode();
+        if (debugMode) {
+            ActivateDebugMode();
         }
+        else {
+            DeactivateDebugMode();
+        } 
     }
 
     private void InitializeStateMachine()
@@ -93,9 +95,14 @@ public class Guard : MonoBehaviour
         NoiseHeard = null;
     }
 
-    private void DebugMode()
+    private void DeactivateDebugMode()
     {
-        
+        GetComponentInChildren<AIDebugMode>().gameObject.SetActive(false);
+    }
+
+    private void ActivateDebugMode()
+    {
+        GetComponentInChildren<AIDebugMode>().gameObject.SetActive(true);
     }
 
 
