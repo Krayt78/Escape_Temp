@@ -14,17 +14,21 @@ public class NoiseHeardState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.isStunned)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
+
         if (m_Guard.Target)
         {
             m_Guard.EnnemyPatrol.StopMoving();
-            m_Guard.ChangeMatYellow();
             m_Guard.ResetNoise();
             return typeof(SightedState);
         }
 
         if (m_Guard.EnnemyPatrol.DestinationReached())
         {
-            m_Guard.ChangeMatBlue();
             m_Guard.ResetNoise();
             return typeof(PatrollState);
         }

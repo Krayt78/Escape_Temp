@@ -22,14 +22,11 @@ public class SightedState : BaseState
 
     public override Type Tick()
     {
-       
-
         // if the guard has lost trace of the ennemy reset the timer, resume his movement capabilities and goto loststate
         if (!m_Guard.Target)
         {
             ResetTimer();
             m_Guard.EnnemyPatrol.ResumeMoving();
-            m_Guard.ChangeMatOrange();
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
             return typeof(LostState);
         }
@@ -44,7 +41,6 @@ public class SightedState : BaseState
         {
             ResetTimer();
             m_Guard.EnnemyPatrol.ResumeMoving();
-            m_Guard.ChangeMatRed();
             return typeof(AttackState);
         }
 

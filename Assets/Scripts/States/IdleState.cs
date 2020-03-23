@@ -14,9 +14,13 @@ public class IdleState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.isStunned)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
 
-            
-            return typeof(PatrollState);
+        return typeof(PatrollState);
         
     }
 }

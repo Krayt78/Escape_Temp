@@ -10,4 +10,8 @@ public static class Constants
     public const int ENNEMIES_XRAYED_LAYER = 13;
     public const int ENNEMIES_XRAYED_STATE_DURATION = 3;
 
+    //GUARD CONSTANTS
+    public const float ENNEMIES_STUNNED_STATE_DURATION = 3;
+
+
 }

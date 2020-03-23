@@ -14,9 +14,14 @@ public class LostState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.isStunned)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
+
         if (m_Guard.EnnemyPatrol.DestinationReached())
         {
-            m_Guard.ChangeMatBlue();
             return typeof(PatrollState);
         }
             
@@ -24,7 +29,6 @@ public class LostState : BaseState
         if (m_Guard.Target)
         {
             m_Guard.EnnemyPatrol.StopMoving();
-            m_Guard.ChangeMatRed();
             return typeof(AttackState);
         }
             

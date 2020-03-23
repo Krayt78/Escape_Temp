@@ -7,9 +7,11 @@ public class Guard : MonoBehaviour
 {
     [SerializeField]
     private bool debugMode;
+
+    public bool isStunned;
+
     [SerializeField]
     public Transform Target { get; private set; }
-
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
@@ -17,8 +19,12 @@ public class Guard : MonoBehaviour
     public EnnemyAttack EnnemyAttack { get; private set; }
     public EnnemyOrientation EnnemyOrientation { get; private set; }
     public NoiseReceiver NoiseReceiver { get; private set; }
+    public EnnemiController EnnemiController { get; private set; }
 
-    public Material mat;
+   // public bool isStunned { get; private set; }
+
+
+
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
@@ -33,6 +39,9 @@ public class Guard : MonoBehaviour
         EnnemyAttack = GetComponent<EnnemyAttack>();
         EnnemyOrientation = GetComponent<EnnemyOrientation>();
         NoiseReceiver = GetComponent<NoiseReceiver>();
+        EnnemiController = GetComponent<EnnemiController>();
+
+        isStunned = false;
     }
 
     private void Awake()
@@ -43,11 +52,14 @@ public class Guard : MonoBehaviour
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
+        GetComponent<EnnemiController>().OnStunned += OnStunned;
 
-        if (debugMode)
-        {
-            DebugMode();
+        if (debugMode) {
+            ActivateDebugMode();
         }
+        else {
+            DeactivateDebugMode();
+        } 
     }
 
     private void InitializeStateMachine()
@@ -59,9 +71,7 @@ public class Guard : MonoBehaviour
             {typeof(IdleState), new IdleState(this)},
             {typeof(LostState), new LostState(this)},
             {typeof(SightedState), new SightedState(this)},
-
-           // {typeof(StunnedState), new StunnedState(this)},
-
+            {typeof(StunnedState), new StunnedState(this)},
             {typeof(AttackState), new AttackState(this)}
         };
 
@@ -82,6 +92,25 @@ public class Guard : MonoBehaviour
     private void OnNoiseReceived(Noise noise)
     {
         NoiseHeard = noise.emitter.transform;
+        Debug.Log("nosie heard");
+    }
+
+    private void OnStunned(float stunDuration)
+    {
+        SetIsStunned(true);
+        StartCoroutine(RecoverFromStun(stunDuration));
+    }
+
+    private void SetIsStunned(bool stunned)
+    {
+        isStunned = stunned;
+    }
+
+    IEnumerator RecoverFromStun(float stunDuration)
+    {
+        yield return new WaitForSeconds(stunDuration);
+
+        SetIsStunned(false);
     }
 
     public void SetTarget(Transform target)
@@ -93,44 +122,13 @@ public class Guard : MonoBehaviour
         NoiseHeard = null;
     }
 
-    private void DebugMode()
+    private void DeactivateDebugMode()
     {
-        
+        GetComponentInChildren<AIDebugMode>().gameObject.SetActive(false);
     }
 
-
-
-
-
-
-
-
-
-    //Test stuff
-
-    public void ChangeMatRed()
+    private void ActivateDebugMode()
     {
-        mat.SetColor("_BaseColor", Color.red);
-    }
-    public void ChangeMatBlue()
-    {
-        mat.SetColor("_BaseColor", Color.blue);
-    }
-
-    public void ChangeMatOrange()
-    {
-        mat.SetColor("_BaseColor", Color.magenta);
-    }
-    public void ChangeMatYellow()
-    {
-        mat.SetColor("_BaseColor", Color.yellow);
-    }
-    public void ChangeMatGreen()
-    {
-        mat.SetColor("_BaseColor", Color.green);
-    }
-    private void OnDestroy()
-    {
-        ChangeMatBlue();
+        GetComponentInChildren<AIDebugMode>().gameObject.SetActive(true);
     }
 }
