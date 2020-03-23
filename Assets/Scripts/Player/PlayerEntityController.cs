@@ -70,11 +70,7 @@ public class PlayerEntityController : EntityController
 
     public override void TakeDamages(float damages)
     {
-        //lifePoint -= damages;
         CallOnTakeDamages(damages);
-
-        //if (lifePoint < 0)
-        //    Dies();
     }
 
     protected override void Dies()
