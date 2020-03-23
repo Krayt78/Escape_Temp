@@ -19,7 +19,6 @@ public class AttackState : BaseState
         {
             m_Guard.EnnemyPatrol.ResumeMoving();
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
-            m_Guard.ChangeMatOrange();
             return typeof(LostState);
         }
 

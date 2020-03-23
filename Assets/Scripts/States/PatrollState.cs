@@ -18,18 +18,21 @@ public class PatrollState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.isStunned)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
 
         if (m_Guard.Target)
         {
             m_Guard.EnnemyPatrol.StopMoving();
-            m_Guard.ChangeMatYellow();
             return typeof(SightedState);
         }
 
         if (m_Guard.NoiseHeard)
         {
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
-            m_Guard.ChangeMatGreen();
             return typeof(NoiseHeardState);
         }
 
