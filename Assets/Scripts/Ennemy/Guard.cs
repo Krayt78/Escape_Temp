@@ -21,9 +21,7 @@ public class Guard : MonoBehaviour
     public NoiseReceiver NoiseReceiver { get; private set; }
     public EnnemiController EnnemiController { get; private set; }
 
-   // public bool isStunned { get; private set; }
-
-
+    // public bool isStunned { get; private set; }
 
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
@@ -77,6 +75,7 @@ public class Guard : MonoBehaviour
 
         GetComponent<StateMachine>().SetStates(states);
     }
+
 
     private void OnTargetSighted()
     {

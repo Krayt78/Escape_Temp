@@ -16,6 +16,9 @@ public class PlayerEntityController : EntityController
 
     private PlayerDNALevel playerDNALevel;
 
+    private PlayerMovement playerMovement;
+    private Echo echo;
+
     public event Action<float> OnEat = delegate { };
 
     private void Awake()
@@ -30,6 +33,12 @@ public class PlayerEntityController : EntityController
         playerInput.OnAction += PlayerAction;
         playerDNALevel = GetComponent<PlayerDNALevel>();
         playerDNALevel.OnDies += Dies;
+
+        echo = GetComponentInChildren<Echo>();
+
+        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement.IsMoving += IsMoving;
+        playerMovement.StoppedMoving += StoppedMoving;
     }
 
     // Update is called once per frame
@@ -66,6 +75,18 @@ public class PlayerEntityController : EntityController
     public void Eat(float value)
     {
         OnEat(value);
+    }
+
+    private void IsMoving()
+    {
+        if (echo.isActive)
+            echo.DeactivateXray();
+    }
+
+    private void StoppedMoving()
+    {
+        if (!echo.isActive)
+            echo.ActivateXray();
     }
 
     public override void TakeDamages(float damages)

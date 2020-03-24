@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EchoReceiver : MonoBehaviour
+{
+
+    private bool isXrayed = false;
+
+    [SerializeField]
+    private List<GameObject> Gfx;
+
+    public void SetXrayed(bool Xray)
+    {
+        if (Xray)
+        {
+            //stop the deactivate coroutine in case its up
+            StopAllCoroutines();
+
+            foreach (GameObject gfx in Gfx)
+            {
+                gfx.layer = Constants.ENNEMIES_XRAYED_LAYER;
+            }
+
+            isXrayed = true;
+        }
+        else
+        {
+            StartCoroutine(DeactivateXrayCoroutine());
+        }
+    }
+
+    IEnumerator DeactivateXrayCoroutine()
+    {
+        yield return new WaitForSeconds(Constants.ENNEMIES_XRAYED_STATE_DURATION);
+
+        foreach(GameObject gfx in Gfx)
+        {
+            gfx.layer = Constants.ENNEMIES_LAYER;
+        }
+
+        isXrayed = false;
+    }
+
+}

@@ -70,7 +70,8 @@ public class Echo : MonoBehaviour
     {
        yield return new WaitForSeconds(Constants.ENNEMIES_XRAYED_STATE_DURATION);
 
-        ennemy.gameObject.layer = Constants.ENNEMIES_LAYER;
+        // ennemy.gameObject.layer = Constants.ENNEMIES_LAYER;
+        ennemy.gameObject.GetComponent<EchoReceiver>().SetXrayed(false);
     }
 
 
@@ -90,8 +91,9 @@ public class Echo : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         XrayedObjectsList.Add(other.gameObject);
-        other.gameObject.layer = Constants.ENNEMIES_XRAYED_LAYER;
+        //  other.gameObject.layer = Constants.ENNEMIES_XRAYED_LAYER;
 
+        other.gameObject.GetComponent<EchoReceiver>().SetXrayed(true);
     }
 
     private void OnTriggerExit(Collider other)

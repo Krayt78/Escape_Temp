@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     private new Rigidbody rigidbody;
 
     public Vector3 movement { get; private set; }
+
+
+    public event Action IsMoving = delegate { };
+    public event Action StoppedMoving = delegate { };
 
     private void Awake()
     {
@@ -34,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
         movement = movement.normalized * moveSpeed;
         //rigidbody.velocity = movement * moveSpeed;
         rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
+
+        if (movement != Vector3.zero)
+            IsMoving();
+        else
+            StoppedMoving();
     }
 
     public float GetSpeedRatio()
