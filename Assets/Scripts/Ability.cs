@@ -12,6 +12,7 @@ public abstract class Ability : MonoBehaviour
     {
         PlayerDNALevel = GetComponent<PlayerDNALevel>();
         PlayerInput = GetComponent<PlayerInput>();
+       
     }
 
     public virtual void Start()

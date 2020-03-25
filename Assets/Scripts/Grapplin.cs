@@ -18,6 +18,10 @@ public class Grapplin : Ability
     private Transform playerCamera;
     [SerializeField]
     private int m_LevelToActivate = 0;
+    [SerializeField]
+    private int m_levelToDeActivate = 2;
+    [SerializeField]
+    private float m_grapplinThrowSpeed = 15f;
 
     RaycastHit hit;
     Ray ray;
@@ -37,7 +41,7 @@ public class Grapplin : Ability
     GameObject m_grapplinPoint;
 
     GameObject grp;
-    private int m_levelToDeActivate = 2;
+ 
 
     public override void Awake()
     {
@@ -46,7 +50,6 @@ public class Grapplin : Ability
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        playerInput.OnGrapplin += UseGrapplin;
     }
     // Update is called once per frame
     void Update()
@@ -66,7 +69,6 @@ public class Grapplin : Ability
         {
             //StopCoroutine(LaunchGrapplin(new GameObject()));
             StopCoroutine(MoveOnBezier());
-
             hitGrap = false;
             m_rigibody.constraints = RigidbodyConstraints.None;
             m_rigibody.freezeRotation = true;
@@ -76,32 +78,6 @@ public class Grapplin : Ability
     private bool Landed()
     {
         return Vector3.Distance(transform.position, destination) < 0.1f;
-    }
-
-    void UseGrapplin()
-    {
-        Debug.Log("We launch grapplin");
-        ray = new Ray(playerCamera.position, playerCamera.forward);
-        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red);
-        if (Physics.Raycast(ray, out hit))
-        {
-            destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
-            //Debug.Log(destination);
-            bezierControlPoint = destination;
-            bezierControlPoint.y += 5;
-            hitGrap = true;
-            coroutine = false;
-            time = 0;
-        }
-        if (hitGrap)
-        {
-            grp = Instantiate(m_grapplinPoint, grapplinPosition.position, new Quaternion(), transform);
-            grp.transform.parent = null;
-            StartCoroutine(LaunchGrapplin(grp));
-
-            // StartCoroutine( MoveOnBezier());
-            //camera.transform.position = Vector3.MoveTowards(camera.transform.position, hit.point, Time.deltaTime*travelingSpeed);  */
-        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -130,10 +106,8 @@ public class Grapplin : Ability
     IEnumerator MoveAlongBezier(float t)
     {
         yield return new WaitForSecondsRealtime(0.03f);
-        Debug.Log(t);
         transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
         //camera.transform.LookAt(CalculateBezierPoint(t, transform.position, bezierControlPoint, destination));
-        //yield return null;
     }
 
     private IEnumerator MoveOnBezier()
@@ -165,12 +139,11 @@ public class Grapplin : Ability
         lrRope.SetPosition(0, transform.position);
         while (grp.transform.position != hit.point)
         {
-            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, 10f * Time.deltaTime);
+            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, m_grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
         }
         CreateBezier(destination, bezierControlPoint);
-        yield return null;
     }
 
     public override void LevelChanged(int level)
@@ -188,6 +161,24 @@ public class Grapplin : Ability
 
     public override void UseAbility()
     {
-        Debug.Log("We use ability");
+        Debug.Log("We launch grapplin");
+        ray = new Ray(playerCamera.position, playerCamera.forward);
+        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red);
+        if (Physics.Raycast(ray, out hit))
+        {
+            destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
+            //Debug.Log(destination);
+            bezierControlPoint = destination;
+            bezierControlPoint.y += 5;
+            hitGrap = true;
+            coroutine = false;
+            time = 0;
+        }
+        if (hitGrap)
+        {
+            grp = Instantiate(m_grapplinPoint, grapplinPosition.position, new Quaternion(), transform);
+            grp.transform.parent = null;
+            StartCoroutine(LaunchGrapplin(grp));
+        }
     }
 }

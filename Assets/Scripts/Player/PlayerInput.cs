@@ -21,7 +21,6 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         playerAbilities = new List<Ability>();
-        //CurrentAbility = playerAbilities[abilitiesIndex];
     }
 
     // Update is called once per frame
@@ -82,6 +81,7 @@ public class PlayerInput : MonoBehaviour
         {
             ability.enabled = false;
             playerAbilities.Add(ability);
+            ChangeCurrentAbility();
         }
     }
 
