@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grapplin : MonoBehaviour
+public class Grapplin : Ability
 {
 
     private PlayerInput playerInput;
@@ -14,7 +14,10 @@ public class Grapplin : MonoBehaviour
 
     public Transform grapplinPosition;
 
-    [SerializeField] Transform playerCamera;
+    [SerializeField]
+    private Transform playerCamera;
+    [SerializeField]
+    private int m_LevelToActivate = 0;
 
     RaycastHit hit;
     Ray ray;
@@ -25,7 +28,7 @@ public class Grapplin : MonoBehaviour
     Rigidbody m_rigibody;
     private Vector3 destination = new Vector3();
     Vector3 bezierControlPoint = new Vector3();
-    
+
     Coroutine MoveCoroutine;
 
     float time = 0;
@@ -34,11 +37,11 @@ public class Grapplin : MonoBehaviour
     GameObject m_grapplinPoint;
 
     GameObject grp;
+    private int m_levelToDeActivate = 2;
 
-
-
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
@@ -49,7 +52,7 @@ public class Grapplin : MonoBehaviour
     void Update()
     {
         //Cursor.visible = true;
-        CheckPosition();   
+        CheckPosition();
     }
 
     private void FixedUpdate()
@@ -63,7 +66,7 @@ public class Grapplin : MonoBehaviour
         {
             //StopCoroutine(LaunchGrapplin(new GameObject()));
             StopCoroutine(MoveOnBezier());
-            
+
             hitGrap = false;
             m_rigibody.constraints = RigidbodyConstraints.None;
             m_rigibody.freezeRotation = true;
@@ -72,7 +75,7 @@ public class Grapplin : MonoBehaviour
 
     private bool Landed()
     {
-        return Vector3.Distance(transform.position,destination)<0.1f;
+        return Vector3.Distance(transform.position, destination) < 0.1f;
     }
 
     void UseGrapplin()
@@ -91,13 +94,13 @@ public class Grapplin : MonoBehaviour
             time = 0;
         }
         if (hitGrap)
-        { 
-            grp = Instantiate(m_grapplinPoint, grapplinPosition.position,new Quaternion(), transform);
+        {
+            grp = Instantiate(m_grapplinPoint, grapplinPosition.position, new Quaternion(), transform);
             grp.transform.parent = null;
             StartCoroutine(LaunchGrapplin(grp));
 
-             // StartCoroutine( MoveOnBezier());
-             //camera.transform.position = Vector3.MoveTowards(camera.transform.position, hit.point, Time.deltaTime*travelingSpeed);  */
+            // StartCoroutine( MoveOnBezier());
+            //camera.transform.position = Vector3.MoveTowards(camera.transform.position, hit.point, Time.deltaTime*travelingSpeed);  */
         }
     }
 
@@ -105,7 +108,7 @@ public class Grapplin : MonoBehaviour
     {
         hitGrap = false;
         m_rigibody.constraints = RigidbodyConstraints.None;
-        m_rigibody.freezeRotation = true;    
+        m_rigibody.freezeRotation = true;
     }
 
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
@@ -168,5 +171,23 @@ public class Grapplin : MonoBehaviour
         }
         CreateBezier(destination, bezierControlPoint);
         yield return null;
+    }
+
+    public override void LevelChanged(int level)
+    {
+        if (level == m_LevelToActivate)
+        {
+            Debug.Log("We add ability");
+            PlayerInput.AddAbility(GetComponent<Grapplin>());
+        }else if(level == m_levelToDeActivate)
+        {
+            Debug.Log("We remove ability");
+            PlayerInput.RemoveAbility(this);
+        }
+    }
+
+    public override void UseAbility()
+    {
+        Debug.Log("We use ability");
     }
 }

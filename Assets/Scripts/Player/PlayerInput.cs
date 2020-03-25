@@ -13,10 +13,15 @@ public class PlayerInput : MonoBehaviour
     public event Action OnAction = delegate { };
     public event Action OnGrapplin = delegate { };
 
+    private int abilitiesIndex = 0;
+    public Ability CurrentAbility { get; private set; }
+    private List<Ability> playerAbilities;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerAbilities = new List<Ability>();
+        //CurrentAbility = playerAbilities[abilitiesIndex];
     }
 
     // Update is called once per frame
@@ -28,11 +33,67 @@ public class PlayerInput : MonoBehaviour
         LookUp = -Input.GetAxis("Mouse Y");
         LookRight = Input.GetAxis("Mouse X");
 
+        if (Input.GetKeyUp(KeyCode.C))
+            ChangeCurrentAbility();
 
         if (Input.GetButtonDown("Fire1"))
             OnAction();
 
         if (Input.GetButtonDown("Fire2"))
-            OnGrapplin();
+            UseAbility();
+    }
+
+    private void UseAbility()
+    {
+        if(CurrentAbility== null)
+        {
+            Debug.LogError("no abilities");
+        }
+        else
+        {
+            CurrentAbility.UseAbility();
+        }
+    }
+
+    private void ChangeCurrentAbility()
+    {
+        Debug.Log(abilitiesIndex);
+        abilitiesIndex++;
+        Debug.Log(playerAbilities.Count);
+        if (abilitiesIndex >= playerAbilities.Count)
+        {
+            abilitiesIndex = 0;
+        }
+
+        Debug.Log(playerAbilities[0]);
+        CurrentAbility = playerAbilities[abilitiesIndex];
+        CurrentAbility.enabled = true;
+
+    }
+
+    public void AddAbility(Ability ability)
+    {
+        if (playerAbilities.Contains(ability))
+        {
+            Debug.LogError("this ability already exists");
+            return;
+        }
+        else
+        {
+            ability.enabled = false;
+            playerAbilities.Add(ability);
+        }
+    }
+
+    internal void RemoveAbility(Ability ability)
+    {
+        if (!playerAbilities.Contains(ability))
+        {
+            Debug.LogError("this ability does not exists");
+        }
+        else
+        {
+            playerAbilities.Remove(ability);
+        }
     }
 }
