@@ -13,5 +13,6 @@ public static class Constants
     //GUARD CONSTANTS
     public const float ENNEMIES_STUNNED_STATE_DURATION = 3;
 
-
+    //SOUNDWAVE CONSTANTS
+    public const float INTERVAL_DURATION = 0.5f;
 }
