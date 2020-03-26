@@ -21,7 +21,6 @@ public class SoundWaveEmitter : MonoBehaviour
 
     public void PulseWaveActivate(Noise n)
     {
-        Debug.Log("Test");
         if (lastTimeInstatiated + Constants.INTERVAL_DURATION <= Time.time)
         {
             GameObject soundwaveInstantiated = Instantiate(soundWave, n.emissionPosition, Quaternion.identity);
