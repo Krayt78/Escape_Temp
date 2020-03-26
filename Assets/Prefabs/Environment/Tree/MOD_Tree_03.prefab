@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3490289688818204138}
   - component: {fileID: 7157194600212087059}
   - component: {fileID: 4946100689081542529}
+  - component: {fileID: 6831361658735755726}
   m_Layer: 0
   m_Name: MOD_Tree_03
   m_TagString: Untagged
@@ -88,7 +89,21 @@ BoxCollider:
   m_GameObject: {fileID: 8894504386062874063}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.48921737, y: 4.885599, z: 0.7820031}
   m_Center: {x: -0.041249722, y: 2.4427938, z: -0.006764571}
+--- !u!64 &6831361658735755726
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8894504386062874063}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -2680172831148794162, guid: 8069eb89e299bd24ebe659e50a58e116, type: 3}
