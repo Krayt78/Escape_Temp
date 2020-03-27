@@ -15,12 +15,12 @@ public class PlayerInput : MonoBehaviour
 
     private int abilitiesIndex = 0;
     public Ability CurrentAbility { get; private set; }
-    private List<Ability> playerAbilities;
+    private List<Ability> playerAbilities = new List<Ability>();
 
     // Start is called before the first frame update
     void Start()
     {
-        playerAbilities = new List<Ability>();
+       
     }
 
     // Update is called once per frame

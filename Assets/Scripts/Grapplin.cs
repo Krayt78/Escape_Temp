@@ -80,13 +80,6 @@ public class Grapplin : Ability
         return Vector3.Distance(transform.position, destination) < 0.1f;
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        hitGrap = false;
-        m_rigibody.constraints = RigidbodyConstraints.None;
-        m_rigibody.freezeRotation = true;
-    }
-
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
     {
         float coef = 1 - time;
@@ -107,7 +100,6 @@ public class Grapplin : Ability
     {
         yield return new WaitForSecondsRealtime(0.03f);
         transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
-        //camera.transform.LookAt(CalculateBezierPoint(t, transform.position, bezierControlPoint, destination));
     }
 
     private IEnumerator MoveOnBezier()
@@ -129,7 +121,6 @@ public class Grapplin : Ability
             lrRope.SetPosition(0, transform.position);
             yield return MoveCoroutine;
         }
-        // hitGrap = false
         Debug.Log("we finished");
     }
 

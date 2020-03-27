@@ -17,7 +17,6 @@ public abstract class Ability : MonoBehaviour
 
     public virtual void Start()
     {
-        LevelChanged(0);
         PlayerDNALevel.OnCurrentLevelChanged += LevelChanged;
     }
 
