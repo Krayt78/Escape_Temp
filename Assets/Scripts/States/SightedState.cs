@@ -40,7 +40,7 @@ public class SightedState : BaseState
         if (IsSighted())
         {
             ResetTimer();
-            m_Guard.EnnemyPatrol.ResumeMoving();
+            m_Guard.EnnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
 

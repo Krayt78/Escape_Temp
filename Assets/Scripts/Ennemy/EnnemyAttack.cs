@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnnemyAttack : MonoBehaviour
 {
-    [SerializeField]
+   /* [SerializeField]
     private int accuracy = 30;
     [SerializeField]
-    private int damages = 2;
+    private int damages = 2;*/
 
     [SerializeField]
     private float fireRate = 1f;
@@ -43,7 +43,9 @@ public class EnnemyAttack : MonoBehaviour
     }
 
     private void FireAtTarget(Transform target)
-    { /*
+    { 
+        
+        /*
         if (RollADice.RollPercentage(accuracy, 100))
         {
             target.GetComponent<EntityController>().TakeDamages(damages);

@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField]
     private float BulletSpeed;
+    [SerializeField]
+    private float Damages = 2;
 
     private Rigidbody m_rigidbody;
     // Start is called before the first frame update
@@ -13,12 +15,16 @@ public class Bullet : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
 
-        m_rigidbody.AddForce(BulletSpeed * transform.forward);
+        m_rigidbody.velocity = BulletSpeed * transform.forward;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            other.gameObject.GetComponent<EntityController>().TakeDamages(Damages);
+            Debug.Log("Hit");
+        }
+
+        Destroy(gameObject);
     }
 }
