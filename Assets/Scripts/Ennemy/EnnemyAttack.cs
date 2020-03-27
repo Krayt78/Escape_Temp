@@ -14,6 +14,12 @@ public class EnnemyAttack : MonoBehaviour
     [SerializeField]
     private float cooldown = 0f;
 
+    [SerializeField]
+    GameObject Bullet;
+
+    [SerializeField]
+    GameObject FiringPoint;
+
 
     public void AttackRoutine(Transform target)
     {
@@ -37,7 +43,7 @@ public class EnnemyAttack : MonoBehaviour
     }
 
     private void FireAtTarget(Transform target)
-    {
+    { /*
         if (RollADice.RollPercentage(accuracy, 100))
         {
             target.GetComponent<EntityController>().TakeDamages(damages);
@@ -47,7 +53,10 @@ public class EnnemyAttack : MonoBehaviour
         {
 
             Debug.Log("Miss");
-        }
+        }*/
+
+        Instantiate(Bullet, FiringPoint.transform.position, FiringPoint.transform.rotation);
+
 
         cooldown = fireRate;
            

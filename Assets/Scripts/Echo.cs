@@ -17,12 +17,12 @@ public class Echo : MonoBehaviour
     private List<GameObject> XrayedObjectsList;
 
     private SphereCollider Xray_Collider;
-    private MeshRenderer Xray_MeshRenderer;
+    //private MeshRenderer Xray_MeshRenderer;
 
     void Awake()
     {
         Xray_Collider = GetComponent<SphereCollider>();
-        Xray_MeshRenderer = GetComponent<MeshRenderer>();
+       //Xray_MeshRenderer = GetComponent<MeshRenderer>();
 
     }
 
@@ -79,13 +79,13 @@ public class Echo : MonoBehaviour
     {
         Xray_Collider.enabled = false;
         transform.localScale = Vector3.one;
-        Xray_MeshRenderer.enabled = false;
+       // Xray_MeshRenderer.enabled = false;
     }
 
     private void ActivateTrigger()
     {
         Xray_Collider.enabled = true;
-        Xray_MeshRenderer.enabled = true;
+       // Xray_MeshRenderer.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
