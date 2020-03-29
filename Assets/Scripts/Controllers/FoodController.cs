@@ -6,6 +6,7 @@ public class FoodController : Interactable
 {
     [SerializeField] private float foodValue = 1;
     public float FoodValue { get { return foodValue; } }
+    [SerializeField] float repopTime = 100f;
 
     public override void Use(GameObject user)
     {
@@ -17,7 +18,14 @@ public class FoodController : Interactable
 
     public void DestroyFood()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        Invoke("ReactiveFood", repopTime);
+        gameObject.SetActive(false);
+    }
+
+    private void ReactiveFood()
+    {
+        gameObject.SetActive(true);
     }
 
 }
