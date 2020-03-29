@@ -35,6 +35,8 @@ public class PlayerEntityController : EntityController
         playerMovement = GetComponent<PlayerMovement>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         playerCameraController = GetComponent<PlayerCameraController>();
+
+        echo = GetComponentInChildren<Echo>();
     }
 
     // Start is called before the first frame update
@@ -42,9 +44,8 @@ public class PlayerEntityController : EntityController
     {
         playerInput.OnAction += PlayerAction;
         playerInput.OnVomit += Vomit;
+        playerInput.OnScan += Scan;
         playerDNALevel.OnDies += Dies;
-
-        echo = GetComponentInChildren<Echo>();
 
         playerMovement.IsMoving += IsMoving;
         playerMovement.StoppedMoving += StoppedMoving;
@@ -104,8 +105,7 @@ public class PlayerEntityController : EntityController
 
     private void StoppedMoving()
     {
-        if (!echo.isActive)
-            echo.ActivateXray();
+
     }
 
     public override void TakeDamages(float damages)
@@ -123,5 +123,11 @@ public class PlayerEntityController : EntityController
     private void Vomit()
     {
         playerDNALevel.LoseDnaLevel(vomitRatePerSeconds * Time.deltaTime);
+    }
+
+    private void Scan()
+    {
+        if (!echo.isActive)
+            echo.ActivateXray();
     }
 }

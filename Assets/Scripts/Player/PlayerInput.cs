@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     public event Action OnAction = delegate { };
     public event Action OnGrapplin = delegate { };
     public event Action OnVomit = delegate { }; //The player vomit to lose DNA to get smaller
+    public event Action OnScan = delegate { }; //The player scan it's surrounding looking for ennemies
 
     private int abilitiesIndex = 0;
     public Ability CurrentAbility { get; private set; }
@@ -42,8 +43,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown("Fire2"))
             UseAbility();
 
-        if (Input.GetKey(KeyCode.V))
+        if (Input.GetButton("Vomit"))
             OnVomit();
+
+        if (Input.GetButtonDown("Scan"))
+            OnScan();
     }
 
     private void UseAbility()
