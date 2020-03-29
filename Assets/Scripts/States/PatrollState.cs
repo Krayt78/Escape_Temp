@@ -42,4 +42,15 @@ public class PatrollState : BaseState
 
         return null;
     }
+
+
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Patrol state");
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting Patrol state");
+    }
 }

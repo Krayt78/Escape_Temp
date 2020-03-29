@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    private Dictionary<Type, BaseState> m_availableStates;
+    protected Dictionary<Type, BaseState> m_availableStates;
 
-    public BaseState CurrentState { get; private set; }
+    public BaseState CurrentState { get; protected set; }
     public String CurrentStateName = "Default";
     public event Action<BaseState> OnStateChanged;
 
@@ -17,12 +17,13 @@ public class StateMachine : MonoBehaviour
         m_availableStates = states;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if(CurrentState == null)
+        if (CurrentState == null)
         {
             CurrentState = m_availableStates.Values.First();
             CurrentStateName = m_availableStates.Values.First().ToString();
+            CurrentState.OnStateEnter(this);
         }
 
         var nextState = CurrentState?.Tick();
@@ -33,10 +34,27 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    private void SwitchToNewState(Type nextState)
+    public virtual void SwitchToNewState(Type nextState)
     {
+        CurrentState.OnStateExit();
+
         CurrentState = m_availableStates[nextState];
         CurrentStateName = m_availableStates[nextState].ToString();
+
+        CallOnStateChanged();
+
+        CurrentState.OnStateEnter(this);
+    }
+
+    public void CallOnStateChanged()
+    {
         OnStateChanged?.Invoke(CurrentState);
+    }
+
+    protected void InitializeStateMachineFirstState()
+    {
+        CurrentState = m_availableStates.Values.First();
+        CurrentStateName = m_availableStates.Values.First().ToString();
+        CurrentState.OnStateEnter(this);
     }
 }

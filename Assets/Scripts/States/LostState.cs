@@ -35,4 +35,15 @@ public class LostState : BaseState
 
         return null;
     }
+
+
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Lost state");
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting Lost state");
+    }
 }

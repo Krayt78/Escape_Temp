@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 6;
+    public bool canMove = true;
 
     private PlayerInput playerInput;
     private new Rigidbody rigidbody;
@@ -35,15 +36,18 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        movement = transform.forward * playerInput.Forward + transform.right * playerInput.Right;
-        movement = movement.normalized * moveSpeed;
-        //rigidbody.velocity = movement * moveSpeed;
-        rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
+        if(canMove)
+        {
+            movement = transform.forward * playerInput.Forward + transform.right * playerInput.Right;
+            movement = movement.normalized * moveSpeed;
+            //rigidbody.velocity = movement * moveSpeed;
+            rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
 
-        if (movement != Vector3.zero)
-            IsMoving();
-        else
-            StoppedMoving();
+            if (movement != Vector3.zero)
+                IsMoving();
+            else
+                StoppedMoving();
+        }
     }
 
     public float GetSpeedRatio()

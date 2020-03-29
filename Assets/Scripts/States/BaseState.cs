@@ -15,5 +15,8 @@ public abstract class BaseState
         this.transform = gameObject.transform;
     }
 
+    public abstract void OnStateEnter(StateMachine manager);
     public abstract Type Tick();
+
+    public abstract void OnStateExit();
 }

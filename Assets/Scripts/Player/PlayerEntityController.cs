@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerEntityController : EntityController
 {
@@ -13,39 +14,42 @@ public class PlayerEntityController : EntityController
 
     [SerializeField] private float actionDistance = 3;
     [SerializeField] private float playerDamages = 1;
+    public float PlayerDamages { get { return playerDamages; } set { playerDamages = Mathf.Clamp(value, 1, 3); } }
 
     private PlayerDNALevel playerDNALevel;
 
+    private PlayerAbilitiesController playerAbilitiesController;
+    private PlayerCameraController playerCameraController;
     private PlayerMovement playerMovement;
     private Echo echo;
 
+    [SerializeField] private float eatingDelay = 1.0f;
     public event Action<float> OnEat = delegate { };
+
+    [SerializeField] private float vomitRatePerSeconds = .2f; //The amount of dna vomited per seconds
 
     private void Awake()
     {
-        
+        playerInput = GetComponent<PlayerInput>();
+        playerDNALevel = GetComponent<PlayerDNALevel>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
+        playerCameraController = GetComponent<PlayerCameraController>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
         playerInput.OnAction += PlayerAction;
-        playerDNALevel = GetComponent<PlayerDNALevel>();
+        playerInput.OnVomit += Vomit;
         playerDNALevel.OnDies += Dies;
 
         echo = GetComponentInChildren<Echo>();
 
-        playerMovement = GetComponent<PlayerMovement>();
         playerMovement.IsMoving += IsMoving;
         playerMovement.StoppedMoving += StoppedMoving;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void PlayerAction()
     {
@@ -71,10 +75,25 @@ public class PlayerEntityController : EntityController
         }
 
     }
-
-    public void Eat(float value)
+    
+    public void Eat(FoodController food)
     {
-        OnEat(value);
+        StartCoroutine(EatingFood(food));
+    }
+
+    private IEnumerator EatingFood(FoodController food)
+    {
+        playerAbilitiesController.enabled = false;
+        playerCameraController.enabled = false;
+        playerMovement.enabled = false;
+
+        yield return new WaitForSeconds(eatingDelay);
+        OnEat(food.FoodValue);
+        food.DestroyFood();
+
+        playerAbilitiesController.enabled = true;
+        playerCameraController.enabled = true;
+        playerMovement.enabled = true;
     }
 
     private void IsMoving()
@@ -99,5 +118,10 @@ public class PlayerEntityController : EntityController
         CallOnDies();
         Debug.Log("dead");
         //Destroy(gameObject);
+    }
+
+    private void Vomit()
+    {
+        playerDNALevel.LoseDnaLevel(vomitRatePerSeconds * Time.deltaTime);
     }
 }

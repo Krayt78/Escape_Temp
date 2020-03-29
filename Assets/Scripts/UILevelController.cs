@@ -15,7 +15,7 @@ public class UILevelController : MonoBehaviour
     private void Start()
     {
         PlayerDNALevel script = GameObject.FindObjectOfType<PlayerDNALevel>();
-        script.OnCurrentLevelChanged += UpdateLevelText;
+        script.OncurrentEvolutionLevelChanged += UpdateLevelText;
         script.OnDnaLevelChanged += UpdateLevelBar;
 
         targetImageValue = 0;

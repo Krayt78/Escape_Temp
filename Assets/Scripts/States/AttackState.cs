@@ -28,4 +28,15 @@ public class AttackState : BaseState
         
         return null;
     }
+
+
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Attack state");
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting Attack state");
+    }
 }

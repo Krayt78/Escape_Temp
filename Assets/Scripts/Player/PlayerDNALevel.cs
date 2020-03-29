@@ -8,26 +8,34 @@ public class PlayerDNALevel : MonoBehaviour
     private PlayerEntityController playerEntityController;
 
     private float dnaLevel;
-    private int currentLevel;
-    private int minLevel = 0, maxLevel = 2;
+    public float DnaLevel { get { return dnaLevel; } }
+    private int currentEvolutionLevel;
+    private int minEvolutionLevel = 0, maxEvolutionLevel = 2;
     private float[] foodToDnaRatio, damagesToDnaRatio;
 
     public event Action<float> OnDnaLevelChanged = delegate { };
-    public event Action<int> OnCurrentLevelChanged = delegate { };
+    public event Action<int> OncurrentEvolutionLevelChanged = delegate { };
     public event Action OnDies = delegate { };
 
-    private void Update()
+
+    public bool printDebug=true;
+
+    void OnGUI()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if (printDebug)
         {
-            TakeDamages(.3f);
+            string printString = "Evolution level: " + currentEvolutionLevel+ "\n" +
+                                    "Dna Level: " + dnaLevel;
+            GUIStyle myStyle = new GUIStyle();
+            myStyle.fontSize = 25;
+            GUI.Label(new Rect(10, 10, 300, 500), printString, myStyle);
         }
     }
 
     private void Awake()
     {
         dnaLevel = 0;
-        currentLevel = minLevel;
+        currentEvolutionLevel = minEvolutionLevel;
         foodToDnaRatio = new float[] { 1, .34f, .15f };
         damagesToDnaRatio = new float[] { 1, .34f, .1f };
     }
@@ -39,30 +47,31 @@ public class PlayerDNALevel : MonoBehaviour
         playerEntityController.OnEat += Eat;
 
         OnDnaLevelChanged(dnaLevel);
-        OnCurrentLevelChanged(currentLevel);
+        OncurrentEvolutionLevelChanged(currentEvolutionLevel);
     }
 
     private void Eat(float value)
     {
-        dnaLevel += value * foodToDnaRatio[currentLevel];
-
-        if (CheckIfGainLevel())
-            GainLevel();
+        dnaLevel += value * foodToDnaRatio[currentEvolutionLevel];
 
         OnDnaLevelChanged(dnaLevel);
     }
 
     private void TakeDamages(float value)
     {
-        dnaLevel -= value * damagesToDnaRatio[currentLevel];
+        LoseDnaLevel(value* damagesToDnaRatio[currentEvolutionLevel]);
 
         if (CheckIfLoseLevel())
             LoseLevel();
+    }
 
+    public void LoseDnaLevel(float value)
+    {
+        dnaLevel -= value;
         OnDnaLevelChanged(dnaLevel);
     }
 
-    private void LoseLevel()
+    public void LoseLevel()
     {
         if (CheckIfDead())
         {
@@ -70,38 +79,49 @@ public class PlayerDNALevel : MonoBehaviour
             return;
         }
 
-        currentLevel--;
-        OnCurrentLevelChanged(currentLevel);
+        currentEvolutionLevel--;
+        OncurrentEvolutionLevelChanged(currentEvolutionLevel);
 
-        dnaLevel = 1 + dnaLevel*damagesToDnaRatio[currentLevel];
+        dnaLevel = .8f;
     }
 
-    private void GainLevel()
+    public void GainLevel()
     {
-        if(currentLevel>=maxLevel)
+        if(currentEvolutionLevel>=maxEvolutionLevel)
         {
             dnaLevel = 1;
             return;
         }
 
-        currentLevel++;
-        OnCurrentLevelChanged(currentLevel);
+        currentEvolutionLevel++;
+        OncurrentEvolutionLevelChanged(currentEvolutionLevel);
 
-        dnaLevel = (dnaLevel-1) * damagesToDnaRatio[currentLevel];
+        dnaLevel = .2f;
     }
 
-    private bool CheckIfGainLevel()
+    public bool CheckIfGainLevel()
     {
         return dnaLevel >= 1;
     }
 
-    private bool CheckIfLoseLevel()
+    public bool CheckIfLoseLevel()
     {
         return dnaLevel < 0;
     }
 
     private bool CheckIfDead()
     {
-        return (currentLevel <= minLevel && dnaLevel<0);
+        return (currentEvolutionLevel <= minEvolutionLevel && dnaLevel<0);
+    }
+
+    public void ClampDnaLevel()
+    {
+        dnaLevel = Mathf.Clamp(dnaLevel, 0, 1);
+    }
+
+    public void GoAlpha()
+    {
+        GainLevel();
+        dnaLevel = 1;
     }
 }

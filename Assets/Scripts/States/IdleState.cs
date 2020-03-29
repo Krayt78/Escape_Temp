@@ -23,4 +23,15 @@ public class IdleState : BaseState
         return typeof(PatrollState);
         
     }
+
+
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Idle state");
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting Idle state");
+    }
 }

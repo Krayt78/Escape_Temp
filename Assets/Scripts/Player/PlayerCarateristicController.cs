@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class PlayerCarateristicController : MonoBehaviour
 {
-    public float[] sizePerLevel = new float[3];
     public float[] speedPerLevel = new float[3];
-    public float[] noisePerLevel = new float[3];
+    public float[] sizePerLevel = new float[3];
     public float[] damagesPerLevel = new float[3];
+    public float[] noisePerLevel = new float[3];
 
-    float easingSpeed = .7f;
+    private float targetSpeed;
+    private float targetSize;
+    private float targetDamages;
+    private float targetNoise;
 
-    //Noise
-    private NoiseEmitter noiseEmitter;
+    const float DEFAULT_EASING_DELAY = .7f;
+    float currentEasingDelayInSeconds;
+    bool easing = false;
+    public bool Easing { get { return easing; } }
+
     //Speed
     private PlayerMovement playerMovement;
     //Size
     private new CapsuleCollider collider;
-
     //Damages
-    //private damageManager
+    private PlayerEntityController entityController;
+    //Noise
+    private NoiseEmitter noiseEmitter;
 
 
     //Debug
@@ -31,70 +38,85 @@ public class PlayerCarateristicController : MonoBehaviour
         {
             string printString = "Speed: " + playerMovement.moveSpeed + "\n" +
                                     "Noise: " + noiseEmitter.noiseEmitted + "\n" +
-                                    "Size: " + collider.height;
+                                    "Size: " + collider.height + "\n" +
+                                    "Easing: " + easing;
             GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 50;
-            GUI.Label(new Rect(10, 100, 500, 700), printString, myStyle);
+            myStyle.fontSize = 25;
+            GUI.Label(new Rect(10, 100, 300, 500), printString, myStyle);
         }
     }
-
 
     private void Awake()
     {
         noiseEmitter = GetComponent<NoiseEmitter>();
         playerMovement = GetComponent<PlayerMovement>();
         collider = GetComponent<CapsuleCollider>();
+        entityController = GetComponent<PlayerEntityController>();
     }
 
     private void Start()
     {
-        GetComponent<PlayerDNALevel>().OnCurrentLevelChanged += UpdateCharacteristics;
-        InitCharacterisctics();
+        //GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCharacteristics;
+        //InitCharacterisctics();
     }
 
-    public void InitCharacterisctics()
+    public void UpdateCharacteristicValues(float newSpeed, float newSize, float newDamages, float newNoise, float easingSpeed= DEFAULT_EASING_DELAY)
     {
-        if (noiseEmitter)
-            noiseEmitter.noiseEmitted = noisePerLevel[0];
-        if (playerMovement)
-            playerMovement.moveSpeed = speedPerLevel[0];
-        if (collider)
-            collider.height = sizePerLevel[0];
+        targetSpeed = newSpeed;
+        targetSize = newSize;
+        targetDamages = newDamages;
+        targetNoise = newNoise;
+        currentEasingDelayInSeconds = easingSpeed;
+
+
+        if(!easing)
+        {
+            StartCoroutine(EaseUpdateCharactisticsValue());
+            easing = true;
+        }
     }
 
-    public void UpdateCharacteristics(int level)
+    IEnumerator EaseUpdateCharactisticsValue()
     {
-        StartCoroutine(EaseCharacteristicTransition(level));
-    }
-
-    IEnumerator EaseCharacteristicTransition(int targetLevel)
-    {
-        float currentStep = 0;
+        float startTime = Time.time;
         float startNoise = noiseEmitter.noiseEmitted,
                 startSpeed = playerMovement.moveSpeed,
                 startHeight = collider.height;
 
-        while(currentStep<1)
+        while (startTime + currentEasingDelayInSeconds > Time.time)
         {
-            currentStep += Time.deltaTime * easingSpeed;
-
+            float step = (Time.time - startTime) / currentEasingDelayInSeconds;
             if (noiseEmitter)
-                noiseEmitter.noiseEmitted = Mathf.Lerp(startNoise, noisePerLevel[targetLevel], currentStep);
+                noiseEmitter.noiseEmitted = Mathf.Lerp(startNoise, targetNoise, step);
             if (playerMovement)
-                playerMovement.moveSpeed = Mathf.Lerp(startSpeed, speedPerLevel[targetLevel], currentStep);
+                playerMovement.moveSpeed = Mathf.Lerp(startSpeed, targetSpeed, step);
             if (collider)
-                collider.height = Mathf.Lerp(startHeight, sizePerLevel[targetLevel], currentStep);
+                collider.height = Mathf.Lerp(startHeight, targetSize, step);
             //Damages handling
             yield return null;
         }
 
         if (noiseEmitter)
-            noiseEmitter.noiseEmitted = noisePerLevel[targetLevel];
+            noiseEmitter.noiseEmitted = targetNoise;
         if (playerMovement)
-            playerMovement.moveSpeed = speedPerLevel[targetLevel];
+            playerMovement.moveSpeed = targetSpeed;
         if (collider)
-            collider.height = sizePerLevel[targetLevel];
-        //Damages handling
+            collider.height = targetSize;
+        if (entityController)
+            entityController.PlayerDamages = targetDamages;
+
+        easing = false;
     }
 
+    public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise)
+    {
+        if (noiseEmitter)
+            noiseEmitter.noiseEmitted = newNoise;
+        if (playerMovement)
+            playerMovement.moveSpeed = newSpeed;
+        if (collider)
+            collider.height = newSize;
+        if (entityController)
+            entityController.PlayerDamages = newDamages;
+    }
 }

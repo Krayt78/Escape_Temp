@@ -20,6 +20,11 @@ public class SightedState : BaseState
         currentTimer = sightedTimer;
     }
 
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Sighted state");
+    }
+
     public override Type Tick()
     {
         // if the guard has lost trace of the ennemy reset the timer, resume his movement capabilities and goto loststate
@@ -47,6 +52,11 @@ public class SightedState : BaseState
        
            
         return null;
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting Sighted state");
     }
 
     private bool IsSighted()

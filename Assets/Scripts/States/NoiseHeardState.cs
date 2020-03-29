@@ -37,4 +37,15 @@ public class NoiseHeardState : BaseState
         return null; 
 
     }
+
+
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering NoiseHeard state");
+    }
+
+    public override void OnStateExit()
+    {
+        Debug.Log("Exiting NoiseHeard state");
+    }
 }
