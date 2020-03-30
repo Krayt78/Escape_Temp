@@ -28,7 +28,7 @@ public class PlayerDNALevel : MonoBehaviour
                                     "Dna Level: " + dnaLevel;
             GUIStyle myStyle = new GUIStyle();
             myStyle.fontSize = 25;
-            GUI.Label(new Rect(10, 10, 300, 500), printString, myStyle);
+            GUI.Label(new Rect(10, 50, 300, 500), printString, myStyle);
         }
     }
 
@@ -83,6 +83,7 @@ public class PlayerDNALevel : MonoBehaviour
         OncurrentEvolutionLevelChanged(currentEvolutionLevel);
 
         dnaLevel = .8f;
+        OnDnaLevelChanged(dnaLevel);
     }
 
     public void GainLevel()
@@ -97,6 +98,7 @@ public class PlayerDNALevel : MonoBehaviour
         OncurrentEvolutionLevelChanged(currentEvolutionLevel);
 
         dnaLevel = .2f;
+        OnDnaLevelChanged(dnaLevel);
     }
 
     public bool CheckIfGainLevel()

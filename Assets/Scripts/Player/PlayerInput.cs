@@ -14,6 +14,8 @@ public class PlayerInput : MonoBehaviour
     public event Action OnUseAbility = delegate { };
     public event Action OnChangeAbility = delegate { };
     public event Action OnVomit = delegate { }; //The player vomit to lose DNA to get smaller
+    public event Action OnStopVomiting = delegate { };
+
     public event Action OnScan = delegate { }; //The player scan it's surrounding looking for ennemies
 
 
@@ -43,6 +45,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButton("Vomit"))
             OnVomit();
+        else if (Input.GetButtonUp("Vomit"))
+            OnStopVomiting();
 
         if (Input.GetButtonDown("Scan"))
             OnScan();

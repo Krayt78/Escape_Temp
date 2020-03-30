@@ -42,7 +42,7 @@ public class PlayerCarateristicController : MonoBehaviour
                                     "Easing: " + easing;
             GUIStyle myStyle = new GUIStyle();
             myStyle.fontSize = 25;
-            GUI.Label(new Rect(10, 100, 300, 500), printString, myStyle);
+            GUI.Label(new Rect(10, 110, 300, 500), printString, myStyle);
         }
     }
 

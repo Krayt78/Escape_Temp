@@ -170,6 +170,8 @@ public class Grapplin : Ability
             grp = Instantiate(m_grapplinPoint, grapplinPosition.position, new Quaternion(), transform);
             grp.transform.parent = null;
             StartCoroutine(LaunchGrapplin(grp));
+
+            GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
         }
     }
 }

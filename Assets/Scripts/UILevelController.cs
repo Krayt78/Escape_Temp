@@ -6,55 +6,59 @@ using TMPro;
 
 public class UILevelController : MonoBehaviour
 {
+    public PlayerDNALevel script;
+
     [SerializeField] Image image;
     [SerializeField] TextMeshProUGUI text;
 
     private float targetImageValue;
-    private int currentLevel = 1;
+    private float uiImageLevel = 0;
+    private int currentLevel = 0;
 
-    private void Start()
+    void Start()
     {
-        PlayerDNALevel script = GameObject.FindObjectOfType<PlayerDNALevel>();
         script.OncurrentEvolutionLevelChanged += UpdateLevelText;
-        script.OnDnaLevelChanged += UpdateLevelBar;
+        //script.OnDnaLevelChanged += UpdateLevelBar;
 
         targetImageValue = 0;
         text.text = ""+currentLevel;
     }
 
-    private void Update()
+    void Update()
     {
-        if (targetImageValue >= 1 && image.fillAmount >= 1)
+        UpdateLevelBar(0);
+        float targetFillValue=targetImageValue;
+        if(uiImageLevel<currentLevel)
         {
-            targetImageValue -= 1;
-            image.fillAmount = 0;
+            if (image.fillAmount == 1)
+            {
+                uiImageLevel++;
+                image.fillAmount = 0;
+            }
+            targetFillValue = 1;
         }
-        else if (targetImageValue < 0 && image.fillAmount <= 0)
+        else if(uiImageLevel>currentLevel)
         {
-            targetImageValue += 1;
-            image.fillAmount = 1;
+            if (image.fillAmount == 0)
+            {
+                uiImageLevel--;
+                image.fillAmount = 1;
+            }
+            targetFillValue = 0;
         }
         
-        image.fillAmount = Mathf.MoveTowards(image.fillAmount, targetImageValue, Time.deltaTime);
+        image.fillAmount = Mathf.MoveTowards(image.fillAmount, targetFillValue, Time.deltaTime);
     }
 
     private void UpdateLevelBar(float value)
     {
-        if (targetImageValue >= 1)
-            targetImageValue = 1 + value;
-        else if (targetImageValue <= 0)
-            targetImageValue = -1 + value;
-        else
-            targetImageValue = value;
+        //targetImageValue = value;
+        targetImageValue = script.DnaLevel;
     }
 
     private void UpdateLevelText(int value)
     {
-        if (currentLevel < value+1)
-            targetImageValue += 1;
-        else if (currentLevel > value+1)
-            targetImageValue -= 1;
-        currentLevel = value+1;
+        currentLevel = value;
         text.text = "" + (currentLevel);
     }
 }
