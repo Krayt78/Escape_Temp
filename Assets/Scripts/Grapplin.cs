@@ -6,7 +6,7 @@ using UnityEngine;
 public class Grapplin : Ability
 {
 
-    private PlayerInput playerInput;
+    private PlayerAbilitiesController playerAbilitiesController;
 
     public LineRenderer lrRope;
     private int nbPoints = 2;
@@ -49,7 +49,7 @@ public class Grapplin : Ability
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
     }
     // Update is called once per frame
     void Update()
@@ -142,11 +142,11 @@ public class Grapplin : Ability
         if (level == m_LevelToActivate)
         {
             Debug.Log("We add ability");
-            PlayerInput.AddAbility(GetComponent<Grapplin>());
+            playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
         }else if(level == m_levelToDeActivate)
         {
             Debug.Log("We remove ability");
-            PlayerInput.RemoveAbility(this);
+            playerAbilitiesController.RemoveAbility(this);
         }
     }
 

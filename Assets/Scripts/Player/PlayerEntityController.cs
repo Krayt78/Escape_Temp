@@ -49,6 +49,8 @@ public class PlayerEntityController : EntityController
 
         playerMovement.IsMoving += IsMoving;
         playerMovement.StoppedMoving += StoppedMoving;
+
+        echo.DeactivateXray();
     }
 
 

@@ -78,7 +78,7 @@ public class Echo : MonoBehaviour
     private void DeactivateTrigger()
     {
         Xray_Collider.enabled = false;
-        transform.localScale = Vector3.one;
+        transform.localScale = Vector3.zero;
        // Xray_MeshRenderer.enabled = false;
     }
 
