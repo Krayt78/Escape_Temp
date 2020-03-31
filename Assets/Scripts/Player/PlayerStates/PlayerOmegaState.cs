@@ -17,7 +17,7 @@ public class PlayerOmegaState : BasePlayerState
     private PlayerDNALevel playerDnaLevel;
 
 
-    float stateSpeed = 1.5f;
+    float stateSpeed = 15f;
     float stateSize = 1f;
     float stateDamages = 1;
     float stateNoise = 1;

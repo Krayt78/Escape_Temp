@@ -20,6 +20,7 @@ public class Guard : MonoBehaviour
     public EnnemyOrientation EnnemyOrientation { get; private set; }
     public NoiseReceiver NoiseReceiver { get; private set; }
     public EnnemiController EnnemiController { get; private set; }
+    public EnnemyAnimationController EnnemyAnimationController { get; private set; }
 
     // public bool isStunned { get; private set; }
 
@@ -38,6 +39,7 @@ public class Guard : MonoBehaviour
         EnnemyOrientation = GetComponent<EnnemyOrientation>();
         NoiseReceiver = GetComponent<NoiseReceiver>();
         EnnemiController = GetComponent<EnnemiController>();
+        EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
 
         isStunned = false;
     }
@@ -97,6 +99,7 @@ public class Guard : MonoBehaviour
     private void OnStunned(float stunDuration)
     {
         SetIsStunned(true);
+        EnnemyAnimationController.TriggerStunned();
         StartCoroutine(RecoverFromStun(stunDuration));
     }
 
@@ -110,6 +113,7 @@ public class Guard : MonoBehaviour
         yield return new WaitForSeconds(stunDuration);
 
         SetIsStunned(false);
+        EnnemyAnimationController.TriggerEndStunned();
     }
 
     public void SetTarget(Transform target)

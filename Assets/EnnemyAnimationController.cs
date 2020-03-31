@@ -18,6 +18,11 @@ public class EnnemyAnimationController : MonoBehaviour
         animator.SetTrigger("stunned");
     }
 
+    public void TriggerEndStunned()
+    {
+        animator.SetTrigger("endStunned");
+    }
+
     public void TriggerIdle()
     {
         animator.SetTrigger("idle");
