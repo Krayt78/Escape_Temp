@@ -491,6 +491,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152324166}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &156946729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1969101643, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+    type: 3}
+  m_PrefabInstance: {fileID: 1674202031234566436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &156946731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156946729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f8fcfc4cef55244a1d5d910b4dbbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
 --- !u!1001 &178049970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2861,6 +2880,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: footstepPerLevelPath.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: attackSFXPath
+      value: event:/SFX/Player/PlayerAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: interactSFXPath
+      value: event:/SFX/Player/Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: eatSFXPath
+      value: event:/SFX/Player/PlayerEat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: hurtSFXPath
+      value: event:/SFX/Player/PlayerHurt
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: evolveToAlphaSFXPath
+      value: event:/SFX/Player/PlayerEvolvingToBeast
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: footstepPerLevelPath.Array.data[0]
+      value: event:/SFX/Player/PlayerFootstepLeaf
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: footstepPerLevelPath.Array.data[1]
+      value: event:/SFX/Player/PlayerFootstepLeaf
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: footstepPerLevelPath.Array.data[2]
+      value: event:/SFX/Player/PlayerBeastFootstep
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52e1eb3ec5e1b84381d6be3736b8582, type: 3}

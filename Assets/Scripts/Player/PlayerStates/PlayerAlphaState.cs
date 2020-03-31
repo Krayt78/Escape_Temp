@@ -40,6 +40,8 @@ public class PlayerAlphaState : BasePlayerState
 
         manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+
+        manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToAlphaSFX();
     }
 
     public override Type Tick()

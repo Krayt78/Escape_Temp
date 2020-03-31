@@ -15,6 +15,7 @@ public class PlayerEntityController : EntityController
     [SerializeField] private float actionDistance = 3;
     [SerializeField] private float playerDamages = 1;
     public float PlayerDamages { get { return playerDamages; } set { playerDamages = Mathf.Clamp(value, 1, 3); } }
+    public event Action OnAttack = delegate { };
 
     private PlayerDNALevel playerDNALevel;
 
@@ -67,7 +68,7 @@ public class PlayerEntityController : EntityController
             }
             else if(hitObject.GetComponent<EntityController>())
             {
-                hitObject.GetComponent<EntityController>().TakeDamages(playerDamages);
+                Attack(hitObject.GetComponent<EntityController>());
                 Debug.Log("Attack");
             }
             else if(hitObject.GetComponent<Interactable>())
@@ -79,24 +80,15 @@ public class PlayerEntityController : EntityController
 
     }
     
-    public void Eat(FoodController food)
+    public void Attack(EntityController attacked)
     {
-        StartCoroutine(EatingFood(food));
+        attacked.TakeDamages(playerDamages);
+        OnAttack();
     }
 
-    private IEnumerator EatingFood(FoodController food)
+    public void Eat(float value)
     {
-        playerAbilitiesController.enabled = false;
-        playerCameraController.enabled = false;
-        playerMovement.enabled = false;
-
-        yield return new WaitForSeconds(eatingDelay);
-        OnEat(food.FoodValue);
-        food.DestroyFood();
-
-        playerAbilitiesController.enabled = true;
-        playerCameraController.enabled = true;
-        playerMovement.enabled = true;
+        OnEat(value);
     }
 
     private void IsMoving()

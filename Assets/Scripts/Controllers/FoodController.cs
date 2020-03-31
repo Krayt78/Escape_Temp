@@ -12,7 +12,8 @@ public class FoodController : Interactable
     {
         if(user.CompareTag("Player"))
         {
-            user.GetComponent<PlayerEntityController>().Eat(this);
+            user.GetComponent<PlayerEntityController>().Eat(foodValue);
+            DestroyFood();
         }
     }
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1969101644}
+  - component: {fileID: 156946731}
   m_Layer: 9
   m_Name: Hands
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 1674202032261348094}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &156946731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969101643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f8fcfc4cef55244a1d5d910b4dbbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
 --- !u!1 &1674202031199242709
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,11 +376,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a50985a0d073aa4fbe847ce54177f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepPath: event:/SFX/PlayerFootstepLeaf
-  footstepBeastPath: event:/SFX/PlayerBeastFootstep
+  footstepPerLevelPath:
+  - event:/SFX/Player/PlayerFootstepLeaf
+  - event:/SFX/Player/PlayerFootstepLeaf
+  - event:/SFX/Player/PlayerBeastFootstep
   vomitSFXPath: event:/SFX/PlayerPuke
-  actionSFXPath: event:/SFX/Interact
+  attackSFXPath: event:/SFX/Player/PlayerAttack
+  interactSFXPath: event:/SFX/Player/Interact
+  eatSFXPath: event:/SFX/Player/PlayerEat
   grapplinSFXPath: event:/SFX/GrapplinUsed
+  hurtSFXPath: event:/SFX/Player/PlayerHurt
+  evolveToAlphaSFXPath: event:/SFX/Player/PlayerEvolvingToBeast
 --- !u!120 &1482130625591624184
 LineRenderer:
   m_ObjectHideFlags: 0

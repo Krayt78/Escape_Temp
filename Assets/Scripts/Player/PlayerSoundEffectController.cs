@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerSoundEffectController : MonoBehaviour
 {
-    [SerializeField] string footstepPath;
-    [SerializeField] string footstepBeastPath;
+    [SerializeField] string[] footstepPerLevelPath;
     float delayBetweenFootstep = .5f;
     float nextFootStep = 0;
+    int currentLevelFootstep=0;
 
     private FMOD.Studio.EventInstance footstepInstance;
 
@@ -18,8 +18,16 @@ public class PlayerSoundEffectController : MonoBehaviour
     private FMOD.Studio.EventInstance vomitInstance;
 
 
-    [SerializeField] string actionSFXPath;
+    [SerializeField] string attackSFXPath;
+    [SerializeField] string interactSFXPath;
+    [SerializeField] string eatSFXPath;
+
     [SerializeField] string grapplinSFXPath;
+
+    [SerializeField] string hurtSFXPath;
+
+
+    [SerializeField] string evolveToAlphaSFXPath;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +35,17 @@ public class PlayerSoundEffectController : MonoBehaviour
         PlayerInput playerInput = GetComponent<PlayerInput>();
         playerInput.OnVomit += PlayVomitSFX;
         playerInput.OnStopVomiting += StopPlayingVomitSFX;
-        playerInput.OnAction += PlayActionSFX;
+
+        PlayerEntityController playerEntityController = GetComponent<PlayerEntityController>();
+        playerEntityController.OnEat += PlayEatSFX;
+        playerEntityController.OnTakeDamages += PlayHurtSFX;
+        playerEntityController.OnAttack += PlayAttackSFX;
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
         playerMovement.IsMoving += PlayFootstepSFX;
         playerMovement.StoppedMoving += StopPlayingFootstepSFX;
+
+        GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
     }
 
     // Update is called once per frame
@@ -46,7 +60,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         {
             nextFootStep = Time.time + delayBetweenFootstep;
 
-            footstepInstance = FMODPlayerController.PlaySoundInstance(footstepPath);
+            footstepInstance = FMODPlayerController.PlaySoundInstance(footstepPerLevelPath[currentLevelFootstep]);
         }
     }
 
@@ -55,9 +69,19 @@ public class PlayerSoundEffectController : MonoBehaviour
         footstepInstance.release();
     }
 
-    private void PlayActionSFX()
+    private void PlayAttackSFX()
     {
-        FMODPlayerController.PlayOnShotSound(actionSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(attackSFXPath, transform.position);
+    }
+
+    private void PlayInteracteSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(interactSFXPath, transform.position);
+    }
+
+    private void PlayEatSFX(float value)
+    {
+        FMODPlayerController.PlayOnShotSound(eatSFXPath, transform.position);
     }
 
     public void PlayGrapplinSFX()
@@ -78,5 +102,20 @@ public class PlayerSoundEffectController : MonoBehaviour
     {
         vomitInstance.release();
         vomitPlaying = false;
+    }
+
+    private void PlayHurtSFX(float value)
+    {
+        FMODPlayerController.PlayOnShotSound(hurtSFXPath, transform.position);
+    }
+
+    public void PlayEvolveToAlphaSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(evolveToAlphaSFXPath, transform.position);
+    }
+
+    private void UpdateCurrentLevel(int newLevel)
+    {
+        currentLevelFootstep = newLevel;
     }
 }
