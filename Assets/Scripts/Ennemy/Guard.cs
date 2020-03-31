@@ -53,6 +53,7 @@ public class Guard : MonoBehaviour
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
         GetComponent<EnnemiController>().OnStunned += OnStunned;
+        GetComponent<EnnemiController>().OnDies += OnDies;
 
         if (debugMode) {
             ActivateDebugMode();
@@ -78,7 +79,10 @@ public class Guard : MonoBehaviour
         GetComponent<StateMachine>().SetStates(states);
     }
 
-
+    private void OnDies()
+    {
+        EnnemyAnimationController.TriggerDeath();
+    }
     private void OnTargetSighted()
     {
         SetTarget(FieldOfView.visibleTargets[0].transform);
