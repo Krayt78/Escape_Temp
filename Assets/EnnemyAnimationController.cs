@@ -5,12 +5,14 @@ using UnityEngine;
 public class EnnemyAnimationController : MonoBehaviour
 {
     private Animator animator;
+    private Guard guard;
 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        guard = GetComponentInParent<Guard>();
     }
 
     public void TriggerStunned()
@@ -36,6 +38,12 @@ public class EnnemyAnimationController : MonoBehaviour
     public void TriggerAttack()
     {
         animator.SetTrigger("attack");
+
+    }
+
+    public void Fire()
+    {
+        guard.EnnemyAttack.AttackRoutine(guard.Target);
     }
 
 }
