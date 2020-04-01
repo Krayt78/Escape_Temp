@@ -22,6 +22,11 @@ public class Grapplin : Ability
     private int m_levelToDeActivate = 2;
     [SerializeField]
     private float m_grapplinThrowSpeed = 15f;
+    [SerializeField]
+    private float m_BezierOffset = 5f;
+
+    [SerializeField]
+    private float MaxRange = 150f;
 
     RaycastHit hit;
     Ray ray;
@@ -61,7 +66,7 @@ public class Grapplin : Ability
     private void FixedUpdate()
     {
         ray = new Ray(playerCamera.position, playerCamera.forward);
-        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * MaxRange, Color.red);
     }
     private void CheckPosition()
     {
@@ -77,7 +82,7 @@ public class Grapplin : Ability
 
     private bool Landed()
     {
-        return Vector3.Distance(transform.position, destination) < 0.1f;
+        return Vector3.Distance(transform.position, destination) < 1.5f;
     }
 
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
@@ -154,7 +159,7 @@ public class Grapplin : Ability
     {
         Debug.Log("We launch grapplin");
         ray = new Ray(playerCamera.position, playerCamera.forward);
-        Debug.DrawRay(ray.origin, ray.direction * 10000f, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * MaxRange, Color.red);
         if (Physics.Raycast(ray, out hit))
         {
             destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
