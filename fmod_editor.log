@@ -7,65 +7,15 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000026B381FC198 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000002C6C9D97658 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
+[WRN] OutputWASAPI::mixerThread                : Starvation detected in WASAPI output buffer!
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Priority: 0, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Priority: 0, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] SystemI::close                           : Closed.
-[LOG] SoundI::release                          :  (0000026B381EF768)
-[LOG] SoundI::release                          :     eat_1 (0000026B1F20F298)
-[LOG] SoundI::release                          :  (0000026B381F0A18)
-[LOG] SoundI::release                          :     eat_2 (0000026B1F20F438)
-[LOG] SoundI::release                          :  (0000026B381EF8D8)
-[LOG] SoundI::release                          :     evolving_1 (0000026B1F210AF8)
-[LOG] SoundI::release                          :  (0000026B381EFD28)
-[LOG] SoundI::release                          :     beast_evolving (0000026B1F20EA78)
-[LOG] SoundI::release                          :  (0000026B2F580068)
-[LOG] SoundI::release                          :     devolving_1 (0000026B1F20E738)
-[LOG] SoundI::release                          :  (0000026B2F581A48)
-[LOG] SoundI::release                          :     puke (0000026B1F20F918)
-[LOG] SoundI::release                          :  (0000026B2F5811A8)
-[LOG] SoundI::release                          :     walk_beast_1 (0000026B1F20D558)
-[LOG] SoundI::release                          :  (0000026B2F581038)
-[LOG] SoundI::release                          :     walk_beast_2 (0000026B1F20F778)
-[LOG] SoundI::release                          :  (0000026B381EFA48)
-[LOG] SoundI::release                          :     walk_beast_3 (0000026B1F210958)
-[LOG] SoundI::release                          :  (0000026B381F0178)
-[LOG] SoundI::release                          :     walk_beast_4 (0000026B1F20FF98)
-[LOG] SoundI::release                          :  (0000026B381F02E8)
-[LOG] SoundI::release                          :     walk_beast_5 (0000026B1F2107B8)
-[LOG] SoundI::release                          :  (0000026B2F580EC8)
-[LOG] SoundI::release                          :     walk_beast_6 (0000026B1F20E598)
-[LOG] SoundI::release                          :  (0000026B2F580BE8)
-[LOG] SoundI::release                          :     walk_beast_7 (0000026B1F20DD78)
-[LOG] SoundI::release                          :  (0000026B03BA6168)
-[LOG] SoundI::release                          :     walk_leaf_1_1 (0000026B1F20E8D8)
-[LOG] SoundI::release                          :  (0000026B03BA6E58)
-[LOG] SoundI::release                          :     walk_leaf_1_2 (0000026B1F20D218)
-[LOG] SoundI::release                          :  (0000026B03BA6B78)
-[LOG] SoundI::release                          :     walk_leaf_1_3 (0000026B1F20DBD8)
-[LOG] SoundI::release                          :  (0000026B381EF488)
-[LOG] SoundI::release                          :     walk_leaf_1_4 (0000026B1F20EDB8)
-[LOG] SoundI::release                          :  (0000026B03BA6CE8)
-[LOG] SoundI::release                          :     walk_leaf_1_5 (0000026B1F20DA38)
-[LOG] SoundI::release                          :  (0000026B381EF318)
-[LOG] SoundI::release                          :     walk_leaf_1_6 (0000026B1F20FDF8)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] SystemI::close                           : Closed.
+[LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 125)
+[LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 125)
+[LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 125)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
