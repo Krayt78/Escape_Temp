@@ -17,7 +17,7 @@ public class PlayerOmegaState : BasePlayerState
     private PlayerDNALevel playerDnaLevel;
 
 
-    float stateSpeed = 15f;
+    float stateSpeed = 2;
     float stateSize = 1f;
     float stateDamages = 1;
     float stateNoise = 1;
@@ -63,6 +63,7 @@ public class PlayerOmegaState : BasePlayerState
         if (dnaLevel >= 1)
         {
             playerDnaLevel.GainLevel();
+            ((PlayerEvolutionStateMachine)manager).CallOnEvolve();
             manager.SwitchToNewState(typeof(PlayerBetaState));
             return;
         }

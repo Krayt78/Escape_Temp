@@ -26,8 +26,12 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     [SerializeField] string hurtSFXPath;
 
-
+    [SerializeField] string devolveSFXPath;
+    [SerializeField] string evolveSFXPath;
     [SerializeField] string evolveToAlphaSFXPath;
+
+
+    [SerializeField] string scanSFXPath;
 
     // Start is called before the first frame update
     void Start()
@@ -40,12 +44,17 @@ public class PlayerSoundEffectController : MonoBehaviour
         playerEntityController.OnEat += PlayEatSFX;
         playerEntityController.OnTakeDamages += PlayHurtSFX;
         playerEntityController.OnAttack += PlayAttackSFX;
+        playerEntityController.OnScan += PlayScanSFX;
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
         playerMovement.IsMoving += PlayFootstepSFX;
         playerMovement.StoppedMoving += StopPlayingFootstepSFX;
 
         GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
+
+        PlayerEvolutionStateMachine playerStateMachine = GetComponent<PlayerEvolutionStateMachine>();
+        playerStateMachine.OnEvolve += PlayEvolveSFX;
+        playerStateMachine.OnDevolve += PlayDevolveSFX;
     }
 
     // Update is called once per frame
@@ -109,9 +118,24 @@ public class PlayerSoundEffectController : MonoBehaviour
         FMODPlayerController.PlayOnShotSound(hurtSFXPath, transform.position);
     }
 
+    public void PlayEvolveSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(devolveSFXPath, transform.position);
+    }
+
+    public void PlayDevolveSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(evolveSFXPath, transform.position);
+    }
+
     public void PlayEvolveToAlphaSFX()
     {
         FMODPlayerController.PlayOnShotSound(evolveToAlphaSFXPath, transform.position);
+    }
+
+    public void PlayScanSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(scanSFXPath, transform.position);
     }
 
     private void UpdateCurrentLevel(int newLevel)

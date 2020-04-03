@@ -94,6 +94,9 @@ public class Echo : MonoBehaviour
         //  other.gameObject.layer = Constants.ENNEMIES_XRAYED_LAYER;
 
         other.gameObject.GetComponent<EchoReceiver>().SetXrayed(true);
+
+
+        ///PLAY SCANNED
     }
 
     private void OnTriggerExit(Collider other)

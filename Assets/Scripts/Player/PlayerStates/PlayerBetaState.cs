@@ -19,7 +19,7 @@ public class PlayerBetaState : BasePlayerState
     float[] rangeStateSpeed = new float[2] { 4, 8 };
     float[] rangeStateSize = new float[2] { 1.5f, 2.5f };
     float[] rangeStateDamages = new float[2] { 2,2 };
-    float[] rangeStateNoise = new float[2] { 4, 8 };
+    float[] rangeStateNoise = new float[2] { 2, 10 };
 
     public override float StateSpeed { get { return Mathf.Lerp(rangeStateSpeed[0], rangeStateSpeed[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
     public override float StateSize { get { return Mathf.Lerp(rangeStateSize[0], rangeStateSize[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
@@ -64,6 +64,7 @@ public class PlayerBetaState : BasePlayerState
         if (dnaLevel <= 0)
         {
             playerDnaLevel.LoseLevel();
+            ((PlayerEvolutionStateMachine)manager).CallOnDevolve();
             manager.SwitchToNewState(typeof(PlayerOmegaState));
             return;
         }
@@ -80,6 +81,7 @@ public class PlayerBetaState : BasePlayerState
     public void EvolveToAlpha()
     {
         playerDnaLevel.GoAlpha();
+        ((PlayerEvolutionStateMachine)manager).CallOnEvolve();
         manager.SwitchToNewState(typeof(PlayerAlphaState));
     }
 

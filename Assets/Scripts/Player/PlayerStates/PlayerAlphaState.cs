@@ -17,7 +17,7 @@ public class PlayerAlphaState : BasePlayerState
     float stateSpeed = 13;
     float stateSize = 4f;
     float stateDamages = 3;
-    float stateNoise = 9;
+    float stateNoise = 20;
     public override float StateSpeed {get{return stateSpeed;} }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
@@ -62,6 +62,7 @@ public class PlayerAlphaState : BasePlayerState
         if (dnaLevel <= 0)
         {
             playerDnaLevel.LoseLevel();
+            ((PlayerEvolutionStateMachine)manager).CallOnDevolve();
             manager.SwitchToNewState(typeof(PlayerBetaState));
             return;
         }

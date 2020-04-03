@@ -491,25 +491,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152324166}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &156946729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1969101643, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-    type: 3}
-  m_PrefabInstance: {fileID: 1674202031234566436}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &156946731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156946729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f8fcfc4cef55244a1d5d910b4dbbcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moving: 0
 --- !u!1001 &178049970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1406,7 +1387,7 @@ PrefabInstance:
     - target: {fileID: 2486525242594151242, guid: 5c333951001a7994aab66888e7b2937b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c333951001a7994aab66888e7b2937b, type: 3}
@@ -1536,7 +1517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f4bb382c05eee499f973e952779d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noiseDepreciationByDistance: 0.8
+  minimumVolumeForNoiseToBeHeard: 3
 --- !u!54 &925431726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2881,50 +2862,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+    - target: {fileID: 6450787227609493358, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
-      propertyPath: footstepPerLevelPath.Array.size
-      value: 3
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
-      propertyPath: attackSFXPath
-      value: event:/SFX/Player/PlayerAttack
+      propertyPath: grapplinSFXPath
+      value: event:/SFX/Player/GrapplinUsed
       objectReference: {fileID: 0}
     - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
-      propertyPath: interactSFXPath
-      value: event:/SFX/Player/Interact
+      propertyPath: vomitSFXPath
+      value: event:/SFX/Player/PlayerPuke
       objectReference: {fileID: 0}
     - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
-      propertyPath: eatSFXPath
-      value: event:/SFX/Player/PlayerEat
+      propertyPath: evolveSFXPath
+      value: event:/SFX/Player/PlayerDevolving
       objectReference: {fileID: 0}
     - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
-      propertyPath: hurtSFXPath
-      value: event:/SFX/Player/PlayerHurt
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-        type: 3}
-      propertyPath: evolveToAlphaSFXPath
-      value: event:/SFX/Player/PlayerEvolvingToBeast
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-        type: 3}
-      propertyPath: footstepPerLevelPath.Array.data[0]
-      value: event:/SFX/Player/PlayerFootstepLeaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-        type: 3}
-      propertyPath: footstepPerLevelPath.Array.data[1]
-      value: event:/SFX/Player/PlayerFootstepLeaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462999034013108312, guid: c52e1eb3ec5e1b84381d6be3736b8582,
-        type: 3}
-      propertyPath: footstepPerLevelPath.Array.data[2]
-      value: event:/SFX/Player/PlayerBeastFootstep
+      propertyPath: devolveSFXPath
+      value: event:/SFX/Player/PlayerEvolving
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c52e1eb3ec5e1b84381d6be3736b8582, type: 3}

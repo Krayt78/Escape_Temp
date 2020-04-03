@@ -1,38 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //[RequireComponent(typeof(Rigidbody))]
 public class NoiseEmitter : MonoBehaviour
 {
-    //private new Rigidbody rigidbody;
-    private PlayerMovement playerMovement;
-    public float noiseEmitted = 6;
-    [SerializeField] float speedRangeMultiplier = 1.5f;
+    public float rangeNoiseEmitted;
 
-    private void Awake()
+    public event Action<Noise> OnNoiseEmitted = delegate { };
+
+    public virtual void EmitNoise(float range, Vector3 emissionPoint, GameObject emitter)
     {
-        //rigidbody = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<PlayerMovement>();
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (playerMovement.movement != Vector3.zero)    //This should be controlled externally in the future
-            EmitNoise();
-    }
-
-    public void EmitNoise()
-    {
+        Noise emitted = new Noise(range, emissionPoint, emitter);
         if (NoiseManager.Instance)
-            NoiseManager.Instance.NoiseEmitted(ComputeNoise());
+            NoiseManager.Instance.NoiseEmitted(emitted);
+        OnNoiseEmitted(emitted);
+    }
+
+    public virtual void EmitNoise()
+    {
+        Noise emitted = ComputeNoise();
+        if (NoiseManager.Instance)
+            NoiseManager.Instance.NoiseEmitted(emitted);
+        OnNoiseEmitted(emitted);
     }
 
     protected virtual Noise ComputeNoise()
     {
-        return new Noise(playerMovement.GetSpeedRatio() * noiseEmitted * speedRangeMultiplier * GetSurfaceNoiseMultiplier(),
+        return new Noise(   rangeNoiseEmitted,
                             transform.position,
                             gameObject);
     }

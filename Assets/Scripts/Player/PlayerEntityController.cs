@@ -29,6 +29,9 @@ public class PlayerEntityController : EntityController
 
     [SerializeField] private float vomitRatePerSeconds = .2f; //The amount of dna vomited per seconds
 
+    public event Action OnScan = delegate { };
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -122,6 +125,9 @@ public class PlayerEntityController : EntityController
     private void Scan()
     {
         if (!echo.isActive)
+        {
             echo.ActivateXray();
+            OnScan();
+        }
     }
 }

@@ -11,7 +11,7 @@ public class SoundWaveEmitter : MonoBehaviour
     private void Start()
     {
         lastTimeInstatiated = Time.time;
-        GetComponent<NoiseReceiver>().OnNoiseReceived += PulseWaveActivate;
+        GetComponentInParent<NoiseEmitter>().OnNoiseEmitted += PulseWaveActivate;
     }
 
     // Update is called once per frame

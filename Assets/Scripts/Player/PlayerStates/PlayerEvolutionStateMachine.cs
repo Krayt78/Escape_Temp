@@ -12,6 +12,9 @@ public class PlayerEvolutionStateMachine : StateMachine
     private PlayerMovement playerMovement;
     private PlayerCarateristicController playerCarateristic;
 
+    public event Action OnEvolve = delegate{ };
+    public event Action OnDevolve = delegate { };
+
     private bool transitionning = false;
 
     private void Awake()
@@ -100,5 +103,15 @@ public class PlayerEvolutionStateMachine : StateMachine
         };
 
         SetStates(states);
+    }
+
+    public void CallOnEvolve()
+    {
+        OnEvolve();
+    }
+
+    public void CallOnDevolve()
+    {
+        OnDevolve();
     }
 }

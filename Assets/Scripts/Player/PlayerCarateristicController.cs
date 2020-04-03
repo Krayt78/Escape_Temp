@@ -37,7 +37,7 @@ public class PlayerCarateristicController : MonoBehaviour
         if(printDebug)
         {
             string printString = "Speed: " + playerMovement.moveSpeed + "\n" +
-                                    "Noise: " + noiseEmitter.noiseEmitted + "\n" +
+                                    //"Noise: " + noiseEmitter.noiseEmitted + "\n" +
                                     "Size: " + collider.height + "\n" +
                                     "Easing: " + easing;
             GUIStyle myStyle = new GUIStyle();
@@ -79,7 +79,7 @@ public class PlayerCarateristicController : MonoBehaviour
     IEnumerator EaseUpdateCharactisticsValue()
     {
         float startTime = Time.time;
-        float startNoise = noiseEmitter.noiseEmitted,
+        float startNoise = noiseEmitter.rangeNoiseEmitted,
                 startSpeed = playerMovement.moveSpeed,
                 startHeight = collider.height;
 
@@ -87,7 +87,9 @@ public class PlayerCarateristicController : MonoBehaviour
         {
             float step = (Time.time - startTime) / currentEasingDelayInSeconds;
             if (noiseEmitter)
-                noiseEmitter.noiseEmitted = Mathf.Lerp(startNoise, targetNoise, step);
+            {
+                noiseEmitter.rangeNoiseEmitted = Mathf.Lerp(startNoise, targetNoise, step);
+            }
             if (playerMovement)
                 playerMovement.moveSpeed = Mathf.Lerp(startSpeed, targetSpeed, step);
             if (collider)
@@ -97,7 +99,9 @@ public class PlayerCarateristicController : MonoBehaviour
         }
 
         if (noiseEmitter)
-            noiseEmitter.noiseEmitted = targetNoise;
+        {
+            noiseEmitter.rangeNoiseEmitted = targetNoise;
+        }
         if (playerMovement)
             playerMovement.moveSpeed = targetSpeed;
         if (collider)
@@ -111,7 +115,9 @@ public class PlayerCarateristicController : MonoBehaviour
     public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise)
     {
         if (noiseEmitter)
-            noiseEmitter.noiseEmitted = newNoise;
+        {
+            noiseEmitter.rangeNoiseEmitted = newNoise;
+        }
         if (playerMovement)
             playerMovement.moveSpeed = newSpeed;
         if (collider)

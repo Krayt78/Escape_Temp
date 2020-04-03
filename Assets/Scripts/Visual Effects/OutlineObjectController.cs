@@ -41,7 +41,7 @@ public class OutlineObjectController : MonoBehaviour
 
     public void EnableOutline(bool enableOutline)
     {
-        if (outlineShowing && enableOutline || !outlineShowing && !enableOutline)
+        if (!gameObject.activeInHierarchy || !enabled || outlineShowing && enableOutline || !outlineShowing && !enableOutline)
             return;
 
         if(lerping)
@@ -116,5 +116,13 @@ public class OutlineObjectController : MonoBehaviour
     void EnableMaterial()
     {
         materials[materials.Length - 1] = outlineMaterial;
+    }
+
+    private void OnDisable()
+    {
+        //SetOutlineWidth(0);
+        DisableMaterial();
+        UpdateOutlineMaterial();
+        lerping = false;
     }
 }

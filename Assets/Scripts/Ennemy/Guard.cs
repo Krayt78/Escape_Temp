@@ -21,6 +21,7 @@ public class Guard : MonoBehaviour
     public NoiseReceiver NoiseReceiver { get; private set; }
     public EnnemiController EnnemiController { get; private set; }
     public EnnemyAnimationController EnnemyAnimationController { get; private set; }
+    public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
 
     // public bool isStunned { get; private set; }
 
@@ -40,8 +41,12 @@ public class Guard : MonoBehaviour
         NoiseReceiver = GetComponent<NoiseReceiver>();
         EnnemiController = GetComponent<EnnemiController>();
         EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
+        EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
 
         isStunned = false;
+
+        //Emit sound regularly
+        InvokeRepeating("EmitNoise", 2.0f, 2.0f);
     }
 
     private void Awake()
@@ -127,6 +132,11 @@ public class Guard : MonoBehaviour
     public void ResetNoise()
     {
         NoiseHeard = null;
+    }
+
+    private void EmitNoise()
+    {
+        EnnemyNoiseEmitter.EmitNoise();
     }
 
     private void DeactivateDebugMode()

@@ -10,9 +10,12 @@ public class NoiseWave : MonoBehaviour
     private float _speedPropagation;
     private float _maxScale;
 
+    public float stickingTime = .5f;
+
     public void UpdateScale(float range)
     {
         _maxScale = range;
+        Debug.Log("range: " + range);
         StartCoroutine(UpdateScaleCoroutine(range));
     }
 
@@ -25,6 +28,7 @@ public class NoiseWave : MonoBehaviour
 
             yield return null;
         }
+        yield return new WaitForSeconds(stickingTime);
         Destroy(gameObject);
     }
 }
