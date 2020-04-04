@@ -15,7 +15,6 @@ public class NoiseWave : MonoBehaviour
     public void UpdateScale(float range)
     {
         _maxScale = range;
-        Debug.Log("range: " + range);
         StartCoroutine(UpdateScaleCoroutine(range));
     }
 

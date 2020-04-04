@@ -5,11 +5,7 @@ using UnityEngine;
 public class PlayerSoundEffectController : MonoBehaviour
 {
     [SerializeField] string[] footstepPerLevelPath;
-    float delayBetweenFootstep = .5f;
-    float nextFootStep = 0;
     int currentLevelFootstep=0;
-
-    private FMOD.Studio.EventInstance footstepInstance;
 
 
     [SerializeField] string vomitSFXPath;
@@ -47,8 +43,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         playerEntityController.OnScan += PlayScanSFX;
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
-        playerMovement.IsMoving += PlayFootstepSFX;
-        playerMovement.StoppedMoving += StopPlayingFootstepSFX;
+        playerMovement.OnStep += PlayFootstepSFX;
 
         GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
 
@@ -65,18 +60,9 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void PlayFootstepSFX()
     {
-        if(nextFootStep <= Time.time)
-        {
-            nextFootStep = Time.time + delayBetweenFootstep;
-
-            footstepInstance = FMODPlayerController.PlaySoundInstance(footstepPerLevelPath[currentLevelFootstep]);
-        }
+        FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep], transform.position);
     }
 
-    private void StopPlayingFootstepSFX()
-    {
-        footstepInstance.release();
-    }
 
     private void PlayAttackSFX()
     {

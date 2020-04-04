@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 movement { get; private set; }
 
-
+    private bool isMoving = false;
+    public event Action StartMoving = delegate { };
     public event Action IsMoving = delegate { };
     public event Action StoppedMoving = delegate { };
 
@@ -22,17 +23,11 @@ public class PlayerMovement : MonoBehaviour
     //Control the speed of steps 
     public float stepByMoveSpeed=.5f;
     public event Action OnStep = delegate { };
-    private Coroutine steppingCoroutine;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-    }
-
-    void Start()
-    {
-        steppingCoroutine = StartCoroutine(TakeStep());
     }
 
     void Update()
@@ -49,17 +44,37 @@ public class PlayerMovement : MonoBehaviour
             movement = movement.normalized * moveSpeed;
             rigidbody.MovePosition(rigidbody.position + movement * Time.fixedDeltaTime);
         }
-        if (movement != Vector3.zero)
-            IsMoving();
+
+        UpdateIsMoving(movement);
+    }
+
+    private void UpdateIsMoving(Vector3 movement)
+    {
+        if(movement == Vector3.zero)
+        {
+            if(isMoving)
+            {
+                isMoving = false;
+                StoppedMoving();
+            }
+        }
         else
-            StoppedMoving();
+        {
+            if(!isMoving)
+            {
+                isMoving = true;
+                StartMoving();
+                StartCoroutine(TakeStep());
+            }
+            IsMoving();
+        }
     }
 
     private IEnumerator TakeStep()
     {
-        while(true)
+        while(isMoving)
         {
-            if (movement!=Vector3.zero)
+            if (IsGrounded())
             {
                 OnStep();
             }
@@ -72,8 +87,12 @@ public class PlayerMovement : MonoBehaviour
         return movement.magnitude / moveSpeed;
     }
 
+    public bool IsGrounded() {
+        return Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f);
+    }
+
     private void OnDestroy()
     {
-        StopCoroutine(steppingCoroutine);
+        StopAllCoroutines();
     }
 }

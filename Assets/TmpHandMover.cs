@@ -24,7 +24,7 @@ public class TmpHandMover : MonoBehaviour
             amplitude = .2f;
         }
 
-        transform.position = new Vector3(transform.position.x, size+Mathf.Cos(Time.time * speed) * amplitude, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.parent.position.y+Mathf.Cos(Time.time * speed) * amplitude, transform.position.z);
     }
 
     private void IsMoving()
