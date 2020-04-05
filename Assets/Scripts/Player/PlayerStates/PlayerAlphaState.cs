@@ -38,7 +38,7 @@ public class PlayerAlphaState : BasePlayerState
 
         Debug.Log("Entering Alpha state");
 
-        manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
+        //manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToAlphaSFX();

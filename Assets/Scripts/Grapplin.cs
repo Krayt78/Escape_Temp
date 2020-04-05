@@ -18,8 +18,7 @@ public class Grapplin : Ability
     private Transform playerCamera;
     [SerializeField]
     private int m_LevelToActivate = 0;
-    [SerializeField]
-    private int m_levelToDeActivate = 2;
+
     [SerializeField]
     private float m_grapplinThrowSpeed = 15f;
     [SerializeField]
@@ -55,6 +54,11 @@ public class Grapplin : Ability
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
+    }
+
+    public override void Start()
+    {
+        base.Start();
     }
     // Update is called once per frame
     void Update()
@@ -126,7 +130,6 @@ public class Grapplin : Ability
             lrRope.SetPosition(0, transform.position);
             yield return MoveCoroutine;
         }
-        Debug.Log("we finished");
     }
 
     private IEnumerator LaunchGrapplin(GameObject grp)
@@ -144,11 +147,12 @@ public class Grapplin : Ability
 
     public override void LevelChanged(int level)
     {
+        
         if (level == m_LevelToActivate)
         {
             Debug.Log("We add ability");
             playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
-        }else if(level == m_levelToDeActivate)
+        }else 
         {
             Debug.Log("We remove ability");
             playerAbilitiesController.RemoveAbility(this);
@@ -160,12 +164,12 @@ public class Grapplin : Ability
         Debug.Log("We launch grapplin");
         ray = new Ray(playerCamera.position, playerCamera.forward);
         Debug.DrawRay(ray.origin, ray.direction * MaxRange, Color.red);
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit,MaxRange))
         {
             destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
             //Debug.Log(destination);
             bezierControlPoint = destination;
-            bezierControlPoint.y += 5;
+            bezierControlPoint.y += m_BezierOffset;
             hitGrap = true;
             coroutine = false;
             time = 0;

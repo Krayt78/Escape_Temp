@@ -42,7 +42,7 @@ public class PlayerOmegaState : BasePlayerState
 
         Debug.Log("Entering Omega state");
 
-        manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = false;   //Disable abilities
+       // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = false;   //Disable abilities
 
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
     }

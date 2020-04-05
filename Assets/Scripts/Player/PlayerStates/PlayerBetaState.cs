@@ -40,7 +40,7 @@ public class PlayerBetaState : BasePlayerState
     {
         this.manager = manager;
 
-        manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;//Enable abilities
+       // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;//Enable abilities
                                                                                     //Start easing characteristics
 
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;

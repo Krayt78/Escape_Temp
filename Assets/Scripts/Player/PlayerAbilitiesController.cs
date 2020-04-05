@@ -8,11 +8,6 @@ public class PlayerAbilitiesController : MonoBehaviour
     [SerializeField] public Ability CurrentAbility { get; private set; }
     private List<Ability> playerAbilities = new List<Ability>();
 
-    private void Start()
-    {
-
-    }
-
     private void UseAbility()
     {
         if (CurrentAbility == null)
@@ -27,18 +22,15 @@ public class PlayerAbilitiesController : MonoBehaviour
 
     private void ChangeCurrentAbility()
     {
-        Debug.Log(abilitiesIndex);
         abilitiesIndex++;
-        Debug.Log(playerAbilities.Count);
         if (abilitiesIndex >= playerAbilities.Count)
         {
             abilitiesIndex = 0;
         }
 
-        Debug.Log(playerAbilities[0]);
+        CurrentAbility.enabled = false;
         CurrentAbility = playerAbilities[abilitiesIndex];
         CurrentAbility.enabled = true;
-
     }
 
     public void AddAbility(Ability ability)
@@ -64,11 +56,12 @@ public class PlayerAbilitiesController : MonoBehaviour
         }
         else
         {
+            ability.enabled = false;
             playerAbilities.Remove(ability);
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
         PlayerInput playerInput = GetComponent<PlayerInput>();
         if (playerInput)
@@ -79,7 +72,7 @@ public class PlayerAbilitiesController : MonoBehaviour
     }
 
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         PlayerInput playerInput = GetComponent<PlayerInput>();
         if (playerInput)
