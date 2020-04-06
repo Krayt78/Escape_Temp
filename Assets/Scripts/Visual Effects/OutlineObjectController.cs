@@ -9,19 +9,16 @@ public class OutlineObjectController : MonoBehaviour
 
     [SerializeField] Material outlineMaterial;
     [SerializeField] Color outlineColor;
-    [SerializeField] float targetOutlineWidth = 0.1f;
+    [SerializeField] float outlineWidth = 0.1f;
 
-    private float outlineApparitionSpeed = 2.0f;
     private bool outlineShowing = false;
-    private bool lerping = false;
-
-    private Coroutine runningCoroutine;
 
     private void Awake()
     {
         renderer = GetComponentInChildren<Renderer>();
         materials = renderer.materials;
         outlineMaterial.SetColor("_OutlineColor", outlineColor);
+        outlineMaterial.SetFloat("_Outline", outlineWidth);
 
         DisableMaterial();
         UpdateOutlineMaterial();
@@ -44,63 +41,12 @@ public class OutlineObjectController : MonoBehaviour
         if (!gameObject.activeInHierarchy || !enabled || outlineShowing && enableOutline || !outlineShowing && !enableOutline)
             return;
 
-        if(lerping)
-        {
-            StopCoroutine(runningCoroutine);
-            lerping = false;
-        }
         if (enableOutline)
-            runningCoroutine = StartCoroutine(ShowOutline());
+            EnableMaterial();
         else
-            runningCoroutine = StartCoroutine(HideOutline());
-    }
+            DisableMaterial();
 
-    IEnumerator ShowOutline()
-    {
-        lerping = true;
-        outlineShowing = true;
-        EnableMaterial();
-
-        float currentOutlineWidth = 0;//materials[materials.Length - 1].GetFloat("_OutlineWidth");
-
-        while(Mathf.Abs(targetOutlineWidth-currentOutlineWidth)>=0.001f)
-        {
-            currentOutlineWidth = Mathf.Lerp(currentOutlineWidth, targetOutlineWidth, Time.deltaTime*outlineApparitionSpeed);
-
-            SetOutlineWidth(currentOutlineWidth);
-            UpdateOutlineMaterial();
-            yield return null;
-        }
-        currentOutlineWidth = targetOutlineWidth;
-        SetOutlineWidth(currentOutlineWidth);
         UpdateOutlineMaterial();
-
-        lerping = false;
-    }
-
-    IEnumerator HideOutline()
-    {
-        lerping = true;
-        outlineShowing = false;
-        float currentOutlineWidth = materials[materials.Length-1].GetFloat("_OutlineWidth");
-
-        while (currentOutlineWidth >= 0.001f)
-        {
-            currentOutlineWidth = Mathf.Lerp(currentOutlineWidth, 0, Time.deltaTime * outlineApparitionSpeed);
-
-            SetOutlineWidth(currentOutlineWidth);
-            UpdateOutlineMaterial();
-            yield return null;
-        }
-
-        DisableMaterial();
-        UpdateOutlineMaterial();
-        lerping = false;
-    }
-
-    void SetOutlineWidth(float width)
-    {
-        materials[materials.Length - 1].SetFloat("_OutlineWidth", width);
     }
 
     void UpdateOutlineMaterial()
@@ -111,18 +57,18 @@ public class OutlineObjectController : MonoBehaviour
     void DisableMaterial()
     {
         materials[materials.Length - 1] = null;
+        outlineShowing = false;
     }
 
     void EnableMaterial()
     {
         materials[materials.Length - 1] = outlineMaterial;
+        outlineShowing = true;
     }
 
     private void OnDisable()
     {
-        //SetOutlineWidth(0);
         DisableMaterial();
         UpdateOutlineMaterial();
-        lerping = false;
     }
 }
