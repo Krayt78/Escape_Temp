@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OutlineObjectController : MonoBehaviour
 {
-    private new Renderer renderer;
+    private new Renderer[] renderer; //We assume every renderer is the same
     private Material[] materials;
 
     [SerializeField] Material outlineMaterial;
@@ -15,8 +15,8 @@ public class OutlineObjectController : MonoBehaviour
 
     private void Awake()
     {
-        renderer = GetComponentInChildren<Renderer>();
-        materials = renderer.materials;
+        renderer = GetComponentsInChildren<Renderer>();
+        materials = renderer[0].materials;
         outlineMaterial.SetColor("_OutlineColor", outlineColor);
         outlineMaterial.SetFloat("_Outline", outlineWidth);
 
@@ -51,7 +51,8 @@ public class OutlineObjectController : MonoBehaviour
 
     void UpdateOutlineMaterial()
     {
-        renderer.materials = materials;
+        for(int i=0; i<renderer.Length; i++)
+            renderer[i].materials = materials;
     }
 
     void DisableMaterial()
