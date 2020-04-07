@@ -22,7 +22,16 @@ public class LostState : BaseState
 
         if (m_Guard.EnnemyPatrol.DestinationReached())
         {
-            return typeof(PatrollState);
+            //watch around 
+
+            if (m_Guard.IsStaticGuard)
+            {
+                m_Guard.EnnemyPatrol.GoToNextCheckpoint();
+                return typeof(StaticState);
+            }
+                
+            else
+                return typeof(PatrollState);
         }
             
 

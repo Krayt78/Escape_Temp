@@ -7,11 +7,16 @@ public class Guard : MonoBehaviour
 {
     [SerializeField]
     private bool debugMode;
+    [SerializeField]
+    public Transform Target { get; private set; }
+    [SerializeField]
+    private bool isStaticGuard;
+
 
     public bool isStunned;
 
-    [SerializeField]
-    public Transform Target { get; private set; }
+    
+    public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
@@ -23,7 +28,6 @@ public class Guard : MonoBehaviour
     public EnnemyAnimationController EnnemyAnimationController { get; private set; }
     public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
 
-    // public bool isStunned { get; private set; }
 
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
@@ -33,6 +37,7 @@ public class Guard : MonoBehaviour
 
     private void Start()
     {
+
         FieldOfView = GetComponent<FieldOfView>();
         EnnemyNavigation = GetComponent<EnnemyNavigation>();
         EnnemyPatrol = GetComponent<EnnemyPatrol>();
@@ -42,6 +47,8 @@ public class Guard : MonoBehaviour
         EnnemiController = GetComponent<EnnemiController>();
         EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
         EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
+
+
 
         isStunned = false;
 
@@ -60,12 +67,14 @@ public class Guard : MonoBehaviour
         GetComponent<EnnemiController>().OnStunned += OnStunned;
         GetComponent<EnnemiController>().OnDies += OnDies;
 
-        if (debugMode) {
+        if (debugMode)
+        {
             ActivateDebugMode();
         }
-        else {
+        else
+        {
             DeactivateDebugMode();
-        } 
+        }
     }
 
     private void InitializeStateMachine()
@@ -78,6 +87,7 @@ public class Guard : MonoBehaviour
             {typeof(LostState), new LostState(this)},
             {typeof(SightedState), new SightedState(this)},
             {typeof(StunnedState), new StunnedState(this)},
+            {typeof(StaticState), new StaticState(this)},
             {typeof(AttackState), new AttackState(this)}
         };
 
