@@ -30,7 +30,7 @@ public class PatrollState : BaseState
             return typeof(SightedState);
         }
 
-        if (m_Guard.NoiseHeard)
+        if (m_Guard.NoiseHeard && !m_Guard.NoiseHeard.GetComponent<Guard>())
         {
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
             return typeof(NoiseHeardState);
