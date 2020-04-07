@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : BaseState
+[System.Serializable]
+public class StaticState : BaseState
 {
+
     private Guard m_Guard;
 
-    public IdleState(Guard guard) : base(guard.gameObject)
+    public StaticState(Guard guard) : base(guard.gameObject)
     {
         m_Guard = guard;
+
     }
+
 
     public override Type Tick()
     {
@@ -20,26 +24,29 @@ public class IdleState : BaseState
             return typeof(StunnedState);
         }
 
-        if (m_Guard.IsStaticGuard)
+        if (m_Guard.Target)
         {
-            return typeof(StaticState);
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(SightedState);
         }
-        else
+
+        if (m_Guard.NoiseHeard)
         {
-            return typeof(PatrollState);
+            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
+            return typeof(NoiseHeardState);
         }
-      
-        
+
+        return null;
     }
 
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Idle state");
+        Debug.Log("Entering Static state");
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Idle state");
+        Debug.Log("Exiting Static state");
     }
 }
