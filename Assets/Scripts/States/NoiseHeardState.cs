@@ -30,7 +30,15 @@ public class NoiseHeardState : BaseState
         if (m_Guard.EnnemyPatrol.DestinationReached())
         {
             m_Guard.ResetNoise();
-            return typeof(PatrollState);
+
+            if (m_Guard.IsStaticGuard)
+            {
+                m_Guard.EnnemyPatrol.GoToNextCheckpoint();
+                return typeof(StaticState);
+            }
+
+            else
+                return typeof(PatrollState);
         }
 
 
