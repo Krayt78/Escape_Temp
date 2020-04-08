@@ -111,6 +111,8 @@ public class Guard : MonoBehaviour
 
     private void OnNoiseReceived(Noise noise)
     {
+        if (noise.emitter.GetComponent<Guard>())
+            return;
         NoiseHeard = noise.emitter.transform;
         Debug.Log("nosie heard");
     }
