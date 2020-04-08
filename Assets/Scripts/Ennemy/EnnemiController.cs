@@ -28,8 +28,5 @@ public class EnnemiController : EntityController
     protected override void Dies()
     {
         CallOnDies();
-
-        //TODO : make it ragdoll 
-        Destroy(gameObject);
     }
 }

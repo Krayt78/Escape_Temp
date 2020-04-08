@@ -28,12 +28,13 @@ public class Guard : MonoBehaviour
     public EnnemyAnimationController EnnemyAnimationController { get; private set; }
     public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
 
-
     //variables to store the orientation and position in case of a static guard;
     public Vector3 GuardingPosition { get; private set; }
     public Quaternion GuardingOrientation { get; private set; }
 
+    private RagdolToggle EnnemyRagdolToggle;
 
+    // public bool isStunned { get; private set; }
 
     public StateMachine StateMachine => GetComponent<StateMachine>();
 
@@ -52,6 +53,7 @@ public class Guard : MonoBehaviour
         EnnemiController = GetComponent<EnnemiController>();
         EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
         EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
+        EnnemyRagdolToggle = GetComponent<RagdolToggle>();
 
         if (IsStaticGuard)
         {
@@ -108,7 +110,8 @@ public class Guard : MonoBehaviour
 
     private void OnDies()
     {
-        EnnemyAnimationController.TriggerDeath();
+        EnnemyRagdolToggle.RagdollActive(true);
+        Destroy(gameObject, 5f);
     }
     private void OnTargetSighted()
     {

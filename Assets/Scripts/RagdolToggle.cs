@@ -19,6 +19,7 @@ public class RagdolToggle : MonoBehaviour
         sphereCollider = GetComponent<SphereCollider>();
         ennemyPatrol = GetComponent<EnnemyPatrol>();
 
+
         childrensCollider = GetComponentsInChildren<Collider>();
         childrensRigibody = GetComponentsInChildren<Rigidbody>();
     }
