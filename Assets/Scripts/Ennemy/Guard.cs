@@ -10,7 +10,7 @@ public class Guard : MonoBehaviour
     [SerializeField]
     public Transform Target { get; private set; }
     [SerializeField]
-    private bool isStaticGuard;
+    private bool isStaticGuard = false;
 
 
     public bool isStunned;
@@ -27,6 +27,11 @@ public class Guard : MonoBehaviour
     public EnnemiController EnnemiController { get; private set; }
     public EnnemyAnimationController EnnemyAnimationController { get; private set; }
     public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
+
+
+    //variables to store the orientation and position in case of a static guard;
+    public Vector3 GuardingPosition { get; private set; }
+    public Quaternion GuardingOrientation { get; private set; }
 
 
 
@@ -47,6 +52,13 @@ public class Guard : MonoBehaviour
         EnnemiController = GetComponent<EnnemiController>();
         EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
         EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
+
+        if (IsStaticGuard)
+        {
+            GuardingPosition = transform.position;
+            GuardingOrientation = transform.rotation;
+        }
+        
 
 
 
