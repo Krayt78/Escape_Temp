@@ -19,20 +19,20 @@ public class Grapplin : Ability
     [SerializeField]
     private Transform playerCamera;
     [SerializeField]
-    private int m_LevelToActivate = 0;
+    private int levelToActivate = 0;
 
     [SerializeField]
-    private float m_grapplinThrowSpeed = 15f;
+    private float grapplinThrowSpeed = 15f;
     [SerializeField]
-    private float m_BezierOffset = 5f;
+    private float bezierOffset = 5f;
 
     [SerializeField]
-    private float MaxRange = 150f;
+    private float maxRange = 150f;
 
     RaycastHit hit;
     Ray ray;
 
-    bool hitGrap = false;
+    bool canUseGrapplin = true;
     bool coroutine = false;
 
     Rigidbody m_rigibody;
@@ -44,11 +44,10 @@ public class Grapplin : Ability
     float time = 0;
 
     [SerializeField]
-    GameObject m_grapplinPoint;
+    GameObject grapplinProjectile;
 
     GameObject grp;
  
-
     public override void Awake()
     {
         base.Awake();
@@ -68,21 +67,24 @@ public class Grapplin : Ability
     void Update()
     {
         //Cursor.visible = true;
-        CheckPosition();
+        if (!canUseGrapplin)
+        {
+            CheckPosition();
+        }
+        
     }
 
     private void FixedUpdate()
     {
         ray = new Ray(playerCamera.position, playerCamera.forward);
-        Debug.DrawRay(ray.origin, ray.direction * MaxRange, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
     }
     private void CheckPosition()
     {
         if (Landed())
         {
-            //StopCoroutine(LaunchGrapplin(new GameObject()));
-            StopCoroutine(MoveOnBezier());
-            hitGrap = false;
+            Debug.LogWarning("We landed");
+            canUseGrapplin = true;
             m_rigibody.constraints = RigidbodyConstraints.None;
             m_rigibody.freezeRotation = true;
         }
@@ -90,7 +92,7 @@ public class Grapplin : Ability
 
     private bool Landed()
     {
-        return Vector3.Distance(transform.position, destination) < 1.5f;
+        return Vector3.Distance(transform.position, destination) < 1f;
     }
 
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
@@ -107,6 +109,7 @@ public class Grapplin : Ability
     private void CreateBezier(Vector3 destination, Vector3 bezierCP)
     {
         StartCoroutine(MoveOnBezier());
+
     }
 
     IEnumerator MoveAlongBezier(float t)
@@ -136,7 +139,7 @@ public class Grapplin : Ability
             }
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             y = transform.position.y;
-            lrRope.SetPosition(0, transform.position);
+            lrRope.SetPosition(0, grapplinPosition.position);
             yield return MoveCoroutine;
         }
     }
@@ -144,13 +147,17 @@ public class Grapplin : Ability
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
         lrRope.enabled = true;
+<<<<<<< HEAD
         lrRope.SetPosition(0, transform.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
 
+=======
+        lrRope.SetPosition(0, grapplinPosition.position);
+>>>>>>> new functionnal version for the grapplin
         while (grp.transform.position != hit.point)
         {
-            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, m_grapplinThrowSpeed * Time.deltaTime);
+            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
         }
@@ -163,7 +170,7 @@ public class Grapplin : Ability
     public override void LevelChanged(int level)
     {
         
-        if (level == m_LevelToActivate)
+        if (level == levelToActivate)
         {
             Debug.Log("We add ability");
             playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
@@ -176,26 +183,49 @@ public class Grapplin : Ability
 
     public override void UseAbility()
     {
-        Debug.Log("We launch grapplin");
-        ray = new Ray(playerCamera.position, playerCamera.forward);
-        Debug.DrawRay(ray.origin, ray.direction * MaxRange, Color.red);
-        if (Physics.Raycast(ray, out hit,MaxRange))
+        if (canUseGrapplin)
         {
-            destination = hit.collider.gameObject.GetComponentInChildren<BezierPoint>().transform.position;
-            //Debug.Log(destination);
-            bezierControlPoint = destination;
-            bezierControlPoint.y += m_BezierOffset;
-            hitGrap = true;
-            coroutine = false;
-            time = 0;
+            InitGrapplin();
         }
-        if (hitGrap)
-        {
-            grp = Instantiate(m_grapplinPoint, grapplinPosition.position, new Quaternion(), transform);
-            grp.transform.parent = null;
-            StartCoroutine(LaunchGrapplin(grp));
+    }
 
+    private void InitGrapplin()
+    {
+        ray = new Ray(playerCamera.position, playerCamera.forward);
+       
+        if (Physics.Raycast(ray, out hit, maxRange))
+        {
+            
+            if (hit.collider.GetComponent<GrapplinZone>() != null)
+            {
+                //Debug.LogWarning("We launch grapplin");
+                destination = hit.collider.gameObject.GetComponent<GrapplinZone>().LandingPoint.position;
+
+                bezierControlPoint = destination;
+                bezierControlPoint.y += bezierOffset;
+
+                canUseGrapplin = false;
+                coroutine = false;
+                time = 0;
+
+<<<<<<< HEAD
             playerSoundEffectController.PlayGrapplinShootSFX();
+=======
+                grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), transform);
+                grp.transform.parent = null;
+                StartCoroutine(LaunchGrapplin(grp));
+
+                GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+            }
+            else
+            {
+                Debug.LogError("Not found");
+            }
+        }
+        else
+        {
+            Debug.LogError("Hit nothing");
+>>>>>>> new functionnal version for the grapplin
         }
     }
 }
