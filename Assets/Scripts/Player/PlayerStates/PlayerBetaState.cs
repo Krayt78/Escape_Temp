@@ -44,6 +44,8 @@ public class PlayerBetaState : BasePlayerState
                                                                                     //Start easing characteristics
 
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+
+        manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToBetaSFX();
     }
 
     public override Type Tick()

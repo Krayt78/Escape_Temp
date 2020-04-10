@@ -45,6 +45,8 @@ public class PlayerOmegaState : BasePlayerState
        // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = false;   //Disable abilities
 
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+
+        manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToOmegaSFX();
     }
 
     public override Type Tick()

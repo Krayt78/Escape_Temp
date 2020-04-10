@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ public class EnnemyAttack : MonoBehaviour
 
     [SerializeField]
     GameObject FiringPoint;
+
+
+    public event Action OnFireAtTarget = delegate { };
 
 
     public void AttackRoutine(Transform target) 
@@ -61,6 +65,7 @@ public class EnnemyAttack : MonoBehaviour
 
 
         cooldown = fireRate;
-           
+
+        OnFireAtTarget();
     }
 }

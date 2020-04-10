@@ -54,13 +54,14 @@ public class PlayerEvolutionStateMachine : StateMachine
         CallOnStateChanged();
 
         StartCoroutine(TransitionToNextState());
+        CurrentState.OnStateEnter(this);
     }
 
     //Smooth the transition to the next state
     private IEnumerator TransitionToNextState()
     {
         //Prevent player from moving or using abilities during transition
-        DisableActionBeforeTransition();
+        //DisableActionBeforeTransition();
 
         transitionning = true;
 
@@ -76,8 +77,8 @@ public class PlayerEvolutionStateMachine : StateMachine
             yield return null;
 
         //Initialize player actions with new state
-        EnableActionAfterTransition();
-        CurrentState.OnStateEnter(this);
+        //EnableActionAfterTransition();
+        //CurrentState.OnStateEnter(this);
         transitionning = false;
     }
 
