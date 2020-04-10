@@ -8,7 +8,7 @@ public class Echo : MonoBehaviour
 
     private float _startTime = 0;
     [SerializeField]
-    private float _lifeTime = 10;
+    private float _lifeTime = 5;
     [SerializeField]
     private float _maxScale;
 
@@ -26,8 +26,17 @@ public class Echo : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        _startTime = _lifeTime;
+        DeactivateTrigger();
+    }
+
     public void ActivateXray()
     {
+        if (CheckIfGrowing()) //If the sphere is growing we don't activate again
+            return;
+
         ActivateTrigger();
         UpdateScale();
         isActive = true;
@@ -36,6 +45,9 @@ public class Echo : MonoBehaviour
     public void DeactivateXray()
     {
         isActive = false;
+
+        if (CheckIfGrowing()) //if the sphere is not done growing, we let it grow
+            return;
 
         foreach(GameObject gameObject in XrayedObjectsList){
             StartCoroutine(DeactivateEnnemiesXrayCoroutine(gameObject));
@@ -57,13 +69,18 @@ public class Echo : MonoBehaviour
          
         while (_startTime < _lifeTime)
         {
-            
+
             transform.localScale = Vector3.one * (_maxScale * Mathf.InverseLerp(0, _lifeTime, _startTime));
             _startTime += Time.deltaTime;
 
             yield return null;
         }
-       
+        if (!isActive)  //if sphere had to be deactivated but hadn't finished, we deactivate it now
+            DeactivateXray();
+
+        //Allow the player to relaunch the scan even if it's not necessary (it's fun ?)
+        isActive = false;
+        DeactivateTrigger();
     }
 
     IEnumerator DeactivateEnnemiesXrayCoroutine(GameObject ennemy)
@@ -111,4 +128,8 @@ public class Echo : MonoBehaviour
 
     }
 
+    public bool CheckIfGrowing()
+    {
+        return _startTime < _lifeTime;
+    }
 }

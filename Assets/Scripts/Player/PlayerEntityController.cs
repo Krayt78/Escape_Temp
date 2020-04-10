@@ -54,7 +54,7 @@ public class PlayerEntityController : EntityController
         playerMovement.IsMoving += IsMoving;
         playerMovement.StoppedMoving += StoppedMoving;
 
-        echo.DeactivateXray();
+        //echo.DeactivateXray();
     }
 
 
@@ -124,7 +124,7 @@ public class PlayerEntityController : EntityController
 
     private void Scan()
     {
-        if (!echo.isActive)
+        if (!echo.isActive && !echo.CheckIfGrowing())
         {
             echo.ActivateXray();
             OnScan();
