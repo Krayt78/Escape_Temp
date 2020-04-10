@@ -37,7 +37,7 @@ public class PlayerDNALevel : MonoBehaviour
         dnaLevel = 0;
         currentEvolutionLevel = minEvolutionLevel;
         foodToDnaRatio = new float[] { 1, .34f, .15f };
-        damagesToDnaRatio = new float[] { 1, .34f, .1f };
+        damagesToDnaRatio = new float[] { 1, .34f, .033f };
     }
 
     private void Start()

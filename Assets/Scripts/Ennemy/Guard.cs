@@ -80,6 +80,7 @@ public class Guard : MonoBehaviour
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
         GetComponent<EnnemiController>().OnStunned += OnStunned;
         GetComponent<EnnemiController>().OnDies += OnDies;
+        GetComponent<EnnemyAttack>().OnFireAtTarget += OnAttack;
 
         if (debugMode)
         {
@@ -116,12 +117,19 @@ public class Guard : MonoBehaviour
     private void OnTargetSighted()
     {
         SetTarget(FieldOfView.visibleTargets[0].transform);
+        EnnemyAnimationController.TriggerSight();
     }
 
     private void OnTargetLost()
     {
         EnnemyNavigation.targetLastSeenPosition = Target.transform.position;
+        EnnemyAnimationController.TriggerEndSight();
         SetTarget(null);
+    }
+
+    private void OnAttack()
+    {
+        EnnemyAnimationController.TriggerEndSight();
     }
 
     private void OnNoiseReceived(Noise noise)

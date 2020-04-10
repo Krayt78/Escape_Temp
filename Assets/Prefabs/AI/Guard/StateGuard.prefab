@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 1672429345}
   - component: {fileID: 7635681318098651696}
   - component: {fileID: 3110169949841907222}
+  - component: {fileID: -5490193504652198773}
   m_Layer: 11
   m_Name: StateGuard
   m_TagString: Untagged
@@ -163,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
+  isStaticGuard: 0
   isStunned: 0
 --- !u!114 &9199634609167077096
 MonoBehaviour:
@@ -284,6 +286,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cd300895586c6438a801b16f475f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5490193504652198773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd393f2763f2bc94d8e9e327cb161648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diesSFXPath: event:/Sentinel/Actions/Dies
+  hurtSFXPath: event:/Sentinel/Actions/Hurt
+  fireAttackSFXPath: event:/Sentinel/Actions/FireAttack
+  projectileHitSmthSFXPath: event:/Sentinel/Actions/ProjectileHitSomething
+  projectileMovementSFXPath: event:/Sentinel/Actions/ProjectileMovement
+  ragdollCollisionSFXPath: event:/Sentinel/Actions/RagdollCollision
+  tentacleMovementSFXPath: event:/Sentinel/Actions/TentacleMovement
+  ennemiScannedSFXPath: event:/Sentinel/Actions/EnnemiScanned
+  motorAttackStateSFXPath: event:/Sentinel/Armor/MotorAttackState
+  motorPatrolStateSFXPath: event:/Sentinel/Armor/MotorPatrolState
+  motorStopSFXPath: event:/Sentinel/Armor/MotorStop
+  enteringPatrolStateSFXPath: event:/Sentinel/States/PatrolState
+  enteringAttackStateSFXPath: event:/Sentinel/States/EnteringAttackState
+  patrolStateSFXPath: event:/Sentinel/States/EnteringPatrolState
+  attackStateSFXPath: event:/Sentinel/States/AttackState
+  playerLostSFXPath: event:/Sentinel/States/PlayerLost
+  searchingStateSFXPath: event:/Sentinel/States/SearchingState
+  spottedSmthSFXPath: event:/Sentinel/States/SpottedSomething
 --- !u!1 &6770435400155485657
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +667,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13981f53f15aa5e47b416908d44c38cb, type: 3}
+--- !u!1 &8272670790517066664 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4256992478028216210, guid: 13981f53f15aa5e47b416908d44c38cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5322566853244271674}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1961739621652858444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5973164609237498486, guid: 13981f53f15aa5e47b416908d44c38cb,
@@ -644,12 +682,6 @@ Transform:
 --- !u!1 &1137254120525087654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5050180887952228252, guid: 13981f53f15aa5e47b416908d44c38cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5322566853244271674}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8272670790517066664 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4256992478028216210, guid: 13981f53f15aa5e47b416908d44c38cb,
     type: 3}
   m_PrefabInstance: {fileID: 5322566853244271674}
   m_PrefabAsset: {fileID: 0}

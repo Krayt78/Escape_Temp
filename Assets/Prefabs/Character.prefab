@@ -347,8 +347,9 @@ MonoBehaviour:
   grapplinPosition: {fileID: 1955251794364794709}
   playerCamera: {fileID: 1674202032974737274}
   m_LevelToActivate: 0
-  m_levelToDeActivate: 2
   m_grapplinThrowSpeed: 15
+  m_BezierOffset: 5
+  MaxRange: 150
   m_grapplinPoint: {fileID: 7220053646614660077, guid: d40ee6a48a201fc4281e939bfb45e420,
     type: 3}
 --- !u!114 &8462999034013108312
@@ -363,20 +364,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a50985a0d073aa4fbe847ce54177f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mute: 0
   footstepPerLevelPath:
-  - event:/SFX/Player/PlayerFootstepLeaf
-  - event:/SFX/Player/PlayerFootstepLeaf
-  - event:/SFX/Player/PlayerBeastFootstep
-  vomitSFXPath: event:/SFX/Player/PlayerPuke
-  attackSFXPath: event:/SFX/Player/PlayerAttack
-  interactSFXPath: event:/SFX/Player/Interact
-  eatSFXPath: event:/SFX/Player/PlayerEat
-  grapplinSFXPath: event:/SFX/Player/GrapplinUsed
-  hurtSFXPath: event:/SFX/Player/PlayerHurt
-  devolveSFXPath: event:/SFX/Player/PlayerEvolving
-  evolveSFXPath: event:/SFX/Player/PlayerDevolving
-  evolveToAlphaSFXPath: event:/SFX/Player/PlayerEvolvingToBeast
-  scanSFXPath: event:/SFX/Player/PlayerScan
+  - event:/Player/Movement/OmegaFootstep
+  - event:/Player/Movement/BetaFootstep
+  - event:/Player/Movement/AlphaFootstep
+  attackSFXPath: event:/Player/Interactions/Attack
+  eatSFXPath: event:/Player/Interactions/Eat
+  hurtSFXPath: event:/Player/Interactions/Hurt
+  diesSFXPath: event:/Player/Interactions/Dies
+  scanSFXPath: event:/Player/Interactions/Scan
+  interactSFXPath: event:/Player/Interactions/Interact
+  grapplinShootSFXPath: event:/Player/Interactions/GrapplinStick
+  grapplinThrowSFXPath: event:/Player/Interactions/GrapplinThrow
+  grapplinStickSFXPath: event:/Player/Interactions/GrapplinStick
+  grapplinRetractSFXPath: event:/Player/Interactions/GrapplinRetract
+  evolveSFXPath: event:/Player/Evolution/Evolve
+  devolveSFXPath: event:/Player/Evolution/Devolve
+  evolveToOmegaSFXPath: event:/Player/Evolution/EvolveToOmega
+  evolveToBetaSFXPath: event:/Player/Evolution/EvolveToBeta
+  evolveToAlphaSFXPath: event:/Player/Evolution/EvolveToAlpha
+  omegaIdleSFXPath: event:/Player/Evolution/OmegaIdle
+  betaIdleSFXPath: event:/Player/Evolution/BetaIdle
+  alphaIdleSFXPath: event:/Player/Evolution/AlphaIdle
+  vomitSFXPath: event:/Player/Evolution/Vomit
 --- !u!120 &1482130625591624184
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -725,6 +736,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000012778114372, guid: 85d52d9937d11064295294895b28d068,
+        type: 3}
+      propertyPath: overridePreviewLeftHandPrefab
+      value: 
+      objectReference: {fileID: 1000013348574242, guid: 638779290bce1af49b356f33dcc6fccf,
+        type: 3}
+    - target: {fileID: 114000012778114372, guid: 85d52d9937d11064295294895b28d068,
+        type: 3}
+      propertyPath: overridePreviewRightHandPrefab
+      value: 
+      objectReference: {fileID: 1000010304998954, guid: 6def53d002137b747aec0b29551e0e25,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d52d9937d11064295294895b28d068, type: 3}
 --- !u!4 &4000011169718178 stripped
@@ -910,6 +933,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SoundWaveEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593906342930208545, guid: 5ab0b22de82e8ca409aa8e79f9f4d7da,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2593906342930208550, guid: 5ab0b22de82e8ca409aa8e79f9f4d7da,
         type: 3}

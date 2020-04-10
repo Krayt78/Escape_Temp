@@ -49,6 +49,8 @@ public class LostState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Lost state");
+
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
     }
 
     public override void OnStateExit()

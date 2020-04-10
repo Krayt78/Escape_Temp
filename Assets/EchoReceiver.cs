@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class EchoReceiver : MonoBehaviour
 
     [SerializeField]
     private List<GameObject> Gfx;
+
+    public event Action OnScanned = delegate { };
 
     public void SetXrayed(bool Xray)
     {
@@ -23,6 +26,8 @@ public class EchoReceiver : MonoBehaviour
             }
 
             isXrayed = true;
+
+            OnScanned();
         }
         else
         {

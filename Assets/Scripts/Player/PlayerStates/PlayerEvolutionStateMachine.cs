@@ -53,32 +53,20 @@ public class PlayerEvolutionStateMachine : StateMachine
 
         CallOnStateChanged();
 
-        StartCoroutine(TransitionToNextState());
+        TransitionToNextState();
+        CurrentState.OnStateEnter(this);
     }
 
     //Smooth the transition to the next state
-    private IEnumerator TransitionToNextState()
+    private void TransitionToNextState()
     {
-        //Prevent player from moving or using abilities during transition
-        DisableActionBeforeTransition();
-
-        transitionning = true;
-
-        //Ease caracteristics trantion
+        //Ease caracteristics transition
         playerCarateristic.UpdateCharacteristicValues(
             ((BasePlayerState)CurrentState).StateSpeed, 
             ((BasePlayerState)CurrentState).StateSize, 
             ((BasePlayerState)CurrentState).StateDamages, 
             ((BasePlayerState)CurrentState).StateNoise,
             ((BasePlayerState)CurrentState).TransformationTimeInSeconds);
-
-        while (playerCarateristic.Easing)
-            yield return null;
-
-        //Initialize player actions with new state
-        EnableActionAfterTransition();
-        CurrentState.OnStateEnter(this);
-        transitionning = false;
     }
 
 

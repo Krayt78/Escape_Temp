@@ -8,6 +8,8 @@ public class Grapplin : Ability
 
     private PlayerAbilitiesController playerAbilitiesController;
 
+    private PlayerSoundEffectController playerSoundEffectController;
+
     public LineRenderer lrRope;
     private int nbPoints = 2;
     //private Vector3[] positions = new Vector3[50];
@@ -54,6 +56,8 @@ public class Grapplin : Ability
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
+
+        playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
 
     public override void Start()
@@ -117,6 +121,9 @@ public class Grapplin : Ability
         m_rigibody.freezeRotation = true;
         coroutine = true;
         float y = transform.position.y;
+
+        playerSoundEffectController.PlayGrapplinRetractSFX();
+
         for (float i = 0; i <= 1; i += 0.002f)
         {
             if (y > transform.position.y)
@@ -124,6 +131,8 @@ public class Grapplin : Ability
                 i += 0.02f;
                 lrRope.enabled = false;
                 Destroy(grp);
+
+                playerSoundEffectController.StopGrapplinSFX();
             }
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
             y = transform.position.y;
@@ -136,12 +145,18 @@ public class Grapplin : Ability
     {
         lrRope.enabled = true;
         lrRope.SetPosition(0, transform.position);
+
+        playerSoundEffectController.PlayGrapplinThrowSFX();
+
         while (grp.transform.position != hit.point)
         {
             grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, m_grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
         }
+
+        playerSoundEffectController.StopGrapplinSFX();
+        playerSoundEffectController.PlayGrapplinStickFX(grp.transform.position);
         CreateBezier(destination, bezierControlPoint);
     }
 
@@ -180,7 +195,7 @@ public class Grapplin : Ability
             grp.transform.parent = null;
             StartCoroutine(LaunchGrapplin(grp));
 
-            GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+            playerSoundEffectController.PlayGrapplinShootSFX();
         }
     }
 }

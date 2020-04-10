@@ -23,6 +23,7 @@ public class SightedState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Sighted state");
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
 
     public override Type Tick()

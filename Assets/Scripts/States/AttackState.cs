@@ -33,6 +33,8 @@ public class AttackState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Attack state");
+
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
     }
 
     public override void OnStateExit()
