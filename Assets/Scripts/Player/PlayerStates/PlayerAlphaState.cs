@@ -12,9 +12,9 @@ public class PlayerAlphaState : BasePlayerState
     private StateMachine manager;
 
     private PlayerDNALevel playerDnaLevel;
-    public float dnaLostSpeed = .1f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
+    public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
-    float stateSpeed = 13;
+    float stateSpeed = 4;
     float stateSize = 4f;
     float stateDamages = 3;
     float stateNoise = 20;
@@ -23,7 +23,7 @@ public class PlayerAlphaState : BasePlayerState
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
 
-    float transformationTimeInSeconds = 3.5f; //The time for the player to turn into an alpha
+    float transformationTimeInSeconds = 1.5f; //The time for the player to turn into an alpha
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
 

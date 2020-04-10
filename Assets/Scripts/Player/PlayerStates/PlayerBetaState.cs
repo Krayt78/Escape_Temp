@@ -16,7 +16,7 @@ public class PlayerBetaState : BasePlayerState
     public bool CanEvolveToAlpha { get { return canEvolveToAlpha; } }
 
 
-    float[] rangeStateSpeed = new float[2] { 4, 8 };
+    float[] rangeStateSpeed = new float[2] { 10, 8 };
     float[] rangeStateSize = new float[2] { 1.5f, 2.5f };
     float[] rangeStateDamages = new float[2] { 2,2 };
     float[] rangeStateNoise = new float[2] { 2, 10 };
@@ -26,10 +26,10 @@ public class PlayerBetaState : BasePlayerState
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
     public override float StateNoise { get { return Mathf.Lerp(rangeStateNoise[0], rangeStateNoise[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
 
-    float transformationTimeInSeconds = 2f;
+    float transformationTimeInSeconds = 1.5f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
-    float easingCharacteristicsSpeed = .5f;
+    float easingCharacteristicsSpeed = 1f;
 
     public PlayerBetaState(GameObject gameObject) : base(gameObject)
     {

@@ -66,7 +66,7 @@ public class PlayerCarateristicController : MonoBehaviour
         targetSize = newSize;
         targetDamages = newDamages;
         targetNoise = newNoise;
-        currentEasingDelayInSeconds = easingSpeed;
+        currentEasingDelayInSeconds += easingSpeed;
 
 
         if(!easing)
@@ -110,6 +110,7 @@ public class PlayerCarateristicController : MonoBehaviour
             entityController.PlayerDamages = targetDamages;
 
         easing = false;
+        currentEasingDelayInSeconds = 0;
     }
 
     public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise)
