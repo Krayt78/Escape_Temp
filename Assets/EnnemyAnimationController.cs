@@ -41,6 +41,15 @@ public class EnnemyAnimationController : MonoBehaviour
 
     }
 
+    public void TriggerSight()
+    {
+        animator.SetTrigger("sight");
+    }
+    public void TriggerEndSight()
+    {
+        animator.SetTrigger("endSight");
+    }
+
     public void Fire()
     {
         guard.EnnemyAttack.AttackRoutine(guard.Target);
