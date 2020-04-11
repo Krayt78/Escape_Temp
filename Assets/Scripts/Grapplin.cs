@@ -149,14 +149,12 @@ public class Grapplin : Ability
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
         lrRope.enabled = true;
-<<<<<<< HEAD
         lrRope.SetPosition(0, transform.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
 
-=======
         lrRope.SetPosition(0, grapplinPosition.position);
->>>>>>> new functionnal version for the grapplin
+
         while (grp.transform.position != hit.point)
         {
             grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, grapplinThrowSpeed * Time.deltaTime);
@@ -209,15 +207,13 @@ public class Grapplin : Ability
                 canUseGrapplin = false;
                 coroutine = false;
                 time = 0;
+                playerSoundEffectController.PlayGrapplinShootSFX();
 
-<<<<<<< HEAD
-            playerSoundEffectController.PlayGrapplinShootSFX();
-=======
                 grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), transform);
                 grp.transform.parent = null;
                 StartCoroutine(LaunchGrapplin(grp));
 
-                GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+                //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
             }
             else
             {
@@ -227,7 +223,7 @@ public class Grapplin : Ability
         else
         {
             Debug.LogError("Hit nothing");
->>>>>>> new functionnal version for the grapplin
+
         }
     }
 }
