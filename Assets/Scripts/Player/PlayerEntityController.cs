@@ -114,6 +114,9 @@ public class PlayerEntityController : EntityController
     {
         CallOnDies();
         Debug.Log("dead");
+
+        playerInput.enabled = false;
+        GetComponent<PlayerSoundEffectController>().enabled = false;
         //Destroy(gameObject);
     }
 
