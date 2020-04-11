@@ -20,6 +20,8 @@ public class Grapplin : Ability
     private Transform playerCamera;
     [SerializeField]
     private int levelToActivate = 0;
+    [SerializeField]
+    private int levelToDeActivate = 2;
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
@@ -174,7 +176,7 @@ public class Grapplin : Ability
         {
             Debug.Log("We add ability");
             playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
-        }else 
+        }else if(level == levelToDeActivate)
         {
             Debug.Log("We remove ability");
             playerAbilitiesController.RemoveAbility(this);
