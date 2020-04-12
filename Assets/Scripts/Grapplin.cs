@@ -10,6 +10,8 @@ public class Grapplin : Ability
 
     private PlayerSoundEffectController playerSoundEffectController;
 
+    private PlayerMovement playerMovement;
+
     public LineRenderer lrRope;
     private int nbPoints = 2;
     //private Vector3[] positions = new Vector3[50];
@@ -57,7 +59,7 @@ public class Grapplin : Ability
         lrRope.enabled = false;
         m_rigibody = GetComponent<Rigidbody>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
-
+        playerMovement = GetComponent<PlayerMovement>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
 
@@ -89,6 +91,7 @@ public class Grapplin : Ability
             canUseGrapplin = true;
             m_rigibody.constraints = RigidbodyConstraints.None;
             m_rigibody.freezeRotation = true;
+            playerMovement.enabled = true;
         }
     }
 
@@ -185,7 +188,9 @@ public class Grapplin : Ability
     {
         if (canUseGrapplin)
         {
+            
             InitGrapplin();
+            
         }
     }
 
@@ -199,6 +204,7 @@ public class Grapplin : Ability
             if (hit.collider.GetComponent<GrapplinZone>() != null)
             {
                 //Debug.LogWarning("We launch grapplin");
+                playerMovement.enabled = false;
                 destination = hit.collider.gameObject.GetComponent<GrapplinZone>().LandingPoint.position;
 
                 bezierControlPoint = destination;
