@@ -36,6 +36,8 @@ public class GuardSoundEffectController : MonoBehaviour
     [SerializeField] string spottedSmthSFXPath;
 
 
+    private bool dead = false;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -57,11 +59,14 @@ public class GuardSoundEffectController : MonoBehaviour
 
     private void PlayDiesSFX()
     {
+        dead = true;
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         FMODPlayerController.PlayOnShotSound(diesSFXPath, transform.position);
     }
 
     private void PlayHurtSFX(float damages)
     {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         FMODPlayerController.PlayOnShotSound(hurtSFXPath, transform.position);
     }
 
@@ -124,13 +129,15 @@ public class GuardSoundEffectController : MonoBehaviour
     private void PlayPatrolStateSFX()
     {
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(patrolStateSFXPath, rigidbody);
+        if (!dead)
+            guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(patrolStateSFXPath, rigidbody);
     }
 
     private void PlayAttackStateSFX()
     {
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(attackStateSFXPath, rigidbody);
+        if(!dead)
+            guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(attackStateSFXPath, rigidbody);
     }
 
     public void PlayPlayerLostSFX()

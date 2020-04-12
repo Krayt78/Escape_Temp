@@ -31,6 +31,7 @@ public class PlayerEntityController : EntityController
 
     public event Action OnScan = delegate { };
 
+    public Animator handAnimator;
 
     private void Awake()
     {
@@ -60,9 +61,11 @@ public class PlayerEntityController : EntityController
 
     private void PlayerAction()
     {
+        int layerMask = ~LayerMask.GetMask("Obstacles");    //TEMP : allow the food to be eaten in bushes
+
         RaycastHit ray;
         //Debug.DrawRay(playerCamera.position, playerCamera.forward);
-        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, actionDistance))
+        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, actionDistance, layerMask))
         {
             GameObject hitObject = ray.transform.gameObject;
             if (hitObject.CompareTag("Player"))
@@ -81,6 +84,8 @@ public class PlayerEntityController : EntityController
             }
         }
 
+        handAnimator.SetTrigger("Action");
+
     }
     
     public void Attack(EntityController attacked)
@@ -98,10 +103,13 @@ public class PlayerEntityController : EntityController
     {
         if (echo.isActive)
             echo.DeactivateXray();
+
+        handAnimator.SetBool("Walking", true);
     }
 
     private void StoppedMoving()
     {
+        handAnimator.SetBool("Walking", false);
 
     }
 
@@ -123,6 +131,7 @@ public class PlayerEntityController : EntityController
     private void Vomit()
     {
         playerDNALevel.LoseDnaLevel(vomitRatePerSeconds * Time.deltaTime);
+        playerDNALevel.ClampDnaLevel();
     }
 
     private void Scan()

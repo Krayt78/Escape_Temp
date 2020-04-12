@@ -17,7 +17,7 @@ public class PlayerOmegaState : BasePlayerState
     private PlayerDNALevel playerDnaLevel;
 
 
-    float stateSpeed = 9;
+    float stateSpeed = 7;
     float stateSize = 1f;
     float stateDamages = 1;
     float stateNoise = 1;
@@ -26,7 +26,7 @@ public class PlayerOmegaState : BasePlayerState
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
 
-    float transformationTimeInSeconds = 1.5f;
+    float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
 

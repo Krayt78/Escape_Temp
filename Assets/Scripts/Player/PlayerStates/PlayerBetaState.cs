@@ -26,10 +26,10 @@ public class PlayerBetaState : BasePlayerState
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
     public override float StateNoise { get { return Mathf.Lerp(rangeStateNoise[0], rangeStateNoise[1], Mathf.Clamp(playerDnaLevel.DnaLevel, 0, 1)); } }
 
-    float transformationTimeInSeconds = 1.5f;
+    float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
-    float easingCharacteristicsSpeed = .3f;
+    float easingCharacteristicsSpeed = .1f;
 
     public PlayerBetaState(GameObject gameObject) : base(gameObject)
     {
@@ -52,6 +52,7 @@ public class PlayerBetaState : BasePlayerState
     {
         if (Input.GetButtonDown("Evolve") && canEvolveToAlpha)
             EvolveToAlpha();
+
         return null;
     }
 
@@ -75,6 +76,10 @@ public class PlayerBetaState : BasePlayerState
         {
             playerDnaLevel.ClampDnaLevel();
             canEvolveToAlpha = true;
+        }
+        else
+        {
+            canEvolveToAlpha = false;
         }
 
         UpdateCharacteristicsOnDnaChanged(dnaLevel);        

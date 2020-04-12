@@ -38,9 +38,10 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Update()
     {
+        int layerMask = ~LayerMask.GetMask("Obstacles");
         RaycastHit ray;
         Debug.DrawRay(playerCamera.position, playerCamera.forward);
-        if (Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, 5))
+        if (Physics.Raycast(playerCamera.position, playerCamera.forward, out ray, 3, layerMask))
         {
             if(ray.transform.gameObject != focusedObject)
             {

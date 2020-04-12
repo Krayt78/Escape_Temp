@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1969101644}
-  - component: {fileID: 156946731}
+  - component: {fileID: 6905398348505475902}
   m_Layer: 9
   m_Name: Hands
   m_TagString: Untagged
@@ -24,28 +24,34 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969101643}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000011169718178}
   - {fileID: 4000011254661850}
-  m_Father: {fileID: 1674202032261348094}
-  m_RootOrder: 5
+  m_Father: {fileID: 1674202032974737274}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &156946731
-MonoBehaviour:
+--- !u!95 &6905398348505475902
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969101643}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f8fcfc4cef55244a1d5d910b4dbbcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moving: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61d13d7ce8e35934b99da819b35db113, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1674202031199242709
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +176,6 @@ Transform:
   - {fileID: 1955251794364794709}
   - {fileID: 6450787227609493356}
   - {fileID: 3839217278334380042}
-  - {fileID: 1969101644}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -264,6 +269,7 @@ MonoBehaviour:
   playerDamages: 1
   eatingDelay: 1
   vomitRatePerSeconds: 0.2
+  handAnimator: {fileID: 6905398348505475902}
 --- !u!114 &1674202031234566439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,6 +638,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1674202032859351343}
+  - {fileID: 1969101644}
   m_Father: {fileID: 1674202032261348094}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
