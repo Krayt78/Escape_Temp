@@ -20,14 +20,15 @@ public class SightedState : BaseState
         currentTimer = sightedTimer;
     }
 
-    public override void OnStateEnter(StateMachine manager)
-    {
-        Debug.Log("Entering Sighted state");
-        manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
-    }
 
     public override Type Tick()
     {
+        if (m_Guard.IsDead)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(DeadState);
+        }
+
         // if the guard has lost trace of the ennemy reset the timer, resume his movement capabilities and goto loststate
         if (!m_Guard.Target)
         {
@@ -55,6 +56,11 @@ public class SightedState : BaseState
         return null;
     }
 
+    public override void OnStateEnter(StateMachine manager)
+    {
+        Debug.Log("Entering Sighted state");
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
+    }
     public override void OnStateExit()
     {
         Debug.Log("Exiting Sighted state");

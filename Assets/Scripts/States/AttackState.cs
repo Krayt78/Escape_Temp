@@ -15,6 +15,12 @@ public class AttackState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.IsDead)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(DeadState);
+        }
+
         if (!m_Guard.Target)
         {
             m_Guard.EnnemyPatrol.ResumeMoving();

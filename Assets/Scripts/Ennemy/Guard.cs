@@ -10,13 +10,18 @@ public class Guard : MonoBehaviour
     [SerializeField]
     public Transform Target { get; private set; }
     [SerializeField]
-    private bool isStaticGuard = false;
-
+    
 
     public bool isStunned;
 
-    
+    [SerializeField]
+    private bool isDead = false;
+    [SerializeField]
+    private bool isStaticGuard = false;
+
+    public bool IsDead { get { return isDead; } private set { isDead = value; } }
     public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
+
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
@@ -36,10 +41,10 @@ public class Guard : MonoBehaviour
 
     // public bool isStunned { get; private set; }
 
-    public StateMachine StateMachine => GetComponent<StateMachine>();
+    public StateMachine m_StateMachine => GetComponent<StateMachine>();
 
     [SerializeField]
-    private BaseState CurrentState => StateMachine.CurrentState;
+    private BaseState CurrentState => m_StateMachine.CurrentState;
 
     private void Start()
     {
@@ -60,9 +65,6 @@ public class Guard : MonoBehaviour
             GuardingPosition = transform.position;
             GuardingOrientation = transform.rotation;
         }
-        
-
-
 
         isStunned = false;
 
@@ -103,7 +105,8 @@ public class Guard : MonoBehaviour
             {typeof(SightedState), new SightedState(this)},
             {typeof(StunnedState), new StunnedState(this)},
             {typeof(StaticState), new StaticState(this)},
-            {typeof(AttackState), new AttackState(this)}
+            {typeof(AttackState), new AttackState(this)},
+            {typeof(DeadState), new DeadState(this)}
         };
 
         GetComponent<StateMachine>().SetStates(states);
@@ -112,8 +115,9 @@ public class Guard : MonoBehaviour
     private void OnDies()
     {
         EnnemyRagdolToggle.RagdollActive(true);
-        Destroy(gameObject, 5f);
+        IsDead = true;
     }
+
     private void OnTargetSighted()
     {
         SetTarget(FieldOfView.visibleTargets[0].transform);

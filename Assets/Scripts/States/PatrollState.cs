@@ -18,6 +18,12 @@ public class PatrollState : BaseState
 
     public override Type Tick()
     {
+        if (m_Guard.IsDead)
+        {
+            m_Guard.EnnemyPatrol.StopMoving();
+            return typeof(DeadState);
+        }
+
         if (m_Guard.isStunned)
         {
             m_Guard.EnnemyPatrol.StopMoving();
