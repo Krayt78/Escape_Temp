@@ -14,7 +14,7 @@ public class PlayerAlphaState : BasePlayerState
     private PlayerDNALevel playerDnaLevel;
     public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
-    float stateSpeed = 4;
+    float stateSpeed = 3;
     float stateSize = 4f;
     float stateDamages = 3;
     float stateNoise = 20;

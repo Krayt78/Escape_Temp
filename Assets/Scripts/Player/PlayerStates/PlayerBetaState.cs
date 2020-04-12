@@ -16,7 +16,7 @@ public class PlayerBetaState : BasePlayerState
     public bool CanEvolveToAlpha { get { return canEvolveToAlpha; } }
 
 
-    float[] rangeStateSpeed = new float[2] { 10, 8 };
+    float[] rangeStateSpeed = new float[2] { 8, 5 };
     float[] rangeStateSize = new float[2] { 1.5f, 2.5f };
     float[] rangeStateDamages = new float[2] { 2,2 };
     float[] rangeStateNoise = new float[2] { 2, 10 };
@@ -29,7 +29,7 @@ public class PlayerBetaState : BasePlayerState
     float transformationTimeInSeconds = 1.5f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
-    float easingCharacteristicsSpeed = 1f;
+    float easingCharacteristicsSpeed = .3f;
 
     public PlayerBetaState(GameObject gameObject) : base(gameObject)
     {
@@ -50,7 +50,7 @@ public class PlayerBetaState : BasePlayerState
 
     public override Type Tick()
     {
-        if (Input.GetKeyDown(KeyCode.K) && canEvolveToAlpha)
+        if (Input.GetButtonDown("Evolve") && canEvolveToAlpha)
             EvolveToAlpha();
         return null;
     }

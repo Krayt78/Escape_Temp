@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerCameraController : MonoBehaviour
 {
-    private float cameraSpeed=150.0f;
+    private float cameraSpeed=90;
     [SerializeField] Vector2 xRotationLimit = new Vector2(-90, 90);
 
     [SerializeField] Transform playerCamera;
