@@ -26,6 +26,7 @@ public class PlayerAlphaState : BasePlayerState
     float transformationTimeInSeconds = 1.5f; //The time for the player to turn into an alpha
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
+    public float stepByMoveSpeed = .8f;
 
     public PlayerAlphaState(GameObject gameObject) : base(gameObject)
     {
@@ -42,6 +43,7 @@ public class PlayerAlphaState : BasePlayerState
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToAlphaSFX();
+        manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
     }
 
     public override Type Tick()

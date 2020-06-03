@@ -29,6 +29,7 @@ public class PlayerOmegaState : BasePlayerState
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
+    public float stepByMoveSpeed = .2f;
 
 
     public PlayerOmegaState(GameObject gameObject) : base(gameObject)
@@ -47,6 +48,7 @@ public class PlayerOmegaState : BasePlayerState
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToOmegaSFX();
+        manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
     }
 
     public override Type Tick()

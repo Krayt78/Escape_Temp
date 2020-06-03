@@ -31,6 +31,8 @@ public class PlayerBetaState : BasePlayerState
 
     float easingCharacteristicsSpeed = .1f;
 
+    public float stepByMoveSpeed = .5f;
+
     public PlayerBetaState(GameObject gameObject) : base(gameObject)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
@@ -46,6 +48,7 @@ public class PlayerBetaState : BasePlayerState
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToBetaSFX();
+        manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
     }
 
     public override Type Tick()
