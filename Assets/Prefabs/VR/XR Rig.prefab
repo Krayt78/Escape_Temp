@@ -454,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 4579785108934345887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.02}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4793294057600667538}
   m_RootOrder: 1
@@ -515,8 +515,7 @@ MonoBehaviour:
   m_ActivateUsage: 2
   m_UIPressUsage: 2
   m_AxisToPressThreshold: 0.1
-  m_ModelPrefab: {fileID: 7469586821250771240, guid: 22a9677ad50f74743a866f273d93223f,
-    type: 3}
+  m_ModelPrefab: {fileID: 400060, guid: 65d8eda911e0ba548a3674f65c43308b, type: 3}
   m_ModelTransform: {fileID: 4224049715451975992}
   m_AnimateModel: 1
   m_ModelSelectTransition: Selected
@@ -596,11 +595,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4793294057643064754}
   - component: {fileID: 4793294057643064755}
-  - component: {fileID: 4086747078616452939}
   - component: {fileID: 5913389234728822756}
   - component: {fileID: 3020182760156870860}
   - component: {fileID: 8774421676757750940}
-  - component: {fileID: 995201637}
+  - component: {fileID: 6861766022423308445}
   m_Layer: 0
   m_Name: XR Rig
   m_TagString: Player
@@ -641,20 +639,6 @@ MonoBehaviour:
   m_TrackingOriginMode: 2
   m_TrackingSpace: 3
   m_CameraYOffset: 0
---- !u!114 &4086747078616452939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4793294057643064752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a5df2202a8b96488c744be3bd0c33e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Timeout: 10
-  m_XRRig: {fileID: 4793294057643064755}
 --- !u!143 &5913389234728822756
 CharacterController:
   m_ObjectHideFlags: 0
@@ -699,24 +683,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a16be1f798c804791f3ac04b520bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_System: {fileID: 4086747078616452939}
+  m_System: {fileID: 0}
   speed: 3
-  gravityMultiplier: 1
+  gravityMultiplier: 0
   controllers:
   - {fileID: 4793294057600667545}
---- !u!65 &995201637
-BoxCollider:
+--- !u!114 &6861766022423308445
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4793294057643064752}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 2.98801, y: 0.06309509, z: 3.0145645}
-  m_Center: {x: -0.0026414394, y: -0.041786194, z: 0.008800507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4f2c0214c9b494fa7eb5b8b2c02885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 0}
+  m_TurnUsage: 0
+  m_Controllers:
+  - {fileID: 4793294058582925244}
+  m_TurnAmount: 45
+  m_DebounceTime: 0.5
+  m_DeadZone: 0.75
 --- !u!1 &4793294058569819145
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,8 +897,7 @@ MonoBehaviour:
   m_ActivateUsage: 2
   m_UIPressUsage: 2
   m_AxisToPressThreshold: 0.1
-  m_ModelPrefab: {fileID: 7469586821250771240, guid: 73b35766e5cc9944f86b298bcd6fe0fd,
-    type: 3}
+  m_ModelPrefab: {fileID: 400060, guid: 641e9d2f5c6b4cb438161abef3be8300, type: 3}
   m_ModelTransform: {fileID: 921470181955902592}
   m_AnimateModel: 1
   m_ModelSelectTransition: Selected
