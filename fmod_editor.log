@@ -2,13 +2,12 @@
 [LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata 0000000000000000.
 [LOG] SystemI::init                            : Initialize version=20008 (108014), maxchannels=256, flags=0x00020000
 [LOG] SystemI::setOutputInternal               : Setting output to 'FMOD WASAPI Output'
-[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=44100, nAvgBytesPerSec=352800, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=48000, nAvgBytesPerSec=384000, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
 [LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x00000003, SubFormat=00000003-0000-0010-8000-00AA00389B71.
-[LOG] OutputWASAPI::init                       : Output buffer size: 3760 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
-[WRN] SystemI::init                            : Output requires a sample rate of 44100Hz, resampling will occur.
+[LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000200AD228038 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000001F0752D91B8 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Priority: 0, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -19,57 +18,10 @@
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 125)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 125)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] SoundI::release                          :  (0000020066465328)
-[LOG] SoundI::release                          :     devolving_1 (0000020001A36C68)
-[LOG] SoundI::release                          :  (0000020009CEDD48)
-[LOG] SoundI::release                          :     eat_1 (000002000B7A06E8)
-[LOG] SoundI::release                          :  (0000020009CEDEB8)
-[LOG] SoundI::release                          :     eat_2 (000002000B7A0888)
-[LOG] SoundI::release                          :  (000002000AAE0948)
-[LOG] SoundI::release                          :     GrapplinShoot (0000020001A35748)
-[LOG] SoundI::release                          :  (000002001CE25DF8)
-[LOG] SoundI::release                          :     walk_leaf_1_1 (000002001C0B1798)
-[LOG] SoundI::release                          :  (0000020009CEDA68)
-[LOG] SoundI::release                          :     walk_leaf_1_2 (000002001C0B1AD8)
-[LOG] SoundI::release                          :  (0000020009CED058)
-[LOG] SoundI::release                          :     walk_leaf_1_3 (000002001C0B2CB8)
-[LOG] SoundI::release                          :  (0000020009CEC4D8)
-[LOG] SoundI::release                          :     walk_leaf_1_4 (000002001C0B1938)
-[LOG] SoundI::release                          :  (000002001CE27388)
-[LOG] SoundI::release                          :     walk_leaf_1_5 (000002001C0B1E18)
-[LOG] SoundI::release                          :  (000002001CE274F8)
-[LOG] SoundI::release                          :     walk_leaf_1_6 (000002001C0B2B18)
-[LOG] SoundI::release                          :  (0000020009CED4A8)
-[LOG] SoundI::release                          :     evolving_1 (000002000B7A0D68)
-[LOG] SoundI::release                          :  (000002000AAE1D68)
-[LOG] SoundI::release                          :     evolve_to_beast (0000020001A35268)
-[LOG] SoundI::release                          :  (00000200664651B8)
-[LOG] SoundI::release                          :     walk_beast_1 (00000200091E8868)
-[LOG] SoundI::release                          :  (000002000AAE00A8)
-[LOG] SoundI::release                          :     walk_beast_2 (00000200091E7EA8)
-[LOG] SoundI::release                          :  (000002000AAE0F08)
-[LOG] SoundI::release                          :     walk_beast_3 (00000200091E86C8)
-[LOG] SoundI::release                          :  (000002000AAE1ED8)
-[LOG] SoundI::release                          :     walk_beast_4 (00000200091E8048)
-[LOG] SoundI::release                          :  (000002000AAE11E8)
-[LOG] SoundI::release                          :     walk_beast_5 (00000200091E81E8)
-[LOG] SoundI::release                          :  (000002000AAE1A88)
-[LOG] SoundI::release                          :     walk_beast_6 (00000200091E8528)
-[LOG] SoundI::release                          :  (000002000AAE0218)
-[LOG] SoundI::release                          :     walk_beast_7 (00000200091E7D08)
-[LOG] SoundI::release                          :  (000002000AAE07D8)
-[LOG] SoundI::release                          :     GrapplingThrow (0000020001A35F68)
-[LOG] SoundI::release                          :  (000002000AAE17A8)
-[LOG] SoundI::release                          :     GrapplingRetract (0000020003C27608)
-[LOG] SoundI::release                          :  (0000020009CEC7B8)
-[LOG] SoundI::release                          :     entering_patrol_state (0000020001A36928)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
 [LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] SystemI::close                           : Closed.
