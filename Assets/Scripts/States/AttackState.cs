@@ -25,13 +25,13 @@ public class AttackState : BaseState
         {
             m_Guard.EnnemyPatrol.ResumeMoving();
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
+            
             return typeof(LostState);
         }
 
         m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
         m_Guard.EnnemyAttack.AttackRoutine(m_Guard.Target);
-        
-        
+
         return null;
     }
 
@@ -39,12 +39,14 @@ public class AttackState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Attack state");
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Attack);
 
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
     }
 
     public override void OnStateExit()
     {
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Exiting Attack state");
     }
 }

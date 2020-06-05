@@ -32,6 +32,7 @@ public class Guard : MonoBehaviour
     public EnnemiController EnnemiController { get; private set; }
     public EnnemyAnimationController EnnemyAnimationController { get; private set; }
     public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
+    public EnnemyVisualFeedBack EnnemyVisualFeedBack { get; private set; }
 
     //variables to store the orientation and position in case of a static guard;
     public Vector3 GuardingPosition { get; private set; }
@@ -59,6 +60,7 @@ public class Guard : MonoBehaviour
         EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
         EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
         EnnemyRagdolToggle = GetComponent<RagdolToggle>();
+        EnnemyVisualFeedBack = GetComponent<EnnemyVisualFeedBack>();
 
         if (IsStaticGuard)
         {

@@ -50,14 +50,13 @@ public class SightedState : BaseState
             m_Guard.EnnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-
-       
            
         return null;
     }
 
     public override void OnStateEnter(StateMachine manager)
     {
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Entering Sighted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
