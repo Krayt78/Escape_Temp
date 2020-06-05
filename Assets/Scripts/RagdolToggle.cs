@@ -32,6 +32,7 @@ public class RagdolToggle : MonoBehaviour
     // Fonction permettant d'activer le ragdoll de la sentinel
     public void RagdollActive(bool active)
     {
+        Debug.Log("ACTIVE RAGDOLL : " + active);
         // Sentinel bones
         foreach (var collider in childrensCollider)
         {
@@ -51,4 +52,14 @@ public class RagdolToggle : MonoBehaviour
         sphereCollider.enabled = !active;
         ennemyPatrol.enabled = !active;
     }
+
+
+    public void CollisionInChildren(Collision collision)
+    {
+        if (collision.relativeVelocity.sqrMagnitude <= 1.5f)
+            return;
+        Debug.Log("Velocity : " + collision.relativeVelocity.sqrMagnitude);
+        GetComponent<GuardSoundEffectController>().PlayRagdollColisionSFX(collision.contacts[0].point);
+    }
+
 }

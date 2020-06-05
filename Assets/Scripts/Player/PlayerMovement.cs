@@ -19,8 +19,13 @@ public class PlayerMovement : MonoBehaviour
     public event Action IsMoving = delegate { };
     public event Action StoppedMoving = delegate { };
 
+    private bool wasGrounded = true;
+    public bool isGrounded { get; private set; }
+    public event Action OnLand = delegate { };
+
 
     //Control the speed of steps 
+    private float nextStep = 0;
     public float stepByMoveSpeed=.5f;
     public event Action OnStep = delegate { };
 
@@ -38,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         movement = Vector3.zero;
+        IsGrounded();
         if(canMove)
         {
             movement = transform.forward * playerInput.Forward + transform.right * playerInput.Right;
@@ -64,22 +70,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 isMoving = true;
                 StartMoving();
-                StartCoroutine(TakeStep());
             }
             IsMoving();
+
+            if (isGrounded)
+                TakeStep();
         }
     }
 
-    private IEnumerator TakeStep()
+    private void TakeStep()
     {
-        while(isMoving)
+        if(Time.time>=nextStep)
         {
-            if (IsGrounded())
-            {
-                OnStep();
-            }
-            yield return new WaitForSeconds(stepByMoveSpeed*GetSpeedRatio());
-        }        
+            OnStep();
+            nextStep = Time.time + stepByMoveSpeed * GetSpeedRatio();
+        }      
     }
 
     public float GetSpeedRatio()
@@ -87,8 +92,26 @@ public class PlayerMovement : MonoBehaviour
         return movement.magnitude / moveSpeed;
     }
 
-    public bool IsGrounded() {
-        return Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f);
+    private bool IsGrounded() {
+        if(Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f))
+        {
+            isGrounded = true;
+            if(!wasGrounded)
+            {
+                OnLand();
+                wasGrounded = true;
+            }
+        }
+        else
+        {
+            isGrounded = false;
+            if (wasGrounded)
+            {
+                //OnLand();
+                wasGrounded = false;
+            }
+        }
+        return isGrounded;
     }
 
     private void OnDestroy()

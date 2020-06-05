@@ -80,9 +80,9 @@ public class GuardSoundEffectController : MonoBehaviour
         FMODPlayerController.PlayOnShotSound(ennemiScannedSFXPath, transform.position);
     }
 
-    private void PlayRagdollColisionSFX()
+    public void PlayRagdollColisionSFX(Vector3 hitPoint)
     {
-        FMODPlayerController.PlayOnShotSound(ragdollCollisionSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(ragdollCollisionSFXPath, hitPoint);
     }
 
     private void PlayTentacleMovementSFX()

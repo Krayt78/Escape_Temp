@@ -67,6 +67,7 @@ public class PlayerSoundEffectController : MonoBehaviour
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
         playerMovement.OnStep += PlayFootstepSFX;
+        playerMovement.OnLand += PlayFootstepSFX;
 
         GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
 
