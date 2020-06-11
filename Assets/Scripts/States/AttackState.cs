@@ -25,10 +25,11 @@ public class AttackState : BaseState
         {
             m_Guard.EnnemyPatrol.ResumeMoving();
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
-            
+            m_Guard.EnnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
 
+        m_Guard.EnnemyEyeMovement.MoveEyeAtTarget(m_Guard.Target.position);
         m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
         m_Guard.EnnemyAttack.AttackRoutine(m_Guard.Target);
 
@@ -40,7 +41,6 @@ public class AttackState : BaseState
     {
         Debug.Log("Entering Attack state");
         m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Attack);
-
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
     }
 
