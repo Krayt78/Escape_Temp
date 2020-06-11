@@ -53,7 +53,7 @@ public class PatrollState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Patrol state");
-
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }
 
