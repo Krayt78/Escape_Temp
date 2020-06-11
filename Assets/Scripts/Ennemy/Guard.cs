@@ -24,6 +24,7 @@ public class Guard : MonoBehaviour
 
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
+    public EnnemyEyeMovement EnnemyEyeMovement { get; private set; }
     public EnnemyNavigation EnnemyNavigation { get; private set; }
     public EnnemyPatrol EnnemyPatrol { get; private set; }
     public EnnemyAttack EnnemyAttack { get; private set; }
@@ -51,6 +52,7 @@ public class Guard : MonoBehaviour
     {
 
         FieldOfView = GetComponent<FieldOfView>();
+        EnnemyEyeMovement = GetComponent<EnnemyEyeMovement>();
         EnnemyNavigation = GetComponent<EnnemyNavigation>();
         EnnemyPatrol = GetComponent<EnnemyPatrol>();
         EnnemyAttack = GetComponent<EnnemyAttack>();
