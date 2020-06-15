@@ -39,7 +39,7 @@ public class Grapplin : Ability
     bool canUseGrapplin = true;
     bool coroutine = false;
 
-    Rigidbody m_rigibody;
+    Rigidbody rigibody;
     private Vector3 destination = new Vector3();
     Vector3 bezierControlPoint = new Vector3();
 
@@ -57,7 +57,7 @@ public class Grapplin : Ability
         base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
-        m_rigibody = GetComponent<Rigidbody>();
+        rigibody = GetComponent<Rigidbody>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         playerMovement = GetComponent<PlayerMovement>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
@@ -89,8 +89,8 @@ public class Grapplin : Ability
         {
             Debug.LogWarning("We landed");
             canUseGrapplin = true;
-            m_rigibody.constraints = RigidbodyConstraints.None;
-            m_rigibody.freezeRotation = true;
+            rigibody.constraints = RigidbodyConstraints.None;
+            rigibody.freezeRotation = true;
             playerMovement.enabled = true;
         }
     }
@@ -125,8 +125,8 @@ public class Grapplin : Ability
 
     private IEnumerator MoveOnBezier()
     {
-        m_rigibody.constraints = RigidbodyConstraints.FreezePositionY;
-        m_rigibody.freezeRotation = true;
+        rigibody.constraints = RigidbodyConstraints.FreezePositionY;
+        rigibody.freezeRotation = true;
         coroutine = true;
         float y = transform.position.y;
 

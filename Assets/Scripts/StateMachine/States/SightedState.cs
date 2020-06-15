@@ -70,6 +70,8 @@ public class SightedState : BaseState
     private bool IsSighted()
     {
        distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
+       Debug.Log("alertLevel : "+(Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(sightedTimer/100));
+       //guard.AlertLevel += (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(sightedTimer/100);
         if ((currentTimer -= Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard)) <= 0)
             return true;
 

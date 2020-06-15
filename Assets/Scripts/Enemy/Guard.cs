@@ -22,6 +22,11 @@ public class Guard : MonoBehaviour
     public bool IsDead { get { return isDead; } private set { isDead = value; } }
     public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
 
+    [Range(0f, 1f)]
+    private float alertLevel = 0f;
+
+    public float AlertLevel { get { return alertLevel; } private set { alertLevel = value; } }
+
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
     public EnemyEyeMovement EnemyEyeMovement { get; private set; }
