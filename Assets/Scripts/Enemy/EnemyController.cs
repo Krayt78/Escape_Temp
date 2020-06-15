@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemiController : EntityController
+public class EnemyController : EntityController
 {
     [SerializeField]
     private float stunDuration = 3f;

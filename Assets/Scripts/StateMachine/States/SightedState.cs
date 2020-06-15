@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SightedState : BaseState
 {
-    private Guard m_Guard;
+    private Guard guard;
 
     private float sightedTimer = 1.5f;
     private float currentTimer = 0;
@@ -15,7 +15,7 @@ public class SightedState : BaseState
 
     public SightedState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
 
         currentTimer = sightedTimer;
     }
@@ -23,33 +23,33 @@ public class SightedState : BaseState
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        // if the guard has lost trace of the ennemy reset the timer, resume his movement capabilities and goto loststate
-        if (!m_Guard.Target)
+        // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
+        if (!guard.Target)
         {
             ResetTimer();
-            m_Guard.EnnemyPatrol.ResumeMoving();
-            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
-            m_Guard.EnnemyEyeMovement.disabledMoveEyeAtTarget();
+            guard.EnemyPatrol.ResumeMoving();
+            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+            guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
         else
         {
             //orient towards target
-            m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
-            m_Guard.EnnemyEyeMovement.MoveEyeAtTarget(m_Guard.Target.position);
+            guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
+            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
         }
 
-        // check if the ennemy detected the player depending on his distance 
+        // check if the enemy detected the player depending on his distance 
         if (IsSighted()) // 50%
         {
             ResetTimer();
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(AlertedState);
         }
            
@@ -58,7 +58,7 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Entering Sighted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
@@ -69,7 +69,7 @@ public class SightedState : BaseState
 
     private bool IsSighted()
     {
-       distanceBetweenTargetAndGuard = Vector3.Distance(m_Guard.transform.position, m_Guard.Target.transform.position);
+       distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         if ((currentTimer -= Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard)) <= 0)
             return true;
 

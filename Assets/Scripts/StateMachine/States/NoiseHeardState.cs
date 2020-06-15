@@ -5,40 +5,40 @@ using UnityEngine;
 
 public class NoiseHeardState : BaseState
 {
-    private Guard m_Guard;
+    private Guard guard;
 
     public NoiseHeardState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
-        if (m_Guard.isStunned)
+        if (guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
 
-        if (m_Guard.Target)
+        if (guard.Target)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
-            m_Guard.ResetNoise();
+            guard.EnemyPatrol.StopMoving();
+            guard.ResetNoise();
             return typeof(SightedState);
         }
 
-        if (m_Guard.EnnemyPatrol.DestinationReached())
+        if (guard.EnemyPatrol.DestinationReached())
         {
-            m_Guard.ResetNoise();
+            guard.ResetNoise();
 
-            if (m_Guard.IsStaticGuard)
+            if (guard.IsStaticGuard)
             {
-                m_Guard.EnnemyPatrol.GoToNextCheckpoint();
+                guard.EnemyPatrol.GoToNextCheckpoint();
                 return typeof(StaticState);
             }
 

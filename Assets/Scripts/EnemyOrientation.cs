@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyOrientation : MonoBehaviour
+public class EnemyOrientation : MonoBehaviour
 {
     [SerializeField]
     private float rotationSpeed = 30f;

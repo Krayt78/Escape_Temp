@@ -7,43 +7,43 @@ using UnityEngine;
 public class StaticState : BaseState
 {
 
-    private Guard m_Guard;
+    private Guard guard;
 
     public StaticState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
 
     }
 
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        if (m_Guard.isStunned)
+        if (guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
 
-        if (m_Guard.Target)
+        if (guard.Target)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(SightedState);
         }
 
-        if (m_Guard.NoiseHeard)
+        if (guard.NoiseHeard)
         {
-            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
+            guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
             return typeof(NoiseHeardState);
         }
 
-        if (m_Guard.EnnemyPatrol.DestinationReached())
-            m_Guard.transform.rotation = m_Guard.GuardingOrientation;
+        if (guard.EnemyPatrol.DestinationReached())
+            guard.transform.rotation = guard.GuardingOrientation;
 
         //maybe add some animation to look around when he does nothing
 

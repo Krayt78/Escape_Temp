@@ -45,14 +45,14 @@ public class GuardSoundEffectController : MonoBehaviour
 
     void Start()
     {
-        EnnemiController ennemiController = GetComponent<EnnemiController>();
+        EnemyController ennemiController = GetComponent<EnemyController>();
         ennemiController.OnStunned += PlayHurtSFX;
         //ennemiController.OnTakeDamages += PlayHurtSFX;
         ennemiController.OnDies += PlayDiesSFX;
         ennemiController.OnDies += PlayMotorStopSFX;
 
 
-        GetComponent<EnnemyAttack>().OnFireAtTarget += PlayFireAttackSFX;
+        GetComponent<EnemyAttack>().OnFireAtTarget += PlayFireAttackSFX;
 
         GetComponent<EchoReceiver>().OnScanned += PlayScannedSFX;
     }

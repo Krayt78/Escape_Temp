@@ -1,37 +1,35 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : BaseState
 {
 
-    private Guard m_Guard;
+    private Guard guard;
 
     public AttackState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        if (!m_Guard.Target)
+        if (!guard.Target)
         {
-            m_Guard.EnnemyPatrol.ResumeMoving();
-            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
-            m_Guard.EnnemyEyeMovement.disabledMoveEyeAtTarget();
+            guard.EnemyPatrol.ResumeMoving();
+            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+            guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
 
-        m_Guard.EnnemyEyeMovement.MoveEyeAtTarget(m_Guard.Target.position);
-        m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
-        m_Guard.EnnemyAttack.AttackRoutine(m_Guard.Target);
+        guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
+        guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
+        guard.EnemyAttack.AttackRoutine(guard.Target);
 
         return null;
     }
@@ -40,13 +38,13 @@ public class AttackState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Attack state");
-        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Attack);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Attack);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
     }
 
     public override void OnStateExit()
     {
-        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Exiting Attack state");
     }
 }

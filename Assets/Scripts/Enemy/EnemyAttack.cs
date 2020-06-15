@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyAttack : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
    /* [SerializeField]
     private int accuracy = 30;

@@ -48,8 +48,8 @@ public class PlayerEvolutionStateMachine : StateMachine
         if(CurrentState!=null)
             CurrentState.OnStateExit();
 
-        CurrentState = m_availableStates[nextState];
-        CurrentStateName = m_availableStates[nextState].ToString();
+        CurrentState = availableStates[nextState];
+        CurrentStateName = availableStates[nextState].ToString();
 
         CallOnStateChanged();
 

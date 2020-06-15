@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     public event Action OnVomit = delegate { }; //The player vomit to lose DNA to get smaller
     public event Action OnStopVomiting = delegate { };
 
-    public event Action OnScan = delegate { }; //The player scan it's surrounding looking for ennemies
+    public event Action OnScan = delegate { }; //The player scan it's surrounding looking for enemys
 
 
     // Start is called before the first frame update

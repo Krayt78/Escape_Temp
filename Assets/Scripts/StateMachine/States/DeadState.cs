@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class DeadState : BaseState
 {
-    private Guard m_Guard;
+    private Guard guard;
 
     public DeadState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()

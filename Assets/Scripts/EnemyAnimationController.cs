@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyAnimationController : MonoBehaviour
+public class EnemyAnimationController : MonoBehaviour
 {
     private Animator animator;
     private Guard guard;
@@ -52,7 +52,7 @@ public class EnnemyAnimationController : MonoBehaviour
 
     public void Fire()
     {
-        guard.EnnemyAttack.AttackRoutine(guard.Target);
+        guard.EnemyAttack.AttackRoutine(guard.Target);
     }
 
 }

@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    private Guard m_Guard;
+    private Guard guard;
 
     public IdleState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (m_Guard.isStunned)
+        if (guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
 
-        if (m_Guard.IsStaticGuard)
+        if (guard.IsStaticGuard)
         {
             return typeof(StaticState);
         }

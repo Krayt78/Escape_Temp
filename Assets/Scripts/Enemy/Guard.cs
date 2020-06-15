@@ -24,22 +24,22 @@ public class Guard : MonoBehaviour
 
     public Transform NoiseHeard { get; private set; }
     public FieldOfView FieldOfView { get; private set; }
-    public EnnemyEyeMovement EnnemyEyeMovement { get; private set; }
-    public EnnemyNavigation EnnemyNavigation { get; private set; }
-    public EnnemyPatrol EnnemyPatrol { get; private set; }
-    public EnnemyAttack EnnemyAttack { get; private set; }
-    public EnnemyOrientation EnnemyOrientation { get; private set; }
+    public EnemyEyeMovement EnemyEyeMovement { get; private set; }
+    public EnemyNavigation EnemyNavigation { get; private set; }
+    public EnemyPatrol EnemyPatrol { get; private set; }
+    public EnemyAttack EnemyAttack { get; private set; }
+    public EnemyOrientation EnemyOrientation { get; private set; }
     public NoiseReceiver NoiseReceiver { get; private set; }
-    public EnnemiController EnnemiController { get; private set; }
-    public EnnemyAnimationController EnnemyAnimationController { get; private set; }
-    public NoiseEmitter EnnemyNoiseEmitter { get; private set; }
-    public EnnemyVisualFeedBack EnnemyVisualFeedBack { get; private set; }
+    public EnemyController EnemyController { get; private set; }
+    public EnemyAnimationController EnemyAnimationController { get; private set; }
+    public NoiseEmitter EnemyNoiseEmitter { get; private set; }
+    public EnemyVisualFeedBack EnemyVisualFeedBack { get; private set; }
 
     //variables to store the orientation and position in case of a static guard;
     public Vector3 GuardingPosition { get; private set; }
     public Quaternion GuardingOrientation { get; private set; }
 
-    private RagdolToggle EnnemyRagdolToggle;
+    private RagdolToggle EnemyRagdolToggle;
 
     // public bool isStunned { get; private set; }
 
@@ -52,17 +52,17 @@ public class Guard : MonoBehaviour
     {
 
         FieldOfView = GetComponent<FieldOfView>();
-        EnnemyEyeMovement = GetComponent<EnnemyEyeMovement>();
-        EnnemyNavigation = GetComponent<EnnemyNavigation>();
-        EnnemyPatrol = GetComponent<EnnemyPatrol>();
-        EnnemyAttack = GetComponent<EnnemyAttack>();
-        EnnemyOrientation = GetComponent<EnnemyOrientation>();
+        EnemyEyeMovement = GetComponent<EnemyEyeMovement>();
+        EnemyNavigation = GetComponent<EnemyNavigation>();
+        EnemyPatrol = GetComponent<EnemyPatrol>();
+        EnemyAttack = GetComponent<EnemyAttack>();
+        EnemyOrientation = GetComponent<EnemyOrientation>();
         NoiseReceiver = GetComponent<NoiseReceiver>();
-        EnnemiController = GetComponent<EnnemiController>();
-        EnnemyAnimationController = GetComponent<EnnemyAnimationController>();
-        EnnemyNoiseEmitter = GetComponent<NoiseEmitter>();
-        EnnemyRagdolToggle = GetComponent<RagdolToggle>();
-        EnnemyVisualFeedBack = GetComponent<EnnemyVisualFeedBack>();
+        EnemyController = GetComponent<EnemyController>();
+        EnemyAnimationController = GetComponent<EnemyAnimationController>();
+        EnemyNoiseEmitter = GetComponent<NoiseEmitter>();
+        EnemyRagdolToggle = GetComponent<RagdolToggle>();
+        EnemyVisualFeedBack = GetComponent<EnemyVisualFeedBack>();
 
         if (IsStaticGuard)
         {
@@ -84,9 +84,9 @@ public class Guard : MonoBehaviour
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
-        GetComponent<EnnemiController>().OnStunned += OnStunned;
-        GetComponent<EnnemiController>().OnDies += OnDies;
-        GetComponent<EnnemyAttack>().OnFireAtTarget += OnAttack;
+        GetComponent<EnemyController>().OnStunned += OnStunned;
+        GetComponent<EnemyController>().OnDies += OnDies;
+        GetComponent<EnemyAttack>().OnFireAtTarget += OnAttack;
 
         if (debugMode)
         {
@@ -119,26 +119,26 @@ public class Guard : MonoBehaviour
 
     private void OnDies()
     {
-        EnnemyRagdolToggle.RagdollActive(true);
+        EnemyRagdolToggle.RagdollActive(true);
         IsDead = true;
     }
 
     private void OnTargetSighted()
     {
         SetTarget(FieldOfView.visibleTargets[0].transform);
-        EnnemyAnimationController.TriggerSight();
+        EnemyAnimationController.TriggerSight();
     }
 
     private void OnTargetLost()
     {
-        EnnemyNavigation.targetLastSeenPosition = Target.transform.position;
-        EnnemyAnimationController.TriggerEndSight();
+        EnemyNavigation.targetLastSeenPosition = Target.transform.position;
+        EnemyAnimationController.TriggerEndSight();
         SetTarget(null);
     }
 
     private void OnAttack()
     {
-        EnnemyAnimationController.TriggerEndSight();
+        EnemyAnimationController.TriggerEndSight();
     }
 
     private void OnNoiseReceived(Noise noise)
@@ -152,7 +152,7 @@ public class Guard : MonoBehaviour
     private void OnStunned(float stunDuration)
     {
         SetIsStunned(true);
-        EnnemyAnimationController.TriggerStunned();
+        EnemyAnimationController.TriggerStunned();
         StartCoroutine(RecoverFromStun(stunDuration));
     }
 
@@ -166,7 +166,7 @@ public class Guard : MonoBehaviour
         yield return new WaitForSeconds(stunDuration);
 
         SetIsStunned(false);
-        EnnemyAnimationController.TriggerEndStunned();
+        EnemyAnimationController.TriggerEndStunned();
     }
 
     public void SetTarget(Transform target)
@@ -180,7 +180,7 @@ public class Guard : MonoBehaviour
 
     private void EmitNoise()
     {
-        EnnemyNoiseEmitter.EmitNoise();
+        EnemyNoiseEmitter.EmitNoise();
     }
 
     private void DeactivateDebugMode()

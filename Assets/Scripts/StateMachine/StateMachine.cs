@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    protected Dictionary<Type, BaseState> m_availableStates;
+    protected Dictionary<Type, BaseState> availableStates;
 
     public BaseState CurrentState { get; protected set; }
     public String CurrentStateName = "Default";
@@ -14,15 +14,15 @@ public class StateMachine : MonoBehaviour
 
     public void SetStates(Dictionary<Type, BaseState> states)
     {
-        m_availableStates = states;
+        availableStates = states;
     }
 
     protected virtual void Update()
     {
         if (CurrentState == null)
         {
-            CurrentState = m_availableStates.Values.First();
-            CurrentStateName = m_availableStates.Values.First().ToString();
+            CurrentState = availableStates.Values.First();
+            CurrentStateName = availableStates.Values.First().ToString();
             CurrentState.OnStateEnter(this);
         }
 
@@ -38,8 +38,8 @@ public class StateMachine : MonoBehaviour
     {
         CurrentState.OnStateExit();
 
-        CurrentState = m_availableStates[nextState];
-        CurrentStateName = m_availableStates[nextState].ToString();
+        CurrentState = availableStates[nextState];
+        CurrentStateName = availableStates[nextState].ToString();
 
         CallOnStateChanged();
 
@@ -53,8 +53,8 @@ public class StateMachine : MonoBehaviour
 
     protected void InitializeStateMachineFirstState()
     {
-        CurrentState = m_availableStates.Values.First();
-        CurrentStateName = m_availableStates.Values.First().ToString();
+        CurrentState = availableStates.Values.First();
+        CurrentStateName = availableStates.Values.First().ToString();
         CurrentState.OnStateEnter(this);
     }
 }
