@@ -138,7 +138,14 @@ public class MasterController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-        
+
+        CheckForInputs();
+
+      
+    }
+
+    void CheckForInputs()
+    {
         RightTeleportUpdate();
         LeftTeleportUpdate();
     }
