@@ -7,7 +7,7 @@ public class RagdolToggle : MonoBehaviour
     protected Animator animator;
     protected Rigidbody rigidbody;
     protected SphereCollider sphereCollider;
-    protected EnnemyPatrol ennemyPatrol;
+    protected EnemyPatrol enemyPatrol;
 
     protected Collider[] childrensCollider;
     protected Rigidbody[] childrensRigibody;
@@ -17,7 +17,7 @@ public class RagdolToggle : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
-        ennemyPatrol = GetComponent<EnnemyPatrol>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
 
 
         childrensCollider = GetComponentsInChildren<Collider>();
@@ -50,7 +50,7 @@ public class RagdolToggle : MonoBehaviour
         rigidbody.detectCollisions = !active;
         rigidbody.isKinematic = active;
         sphereCollider.enabled = !active;
-        ennemyPatrol.enabled = !active;
+        enemyPatrol.enabled = !active;
     }
 
 

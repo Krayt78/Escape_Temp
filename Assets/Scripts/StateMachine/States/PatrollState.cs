@@ -7,11 +7,11 @@ using UnityEngine;
 public class PatrollState : BaseState
 {
 
-    private Guard m_Guard;
+    private Guard guard;
 
     public PatrollState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
 
     }
 
@@ -19,34 +19,34 @@ public class PatrollState : BaseState
     public override Type Tick()
     {
         // ANY STATE-    --> i think we should move this in an other script, it is common to each state or quite
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        if (m_Guard.isStunned)
+        if (guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
         // -ANY STATE //
 
-        if (m_Guard.Target)
+        if (guard.Target)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(SightedState);
         }
 
-        if (m_Guard.NoiseHeard && !m_Guard.NoiseHeard.GetComponent<Guard>())
+        if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>())
         {
-            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.NoiseHeard.position);
+            guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
             return typeof(NoiseHeardState);
         }
 
 
-        if (m_Guard.EnnemyPatrol.DestinationReached())
-            m_Guard.EnnemyPatrol.GoToNextCheckpoint();
+        if (guard.EnemyPatrol.DestinationReached())
+            guard.EnemyPatrol.GoToNextCheckpoint();
 
         return null;
     }
@@ -55,7 +55,7 @@ public class PatrollState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Patrol state");
-        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Patrol);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }
 

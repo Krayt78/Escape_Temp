@@ -6,24 +6,24 @@ using UnityEngine;
 public class StunnedState : BaseState
 {
 
-    private Guard m_Guard;
+    private Guard guard;
 
     public StunnedState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        if (!m_Guard.isStunned)
+        if (!guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.ResumeMoving();
+            guard.EnemyPatrol.ResumeMoving();
      
             return typeof(PatrollState);
         }

@@ -5,34 +5,34 @@ using UnityEngine;
 
 public class LostState : BaseState
 {
-    private Guard m_Guard;
+    private Guard guard;
 
     public LostState(Guard guard) : base(guard.gameObject)
     {
-        m_Guard = guard;
+        this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (m_Guard.IsDead)
+        if (guard.IsDead)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
-        if (m_Guard.isStunned)
+        if (guard.isStunned)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
 
-        if (m_Guard.EnnemyPatrol.DestinationReached())
+        if (guard.EnemyPatrol.DestinationReached())
         {
             //watch around 
 
-            if (m_Guard.IsStaticGuard)
+            if (guard.IsStaticGuard)
             {
-                m_Guard.EnnemyPatrol.GoToNextCheckpoint();
+                guard.EnemyPatrol.GoToNextCheckpoint();
                 return typeof(StaticState);
             }
             else
@@ -42,9 +42,9 @@ public class LostState : BaseState
         }
             
 
-        if (m_Guard.Target)
+        if (guard.Target)
         {
-            m_Guard.EnnemyPatrol.StopMoving();
+            guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
             
@@ -56,7 +56,7 @@ public class LostState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Lost state");
-        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
     }
 

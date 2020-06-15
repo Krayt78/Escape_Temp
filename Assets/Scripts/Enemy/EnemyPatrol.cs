@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.AI;
 
-public class EnnemyPatrol : MonoBehaviour
+public class EnemyPatrol : MonoBehaviour
 {
 
     public event Action OnWaypointReached = delegate { };
@@ -14,7 +14,7 @@ public class EnnemyPatrol : MonoBehaviour
     private int currentWaypointNumber;
     private NavMeshAgent m_navMeshAgent;
 
-    private EnnemyAI.State state;
+    private EnemyAI.State state;
 
     // Start is called before the first frame update
     void Start()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-public class EnnemyVisualFeedBack : MonoBehaviour
+public class EnemyVisualFeedBack : MonoBehaviour
 {
     [SerializeField] List<GameObject> feedbackObjects;
     private List<Renderer> m_feedBackObjectRenderers;

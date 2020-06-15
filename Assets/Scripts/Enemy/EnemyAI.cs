@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public List<Transform> visibleTargets;
 
     private FieldOfView fieldOfView;
-    private EnnemyNavigation ennemyNavigation;
-    private EnnemyPatrol ennemyPatrol;
+    private EnemyNavigation enemyNavigation;
+    private EnemyPatrol enemyPatrol;
 
     
 
@@ -20,8 +20,8 @@ public class EnnemyAI : MonoBehaviour
     void Start()
     {
         fieldOfView = GetComponent<FieldOfView>();
-        ennemyNavigation = GetComponent<EnnemyNavigation>();
-        ennemyPatrol = GetComponent<EnnemyPatrol>();
+        enemyNavigation = GetComponent<EnemyNavigation>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
 
         visibleTargets = fieldOfView.visibleTargets;
 
@@ -41,11 +41,11 @@ public class EnnemyAI : MonoBehaviour
         switch (state)
         {
             case State.Patrolling:
-                if (ennemyPatrol.DestinationReached())
-                   ennemyPatrol.GoToNextCheckpoint();
+                if (enemyPatrol.DestinationReached())
+                   enemyPatrol.GoToNextCheckpoint();
                 break;
             case State.Attacking:
-                //ennemyNavigation.ChaseTarget();
+                //enemyNavigation.ChaseTarget();
                 break;
             case State.LostSight:
                 state = State.Patrolling;
@@ -64,7 +64,7 @@ public class EnnemyAI : MonoBehaviour
     private void OnTargetLost()
     {
         state = State.LostSight;
-        //ennemyNavigation.HandleTargetLost();
+        //enemyNavigation.HandleTargetLost();
     }
 
     IEnumerator FindTargetsWithDelay(float delay)

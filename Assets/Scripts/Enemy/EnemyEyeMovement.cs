@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyEyeMovement : MonoBehaviour
+public class EnemyEyeMovement : MonoBehaviour
 {
     [SerializeField] Transform sentinelEye;
     private float rotationSpeed = 50f;

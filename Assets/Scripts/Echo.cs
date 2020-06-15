@@ -50,7 +50,7 @@ public class Echo : MonoBehaviour
             return;
 
         foreach(GameObject gameObject in XrayedObjectsList){
-            StartCoroutine(DeactivateEnnemiesXrayCoroutine(gameObject));
+            StartCoroutine(DeactivateEnemyesXrayCoroutine(gameObject));
         }
 
         DeactivateTrigger();
@@ -83,12 +83,12 @@ public class Echo : MonoBehaviour
         DeactivateTrigger();
     }
 
-    IEnumerator DeactivateEnnemiesXrayCoroutine(GameObject ennemy)
+    IEnumerator DeactivateEnemyesXrayCoroutine(GameObject enemy)
     {
        yield return new WaitForSeconds(Constants.ENNEMIES_XRAYED_STATE_DURATION);
 
-        // ennemy.gameObject.layer = Constants.ENNEMIES_LAYER;
-        ennemy.gameObject.GetComponent<EchoReceiver>().SetXrayed(false);
+        // enemy.gameObject.layer = Constants.ENNEMIES_LAYER;
+        enemy.gameObject.GetComponent<EchoReceiver>().SetXrayed(false);
     }
 
 
@@ -120,7 +120,7 @@ public class Echo : MonoBehaviour
     {
         if (XrayedObjectsList.Contains(other.gameObject))
         {
-            StartCoroutine(DeactivateEnnemiesXrayCoroutine(other.gameObject));
+            StartCoroutine(DeactivateEnemyesXrayCoroutine(other.gameObject));
             XrayedObjectsList.Remove(other.gameObject);
         }
         else
