@@ -6,18 +6,17 @@ using UnityEngine.AI;
 public class EnnemyNavigation : MonoBehaviour
 {
 
-    private NavMeshAgent m_navMeshAgent;
+    private NavMeshAgent navMeshAgent;
 
-    //Serialized Fields
     public Vector3 targetLastSeenPosition;
 
 
 
-    // Start is called before the first frame update
+    
     void Start()
     {
-        m_navMeshAgent = GetComponent<NavMeshAgent>();
-        m_navMeshAgent.Warp(transform.position);
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.Warp(transform.position);
     }
 
     public void ChaseTarget(Vector3 targetPosition)
@@ -27,7 +26,7 @@ public class EnnemyNavigation : MonoBehaviour
 
     private void SetDestination(Vector3 targetPosition)
     {
-            m_navMeshAgent.SetDestination(targetPosition);
+            navMeshAgent.SetDestination(targetPosition);
     }
 
 
