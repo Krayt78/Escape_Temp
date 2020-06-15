@@ -12,14 +12,13 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField]
     private List<GameObject> WaypointPatrolList = new List<GameObject>();
     private int currentWaypointNumber;
-    private NavMeshAgent m_navMeshAgent;
+    private NavMeshAgent navMeshAgent;
 
     private EnemyAI.State state;
 
-    // Start is called before the first frame update
     void Start()
     {
-        m_navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
 
     }
 
@@ -29,27 +28,27 @@ public class EnemyPatrol : MonoBehaviour
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
 
-        m_navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
+        navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
     }
 
     public void StopMoving()
     {
-        m_navMeshAgent.isStopped = true;
+        navMeshAgent.isStopped = true;
     }
 
     public void ResumeMoving()
     {
-        m_navMeshAgent.isStopped = false;
+        navMeshAgent.isStopped = false;
     }
 
     public bool DestinationReached()
     {
         // Check if we've reached the destination
-        if (!m_navMeshAgent.pathPending)
+        if (!navMeshAgent.pathPending)
         {
-            if (m_navMeshAgent.remainingDistance <= m_navMeshAgent.stoppingDistance)
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
-                if (!m_navMeshAgent.hasPath || m_navMeshAgent.velocity.sqrMagnitude == 0f)
+                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
                 {
                     return true;
                 }

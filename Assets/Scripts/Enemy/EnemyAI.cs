@@ -16,7 +16,6 @@ public class EnemyAI : MonoBehaviour
 
     public State state = State.Default;
 
-    // Start is called before the first frame update
     void Start()
     {
         fieldOfView = GetComponent<FieldOfView>();

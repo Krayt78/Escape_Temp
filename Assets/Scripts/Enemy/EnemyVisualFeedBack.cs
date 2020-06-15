@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyVisualFeedBack : MonoBehaviour
 {
     [SerializeField] List<GameObject> feedbackObjects;
-    private List<Renderer> m_feedBackObjectRenderers;
+    private List<Renderer> feedBackObjectRenderers;
     [SerializeField] Material sightMaterial;
     [SerializeField] Material attackMaterial;
     [SerializeField] Material patrolState;
@@ -18,13 +18,13 @@ public class EnemyVisualFeedBack : MonoBehaviour
         Attack,
         Patrol,
     }
-    // Start is called before the first frame update
+    
     void Start()
     {
-        m_feedBackObjectRenderers = new List<Renderer>();
+        feedBackObjectRenderers = new List<Renderer>();
         foreach (GameObject feedbackObject in feedbackObjects)
         {
-            m_feedBackObjectRenderers.Add(feedbackObject.GetComponent<Renderer>());
+            feedBackObjectRenderers.Add(feedbackObject.GetComponent<Renderer>());
         }
 
         setStateColor(StateColor.Patrol);
@@ -42,7 +42,7 @@ public class EnemyVisualFeedBack : MonoBehaviour
             lastStateColor = state;
         }
 
-        foreach (var m_feedBackObjectRenderer in m_feedBackObjectRenderers)
+        foreach (var m_feedBackObjectRenderer in feedBackObjectRenderers)
         {
             if (state == StateColor.Sight)
             {

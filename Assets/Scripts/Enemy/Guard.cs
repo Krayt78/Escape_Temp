@@ -43,10 +43,10 @@ public class Guard : MonoBehaviour
 
     // public bool isStunned { get; private set; }
 
-    public StateMachine m_StateMachine => GetComponent<StateMachine>();
+    public StateMachine stateMachine => GetComponent<StateMachine>();
 
     [SerializeField]
-    private BaseState CurrentState => m_StateMachine.CurrentState;
+    private BaseState CurrentState => stateMachine.CurrentState;
 
     private void Start()
     {
@@ -146,7 +146,7 @@ public class Guard : MonoBehaviour
         if (noise.emitter.GetComponent<Guard>())
             return;
         NoiseHeard = noise.emitter.transform;
-        Debug.Log("nosie heard");
+        Debug.Log("noise heard");
     }
 
     private void OnStunned(float stunDuration)
