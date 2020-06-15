@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SightedState : BaseState
+public class AlertedState : BaseState
 {
     private Guard m_Guard;
 
-    private float sightedTimer = 3f;
+    private float sightedTimer = 1.5f;
     private float currentTimer = 0;
 
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
 
-    public SightedState(Guard guard) : base(guard.gameObject)
+    public AlertedState(Guard guard) : base(guard.gameObject)
     {
         m_Guard = guard;
 
@@ -41,10 +41,11 @@ public class SightedState : BaseState
         {
             //orient towards target
             m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
+            m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
         }
 
         // check if the ennemy detected the player depending on his distance 
-        if (IsSighted())
+        if (IsSighted()) // 100%
         {
             ResetTimer();
             m_Guard.EnnemyPatrol.StopMoving();
@@ -58,12 +59,12 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Sighted state");
+        Debug.Log("Entering Alerted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Sighted state");
+        Debug.Log("Exiting Alerted state");
     }
 
     private bool IsSighted()

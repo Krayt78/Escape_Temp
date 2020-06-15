@@ -103,6 +103,7 @@ public class Guard : MonoBehaviour
             {typeof(IdleState), new IdleState(this)},
             {typeof(LostState), new LostState(this)},
             {typeof(SightedState), new SightedState(this)},
+            {typeof(AlertedState), new AlertedState(this)},
             {typeof(StunnedState), new StunnedState(this)},
             {typeof(StaticState), new StaticState(this)},
             {typeof(AttackState), new AttackState(this)},

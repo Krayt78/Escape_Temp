@@ -18,6 +18,7 @@ public class PatrollState : BaseState
 
     public override Type Tick()
     {
+        // ANY STATE-    --> i think we should move this in an other script, it is common to each state or quite
         if (m_Guard.IsDead)
         {
             m_Guard.EnnemyPatrol.StopMoving();
@@ -29,6 +30,7 @@ public class PatrollState : BaseState
             m_Guard.EnnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
+        // -ANY STATE //
 
         if (m_Guard.Target)
         {
