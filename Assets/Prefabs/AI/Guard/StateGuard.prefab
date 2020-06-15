@@ -13,20 +13,20 @@ GameObject:
   - component: {fileID: 2486525242594151236}
   - component: {fileID: 2768329603929176748}
   - component: {fileID: 2486525242594151233}
-  - component: {fileID: 2486525242594151238}
-  - component: {fileID: 9199634608580640272}
   - component: {fileID: 9199634609167077103}
   - component: {fileID: 9199634609167077096}
-  - component: {fileID: 275735371180731719}
-  - component: {fileID: 275735371180731712}
-  - component: {fileID: 275735371180731713}
   - component: {fileID: 6106039678586229488}
   - component: {fileID: 531032871}
-  - component: {fileID: 1672429345}
   - component: {fileID: 7635681318098651696}
   - component: {fileID: 3110169949841907222}
   - component: {fileID: -5490193504652198773}
-  - component: {fileID: 304258029}
+  - component: {fileID: 1986241611511234180}
+  - component: {fileID: 375255480629149475}
+  - component: {fileID: 3103584949506698641}
+  - component: {fileID: 7319089558128541507}
+  - component: {fileID: 4712989700732406273}
+  - component: {fileID: 3756661216827166857}
+  - component: {fileID: 7697378172346190403}
   m_Layer: 11
   m_Name: StateGuard
   m_TagString: Untagged
@@ -124,34 +124,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   visibleTargets: []
---- !u!114 &2486525242594151238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb0bcc3114afe9441985b5ad80219917, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLastSeenPosition: {x: 0, y: 0, z: 0}
---- !u!114 &9199634608580640272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f9ce5d4212d1544bfcba72c51a1250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WaypointPatrolList:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &9199634609167077103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,48 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentStateName: Default
---- !u!114 &275735371180731719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fc82add79930ac4995d112f927cd488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stunDuration: 3
---- !u!114 &275735371180731712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63126a28d65876d4ba600c7c623bfa78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 1
-  cooldown: 0
-  Bullet: {fileID: 6521587158353889600, guid: 1e301c3a0fb5ad5408eb874abca41b74, type: 3}
-  FiringPoint: {fileID: 6770435400161179507}
---- !u!114 &275735371180731713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72fc7bdb9ecb190449818285e5641990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 180
 --- !u!114 &6106039678586229488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,18 +181,6 @@ MonoBehaviour:
   Gfx:
   - {fileID: 1137254120525087654}
   - {fileID: 8272670790517066664}
---- !u!114 &1672429345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486525242594151242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc28af39eae73e42b963db656ea69e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7635681318098651696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +236,7 @@ MonoBehaviour:
   playerLostSFXPath: event:/Sentinel/States/PlayerLost
   searchingStateSFXPath: event:/Sentinel/States/SearchingState
   spottedSmthSFXPath: event:/Sentinel/States/SpottedSomething
---- !u!114 &304258029
+--- !u!114 &1986241611511234180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,10 +245,90 @@ MonoBehaviour:
   m_GameObject: {fileID: 2486525242594151242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4282f6f2e5e754f98d412f11e5471b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ebc2676d37aaee458d1435213c5cbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sentinelEye: {fileID: 5629061465918109912}
+--- !u!114 &375255480629149475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c776afbd7da11e54685ebf1bbdca683b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointPatrolList: []
+--- !u!114 &3103584949506698641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7226469e80085146b3d1249aab451df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunDuration: 3
+--- !u!114 &7319089558128541507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c80a6d0b3616442bd494c9fb7d2141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 30
+--- !u!114 &4712989700732406273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2900a47125b95344a9cb5f4880b47736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 1
+  cooldown: 0
+  Bullet: {fileID: 6521587158353889600, guid: 1e301c3a0fb5ad5408eb874abca41b74, type: 3}
+  FiringPoint: {fileID: 6770435400161179507}
+--- !u!114 &3756661216827166857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011703b3f3cc69f44bb4379aa63a1f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLastSeenPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &7697378172346190403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486525242594151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d452c461a971342b740a2904096c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6770435400155485657
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +389,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -295,22 +296,22 @@ GameObject:
   - component: {fileID: 7016531009929077401}
   - component: {fileID: 7328840197656630129}
   - component: {fileID: 7016531009929077404}
-  - component: {fileID: 7016531009929077403}
-  - component: {fileID: 4356663782745741261}
   - component: {fileID: 4356663782290958130}
   - component: {fileID: 4356663782290958133}
-  - component: {fileID: 4615569029652071578}
-  - component: {fileID: 4615569029652071581}
-  - component: {fileID: 4615569029652071580}
   - component: {fileID: 1685281891229023021}
   - component: {fileID: 4890434549566063354}
-  - component: {fileID: 3150400831466754057}
   - component: {fileID: 9133023407889177170}
   - component: {fileID: -5886568066857260874}
   - component: {fileID: -7199470198312790290}
-  - component: {fileID: 861174213188389513}
-  - component: {fileID: -482099726199864922}
   - component: {fileID: 1014100991790816346}
+  - component: {fileID: 340897990855427195}
+  - component: {fileID: 8816052375809840466}
+  - component: {fileID: 5466818140407036009}
+  - component: {fileID: 8262919992601365204}
+  - component: {fileID: 7912495944996205763}
+  - component: {fileID: 7241542291936504553}
+  - component: {fileID: 6852265252787740648}
+  - component: {fileID: 5130429992329635616}
   m_Layer: 11
   m_Name: StateGuard w_ Armor
   m_TagString: Untagged
@@ -407,34 +408,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   visibleTargets: []
---- !u!114 &7016531009929077403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb0bcc3114afe9441985b5ad80219917, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLastSeenPosition: {x: 0, y: 0, z: 0}
---- !u!114 &4356663782745741261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f9ce5d4212d1544bfcba72c51a1250, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WaypointPatrolList:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &4356663782290958130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,48 +437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentStateName: Default
---- !u!114 &4615569029652071578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fc82add79930ac4995d112f927cd488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stunDuration: 3
---- !u!114 &4615569029652071581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63126a28d65876d4ba600c7c623bfa78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 1
-  cooldown: 0
-  Bullet: {fileID: 6521587158353889600, guid: 1e301c3a0fb5ad5408eb874abca41b74, type: 3}
-  FiringPoint: {fileID: 2173896597272665774}
---- !u!114 &4615569029652071580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72fc7bdb9ecb190449818285e5641990, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 180
 --- !u!114 &1685281891229023021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,18 +466,6 @@ MonoBehaviour:
   - {fileID: 5482577117171903099}
   - {fileID: 3535393942018007669}
   - {fileID: 0}
---- !u!114 &3150400831466754057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc28af39eae73e42b963db656ea69e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9133023407889177170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,38 +521,6 @@ MonoBehaviour:
   playerLostSFXPath: event:/Sentinel/States/PlayerLost
   searchingStateSFXPath: event:/Sentinel/States/SearchingState
   spottedSmthSFXPath: event:/Sentinel/States/SpottedSomething
---- !u!114 &861174213188389513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 539bd34fa8ae4c548aa13f2546845d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  feedbackObjects:
-  - {fileID: 7919637441146857892}
-  - {fileID: 7946945591000372425}
-  - {fileID: 8390432712477766677}
-  sightMaterial: {fileID: 2100000, guid: 617e4df4820f4844ca0e3faa1cc3d528, type: 2}
-  attackMaterial: {fileID: 2100000, guid: 50cd2357936f48246838e0bad9f9d480, type: 2}
-  patrolState: {fileID: 2100000, guid: 99ac410307bb982439535013f2fce9df, type: 2}
---- !u!114 &-482099726199864922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4282f6f2e5e754f98d412f11e5471b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sentinelEye: {fileID: 990829145546772741}
 --- !u!114 &1014100991790816346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +533,118 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a99284d42fd0c42929aeed774e8f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &340897990855427195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebc2676d37aaee458d1435213c5cbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinelEye: {fileID: 990829145546772741}
+--- !u!114 &8816052375809840466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d161450e172de45a5c1e2f2283588e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedbackObjects:
+  - {fileID: 7919637441146857892}
+  - {fileID: 7946945591000372425}
+  - {fileID: 8390432712477766677}
+  sightMaterial: {fileID: 2100000, guid: 617e4df4820f4844ca0e3faa1cc3d528, type: 2}
+  attackMaterial: {fileID: 2100000, guid: 50cd2357936f48246838e0bad9f9d480, type: 2}
+  patrolState: {fileID: 2100000, guid: 99ac410307bb982439535013f2fce9df, type: 2}
+--- !u!114 &5466818140407036009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011703b3f3cc69f44bb4379aa63a1f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLastSeenPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &8262919992601365204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c776afbd7da11e54685ebf1bbdca683b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointPatrolList: []
+--- !u!114 &7912495944996205763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2900a47125b95344a9cb5f4880b47736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 1
+  cooldown: 0
+  Bullet: {fileID: 6521587158353889600, guid: 1e301c3a0fb5ad5408eb874abca41b74, type: 3}
+  FiringPoint: {fileID: 2173896597272665774}
+--- !u!114 &7241542291936504553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7226469e80085146b3d1249aab451df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunDuration: 3
+--- !u!114 &6852265252787740648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d452c461a971342b740a2904096c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5130429992329635616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c80a6d0b3616442bd494c9fb7d2141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 30
 --- !u!1 &7617289542263088525
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +735,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
