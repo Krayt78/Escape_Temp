@@ -18,6 +18,5 @@ public class EnnemyOrientation : MonoBehaviour
 
         // Rotate our transform a step closer to the target's.
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-
     }
 }

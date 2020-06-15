@@ -35,12 +35,14 @@ public class SightedState : BaseState
             ResetTimer();
             m_Guard.EnnemyPatrol.ResumeMoving();
             m_Guard.EnnemyNavigation.ChaseTarget(m_Guard.EnnemyNavigation.targetLastSeenPosition);
+            m_Guard.EnnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
         else
         {
             //orient towards target
             m_Guard.EnnemyOrientation.OrientationTowardsTarget(m_Guard.Target);
+            m_Guard.EnnemyEyeMovement.MoveEyeAtTarget(m_Guard.Target.position);
         }
 
         // check if the ennemy detected the player depending on his distance 
@@ -56,6 +58,7 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Entering Sighted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }

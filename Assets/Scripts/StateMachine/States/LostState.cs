@@ -35,9 +35,10 @@ public class LostState : BaseState
                 m_Guard.EnnemyPatrol.GoToNextCheckpoint();
                 return typeof(StaticState);
             }
-                
             else
+            {
                 return typeof(PatrollState);
+            }
         }
             
 
@@ -55,7 +56,7 @@ public class LostState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Lost state");
-
+        m_Guard.EnnemyVisualFeedBack.setStateColor(EnnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
     }
 
