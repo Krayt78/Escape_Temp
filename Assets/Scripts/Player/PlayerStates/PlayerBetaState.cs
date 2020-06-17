@@ -49,6 +49,7 @@ public class PlayerBetaState : BasePlayerState
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToBetaSFX();
         manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
+        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Beta);
     }
 
     public override Type Tick()
