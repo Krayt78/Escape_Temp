@@ -7,19 +7,13 @@ public class SightedState : BaseState
 {
     private Guard guard;
 
-    private float sightedTimer = 1.5f;
-    private float currentTimer = 0;
-
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
 
     public SightedState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-
-        currentTimer = sightedTimer;
     }
-
 
     public override Type Tick()
     {
@@ -32,9 +26,7 @@ public class SightedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
-            ResetTimer();
             guard.EnemyPatrol.ResumeMoving();
-            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
             guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
@@ -45,12 +37,15 @@ public class SightedState : BaseState
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
         }
 
-        // check if the enemy detected the player depending on his distance 
-        if (IsSighted()) // 50%
-        {
-            ResetTimer();
+        AlertLevel();
+
+        // check if the enemy detected the player depending on his distance and time since first sighted
+        if(guard.AlertLevel > 0.5f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AlertedState);
+        }
+        if(guard.AlertLevel == 0f){
+            return typeof(PatrollState);
         }
            
         return null;
@@ -67,19 +62,12 @@ public class SightedState : BaseState
         Debug.Log("Exiting Sighted state");
     }
 
-    private bool IsSighted()
+    private float AlertLevel()
     {
-       distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-       Debug.Log("alertLevel : "+(Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(sightedTimer/100));
-       //guard.AlertLevel += (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(sightedTimer/100);
-        if ((currentTimer -= Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard)) <= 0)
-            return true;
-
-        return false;
+        distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
+        guard.SetAlertLevel(guard.AlertLevel + (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(1/guard.SIGHTED_TIMER));
+        Debug.Log("alertLevel in Sighted : "+guard.AlertLevel);
+        return guard.AlertLevel;
     }
 
-    private void ResetTimer()
-    {
-        currentTimer = sightedTimer;
-    }
 }

@@ -24,6 +24,8 @@ public class Guard : MonoBehaviour
 
     [Range(0f, 1f)]
     private float alertLevel = 0f;
+    // TIME between SIGHTED and ATTACKING
+    public readonly float SIGHTED_TIMER = 6f;
 
     public float AlertLevel { get { return alertLevel; } private set { alertLevel = value; } }
 
@@ -197,4 +199,10 @@ public class Guard : MonoBehaviour
     {
         GetComponentInChildren<AIDebugMode>().gameObject.SetActive(true);
     }
+
+    public void SetAlertLevel(float value)
+    {
+        this.AlertLevel = value;
+    }
+    
 }
