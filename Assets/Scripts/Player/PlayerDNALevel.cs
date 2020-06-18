@@ -46,6 +46,11 @@ public class PlayerDNALevel : MonoBehaviour
         playerEntityController.OnTakeDamages += TakeDamages;
         playerEntityController.OnEat += Eat;
 
+        Invoke("LaunchFirstEvents", 0.3f);
+    }
+
+    private void LaunchFirstEvents()
+    {
         OnDnaLevelChanged(dnaLevel);
         OncurrentEvolutionLevelChanged(currentEvolutionLevel);
     }

@@ -80,7 +80,9 @@ public class Grapplin : Ability
 
     private void FixedUpdate()
     {
-        ray = new Ray(playerCamera.position, playerCamera.forward);
+        //ray = new Ray(playerCamera.position, playerCamera.forward);
+
+        ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
     }
     private void CheckPosition()
@@ -160,6 +162,7 @@ public class Grapplin : Ability
 
         while (grp.transform.position != hit.point)
         {
+            lrRope.SetPosition(0, grapplinPosition.position);
             grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
@@ -197,14 +200,15 @@ public class Grapplin : Ability
     private void InitGrapplin()
     {
         ray = new Ray(playerCamera.position, playerCamera.forward);
-       
+        //VR : Ray traced from the hand
+        //ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
             
             if (hit.collider.GetComponent<GrapplinZone>() != null)
             {
                 //Debug.LogWarning("We launch grapplin");
-                playerMovement.enabled = false;
+                //playerMovement.enabled = false;
                 destination = hit.collider.gameObject.GetComponent<GrapplinZone>().LandingPoint.position;
 
                 bezierControlPoint = destination;
