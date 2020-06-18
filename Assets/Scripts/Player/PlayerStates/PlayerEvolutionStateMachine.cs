@@ -27,8 +27,8 @@ public class PlayerEvolutionStateMachine : StateMachine
     private void Start()
     {
         InitializePlayerStateMachine();
-        InitializeStateMachineFirstState();
-
+        //InitializeStateMachineFirstState();
+        SetStartState();
 
         playerCarateristic.InitCharacterisctics(
             ((BasePlayerState)CurrentState).StateSpeed,
@@ -101,6 +101,20 @@ public class PlayerEvolutionStateMachine : StateMachine
     public void CallOnDevolve()
     {
         OnDevolve();
+    }
+
+    private void SetStartState()
+    {
+        BaseState value;
+
+        if (!availableStates.TryGetValue(typeof(PlayerBetaState), out value))
+        {
+            Debug.LogError("NO PLAYER STATE FOUND");
+            return;
+        }
+        CurrentState = value;
+        CurrentStateName = value.ToString();
+        CurrentState.OnStateEnter(this);
     }
 
     private void OnGUI()

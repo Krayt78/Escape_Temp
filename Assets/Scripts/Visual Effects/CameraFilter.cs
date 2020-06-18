@@ -33,14 +33,14 @@ public class CameraFilter : Singleton<CameraFilter>
     public enum Profile
     {
         Beta,
-        Aplha,
+        Alpha,
         Omega
     }
     // Start is called before the first frame update
     void Start()
     {
         globalCameraVolume = gameObject.GetComponent<Volume>();
-        currentProfile = Profile.Omega;
+        currentProfile = Profile.Beta;
 
         ColorAdjustments temp;
         Vignette tempVignette;
@@ -74,7 +74,7 @@ public class CameraFilter : Singleton<CameraFilter>
         {
             globalCameraVolume.profile = omegaProfile;
         }
-        else if (profile == Profile.Aplha)
+        else if (profile == Profile.Alpha)
         {
             globalCameraVolume.profile = alphaProfile;
             alphaColorAdjustment.saturation.value = 0;
@@ -94,12 +94,13 @@ public class CameraFilter : Singleton<CameraFilter>
 
         float saturationPercentage = ((1 - dnaLevel) * 100) * (-1);
         omegaColorAdjustment.saturation.value = saturationPercentage;
+        omegaColorAdjustment.contrast.value = -saturationPercentage;
         omegaVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
     }
 
     public IEnumerator alphaColorLerp()
     {
-        if (currentProfile != Profile.Aplha && alphaColorAdjustment == null)
+        if (currentProfile != Profile.Alpha && alphaColorAdjustment == null)
         {
             yield return null;
         }
