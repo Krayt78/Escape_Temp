@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FMODPlayerController
 {
+    //Temp
+    private static FMOD.Studio.EventInstance playingVoice;
+
     public static void PlayOnShotSound(string path, Vector3 position)
     {
         FMODUnity.RuntimeManager.PlayOneShot(path, position);
@@ -11,6 +14,7 @@ public class FMODPlayerController
 
     public static FMOD.Studio.EventInstance PlaySoundInstance(string path, Vector3 position)
     {
+        Debug.Log("PlayStart");
         FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
 
         FMOD.VECTOR fvector;
@@ -19,10 +23,17 @@ public class FMODPlayerController
         fvector.z = position.z;
         attributes.position = fvector;
 
-        FMOD.Studio.EventInstance sound = FMODUnity.RuntimeManager.CreateInstance(path);
-        sound.set3DAttributes(attributes);
-        sound.start();
+        Debug.Log("PlayCreate");
 
+        FMOD.Studio.EventInstance sound = FMODUnity.RuntimeManager.CreateInstance(path);
+        Debug.Log("PlayAttribute");
+        //sound.set3DAttributes(attributes);
+        sound.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(position));
+
+
+        Debug.Log("Play.");
+        sound.start();
+        Debug.Log("Played");
         return sound;
     }
 
@@ -38,5 +49,13 @@ public class FMODPlayerController
     public static void ReleaseSoundInstance(FMOD.Studio.EventInstance sound)
     {
         sound.release();
+    }
+
+    public static void PlayVoice(string path, Vector3 pos)
+    {
+        //if (playingVoice.isValid())
+        playingVoice.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+
+        playingVoice = PlaySoundInstance(path, pos);
     }
 }
