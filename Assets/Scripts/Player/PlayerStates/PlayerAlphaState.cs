@@ -44,6 +44,7 @@ public class PlayerAlphaState : BasePlayerState
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToAlphaSFX();
         manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
+        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Aplha);
     }
 
     public override Type Tick()

@@ -49,10 +49,12 @@ public class PlayerOmegaState : BasePlayerState
 
         manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToOmegaSFX();
         manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
+        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Omega);
     }
 
     public override Type Tick()
     {
+        CameraFilter.Instance.omegaFilterFluctation(playerDnaLevel.DnaLevel);
         return null;
     }
 
