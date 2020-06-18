@@ -14,26 +14,11 @@ public class FMODPlayerController
 
     public static FMOD.Studio.EventInstance PlaySoundInstance(string path, Vector3 position)
     {
-        Debug.Log("PlayStart");
-        FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
-
-        FMOD.VECTOR fvector;
-        fvector.x = position.x;
-        fvector.y = position.y;
-        fvector.z = position.z;
-        attributes.position = fvector;
-
-        Debug.Log("PlayCreate");
-
         FMOD.Studio.EventInstance sound = FMODUnity.RuntimeManager.CreateInstance(path);
-        Debug.Log("PlayAttribute");
-        //sound.set3DAttributes(attributes);
         sound.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(position));
 
 
-        Debug.Log("Play.");
         sound.start();
-        Debug.Log("Played");
         return sound;
     }
 
