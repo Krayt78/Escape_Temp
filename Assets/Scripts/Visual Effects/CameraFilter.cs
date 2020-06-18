@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -16,7 +17,16 @@ public class CameraFilter : Singleton<CameraFilter>
     [SerializeField]
     private VolumeProfile alphaProfile;
     private ColorAdjustments omegaColorAdjustment;
+    private ColorAdjustments alphaColorAdjustment;
     private Vignette omegaVignette;
+    [ColorUsage(true, true)]
+    [SerializeField]
+    private Color alphaStartingColor;
+    [ColorUsage(true, true)]
+    [SerializeField]
+    private Color alphaMaxColor;
+    [SerializeField]
+    private float alphaSaturationMax;
 
     public Profile currentProfile { get; private set; }
 
@@ -31,6 +41,7 @@ public class CameraFilter : Singleton<CameraFilter>
     {
         globalCameraVolume = gameObject.GetComponent<Volume>();
         currentProfile = Profile.Omega;
+
         ColorAdjustments temp;
         Vignette tempVignette;
         if (omegaProfile.TryGet<ColorAdjustments>(out temp))
@@ -41,11 +52,15 @@ public class CameraFilter : Singleton<CameraFilter>
         {
             omegaVignette = tempVignette;
         }
+
+        if (alphaProfile.TryGet<ColorAdjustments>(out temp))
+        {
+            alphaColorAdjustment = temp;
+        }
     }
     
     public void setVolumeProfile(Profile profile)
     {
-        Debug.Log(profile);
         if (currentProfile == profile)
         {
             return;
@@ -62,6 +77,9 @@ public class CameraFilter : Singleton<CameraFilter>
         else if (profile == Profile.Aplha)
         {
             globalCameraVolume.profile = alphaProfile;
+            alphaColorAdjustment.saturation.value = 0;
+            alphaColorAdjustment.colorFilter.value = alphaStartingColor;
+            StartCoroutine(alphaColorLerp());
         }
 
         currentProfile = profile;
@@ -77,5 +95,24 @@ public class CameraFilter : Singleton<CameraFilter>
         float saturationPercentage = ((1 - dnaLevel) * 100) * (-1);
         omegaColorAdjustment.saturation.value = saturationPercentage;
         omegaVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
+    }
+
+    public IEnumerator alphaColorLerp()
+    {
+        if (currentProfile != Profile.Aplha && alphaColorAdjustment == null)
+        {
+            yield return null;
+        }
+        float ElapsedTime = 0.0f;
+        float TotalTime = 10f;
+
+        while (ElapsedTime < TotalTime)
+        {
+            ElapsedTime += Time.deltaTime;
+            alphaColorAdjustment.saturation.value = Mathf.Lerp(alphaColorAdjustment.saturation.value, alphaSaturationMax, (ElapsedTime / TotalTime));
+            alphaColorAdjustment.colorFilter.value = Color.Lerp(alphaColorAdjustment.colorFilter.value, alphaMaxColor, (ElapsedTime / TotalTime));
+
+            yield return null;
+        }
     }
 }
