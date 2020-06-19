@@ -118,7 +118,7 @@ public class PlayerDNALevel : MonoBehaviour
 
     private bool CheckIfDead()
     {
-        return (currentEvolutionLevel <= minEvolutionLevel && dnaLevel<0);
+        return (currentEvolutionLevel <= minEvolutionLevel && dnaLevel<=0);
     }
 
     public void ClampDnaLevel()

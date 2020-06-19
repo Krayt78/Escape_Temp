@@ -9,11 +9,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject winMenu;
 
     // Start is called before the first frame update
     void Start()
     {
         player.GetComponent<EntityController>().OnDies += OnPlayerDies;
+        EndOfLevel.instance.OnWinLevel += PlayerWon;
     }
 
     // Update is called once per frame
@@ -50,6 +52,11 @@ public class GameController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         player.GetComponent<PlayerCameraController>().enabled = false;
+    }
+
+    public void PlayerWon()
+    {
+        winMenu.SetActive(true);
     }
 
     public void RestartScene()
