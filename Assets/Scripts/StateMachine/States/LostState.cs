@@ -89,12 +89,17 @@ public class LostState : BaseState
         Debug.Log("Entering Lost state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
-        guard.EnemyPatrol.AddRandomWaypointNear(guard.transform.position, true);
+        if(guard.AlertLevel > 0.5f){
+            guard.EnemyPatrol.AddRandomWaypointNear(guard.transform.position, true);
+        }
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Lost state");
-        guard.EnemyPatrol.RestoreWaypoints();
+        if(guard.AlertLevel > 0.5f)
+        {
+            guard.EnemyPatrol.RestoreWaypoints();
+        }
     }
 }
