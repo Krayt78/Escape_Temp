@@ -15,6 +15,7 @@ public class PlayerOmegaState : BasePlayerState
     public const int levelState = 0;
 
     private PlayerDNALevel playerDnaLevel;
+    public float dnaLostSpeed = .0333f;
 
 
     float stateSpeed = 7;
@@ -54,6 +55,7 @@ public class PlayerOmegaState : BasePlayerState
 
     public override Type Tick()
     {
+        playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
         CameraFilter.Instance.omegaFilterFluctation(playerDnaLevel.DnaLevel);
         return null;
     }
