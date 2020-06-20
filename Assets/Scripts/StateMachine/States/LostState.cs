@@ -66,22 +66,16 @@ public class LostState : BaseState
             guard.EnemyPatrol.GoToNextCheckpoint();
         }
             
-        AlertLevel();
+        AlertLevelDown();
 
         return null;
     }
 
-    private void ResetTimer()
-    {
-        guard.SetAlertLevel(0f);
-    }
-
-    private float AlertLevel()
+    private void AlertLevelDown()
     {
         //distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 0.5f), 0f, 1f));
+        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 0.05f), 0f, 1f));
         Debug.Log("alertLevel In LostState : "+guard.AlertLevel);
-        return guard.AlertLevel;
     }
 
     public override void OnStateEnter(StateMachine manager)
