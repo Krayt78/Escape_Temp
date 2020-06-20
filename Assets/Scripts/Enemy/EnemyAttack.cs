@@ -21,8 +21,15 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     GameObject FiringPoint;
 
+    private Guard guard;
+
 
     public event Action OnFireAtTarget = delegate { };
+
+    private void Start()
+    {
+        guard = GetComponentInParent<Guard>();
+    }
 
 
     public void AttackRoutine(Transform target) 
@@ -47,8 +54,8 @@ public class EnemyAttack : MonoBehaviour
     }
 
     private void FireAtTarget(Transform target)
-    { 
-        
+    {
+
         /*
         if (RollADice.RollPercentage(accuracy, 100))
         {
@@ -60,9 +67,8 @@ public class EnemyAttack : MonoBehaviour
 
             Debug.Log("Miss");
         }*/
-
+        guard.EnemyAnimationController.TriggerAttackTurret();
         Instantiate(Bullet, FiringPoint.transform.position, FiringPoint.transform.rotation);
-
 
         cooldown = fireRate;
 
