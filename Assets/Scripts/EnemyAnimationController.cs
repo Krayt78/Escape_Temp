@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class EnemyAnimationController : MonoBehaviour
 {
+    [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private Animator animatorArmor;
     private Guard guard;
 
+    bool isTopCanonLastAttack;
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         guard = GetComponentInParent<Guard>();
+        isTopCanonLastAttack = false;
     }
 
     public void TriggerStunned()
@@ -38,7 +43,19 @@ public class EnemyAnimationController : MonoBehaviour
     public void TriggerAttack()
     {
         animator.SetTrigger("attack");
-
+    }
+    public void TriggerAttackTurret()
+    {
+        if (!isTopCanonLastAttack)
+        {
+            animatorArmor.SetTrigger("topCanonShootTrigger");
+            isTopCanonLastAttack = true;
+        }
+        else
+        {
+            animatorArmor.SetTrigger("botCanonShootTrigger");
+            isTopCanonLastAttack = false;
+        }
     }
 
     public void TriggerSight()
