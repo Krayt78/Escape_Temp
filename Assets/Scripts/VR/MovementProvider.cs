@@ -6,6 +6,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MovementProvider : LocomotionProvider
 {
+    [SerializeField]
+    [Tooltip("The XR Rig object to provide access control to.")]
+    XRRig m_XRRig;
+    /// <summary>
+    /// The XR Rig object to provide access control to.
+    /// </summary>
+    public XRRig xrRig { get { return m_XRRig; } set { m_XRRig = value; } }
+
     public float speed = 1.0f;
     public float gravityMultiplier = 1.0f;
     public List<XRController> controllers = null;
@@ -13,9 +21,12 @@ public class MovementProvider : LocomotionProvider
     private CharacterController characterController = null;
     private GameObject head = null;
 
+    
+
     protected override void Awake() {
-        characterController = GetComponent<CharacterController>();
-        head = GetComponent<XRRig>().cameraGameObject;
+        characterController = xrRig.GetComponent<CharacterController>();
+
+        head = xrRig.cameraGameObject;
     }
     // Start is called before the first frame update
     void Start()
