@@ -205,7 +205,7 @@ public class Grapplin : Ability
         if (Physics.Raycast(ray, out hit, maxRange))
         {
             
-            if (hit.collider.GetComponent<GrapplinZone>() != null)
+            if (hit.collider.GetComponentInChildren<GrapplinZone>() != null)
             {
                 //Debug.LogWarning("We launch grapplin");
                 //playerMovement.enabled = false;
