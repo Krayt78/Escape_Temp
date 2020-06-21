@@ -40,6 +40,7 @@ public class AlertedState : BaseState
         {
             //orient towards target
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
+            guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
         }
 
