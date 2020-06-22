@@ -11,6 +11,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class MasterController : MonoBehaviour
 {
+
+    public PlayerInput playerInput;
+
     static MasterController s_Instance = null;
     public static MasterController Instance => s_Instance;
 
@@ -148,6 +151,18 @@ public class MasterController : MonoBehaviour
     {
         RightTeleportUpdate();
         LeftTeleportUpdate();
+        GrapplinUpdate();
+    }
+
+    void GrapplinUpdate()
+    {
+        bool buttonInput;
+        m_RightInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
+
+        if(buttonInput == true)
+        {
+            playerInput.OnUseAbilityFunction();
+        }
     }
 
     void RightTeleportUpdate()

@@ -52,4 +52,9 @@ public class PlayerInput : MonoBehaviour
             OnScan();
     }
 
+    public void OnUseAbilityFunction()
+    {
+        OnUseAbility();
+    }
+
 }

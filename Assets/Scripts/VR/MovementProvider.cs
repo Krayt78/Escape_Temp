@@ -84,7 +84,7 @@ public class MovementProvider : LocomotionProvider
         Vector3 movement = direction * speed;
         characterController.Move(movement * Time.deltaTime);
 
-        Debug.Log(position);
+        //Debug.Log(position);
         
     }
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMouthController : MonoBehaviour
 {
 
+    public PlayerEntityController playerEntityController;
+
     private void OnTriggerEnter(Collider other)
     {
         FoodController food = other.gameObject.GetComponent<FoodController>();

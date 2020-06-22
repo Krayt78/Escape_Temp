@@ -199,9 +199,9 @@ public class Grapplin : Ability
 
     private void InitGrapplin()
     {
-        ray = new Ray(playerCamera.position, playerCamera.forward);
+        //ray = new Ray(playerCamera.position, playerCamera.forward);
         //VR : Ray traced from the hand
-        //ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
+        ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
             
