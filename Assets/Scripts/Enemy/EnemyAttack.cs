@@ -68,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
             Debug.Log("Miss");
         }*/
         guard.EnemyAnimationController.TriggerAttackTurret();
-        Instantiate(Bullet, FiringPoint.transform.position, FiringPoint.transform.rotation);
+        GameObject bullet = Instantiate(Bullet, FiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
 
         cooldown = fireRate;
 
