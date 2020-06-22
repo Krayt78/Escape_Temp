@@ -220,6 +220,7 @@ public class Grapplin : Ability
                 playerSoundEffectController.PlayGrapplinShootSFX();
 
                 grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), transform);
+                grp.transform.LookAt(destination);
                 grp.transform.parent = null;
                 StartCoroutine(LaunchGrapplin(grp));
 
