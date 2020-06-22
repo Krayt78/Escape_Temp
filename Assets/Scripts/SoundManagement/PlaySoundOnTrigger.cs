@@ -6,7 +6,7 @@ public class PlaySoundOnTrigger : MonoBehaviour
 {
     public string eventPath = "event:/Tutorial/Tutorial_Voice_";
     public int eventIndex = 0;
-
+    public float delay = 0f;
     public bool played = false;
 
     private void OnTriggerEnter(Collider other)
@@ -15,9 +15,15 @@ public class PlaySoundOnTrigger : MonoBehaviour
             return;
         if(other.CompareTag("Player"))
         {
-            played = true;
-            Debug.Log("Play : " + (eventPath + eventIndex));
-            FMODPlayerController.PlayVoice(eventPath + eventIndex, transform.position);
+            StartCoroutine(PlayWithDelayCoroutine());
         }
+    }
+
+    public IEnumerator PlayWithDelayCoroutine()
+    {
+        yield return new WaitForSeconds(delay);
+        played = true;
+        Debug.Log("Play : " + (eventPath + eventIndex));
+        FMODPlayerController.PlayVoice(eventPath + eventIndex, transform.position);
     }
 }
