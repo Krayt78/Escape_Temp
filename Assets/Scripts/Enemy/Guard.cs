@@ -179,6 +179,7 @@ public class Guard : MonoBehaviour
     public void SetTarget(Transform target)
     {
         Target = target;
+        //EnemyAIManager.Instance.Add
     }
     public void ResetNoise()
     {

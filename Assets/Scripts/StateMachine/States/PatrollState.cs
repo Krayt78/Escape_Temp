@@ -8,13 +8,12 @@ public class PatrollState : BaseState
 {
 
     private Guard guard;
+    private EnemyAIManager AIManager;
 
     public PatrollState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-
     }
-
 
     public override Type Tick()
     {
@@ -29,20 +28,35 @@ public class PatrollState : BaseState
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
         }
-        // -ANY STATE //
 
         if (guard.Target)
         {
             guard.EnemyPatrol.StopMoving();
-            return typeof(SightedState);
+            AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.10f);
+            if(AIManager.GlobalAlertLevel < 0.33f){
+                return typeof(SightedState);
+            }
+            else if(AIManager.GlobalAlertLevel >= 0.33f && AIManager.GlobalAlertLevel < 0.66f){
+                return typeof(AlertedState);
+            }
+            else if(AIManager.GlobalAlertLevel >= 0.66f){
+                return typeof(AttackState);
+            }
+        }
+        else
+        {
+            AIManager.RemoveEnemyOnSight(guard);
         }
 
         if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>())
         {
-            guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
-            return typeof(NoiseHeardState);
+            guard.EnemyOrientation.OrientationTowardsTarget(guard.NoiseHeard);
+            Debug.Log("Distance remaining on noiseHeard : "+guard.EnemyNavigation.GetDistanceRemaining());
+            if(guard.EnemyNavigation.GetDistanceRemaining() < 30f){
+                guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
+                return typeof(NoiseHeardState);
+            }
         }
-
 
         if (guard.EnemyPatrol.DestinationReached())
             guard.EnemyPatrol.GoToNextCheckpoint();
@@ -53,6 +67,7 @@ public class PatrollState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        this.AIManager = EnemyAIManager.Instance;
         Debug.Log("Entering Patrol state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();

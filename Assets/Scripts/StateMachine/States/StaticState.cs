@@ -43,6 +43,7 @@ public class StaticState : BaseState
         }
 
         if (guard.EnemyPatrol.DestinationReached())
+            guard.EnemyPatrol.GoToNextCheckpoint();
             guard.transform.rotation = guard.GuardingOrientation;
 
         //maybe add some animation to look around when he does nothing

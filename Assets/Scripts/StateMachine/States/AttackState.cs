@@ -21,6 +21,7 @@ public class AttackState : BaseState
 
         if (!guard.Target)
         {
+            EnemyAIManager.Instance.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
             guard.EnemyEyeMovement.disabledMoveEyeAtTarget();

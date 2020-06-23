@@ -19,9 +19,13 @@ public class FieldOfView : MonoBehaviour
     public event Action OnTargetSighted = delegate { };
     public event Action OnTargetLost = delegate { };
 
+    private EnemyAIManager AIManager;
+
     void Start()
     {
+        this.AIManager = EnemyAIManager.Instance;
         StartCoroutine("FindTargetsWithDelay", .2f);
+        StartCoroutine("FindTargetsGlobalAlertWithDelay", .2f);
     }
 
 
@@ -35,9 +39,19 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    IEnumerator FindTargetsGlobalAlertWithDelay(float delay)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(delay);
+            FindGlobalAlertLevelTargets();
+        }
+    }
+
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        //AIManager.ClearEnemiesOnSight();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -48,13 +62,11 @@ public class FieldOfView : MonoBehaviour
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-                
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-
+                    AIManager.AddEnemyOnSight(transform.gameObject.GetComponent<Guard>());
                 }
-
             }
         }
 
@@ -68,6 +80,35 @@ public class FieldOfView : MonoBehaviour
         previousVisibleTargetCount = visibleTargets.Count;
     }
 
+    void FindGlobalAlertLevelTargets()
+    {
+        Collider[] targets = new Collider[0];
+        if(AIManager.GlobalAlertLevel > 0.33 && AIManager.GlobalAlertLevel <= 0.66){
+            targets = Physics.OverlapSphere(transform.position, viewRadius*30, targetMask);
+        }
+        if(AIManager.GlobalAlertLevel > 0.66){
+            targets = Physics.OverlapSphere(transform.position, viewRadius*60, targetMask);
+        }
+
+        Debug.Log("TARGETS OVERLAPSPHERE GLOBALALERT : "+targets.Length);
+        Debug.Log("radius : "+(viewRadius*60));
+
+        for (int i = 0; i < targets.Length; i++)
+        {
+            Transform target = targets[i].transform;
+            Vector3 dirToTarget = (target.position - transform.position).normalized;
+            float dstToTarget = Vector3.Distance(transform.position, target.position);
+
+            if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+            {
+                if(!AIManager.HasCurrentEnemyAlerted(transform.gameObject.GetComponent<Guard>())){
+                    transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenPosition = target.position;
+                    transform.gameObject.GetComponent<Guard>().stateMachine.SwitchToNewState(typeof(AlertedState));
+                }
+            }
+
+        }
+    }
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {

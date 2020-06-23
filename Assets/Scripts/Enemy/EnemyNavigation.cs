@@ -29,6 +29,10 @@ public class EnemyNavigation : MonoBehaviour
             navMeshAgent.SetDestination(targetPosition);
     }
 
+    public float GetDistanceRemaining(){
+        return navMeshAgent.remainingDistance;
+    }
+
 
 
 

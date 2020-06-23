@@ -8,6 +8,9 @@ public class LostState : BaseState
     private Guard guard;
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
+    private float waitTime = 0f;
+
+    private EnemyAIManager AIManager;
 
     public LostState(Guard guard) : base(guard.gameObject)
     {
@@ -16,6 +19,7 @@ public class LostState : BaseState
 
     public override Type Tick()
     {
+        waitTime += Time.deltaTime;
         if (guard.IsDead)
         {
             guard.EnemyPatrol.StopMoving();
@@ -30,12 +34,17 @@ public class LostState : BaseState
 
         if (guard.EnemyPatrol.DestinationReached())
         {
-            if(guard.AlertLevel == 0f)
+            if(guard.AlertLevel == 0f && AIManager.GlobalAlertLevel < 0.66f)
             {
-                if (guard.IsStaticGuard)
-                    return typeof(StaticState);
-                else
-                    return typeof(PatrollState);
+                if(AIManager.GlobalAlertLevel < 0.33f){
+                    if (guard.IsStaticGuard){
+                        return typeof(StaticState);
+                    }
+                    else return typeof(PatrollState);
+                }
+                else{
+                    return typeof(AlertedState);
+                }
             }
             else
             {
@@ -75,12 +84,13 @@ public class LostState : BaseState
     {
         //distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 0.05f), 0f, 1f));
-        Debug.Log("alertLevel In LostState : "+guard.AlertLevel);
     }
 
     public override void OnStateEnter(StateMachine manager)
     {
+        this.AIManager = EnemyAIManager.Instance;
         Debug.Log("Entering Lost state");
+        AIManager.RemoveEnemyOnAlert(guard);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
         if(guard.AlertLevel > 0.5f){

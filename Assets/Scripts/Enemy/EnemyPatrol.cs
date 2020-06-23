@@ -18,6 +18,8 @@ public class EnemyPatrol : MonoBehaviour
 
     private EnemyAI.State state;
 
+    private readonly String TEMP_WAYPOINT_NAME = "IA Waypoint Temp ";
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -60,18 +62,26 @@ public class EnemyPatrol : MonoBehaviour
         return false;
     }
 
-    public void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 4)
+    public void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 2.5f)
     {
         OldWaypointPatrolList = new List<GameObject>(WaypointPatrolList);
         oldWaypointNumber = currentWaypointNumber;
-        int rand1 = isRandom ? UnityEngine.Random.Range(1,4) : minNbPoints;
+        int rand1 = isRandom ? UnityEngine.Random.Range(3,5) : minNbPoints;
+        
         for(var i = 0; i < rand1; i++)
         {
             Vector3 newPos = guardPos + UnityEngine.Random.insideUnitSphere * distance;
             newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
-            GameObject IAWaypoint = Instantiate(new GameObject("IA Waypoint Temp "+i));
-            IAWaypoint.transform.position = newPos;
-            WaypointPatrolList.Insert(currentWaypointNumber, IAWaypoint);
+            NavMeshPath path = new NavMeshPath();
+            navMeshAgent.CalculatePath(newPos, path);
+            if (path.status != NavMeshPathStatus.PathPartial)
+            {
+                GameObject IAWaypoint = Instantiate(new GameObject(TEMP_WAYPOINT_NAME + i));
+                IAWaypoint.transform.position = newPos;
+                WaypointPatrolList.Insert(currentWaypointNumber, IAWaypoint);
+            }
+            else i--;
+            
         }
     }
 

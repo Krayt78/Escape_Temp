@@ -41,7 +41,6 @@ public class NoiseHeardState : BaseState
                 guard.EnemyPatrol.GoToNextCheckpoint();
                 return typeof(StaticState);
             }
-
             else
                 return typeof(PatrollState);
         }

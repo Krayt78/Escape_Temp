@@ -20,6 +20,7 @@ public class DeadState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        EnemyAIManager.Instance.RemoveEnemyOnAlert(guard);
         Debug.Log("Entering Dead state");
     }
 

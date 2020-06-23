@@ -13,10 +13,11 @@ public class AlertedState : BaseState
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
 
+    private EnemyAIManager AIManager;
+
     public AlertedState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-
         currentTimer = sightedTimer;
     }
 
@@ -25,6 +26,14 @@ public class AlertedState : BaseState
     {
         if (guard.IsDead)
         {
+            if(AIManager.HasEnemySighted()){
+                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.2f);
+            }
+            else{
+                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel - 0.4f);
+            }
+            AIManager.RemoveEnemyOnAlert(guard);
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -32,21 +41,26 @@ public class AlertedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
+            Debug.Log("ALERT GUARD DOESNT HAVE TARGET");
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-            return typeof(LostState);
+            if(AIManager.GlobalAlertLevel < 0.33f){
+                return typeof(LostState);
+            }
+            // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT
         }
         else
         {
-            //orient towards target
+            Debug.Log("ALERT GUARD HAVE TARGET");
+            //orient towards target and chase target
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+
+            AlertLevel();
         }
 
-        AlertLevel();
-
-        // check if the enemy detected the player depending on his distance and time since first sighted
         if(guard.AlertLevel > 1f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
@@ -57,6 +71,9 @@ public class AlertedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        this.AIManager = EnemyAIManager.Instance;
+        AIManager.AddEnemyOnAlert(guard);
+        
         Debug.Log("Entering Alerted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
@@ -69,7 +86,6 @@ public class AlertedState : BaseState
     {
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         guard.SetAlertLevel(guard.AlertLevel + (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(1/guard.SIGHTED_TIMER));
-        Debug.Log("alertLevel Alerted state : "+guard.AlertLevel);
         return guard.AlertLevel;
     }
 

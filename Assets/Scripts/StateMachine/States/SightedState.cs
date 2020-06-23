@@ -6,6 +6,7 @@ using UnityEngine;
 public class SightedState : BaseState
 {
     private Guard guard;
+    private EnemyAIManager AIManager;
 
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
@@ -19,6 +20,10 @@ public class SightedState : BaseState
     {
         if (guard.IsDead)
         {
+            Debug.Log("IsDead Sighted has target : "+!!guard.Target);
+            if(AIManager.HasEnemyAlerted()){
+                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.10f);
+            }
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -26,6 +31,7 @@ public class SightedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
@@ -53,6 +59,7 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        this.AIManager = EnemyAIManager.Instance;
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Entering Sighted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
