@@ -21,11 +21,14 @@ public class MovementProvider : LocomotionProvider
     private CharacterController characterController = null;
     private GameObject head = null;
 
-    
+
+    private float sizeMin = 1;
+    private float sizeMax = 2;
+
+
 
     protected override void Awake() {
         characterController = xrRig.GetComponent<CharacterController>();
-
         head = xrRig.cameraGameObject;
     }
     // Start is called before the first frame update
@@ -39,12 +42,17 @@ public class MovementProvider : LocomotionProvider
     {
         PositionController();
         CheckForInput();
+       //ApplyGravity();
+    }
+
+    private void FixedUpdate()
+    {
         ApplyGravity();
     }
 
     private void PositionController() {
         //get the head in local, playspace ground
-        float headHeight = Mathf.Clamp(head.transform.localPosition.y, 1, 2); // clamp it so you dont become too small r too tall
+        float headHeight = Mathf.Clamp(head.transform.localPosition.y, sizeMin, sizeMax); // clamp it so you dont become too small r too tall
         characterController.height = headHeight;
 
         //cut in half, add skin
@@ -91,6 +99,9 @@ public class MovementProvider : LocomotionProvider
     private void ApplyGravity() {
         Vector3 gravity = new Vector3(0, Physics.gravity.y * gravityMultiplier, 0);
         gravity.y *= Time.deltaTime;
+        
         characterController.Move(gravity * Time.deltaTime);
+        //xrRig.transform.position = characterController.transform.position;
+
     }
 }
