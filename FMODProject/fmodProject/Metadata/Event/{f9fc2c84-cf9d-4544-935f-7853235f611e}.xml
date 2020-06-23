@@ -92,6 +92,9 @@
 		<property name="length">
 			<value>59.373424036281179</value>
 		</property>
+		<property name="pitch">
+			<value>-3</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{70f39338-ce15-4105-b1ea-70a970a2452e}</destination>
 		</relationship>
@@ -112,6 +115,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{fc122ef6-1b4f-4b21-9062-96b6ad2e5128}">
 		<relationship name="effects">
+			<destination>{11e93d6b-8d31-48e4-8816-65bb581611ad}</destination>
 			<destination>{79c455bf-d46c-4e7b-b785-266f6a5167a2}</destination>
 			<destination>{412088f4-460a-4078-ba61-605f81f5304f}</destination>
 		</relationship>
@@ -124,7 +128,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c10286cf-c9f4-4fe2-aa2e-aab94fe5fef6}" />
+	<object class="SFXReverbEffect" id="{11e93d6b-8d31-48e4-8816-65bb581611ad}" />
 	<object class="MixerBusFader" id="{79c455bf-d46c-4e7b-b785-266f6a5167a2}" />
-	<object class="SpatialiserEffect" id="{412088f4-460a-4078-ba61-605f81f5304f}" />
+	<object class="SpatialiserEffect" id="{412088f4-460a-4078-ba61-605f81f5304f}">
+		<property name="maximumDistance">
+			<value>450</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{695ae428-8c27-4a31-bf94-24b6707fc225}" />
 </objects>
