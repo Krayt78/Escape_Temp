@@ -16,12 +16,14 @@ public class SequenceObjectSpawner : MonoBehaviour
     {
         SequenceSpawnerManager.Instance.OnSpawnObject += SpawnObject;
         SequenceSpawnerManager.Instance.OnDespawnObject += DespawnObject;
-    }
+        
+    }   
 
     private void SpawnObject(int step)
     {
         if (step == stepToSpawnObject)
         {
+            Debug.Log("We spawn the object");
             spawnedObject = Instantiate(objectToSpawn, transform.position, transform.rotation);
         }
     }

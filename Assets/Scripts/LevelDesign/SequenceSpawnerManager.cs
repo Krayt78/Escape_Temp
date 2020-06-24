@@ -9,7 +9,7 @@ public class SequenceSpawnerManager : MonoBehaviour
     private static SequenceSpawnerManager instance;
     public static SequenceSpawnerManager Instance { get { return instance; } }
 
-    public int currentStep = 0;             //The current step is public in order to better control the order of the step
+    public int currentStep = -1;             //The current step is public in order to better control the order of the step
     public event Action<int> OnSpawnObject;
     public event Action<int> OnDespawnObject;
 
@@ -53,8 +53,8 @@ public class SequenceSpawnerManager : MonoBehaviour
     //tell the ObjectSpawners to spawn the object (if the step is correct)
     public void SpawnNextStep()
     {
-        DespawnObject();
+        DespawnObject(currentStep);
         IncrementStep();
-        SpawnObject();
+        SpawnObject(currentStep);
     }
 }
