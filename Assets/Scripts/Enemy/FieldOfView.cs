@@ -25,7 +25,7 @@ public class FieldOfView : MonoBehaviour
     {
         this.AIManager = EnemyAIManager.Instance;
         StartCoroutine("FindTargetsWithDelay", .2f);
-        StartCoroutine("FindTargetsGlobalAlertWithDelay", .2f);
+        StartCoroutine("FindTargetsGlobalAlertWithDelay", .5f);
     }
 
 
@@ -51,25 +51,30 @@ public class FieldOfView : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-        //AIManager.ClearEnemiesOnSight();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        if(targetsInViewRadius.Length > 0)
         {
-            Transform target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
-                float dstToTarget = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                Transform target = targetsInViewRadius[i].transform;
+                Vector3 dirToTarget = (target.position - transform.position).normalized;
+                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
                 {
-                    visibleTargets.Add(target);
-                    AIManager.AddEnemyOnSight(transform.gameObject.GetComponent<Guard>());
+                    float dstToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                    {
+                        visibleTargets.Add(target);
+                    }
+                    else
+                    {
+                        AIManager.RemoveEnemyOnSight(transform.gameObject.GetComponent<Guard>());
+                    }
                 }
             }
         }
-
+        
         //if the target is visible and first in the array we activate the event so that the ai can walk to it
         if (visibleTargets.Count == 1 && !(visibleTargets.Count == previousVisibleTargetCount))
             OnTargetSighted();
@@ -90,24 +95,26 @@ public class FieldOfView : MonoBehaviour
             targets = Physics.OverlapSphere(transform.position, viewRadius*60, targetMask);
         }
 
-        Debug.Log("TARGETS OVERLAPSPHERE GLOBALALERT : "+targets.Length);
-        Debug.Log("radius : "+(viewRadius*60));
-
-        for (int i = 0; i < targets.Length; i++)
+        if(targets.Length > 0)
         {
-            Transform target = targets[i].transform;
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
-            float dstToTarget = Vector3.Distance(transform.position, target.position);
-
-            if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+            for (int i = 0; i < targets.Length; i++)
             {
-                if(!AIManager.HasCurrentEnemyAlerted(transform.gameObject.GetComponent<Guard>())){
-                    transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenPosition = target.position;
-                    transform.gameObject.GetComponent<Guard>().stateMachine.SwitchToNewState(typeof(AlertedState));
+                Transform target = targets[i].transform;
+                Vector3 dirToTarget = (target.position - transform.position).normalized;
+                float dstToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                {
+                    if(!AIManager.HasCurrentEnemyAlerted(transform.gameObject.GetComponent<Guard>())){
+                        Vector3 newPos = target.position + UnityEngine.Random.insideUnitSphere * 1.25f;
+                        newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
+                        transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenPosition = newPos;
+                        AIManager.AddEnemyOnAlert(transform.gameObject.GetComponent<Guard>());
+                    }
                 }
             }
-
         }
+        
     }
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)

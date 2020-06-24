@@ -132,12 +132,17 @@ public class Guard : MonoBehaviour
 
     private void OnTargetSighted()
     {
+        
         SetTarget(FieldOfView.visibleTargets[0].transform);
+        EnemyAIManager.Instance.AddEnemyOnSight(this);
+        Debug.Log("OntargetSighted hasEnemySighted : "+EnemyAIManager.Instance.HasEnemySighted());
         EnemyAnimationController.TriggerSight();
     }
 
     private void OnTargetLost()
     {
+        EnemyAIManager.Instance.RemoveEnemyOnSight(this);
+        Debug.Log("OntargetLost hasEnemySighted : "+EnemyAIManager.Instance.HasEnemySighted());
         EnemyNavigation.targetLastSeenPosition = Target.transform.position;
         EnemyAnimationController.TriggerEndSight();
         SetTarget(null);

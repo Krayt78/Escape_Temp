@@ -20,38 +20,46 @@ public class SightedState : BaseState
     {
         if (guard.IsDead)
         {
-            Debug.Log("IsDead Sighted has target : "+!!guard.Target);
-            if(AIManager.HasEnemyAlerted()){
-                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.10f);
+            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
+            {
+                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.1f);
             }
+            else
+            {
+                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel - 0.4f);
+            }
+            AIManager.RemoveEnemyOnAlert(guard);
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
 
+        AlertLevel();
+
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
-        if (!guard.Target)
+        if (!guard.Target && !AIManager.HasCurrentEnemyAlerted(guard))
         {
-            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
             return typeof(LostState);
         }
-        else
+
+        if (AIManager.HasCurrentEnemyAlerted(guard) || guard.AlertLevel > 0.5f)
         {
-            //orient towards target
-            guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
-            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
-        }
-
-        AlertLevel();
-
-        // check if the enemy detected the player depending on his distance and time since first sighted
-        if(guard.AlertLevel > 0.5f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AlertedState);
         }
-        if(guard.AlertLevel == 0f){
+
+        if(guard.AlertLevel == 0f && !AIManager.HasCurrentEnemyAlerted(guard))
+        {
+            guard.EnemyPatrol.ResumeMoving();
             return typeof(PatrollState);
+        }
+
+        if((AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0) || AIManager.GlobalAlertLevel > 0.66)
+        {
+            guard.EnemyPatrol.StopMoving();
+            return typeof(AttackState);
         }
            
         return null;
@@ -71,9 +79,11 @@ public class SightedState : BaseState
 
     private float AlertLevel()
     {
-        distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
+        if(guard.Target)
+        {
+            distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
+        } 
         guard.SetAlertLevel(guard.AlertLevel + (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(1/guard.SIGHTED_TIMER));
-        Debug.Log("alertLevel in Sighted : "+guard.AlertLevel);
         return guard.AlertLevel;
     }
 

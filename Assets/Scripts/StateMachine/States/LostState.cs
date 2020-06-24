@@ -8,7 +8,6 @@ public class LostState : BaseState
     private Guard guard;
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
-    private float waitTime = 0f;
 
     private EnemyAIManager AIManager;
 
@@ -19,9 +18,18 @@ public class LostState : BaseState
 
     public override Type Tick()
     {
-        waitTime += Time.deltaTime;
         if (guard.IsDead)
         {
+            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
+            {
+                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel + 0.1f, 0, 1));
+            }
+            else
+            {
+                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel - 0.6f, 0, 1));
+            }
+            AIManager.RemoveEnemyOnAlert(guard);
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -32,29 +40,9 @@ public class LostState : BaseState
             return typeof(StunnedState);
         }
 
-        if (guard.EnemyPatrol.DestinationReached())
-        {
-            if(guard.AlertLevel == 0f && AIManager.GlobalAlertLevel < 0.66f)
-            {
-                if(AIManager.GlobalAlertLevel < 0.33f){
-                    if (guard.IsStaticGuard){
-                        return typeof(StaticState);
-                    }
-                    else return typeof(PatrollState);
-                }
-                else{
-                    return typeof(AlertedState);
-                }
-            }
-            else
-            {
-                guard.EnemyPatrol.GoToNextCheckpoint();
-            }
-        }
-
         if(guard.Target)
         {
-            if (guard.AlertLevel > 1f)
+            if (guard.AlertLevel > 1f || (AIManager.onAttack > 0 && AIManager.HasCurrentEnemyAlerted(guard)))
             {
                 guard.EnemyPatrol.StopMoving();
                 return typeof(AttackState);
@@ -70,11 +58,39 @@ public class LostState : BaseState
                 return typeof(SightedState);
             }
         }
-        else{
-            if (guard.EnemyPatrol.DestinationReached())
-            guard.EnemyPatrol.GoToNextCheckpoint();
+
+        if(guard.EnemyPatrol.IsNextCheckpointTemporary()){
+            Debug.Log("isNext checkpt");
+            if(guard.EnemyPatrol.DestinationReached()){
+                Debug.Log("reached dest");
+                guard.EnemyPatrol.GoToNextCheckpoint();
+                Debug.Log("goto next checkpt");
+            }
         }
-            
+        else
+        {
+            if(guard.AlertLevel == 0f && AIManager.GlobalAlertLevel < 0.66f)
+            {
+                if(AIManager.GlobalAlertLevel < 0.33f)
+                {
+                    if (guard.IsStaticGuard)
+                    {
+                        return typeof(StaticState);
+                    }
+                    else return typeof(PatrollState);
+                }
+                else
+                {
+                    return typeof(AlertedState);
+                }
+            }
+            else if(guard.EnemyPatrol.DestinationReached()){
+                Debug.Log("reached dest 2");
+                guard.EnemyPatrol.GoToNextCheckpoint();
+                Debug.Log("goto next checkpt 2");
+            }
+        }
+ 
         AlertLevelDown();
 
         return null;

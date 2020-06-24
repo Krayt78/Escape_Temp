@@ -26,11 +26,13 @@ public class AlertedState : BaseState
     {
         if (guard.IsDead)
         {
-            if(AIManager.HasEnemySighted()){
-                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.2f);
+            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
+            {
+                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel + 0.1f, 0, 1));
             }
-            else{
-                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel - 0.4f);
+            else
+            {
+                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel - 0.4f, 0, 1));
             }
             AIManager.RemoveEnemyOnAlert(guard);
             AIManager.RemoveEnemyOnSight(guard);
@@ -41,24 +43,32 @@ public class AlertedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
-            Debug.Log("ALERT GUARD DOESNT HAVE TARGET");
             AIManager.RemoveEnemyOnSight(guard);
-            guard.EnemyPatrol.ResumeMoving();
-            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-            if(AIManager.GlobalAlertLevel < 0.33f){
+            
+            if(AIManager.GlobalAlertLevel < 0.66f)
+            {
+                guard.EnemyPatrol.ResumeMoving();
+                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                AIManager.RemoveEnemyOnAlert(guard);
                 return typeof(LostState);
             }
             // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT
         }
         else
         {
-            Debug.Log("ALERT GUARD HAVE TARGET");
+            AIManager.AddEnemyOnSight(guard);
             //orient towards target and chase target
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
 
             AlertLevel();
+        }
+
+        if(AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
+        {
+            guard.EnemyPatrol.StopMoving();
+            return typeof(AttackState);
         }
 
         if(guard.AlertLevel > 1f){
@@ -73,7 +83,6 @@ public class AlertedState : BaseState
     {
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
-        
         Debug.Log("Entering Alerted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }

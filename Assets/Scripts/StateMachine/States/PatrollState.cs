@@ -19,6 +19,8 @@ public class PatrollState : BaseState
     {
         if (guard.IsDead)
         {
+            AIManager.RemoveEnemyOnAlert(guard);
+            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -32,26 +34,16 @@ public class PatrollState : BaseState
         if (guard.Target)
         {
             guard.EnemyPatrol.StopMoving();
-            AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.10f);
-            if(AIManager.GlobalAlertLevel < 0.33f){
-                return typeof(SightedState);
-            }
-            else if(AIManager.GlobalAlertLevel >= 0.33f && AIManager.GlobalAlertLevel < 0.66f){
-                return typeof(AlertedState);
-            }
-            else if(AIManager.GlobalAlertLevel >= 0.66f){
-                return typeof(AttackState);
-            }
+            return typeof(SightedState);
         }
-        else
-        {
-            AIManager.RemoveEnemyOnSight(guard);
+
+        if(AIManager.HasCurrentEnemyAlerted(guard)){
+            return typeof(AlertedState);
         }
 
         if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>())
         {
             guard.EnemyOrientation.OrientationTowardsTarget(guard.NoiseHeard);
-            Debug.Log("Distance remaining on noiseHeard : "+guard.EnemyNavigation.GetDistanceRemaining());
             if(guard.EnemyNavigation.GetDistanceRemaining() < 30f){
                 guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
                 return typeof(NoiseHeardState);

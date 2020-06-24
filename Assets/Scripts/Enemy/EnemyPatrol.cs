@@ -74,6 +74,7 @@ public class EnemyPatrol : MonoBehaviour
             newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
             NavMeshPath path = new NavMeshPath();
             navMeshAgent.CalculatePath(newPos, path);
+            
             if (path.status != NavMeshPathStatus.PathPartial)
             {
                 GameObject IAWaypoint = Instantiate(new GameObject(TEMP_WAYPOINT_NAME + i));
@@ -89,6 +90,14 @@ public class EnemyPatrol : MonoBehaviour
     {
         WaypointPatrolList = new List<GameObject>(OldWaypointPatrolList);
         currentWaypointNumber = oldWaypointNumber;
+    }
+
+    public bool IsNextCheckpointTemporary(){
+        if(WaypointPatrolList.Count > currentWaypointNumber + 1)
+        {
+            return WaypointPatrolList[currentWaypointNumber+1];
+        }
+        else return false;
     }
 
 
