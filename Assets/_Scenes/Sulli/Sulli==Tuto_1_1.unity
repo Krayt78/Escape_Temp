@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9633,6 +9633,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 1674202032261348087, guid: c52e1eb3ec5e1b84381d6be3736b8582,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1674202032261348094, guid: c52e1eb3ec5e1b84381d6be3736b8582,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13815,6 +13820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc6037b2588fc74492bbff93dce919b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScene: Tuto_1_2
 --- !u!65 &1883373849
 BoxCollider:
   m_ObjectHideFlags: 0
