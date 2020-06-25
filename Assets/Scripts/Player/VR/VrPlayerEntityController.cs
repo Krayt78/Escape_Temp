@@ -114,7 +114,7 @@ public class VrPlayerEntityController : EntityController
         Debug.Log("dead");
 
         playerInput.enabled = false;
-        GetComponent<PlayerSoundEffectController>().enabled = false;
+        GetComponent<VrPlayerSoundEffectController>().enabled = false;
         //Destroy(gameObject);
     }
 
