@@ -34,7 +34,9 @@ public class SightedState : BaseState
             return typeof(DeadState);
         }
 
-        AlertLevel();
+        if(guard.Target){
+            AlertLevel();
+        }
 
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target && !AIManager.HasCurrentEnemyAlerted(guard))
@@ -79,10 +81,7 @@ public class SightedState : BaseState
 
     private float AlertLevel()
     {
-        if(guard.Target)
-        {
-            distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-        } 
+        distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         guard.SetAlertLevel(guard.AlertLevel + (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard))*(1/guard.SIGHTED_TIMER));
         return guard.AlertLevel;
     }
