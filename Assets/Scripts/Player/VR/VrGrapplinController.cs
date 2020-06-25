@@ -8,9 +8,10 @@ public class VrGrapplinController : Ability
 
     private PlayerAbilitiesController playerAbilitiesController;
 
-    private PlayerSoundEffectController playerSoundEffectController;
+    private VrPlayerSoundEffectController playerSoundEffectController;
 
     private PlayerMovement playerMovement;
+    private CharacterController characterController;
 
     public LineRenderer lrRope;
     private int nbPoints = 2;
@@ -39,7 +40,7 @@ public class VrGrapplinController : Ability
     bool canUseGrapplin = true;
     bool coroutine = false;
 
-    Rigidbody rigibody;
+    //Rigidbody rigibody;
     private Vector3 destination = new Vector3();
     Vector3 bezierControlPoint = new Vector3();
 
@@ -57,10 +58,11 @@ public class VrGrapplinController : Ability
         base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
-        rigibody = GetComponent<Rigidbody>();
+        //rigibody = GetComponent<Rigidbody>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
-        playerMovement = GetComponent<PlayerMovement>();
-        playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
+        //playerMovement = GetComponent<PlayerMovement>();
+        characterController = GetComponentInChildren<CharacterController>();
+        playerSoundEffectController = GetComponent<VrPlayerSoundEffectController>();
     }
 
     public override void Start()
@@ -91,9 +93,9 @@ public class VrGrapplinController : Ability
         {
             Debug.LogWarning("We landed");
             canUseGrapplin = true;
-            rigibody.constraints = RigidbodyConstraints.None;
-            rigibody.freezeRotation = true;
-            playerMovement.enabled = true;
+            characterController.enabled = true;
+            //rigibody.constraints = RigidbodyConstraints.None;
+            //rigibody.freezeRotation = true;
         }
     }
 
@@ -127,8 +129,8 @@ public class VrGrapplinController : Ability
 
     private IEnumerator MoveOnBezier()
     {
-        rigibody.constraints = RigidbodyConstraints.FreezePositionY;
-        rigibody.freezeRotation = true;
+        //rigibody.constraints = RigidbodyConstraints.FreezePositionY;
+        //rigibody.freezeRotation = true;
         coroutine = true;
         float y = transform.position.y;
 
@@ -154,6 +156,7 @@ public class VrGrapplinController : Ability
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
         lrRope.enabled = true;
+        characterController.enabled = false;
         lrRope.SetPosition(0, transform.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
@@ -179,7 +182,7 @@ public class VrGrapplinController : Ability
         if (level == levelToActivate)
         {
             Debug.Log("We add ability");
-            playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
+            playerAbilitiesController.AddAbility(GetComponent<VrGrapplinController>());
         }
         else if (level == levelToDeActivate)
         {
@@ -210,7 +213,7 @@ public class VrGrapplinController : Ability
             {
                 //Debug.LogWarning("We launch grapplin");
                 //playerMovement.enabled = false;
-                destination = hit.collider.gameObject.GetComponent<GrapplinZone>().LandingPoint.position;
+                destination = hit.collider.gameObject.GetComponentInChildren<GrapplinZone>().LandingPoint.position;
 
                 bezierControlPoint = destination;
                 bezierControlPoint.y += bezierOffset;

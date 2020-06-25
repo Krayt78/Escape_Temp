@@ -12,12 +12,14 @@ public class PlayerAlphaState : BasePlayerState
     private StateMachine manager;
 
     private PlayerDNALevel playerDnaLevel;
+    private VrPlayerDNALevel vrPlayerDNALevel;
     public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
     float stateSpeed = 3;
     float stateSize = 4f;
     float stateDamages = 3;
     float stateNoise = 20;
+
     public override float StateSpeed {get{return stateSpeed;} }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
@@ -31,6 +33,10 @@ public class PlayerAlphaState : BasePlayerState
     public PlayerAlphaState(GameObject gameObject) : base(gameObject)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
+        if (playerDnaLevel == null)
+        {
+            vrPlayerDNALevel = gameObject.GetComponent<VrPlayerDNALevel>();
+        }
     }
 
     public override void OnStateEnter(StateMachine manager)
@@ -40,31 +46,68 @@ public class PlayerAlphaState : BasePlayerState
         Debug.Log("Entering Alpha state");
 
         //manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
-        playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        if (playerDnaLevel != null)
+        {
+            playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        }
+        else
+        {
+            vrPlayerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        }
 
-        manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToAlphaSFX();
-        manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
+        PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
+        if (playerSoundEffectController != null)
+        {
+            playerSoundEffectController.PlayEvolveToAlphaSFX();
+        }
+        else
+        {
+            manager.gameObject.GetComponent<VrPlayerSoundEffectController>().PlayEvolveToAlphaSFX();
+        }
+
+        //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
         CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Alpha);
     }
 
     public override Type Tick()
     {
-        playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
-
+        if (playerDnaLevel != null)
+        {
+            playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
+        }
+        else
+        {
+            vrPlayerDNALevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
+        }
+        
         return null;
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Alpha state");
-        playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        if (playerDnaLevel != null)
+        {
+            playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        }
+        else
+        {
+            vrPlayerDNALevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        }
     }
 
     private void OnDnaLevelChanged(float dnaLevel)
     {
         if (dnaLevel <= 0)
         {
-            playerDnaLevel.LoseLevel();
+            if (playerDnaLevel != null)
+            {
+                playerDnaLevel.LoseLevel();
+            }
+            else
+            {
+                vrPlayerDNALevel.LoseLevel();
+            }
             ((PlayerEvolutionStateMachine)manager).CallOnDevolve();
             manager.SwitchToNewState(typeof(PlayerBetaState));
             return;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMouthController : MonoBehaviour
 {
 
-    public PlayerEntityController playerEntityController;
+    public VrPlayerEntityController vrPlayerEntityController;
 
     private void OnTriggerEnter(Collider other)
     {

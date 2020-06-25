@@ -28,7 +28,6 @@ public class PlayerAbilitiesController : MonoBehaviour
             abilitiesIndex = 0;
         }
 
-      
         CurrentAbility = playerAbilities[abilitiesIndex];
         CurrentAbility.enabled = true;
     }

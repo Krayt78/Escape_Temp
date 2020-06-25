@@ -11,6 +11,7 @@ public class PlayerEvolutionStateMachine : StateMachine
     private PlayerAbilitiesController playerAbilities;
     private PlayerMovement playerMovement;
     private PlayerCarateristicController playerCarateristic;
+    private VrPlayerCarateristicController vrPlayerCarateristic;
 
     public event Action OnEvolve = delegate{ };
     public event Action OnDevolve = delegate { };
@@ -22,6 +23,10 @@ public class PlayerEvolutionStateMachine : StateMachine
         playerAbilities = GetComponent<PlayerAbilitiesController>();
         playerMovement = GetComponent<PlayerMovement>();
         playerCarateristic = GetComponent<PlayerCarateristicController>();
+        if (playerCarateristic == null)
+        {
+            vrPlayerCarateristic = GetComponent<VrPlayerCarateristicController>();
+        }
     }
 
     private void Start()
@@ -30,11 +35,23 @@ public class PlayerEvolutionStateMachine : StateMachine
         //InitializeStateMachineFirstState();
         SetStartState();
 
-        playerCarateristic.InitCharacterisctics(
+        
+        if (playerCarateristic != null)
+        {
+            playerCarateristic.InitCharacterisctics(
             ((BasePlayerState)CurrentState).StateSpeed,
             ((BasePlayerState)CurrentState).StateSize,
             ((BasePlayerState)CurrentState).StateDamages,
             ((BasePlayerState)CurrentState).StateNoise);
+        }
+        else
+        {
+            vrPlayerCarateristic.InitCharacterisctics(
+            ((BasePlayerState)CurrentState).StateSpeed,
+            ((BasePlayerState)CurrentState).StateSize,
+            ((BasePlayerState)CurrentState).StateDamages,
+            ((BasePlayerState)CurrentState).StateNoise);
+        }
     }
 
     protected override void Update()
@@ -61,12 +78,25 @@ public class PlayerEvolutionStateMachine : StateMachine
     private void TransitionToNextState()
     {
         //Ease caracteristics transition
-        playerCarateristic.UpdateCharacteristicValues(
-            ((BasePlayerState)CurrentState).StateSpeed, 
-            ((BasePlayerState)CurrentState).StateSize, 
-            ((BasePlayerState)CurrentState).StateDamages, 
+        if (playerCarateristic != null)
+        {
+            playerCarateristic.UpdateCharacteristicValues(
+            ((BasePlayerState)CurrentState).StateSpeed,
+            ((BasePlayerState)CurrentState).StateSize,
+            ((BasePlayerState)CurrentState).StateDamages,
             ((BasePlayerState)CurrentState).StateNoise,
             ((BasePlayerState)CurrentState).TransformationTimeInSeconds);
+        }
+        else
+        {
+            vrPlayerCarateristic.UpdateCharacteristicValues(
+                ((BasePlayerState)CurrentState).StateSpeed,
+                ((BasePlayerState)CurrentState).StateSize,
+                ((BasePlayerState)CurrentState).StateDamages,
+                ((BasePlayerState)CurrentState).StateNoise,
+                ((BasePlayerState)CurrentState).TransformationTimeInSeconds);
+
+        }
     }
 
 

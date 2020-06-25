@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField]
     public Transform doorTransform;
     Vector3 originalPos;
 
     public void Start()
     {
-        doorTransform = GetComponentInChildren<GameObject>().transform;
         originalPos = doorTransform.position;
     }
 
@@ -19,9 +19,6 @@ public class Door : MonoBehaviour
         {
             doorTransform.position = new Vector3(doorTransform.position.x, doorTransform.position.y + 40, doorTransform.transform.position.z);
         }
-       
-
-
     }
     private void OnTriggerExit(Collider other)
     {

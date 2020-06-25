@@ -100,7 +100,7 @@ public class MovementProvider : LocomotionProvider
         Vector3 gravity = new Vector3(0, Physics.gravity.y * gravityMultiplier, 0);
         gravity.y *= Time.deltaTime;
         
-        characterController.Move(gravity * Time.deltaTime);
+        characterController.Move(gravity);
         //xrRig.transform.position = characterController.transform.position;
 
     }

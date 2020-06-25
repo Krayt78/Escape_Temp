@@ -15,6 +15,7 @@ public class PlayerOmegaState : BasePlayerState
     public const int levelState = 0;
 
     private PlayerDNALevel playerDnaLevel;
+    private VrPlayerDNALevel vrPlayerDNALevel;
     public float dnaLostSpeed = .0333f;
 
 
@@ -36,6 +37,10 @@ public class PlayerOmegaState : BasePlayerState
     public PlayerOmegaState(GameObject gameObject) : base(gameObject)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
+        if (playerDnaLevel == null)
+        {
+            vrPlayerDNALevel = gameObject.GetComponent<VrPlayerDNALevel>();
+        }
     }
 
     public override void OnStateEnter(StateMachine manager)
@@ -44,12 +49,28 @@ public class PlayerOmegaState : BasePlayerState
 
         Debug.Log("Entering Omega state");
 
-       // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = false;   //Disable abilities
+        // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = false;   //Disable abilities
 
-        playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        if (playerDnaLevel != null)
+        {
+            playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        }
+        else
+        {
+            vrPlayerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
+        }
 
-        manager.gameObject.GetComponent<PlayerSoundEffectController>().PlayEvolveToOmegaSFX();
-        manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
+        PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
+        if (playerSoundEffectController != null)
+        {
+            playerSoundEffectController.PlayEvolveToOmegaSFX();
+        }
+        else
+        {
+            manager.gameObject.GetComponent<VrPlayerSoundEffectController>().PlayEvolveToOmegaSFX();
+        }
+
+        //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
         CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Omega);
     }
 
