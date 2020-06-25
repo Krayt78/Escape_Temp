@@ -25,7 +25,7 @@ public class VrPlayerCarateristicController : MonoBehaviour
     //private new CapsuleCollider collider;
     private CharacterController characterController;
     //Damages
-    private PlayerEntityController entityController;
+    private VrPlayerEntityController VrPlayerEntityController;
     //Noise
     private NoiseEmitter noiseEmitter;
 
@@ -53,7 +53,7 @@ public class VrPlayerCarateristicController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         //collider = GetComponent<CapsuleCollider>();
         characterController = GetComponentInChildren<CharacterController>();
-        entityController = GetComponent<PlayerEntityController>();
+        VrPlayerEntityController = GetComponent<VrPlayerEntityController>();
     }
 
     private void Start()
@@ -109,8 +109,8 @@ public class VrPlayerCarateristicController : MonoBehaviour
             playerMovement.moveSpeed = targetSpeed;
         //if (collider)
         //    collider.height = targetSize;
-        if (entityController)
-            entityController.PlayerDamages = targetDamages;
+        if (VrPlayerEntityController)
+            VrPlayerEntityController.PlayerDamages = targetDamages;
 
         easing = false;
         currentEasingDelayInSeconds = 0;
@@ -126,7 +126,7 @@ public class VrPlayerCarateristicController : MonoBehaviour
             playerMovement.moveSpeed = newSpeed;
         //if (collider)
         //    collider.height = newSize;
-        if (entityController)
-            entityController.PlayerDamages = newDamages;
+        if (VrPlayerEntityController)
+            VrPlayerEntityController.PlayerDamages = newDamages;
     }
 }

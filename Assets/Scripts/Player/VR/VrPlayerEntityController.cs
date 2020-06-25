@@ -14,6 +14,7 @@ public class VrPlayerEntityController : EntityController
 
     [SerializeField] private float actionDistance = 3;
     [SerializeField] private float playerDamages = 1;
+
     public float PlayerDamages { get { return playerDamages; } set { playerDamages = Mathf.Clamp(value, 1, 3); } }
     public event Action OnAttack = delegate { };
 
@@ -85,6 +86,7 @@ public class VrPlayerEntityController : EntityController
     public void Attack(EntityController attacked)
     {
         attacked.TakeDamages(playerDamages);
+        Debug.Log("Player damages : " + playerDamages);
         OnAttack();
     }
 

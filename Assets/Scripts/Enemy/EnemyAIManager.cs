@@ -92,7 +92,7 @@ public class EnemyAIManager : MonoBehaviour
     }
 
     private void AlertLevel(){
-        Debug.Log("ALERTLEVEL HASENEMY ONSIGHT : "+HasEnemySighted());
+      //  Debug.Log("ALERTLEVEL HASENEMY ONSIGHT : "+HasEnemySighted());
         if(HasEnemySighted())
         {
             SetGlobalAlertLevel(GlobalAlertLevel + (0.01f * EnemiesOnSight.Count / 3));
@@ -105,6 +105,6 @@ public class EnemyAIManager : MonoBehaviour
             }
         }
         
-        Debug.Log("GLOBAL ALERT : "+GlobalAlertLevel);
+      //  Debug.Log("GLOBAL ALERT : "+GlobalAlertLevel);
     }
 }

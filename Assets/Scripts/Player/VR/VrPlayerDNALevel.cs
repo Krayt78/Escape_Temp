@@ -9,7 +9,7 @@ public class VrPlayerDNALevel : MonoBehaviour
 
     private float dnaLevel;
     public float DnaLevel { get { return dnaLevel; } }
-    private int currentEvolutionLevel;
+    public int currentEvolutionLevel;
     private int minEvolutionLevel = 0, maxEvolutionLevel = 2;
     private float[] foodToDnaRatio, damagesToDnaRatio;
 

@@ -87,10 +87,16 @@ public class PlayerBetaState : BasePlayerState
         CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Beta);
     }
 
+    
     public override Type Tick()
     {
-        if (Input.GetButtonDown("Evolve") && canEvolveToAlpha)
+        //delete this shit as soon as possible
+        if (MasterController.EVOLVEPRESSED && canEvolveToAlpha)
+        {
             EvolveToAlpha();
+            MasterController.EVOLVEPRESSED = false;
+        }
+           
 
         return null;
     }
@@ -149,7 +155,7 @@ public class PlayerBetaState : BasePlayerState
     {
         if (playerDnaLevel != null)
         {
-            playerDnaLevel.GoAlpha();
+            vrPlayerDNALevel.GoAlpha();
         }
         else
         {

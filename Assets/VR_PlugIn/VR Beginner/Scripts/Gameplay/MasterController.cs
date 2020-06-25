@@ -11,6 +11,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class MasterController : MonoBehaviour
 {
+    //delete this shit a s soon as possible
+    public static bool EVOLVEPRESSED = false;
+
+    [SerializeField]
+    private GameObject player;
+
+    private VrPlayerEntityController VrPlayerEntityController;
+    private VrPlayerDNALevel VrPlayerDNALevel;
 
     public PlayerInput playerInput;
 
@@ -78,6 +86,9 @@ public class MasterController : MonoBehaviour
 
     void Start()
     {
+        VrPlayerDNALevel = player.GetComponent<VrPlayerDNALevel>();
+        VrPlayerEntityController = player.GetComponent<VrPlayerEntityController>();
+
         m_RightLineVisual = RightTeleportInteractor.GetComponent<XRInteractorLineVisual>();
         m_RightLineVisual.enabled = false;
 
@@ -152,6 +163,20 @@ public class MasterController : MonoBehaviour
         RightTeleportUpdate();
         LeftTeleportUpdate();
         GrapplinUpdate();
+        EvolutionUpdate();
+    }
+
+    void EvolutionUpdate()
+    {
+        bool buttonInput;
+        m_LeftInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
+
+
+        if (buttonInput == true && VrPlayerDNALevel.currentEvolutionLevel == 1 && VrPlayerDNALevel.DnaLevel >= 1)
+        {
+            EVOLVEPRESSED = true;
+        }
+
     }
 
     void GrapplinUpdate()
