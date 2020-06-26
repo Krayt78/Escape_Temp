@@ -18,6 +18,9 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private bool transitionning = false;
 
+    [SerializeField] private enum StartPlayerState { Omega, Beta, Alpha}
+    [SerializeField] private StartPlayerState startState = StartPlayerState.Beta;
+
     private void Awake()
     {
         playerAbilities = GetComponent<PlayerAbilitiesController>();
@@ -137,11 +140,33 @@ public class PlayerEvolutionStateMachine : StateMachine
     {
         BaseState value;
 
-        if (!availableStates.TryGetValue(typeof(PlayerBetaState), out value))
+        switch(startState)
         {
-            Debug.LogError("NO PLAYER STATE FOUND");
-            return;
+            case StartPlayerState.Omega:
+                if (!availableStates.TryGetValue(typeof(PlayerOmegaState), out value))
+                {
+                    Debug.LogError("NO PLAYER STATE FOUND");
+                    return;
+                }
+                break;
+            case StartPlayerState.Alpha:
+                if (!availableStates.TryGetValue(typeof(PlayerAlphaState), out value))
+                {
+                    Debug.LogError("NO PLAYER STATE FOUND");
+                    return;
+                }
+                break;
+            case StartPlayerState.Beta:
+            default:
+                if (!availableStates.TryGetValue(typeof(PlayerBetaState), out value))
+                {
+                    Debug.LogError("NO PLAYER STATE FOUND");
+                    return;
+                }
+                break;
         }
+
+        
         CurrentState = value;
         CurrentStateName = value.ToString();
         CurrentState.OnStateEnter(this);
