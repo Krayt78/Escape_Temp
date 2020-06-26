@@ -8,7 +8,7 @@ public class SequenceObjectSpawner : MonoBehaviour
 {
     [SerializeField] GameObject objectToSpawn;
     [SerializeField] int stepToSpawnObject;
-
+    [SerializeField] float delay = 0f;
     private GameObject spawnedObject;
 
     // Start is called before the first frame update
@@ -23,8 +23,8 @@ public class SequenceObjectSpawner : MonoBehaviour
     {
         if (step == stepToSpawnObject)
         {
-            Debug.Log("We spawn the object");
-            spawnedObject = Instantiate(objectToSpawn, transform.position, transform.rotation);
+            StartCoroutine(SpawnWithDelay());
+            
         }
     }
 
@@ -34,5 +34,11 @@ public class SequenceObjectSpawner : MonoBehaviour
         {
             Destroy(spawnedObject);
         }
+    }
+
+    public IEnumerator SpawnWithDelay()
+    {
+        yield return new WaitForSeconds(delay);
+        spawnedObject = Instantiate(objectToSpawn, transform.position, transform.rotation);
     }
 }
