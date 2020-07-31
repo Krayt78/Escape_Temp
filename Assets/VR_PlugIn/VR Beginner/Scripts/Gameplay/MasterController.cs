@@ -17,8 +17,8 @@ public class MasterController : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    private VrPlayerEntityController VrPlayerEntityController;
-    private VrPlayerDNALevel VrPlayerDNALevel;
+    private PlayerEntityController playerEntityController;
+    private PlayerDNALevel playerDNALevel;
 
     public PlayerInput playerInput;
 
@@ -86,8 +86,8 @@ public class MasterController : MonoBehaviour
 
     void Start()
     {
-        VrPlayerDNALevel = player.GetComponent<VrPlayerDNALevel>();
-        VrPlayerEntityController = player.GetComponent<VrPlayerEntityController>();
+        playerDNALevel = player.GetComponent<PlayerDNALevel>();
+        playerEntityController = player.GetComponent<PlayerEntityController>();
 
         m_RightLineVisual = RightTeleportInteractor.GetComponent<XRInteractorLineVisual>();
         m_RightLineVisual.enabled = false;
@@ -172,7 +172,7 @@ public class MasterController : MonoBehaviour
         m_LeftInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
 
 
-        if (buttonInput == true && VrPlayerDNALevel.currentEvolutionLevel == 1 && VrPlayerDNALevel.DnaLevel >= 1)
+        if (buttonInput == true && playerDNALevel.CurrentEvolutionLevel == 1 && playerDNALevel.DnaLevel >= 1)
         {
             EVOLVEPRESSED = true;
         }

@@ -52,8 +52,11 @@ public class PlayerEntityController : EntityController
         playerInput.OnScan += Scan;
         playerDNALevel.OnDies += Dies;
 
-        playerMovement.IsMoving += IsMoving;
-        playerMovement.StoppedMoving += StoppedMoving;
+        if(playerMovement)
+        {
+            playerMovement.IsMoving += IsMoving;
+            playerMovement.StoppedMoving += StoppedMoving;
+        }
 
         //echo.DeactivateXray();
     }
@@ -84,7 +87,8 @@ public class PlayerEntityController : EntityController
             }
         }
 
-        handAnimator.SetTrigger("Action");
+        if(handAnimator)
+            handAnimator.SetTrigger("Action");
 
     }
     
@@ -104,12 +108,14 @@ public class PlayerEntityController : EntityController
         if (echo.isActive)
             echo.DeactivateXray();
 
-        handAnimator.SetBool("Walking", true);
+        if (handAnimator)
+            handAnimator.SetBool("Walking", true);
     }
 
     private void StoppedMoving()
     {
-        handAnimator.SetBool("Walking", false);
+        if (handAnimator)
+            handAnimator.SetBool("Walking", false);
 
     }
 

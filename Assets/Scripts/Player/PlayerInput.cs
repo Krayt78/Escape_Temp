@@ -31,8 +31,8 @@ public class PlayerInput : MonoBehaviour
         Forward = Input.GetAxis("Vertical");
         Right = Input.GetAxis("Horizontal");
 
-        LookUp = -Input.GetAxis("Mouse Y");
-        LookRight = Input.GetAxis("Mouse X");
+        LookUp = -Input.GetAxis("MouseY");
+        LookRight = Input.GetAxis("MouseX");
 
         if (Input.GetButtonDown("Fire1"))
             OnAction();

@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9229cbd03660dd4458205a437df0d945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vrPlayerEntityController: {fileID: 8363994849311951132}
+  playerEntityController: {fileID: 0}
 --- !u!1 &3225285112640672817
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentStateName: Default
+  startState: 0
 --- !u!114 &3225285112640672829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c940b3cadcefe7c44854048ff03ef2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
   lrRope: {fileID: 4241560037413832827}
   grapplinPosition: {fileID: 7034672381671167896}
   playerCamera: {fileID: 7034672381660163115}

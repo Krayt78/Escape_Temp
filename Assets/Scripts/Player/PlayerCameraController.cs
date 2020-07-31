@@ -8,14 +8,14 @@ public class PlayerCameraController : MonoBehaviour
     private float cameraSpeed=90;
     [SerializeField] Vector2 xRotationLimit = new Vector2(-90, 90);
 
-    [SerializeField] Transform playerCamera;
+    [SerializeField] public Transform playerCamera;
     private PlayerInput playerInput;
 
     private float playerOrientation = 0;
     private float cameraYaw = 0;
 
 
-    [SerializeField] private Texture2D reticuleTexture;
+    //[SerializeField] private Texture2D reticuleTexture;
     private Rect reticulePosition;
     private float reticuleSize = 5;
 
@@ -34,6 +34,8 @@ public class PlayerCameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        //reticuleTexture = (Texture2D)Resources.Load("Sprites/SPR_white_reticule.png");
     }
 
     private void Update()
@@ -75,6 +77,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.DrawTexture(reticulePosition, reticuleTexture);
+        //GUI.DrawTexture(reticulePosition, reticuleTexture);
     }
 }

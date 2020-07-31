@@ -15,7 +15,7 @@ public class PlayerOmegaState : BasePlayerState
     public const int levelState = 0;
 
     private PlayerDNALevel playerDnaLevel;
-    private VrPlayerDNALevel vrPlayerDNALevel;
+    private PlayerDNALevel playerDNALevel;
     public float dnaLostSpeed = .0333f;
 
 
@@ -39,7 +39,7 @@ public class PlayerOmegaState : BasePlayerState
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
         if (playerDnaLevel == null)
         {
-            vrPlayerDNALevel = gameObject.GetComponent<VrPlayerDNALevel>();
+            playerDNALevel = gameObject.GetComponent<PlayerDNALevel>();
         }
     }
 
@@ -57,17 +57,13 @@ public class PlayerOmegaState : BasePlayerState
         }
         else
         {
-            vrPlayerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
+            playerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
         }
 
         PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
         if (playerSoundEffectController != null)
         {
             playerSoundEffectController.PlayEvolveToOmegaSFX();
-        }
-        else
-        {
-            manager.gameObject.GetComponent<VrPlayerSoundEffectController>().PlayEvolveToOmegaSFX();
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
@@ -76,22 +72,40 @@ public class PlayerOmegaState : BasePlayerState
 
     public override Type Tick()
     {
-        playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
-        CameraFilter.Instance.omegaFilterFluctation(playerDnaLevel.DnaLevel);
+        if (playerDnaLevel)
+        {
+            playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
+            CameraFilter.Instance.omegaFilterFluctation(playerDnaLevel.DnaLevel);
+        }
+        else
+        {
+            playerDNALevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
+            CameraFilter.Instance.omegaFilterFluctation(playerDNALevel.DnaLevel);
+        }
         return null;
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Omega state");
-        playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        if (playerDnaLevel != null)
+        {
+            playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        }
+        else
+        {
+            playerDNALevel.OnDnaLevelChanged -= OnDnaLevelChanged;
+        }
     }
 
     private void OnDnaLevelChanged(float dnaLevel)
     {
         if (dnaLevel >= 1)
         {
-            playerDnaLevel.GainLevel();
+            if (playerDnaLevel)
+                playerDnaLevel.GainLevel();
+            else
+                playerDNALevel.GainLevel();
             ((PlayerEvolutionStateMachine)manager).CallOnEvolve();
             manager.SwitchToNewState(typeof(PlayerBetaState));
             return;

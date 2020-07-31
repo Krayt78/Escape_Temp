@@ -12,7 +12,7 @@ public class FoodController : Interactable
     {
         if(user.CompareTag("Player"))
         {
-            user.GetComponent<PlayerMouthController>().vrPlayerEntityController.Eat(foodValue);
+            user.GetComponentInChildren<PlayerMouthController>().playerEntityController.Eat(foodValue);
             DestroyFood();
         }
     }

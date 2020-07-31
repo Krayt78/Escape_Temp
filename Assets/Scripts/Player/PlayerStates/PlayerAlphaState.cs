@@ -12,7 +12,6 @@ public class PlayerAlphaState : BasePlayerState
     private StateMachine manager;
 
     private PlayerDNALevel playerDnaLevel;
-    private VrPlayerDNALevel vrPlayerDNALevel;
     public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
     float stateSpeed = 3;
@@ -33,10 +32,6 @@ public class PlayerAlphaState : BasePlayerState
     public PlayerAlphaState(GameObject gameObject) : base(gameObject)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
-        if (playerDnaLevel == null)
-        {
-            vrPlayerDNALevel = gameObject.GetComponent<VrPlayerDNALevel>();
-        }
     }
 
     public override void OnStateEnter(StateMachine manager)
@@ -46,23 +41,12 @@ public class PlayerAlphaState : BasePlayerState
         Debug.Log("Entering Alpha state");
 
         //manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
-        if (playerDnaLevel != null)
-        {
-            playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
-        }
-        else
-        {
-            vrPlayerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
-        }
+        playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
         if (playerSoundEffectController != null)
         {
             playerSoundEffectController.PlayEvolveToAlphaSFX();
-        }
-        else
-        {
-            manager.gameObject.GetComponent<VrPlayerSoundEffectController>().PlayEvolveToAlphaSFX();
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
@@ -71,14 +55,7 @@ public class PlayerAlphaState : BasePlayerState
 
     public override Type Tick()
     {
-        if (playerDnaLevel != null)
-        {
-            playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
-        }
-        else
-        {
-            vrPlayerDNALevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
-        }
+        playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
         
         return null;
     }
@@ -86,14 +63,7 @@ public class PlayerAlphaState : BasePlayerState
     public override void OnStateExit()
     {
         Debug.Log("Exiting Alpha state");
-        if (playerDnaLevel != null)
-        {
-            playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
-        }
-        else
-        {
-            vrPlayerDNALevel.OnDnaLevelChanged -= OnDnaLevelChanged;
-        }
+        playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }
 
     private void OnDnaLevelChanged(float dnaLevel)
@@ -103,10 +73,6 @@ public class PlayerAlphaState : BasePlayerState
             if (playerDnaLevel != null)
             {
                 playerDnaLevel.LoseLevel();
-            }
-            else
-            {
-                vrPlayerDNALevel.LoseLevel();
             }
             ((PlayerEvolutionStateMachine)manager).CallOnDevolve();
             manager.SwitchToNewState(typeof(PlayerBetaState));

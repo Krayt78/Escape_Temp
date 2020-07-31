@@ -1,0 +1,37 @@
+Contrôles du jeu
+- Le jeu ne peut être joué qu’en VR actuellement.
+- Oculus Rift S:
+	- Pour se déplacer: utiliser le joystick gauche.
+	- Passage mode Alpha: Touche Y
+	- Lancement du grappin: Viser le haut d’un bolet dans le prolongement de sa main, et appuyer sur la touche B.
+	- Tourner la caméra manuellement: utilisez le joystick droit
+
+Éléments fonctionnels du jeu
+- Personnage principal
+	- Les déplacements du personnage fonctionne
+	- Le système d’évolution fonctionne
+	- Ramasser des objets fonctionnent
+	- Manger la nourriture fonctionne
+
+- IA
+	- Le déplacement des IAs (patrouille, poursuite) fonctionne
+	- L’attaque des IAs fonctionne
+	- Le comportement de groupe des IAs fonctionne
+
+- Environnement
+	- Les modèles 3D ont plusieurs LOD qui se chargent dynamiquement pour ne pas prendre trop de ressources
+	- Le joueur peut utiliser son grappin sur les champignons
+	- Le joueur peut se dissimuler dans des buissons pour échapper aux sentinelles
+
+
+- Éléments dysfonctionnels / bugs connus
+	- Le grappin ne fonctionne environ qu’une fois par niveau, et dans certain cas le déplacement n’est pas bon.
+	- Le comportement de l’IA n’est pas constant, il y a des bugs dans le changements d’état.
+	- Deux sentinelles qui se rencontre lors de leur patrouille peuvent se mettre à tourner sur place.
+	- Le comportement de groupe des IAs à certain dysfonctionnement
+	- Dans certains cas  encore inconnu, le joueur peut passer à travers le terrain lors de son apparition dans le 3ème niveau
+	- Le joueur ne se prend pas de dommage si ce sont ses mains qui sont touchées
+	- Les menus ne s’affiche pas du côté casque.
+
+Contraintes, limitations éventuelles ou protocoles de test à prendre en compte (enchaînement d'actions ? parcours précis dans la map ? etc)
+- La fin du niveau ne fait rien de spécial, une fois dans la map principal le joueur est donc libre de faire ce qu’il veut et d’arrêter quand il le souhaite

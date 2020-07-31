@@ -15,14 +15,17 @@ public class PlayerNoiseEmitter : NoiseEmitter
 
     private void Start()
     {
-        playerMovement.OnStep += EmitStepNoise;
+        if(playerMovement)
+            playerMovement.OnStep += EmitStepNoise;
     }
 
     protected override Noise ComputeNoise()
     {
-        return new Noise(   playerMovement.GetSpeedRatio() * rangeNoiseEmitted,
+            return playerMovement ? 
+               new Noise(   playerMovement.GetSpeedRatio() * rangeNoiseEmitted,
                             new Vector3(transform.position.x, transform.position.y- playerCapsule.height/2, transform.position.z),
-                            gameObject);
+                            gameObject) 
+                : null;
     }
 
     private void EmitStepNoise()
