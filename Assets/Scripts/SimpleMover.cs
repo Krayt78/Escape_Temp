@@ -19,8 +19,10 @@ public class SimpleMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (UseVR.Instance.useVr)
-        //    Destroy(this);
+        if (UseVR.Instance.useVr){
+            Destroy(this);
+            return;
+        }
 
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
