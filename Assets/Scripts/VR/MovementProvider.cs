@@ -58,7 +58,7 @@ public class MovementProvider : LocomotionProvider
         //cut in half, add skin
         Vector3 newCenter = Vector3.zero;
         newCenter.y = characterController.height / 2;
-        newCenter.y = +characterController.skinWidth;
+        newCenter.y += characterController.skinWidth;
 
         //Let's move the capsule in local space as well
         newCenter.x = head.transform.localPosition.x;
