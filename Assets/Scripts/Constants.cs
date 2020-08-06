@@ -15,4 +15,6 @@ public static class Constants
 
     //SOUNDWAVE CONSTANTS
     public const float INTERVAL_DURATION = 0.5f;
+
+    public const int SLICEABLE_LAYER = 17;
 }
