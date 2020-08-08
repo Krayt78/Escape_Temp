@@ -11,9 +11,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class MasterController : MonoBehaviour
 {
-    //delete this shit a s soon as possible
-    public static bool EVOLVEPRESSED = false;
-
     [SerializeField]
     private GameObject player;
 
@@ -172,10 +169,7 @@ public class MasterController : MonoBehaviour
         m_LeftInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
 
 
-        if (buttonInput == true && playerDNALevel.CurrentEvolutionLevel == 1 && playerDNALevel.DnaLevel >= 1)
-        {
-            EVOLVEPRESSED = true;
-        }
+        playerInput.CallOnEvolveToAlpha();
 
     }
 

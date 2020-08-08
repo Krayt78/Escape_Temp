@@ -8,6 +8,11 @@ using UnityEngine;
 public class PlayerEntityController : EntityController
 {
     public float lifePoint = 10;
+    public const float MAX_LIFE_POINT = 10;
+    public event Action<float> OnRegainHealth = delegate { };
+    public event Action OnLifePointEqualZero = delegate { };
+    public bool canTakeDamages = true;
+    public bool DEV_ONLY_canTakeDamages = true; ///Used to test the game without dying when designing features
 
     private PlayerInput playerInput;
     [SerializeField] Transform playerCamera;
@@ -22,10 +27,12 @@ public class PlayerEntityController : EntityController
     private PlayerAbilitiesController playerAbilitiesController;
     private PlayerCameraController playerCameraController;
     private PlayerMovement playerMovement;
+    private PlayerCarateristicController playerCarateristic;
+
     private Echo echo;
 
     [SerializeField] private float eatingDelay = 1.0f;
-    public event Action<float> OnEat = delegate { };
+    public event Action<float> OnEatDna = delegate { };
 
     [SerializeField] private float vomitRatePerSeconds = .2f; //The amount of dna vomited per seconds
 
@@ -40,6 +47,7 @@ public class PlayerEntityController : EntityController
         playerMovement = GetComponent<PlayerMovement>();
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         playerCameraController = GetComponent<PlayerCameraController>();
+        playerCarateristic = GetComponent<PlayerCarateristicController>();
 
         echo = GetComponentInChildren<Echo>();
     }
@@ -97,10 +105,15 @@ public class PlayerEntityController : EntityController
         attacked.TakeDamages(playerDamages);
         OnAttack();
     }
-
-    public void Eat(float value)
+    
+    public void EatHealth(float value)
     {
-        OnEat(value);
+        GainHealth(value);
+    }
+
+    public void EatDNA(float value)
+    {
+        OnEatDna(value);
     }
 
     private void IsMoving()
@@ -121,7 +134,22 @@ public class PlayerEntityController : EntityController
 
     public override void TakeDamages(float damages)
     {
+        if (!canTakeDamages || !DEV_ONLY_canTakeDamages)
+            return;
+
+        lifePoint -= damages / playerCarateristic.resistancePerLevel;
+        if (lifePoint <= 0)
+        {
+            lifePoint = 0;
+            OnLifePointEqualZero();
+        }
         CallOnTakeDamages(damages);
+    }
+
+    public void GainHealth(float healing)
+    {
+        lifePoint = Mathf.Max(lifePoint + healing, MAX_LIFE_POINT);
+        OnRegainHealth(healing);
     }
 
     protected override void Dies()

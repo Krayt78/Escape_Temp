@@ -11,13 +11,17 @@ public class CameraFilter : Singleton<CameraFilter>
     private Volume globalCameraVolume;
     // Default profile
     [SerializeField]
-    private VolumeProfile betaProfile;
+    private VolumeProfile criticalProfile;
     [SerializeField]
     private VolumeProfile omegaProfile;
     [SerializeField]
+    private VolumeProfile betaProfile;
+    [SerializeField]
     private VolumeProfile alphaProfile;
+    private ColorAdjustments criticalColorAdjustment;
     private ColorAdjustments omegaColorAdjustment;
     private ColorAdjustments alphaColorAdjustment;
+    private Vignette criticalVignette;
     private Vignette omegaVignette;
     [ColorUsage(true, true)]
     [SerializeField]
@@ -34,7 +38,8 @@ public class CameraFilter : Singleton<CameraFilter>
     {
         Beta,
         Alpha,
-        Omega
+        Omega,
+        Critical
     }
     // Start is called before the first frame update
     void Start()
@@ -44,6 +49,14 @@ public class CameraFilter : Singleton<CameraFilter>
 
         ColorAdjustments temp;
         Vignette tempVignette;
+        if (criticalProfile.TryGet<ColorAdjustments>(out temp))
+        {
+            criticalColorAdjustment = temp;
+        }
+        if (criticalProfile.TryGet<Vignette>(out tempVignette))
+        {
+            criticalVignette = tempVignette;
+        }
         if (omegaProfile.TryGet<ColorAdjustments>(out temp))
         {
             omegaColorAdjustment = temp;
@@ -65,23 +78,24 @@ public class CameraFilter : Singleton<CameraFilter>
         {
             return;
         }
-
-        if (profile == Profile.Beta)
+        switch (profile)
         {
-            globalCameraVolume.profile = betaProfile;
+            case Profile.Alpha:
+                globalCameraVolume.profile = alphaProfile;
+                alphaColorAdjustment.saturation.value = 0;
+                alphaColorAdjustment.colorFilter.value = alphaStartingColor;
+                StartCoroutine(alphaColorLerp());
+                break;
+            case Profile.Beta:
+                globalCameraVolume.profile = betaProfile;
+                break;
+            case Profile.Omega:
+                globalCameraVolume.profile = omegaProfile;
+                break;
+            case Profile.Critical:
+                globalCameraVolume.profile = criticalProfile;
+                break;
         }
-        else if (profile == Profile.Omega)
-        {
-            globalCameraVolume.profile = omegaProfile;
-        }
-        else if (profile == Profile.Alpha)
-        {
-            globalCameraVolume.profile = alphaProfile;
-            alphaColorAdjustment.saturation.value = 0;
-            alphaColorAdjustment.colorFilter.value = alphaStartingColor;
-            StartCoroutine(alphaColorLerp());
-        }
-
         currentProfile = profile;
     }
 
@@ -96,6 +110,19 @@ public class CameraFilter : Singleton<CameraFilter>
         omegaColorAdjustment.saturation.value = saturationPercentage;
         omegaColorAdjustment.contrast.value = -saturationPercentage;
         omegaVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
+    }
+
+    public void CriticalFilterFluctation(float dnaLevel)
+    {
+        if (currentProfile != Profile.Critical && criticalColorAdjustment == null)
+        {
+            return;
+        }
+
+        float saturationPercentage = ((1 - dnaLevel) * 100) * (-1);
+        criticalColorAdjustment.saturation.value = saturationPercentage;
+        criticalColorAdjustment.contrast.value = -saturationPercentage;
+        criticalVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
     }
 
     public IEnumerator alphaColorLerp()

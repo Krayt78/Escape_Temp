@@ -34,6 +34,7 @@ public class PlayerSoundEffectController : MonoBehaviour
     [SerializeField] string evolveSFXPath;
     [SerializeField] string devolveSFXPath;
 
+    [SerializeField] string evolveToCriticalSFXPath;
     [SerializeField] string evolveToOmegaSFXPath;
     [SerializeField] string evolveToBetaSFXPath;
     [SerializeField] string evolveToAlphaSFXPath;
@@ -59,7 +60,8 @@ public class PlayerSoundEffectController : MonoBehaviour
         playerInput.OnStopVomiting += StopPlayingVomitSFX;
 
         PlayerEntityController playerEntityController = GetComponent<PlayerEntityController>();
-        playerEntityController.OnEat += PlayEatSFX;
+        playerEntityController.OnEatDna += PlayEatSFX;
+        playerEntityController.OnRegainHealth += PlayEatSFX;
         playerEntityController.OnTakeDamages += PlayHurtSFX;
         playerEntityController.OnDies += PlayDiesSFX;
         playerEntityController.OnAttack += PlayAttackSFX;
@@ -235,6 +237,14 @@ public class PlayerSoundEffectController : MonoBehaviour
             return;
 
         FMODPlayerController.PlayOnShotSound(evolveToOmegaSFXPath, transform.position);
+    }
+
+    public void PlayEvolveToCriticalSFX()
+    {
+        if (mute)
+            return;
+
+        FMODPlayerController.PlayOnShotSound(evolveToCriticalSFXPath, transform.position);
     }
 
     public void PlayScanSFX()

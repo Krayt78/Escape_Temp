@@ -9,8 +9,11 @@ using UnityEngine;
  */
 public class PlayerAlphaState : BasePlayerState
 {
+    [SerializeField] private const int LEVEL_STATE = 2;
+
     private StateMachine manager;
 
+    private PlayerEntityController playerEntityController;
     private PlayerDNALevel playerDnaLevel;
     public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
@@ -18,19 +21,22 @@ public class PlayerAlphaState : BasePlayerState
     float stateSize = 4f;
     float stateDamages = 3;
     float stateNoise = 20;
+    float stateResistance = 1000f;
 
     public override float StateSpeed {get{return stateSpeed;} }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
+    public override float StateResistance { get { return stateResistance; } }
 
     float transformationTimeInSeconds = 1.5f; //The time for the player to turn into an alpha
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
 
     public float stepByMoveSpeed = .8f;
 
-    public PlayerAlphaState(GameObject gameObject) : base(gameObject)
+    public PlayerAlphaState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
     {
+        playerEntityController = gameObject.GetComponent<PlayerEntityController>();
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
     }
 
@@ -40,7 +46,7 @@ public class PlayerAlphaState : BasePlayerState
 
         Debug.Log("Entering Alpha state");
 
-        //manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;
+        playerEntityController.canTakeDamages = false;
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
@@ -63,6 +69,7 @@ public class PlayerAlphaState : BasePlayerState
     public override void OnStateExit()
     {
         Debug.Log("Exiting Alpha state");
+        playerEntityController.canTakeDamages = true;
         playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }
 

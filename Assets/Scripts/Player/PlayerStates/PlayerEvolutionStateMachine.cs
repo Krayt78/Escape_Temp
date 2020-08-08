@@ -8,8 +8,10 @@ using UnityEngine;
 //Give back control when transition is over
 public class PlayerEvolutionStateMachine : StateMachine
 {
-    private PlayerAbilitiesController playerAbilities;
-    private PlayerMovement playerMovement;
+    private PlayerEntityController      playerEntityController;
+    private PlayerDNALevel              playerDNALevel;
+    private PlayerAbilitiesController   playerAbilities;
+    private PlayerMovement              playerMovement;
     private PlayerCarateristicController playerCarateristic;
 
     public event Action OnEvolve = delegate{ };
@@ -22,6 +24,8 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void Awake()
     {
+        playerEntityController = GetComponent<PlayerEntityController>();
+        playerDNALevel = GetComponent<PlayerDNALevel>();
         playerAbilities = GetComponent<PlayerAbilitiesController>();
         playerMovement = GetComponent<PlayerMovement>();
         playerCarateristic = GetComponent<PlayerCarateristicController>();
@@ -30,7 +34,6 @@ public class PlayerEvolutionStateMachine : StateMachine
     private void Start()
     {
         InitializePlayerStateMachine();
-        //InitializeStateMachineFirstState();
         SetStartState();
 
         
@@ -40,8 +43,13 @@ public class PlayerEvolutionStateMachine : StateMachine
             ((BasePlayerState)CurrentState).StateSpeed,
             ((BasePlayerState)CurrentState).StateSize,
             ((BasePlayerState)CurrentState).StateDamages,
-            ((BasePlayerState)CurrentState).StateNoise);
+            ((BasePlayerState)CurrentState).StateNoise,
+            ((BasePlayerState)CurrentState).StateResistance);
         }
+
+        playerEntityController.OnLifePointEqualZero += OnLifePointIsZero;
+        playerDNALevel.OncurrentEvolutionLevelChanged += SwitchState;
+        playerDNALevel.OnEvolveToAlpha += EvolveToAlpha;
     }
 
     protected override void Update()
@@ -49,13 +57,22 @@ public class PlayerEvolutionStateMachine : StateMachine
         if(!transitionning)
             base.Update();
     }
-
+    
     public override void SwitchToNewState(Type nextState)
     {
-        if(CurrentState!=null)
+        BaseState temp = availableStates[nextState];
+        if (((BasePlayerState)CurrentState).levelState == ((BasePlayerState)temp).levelState)
+            return;
+
+        if (CurrentState!=null)
             CurrentState.OnStateExit();
 
-        CurrentState = availableStates[nextState];
+        if (((BasePlayerState)CurrentState).levelState < ((BasePlayerState)temp).levelState)
+            CallOnEvolve();
+        else if (((BasePlayerState)CurrentState).levelState > ((BasePlayerState)temp).levelState)
+            CallOnDevolve();
+
+        CurrentState = temp;
         CurrentStateName = availableStates[nextState].ToString();
 
         CallOnStateChanged();
@@ -75,6 +92,7 @@ public class PlayerEvolutionStateMachine : StateMachine
             ((BasePlayerState)CurrentState).StateSize,
             ((BasePlayerState)CurrentState).StateDamages,
             ((BasePlayerState)CurrentState).StateNoise,
+            ((BasePlayerState)CurrentState).StateResistance,
             ((BasePlayerState)CurrentState).TransformationTimeInSeconds);
         }
     }
@@ -97,7 +115,8 @@ public class PlayerEvolutionStateMachine : StateMachine
         {
             {typeof(PlayerOmegaState), new PlayerOmegaState(gameObject)},
             {typeof(PlayerBetaState), new PlayerBetaState(gameObject)},
-            {typeof(PlayerAlphaState), new PlayerAlphaState(gameObject)}
+            {typeof(PlayerAlphaState), new PlayerAlphaState(gameObject)},
+            {typeof(PlayerCriticalState), new PlayerCriticalState(gameObject)}
         };
 
         SetStates(states);
@@ -147,6 +166,33 @@ public class PlayerEvolutionStateMachine : StateMachine
         CurrentState = value;
         CurrentStateName = value.ToString();
         CurrentState.OnStateEnter(this);
+    }
+
+    private void SwitchState(int state)
+    {
+        if (CurrentState.GetType() == typeof(PlayerCriticalState) /* || CurrentState.GetType() == typeof(PlayerAlphaState)*/)
+            return;
+
+        switch(state)
+        {
+            case 0:
+                SwitchToNewState(typeof(PlayerOmegaState));
+                break;
+            case 1:
+                SwitchToNewState(typeof(PlayerBetaState));
+                break;
+
+        }
+    }
+
+    private void EvolveToAlpha()
+    {
+        SwitchToNewState(typeof(PlayerAlphaState));
+    }
+
+    private void OnLifePointIsZero()
+    {
+        SwitchToNewState(typeof(PlayerCriticalState));
     }
 
     private void OnGUI()

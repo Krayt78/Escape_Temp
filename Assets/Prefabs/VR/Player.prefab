@@ -222,6 +222,7 @@ MonoBehaviour:
   grapplinRetractSFXPath: event:/Player/Interactions/GrapplinRetract
   evolveSFXPath: event:/Player/Evolution/Evolve
   devolveSFXPath: event:/Player/Evolution/Devolve
+  evolveToCriticalSFXPath: 
   evolveToOmegaSFXPath: 
   evolveToBetaSFXPath: 
   evolveToAlphaSFXPath: event:/Player/Evolution/EvolveToAlpha
@@ -285,6 +286,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifePoint: 10
+  canTakeDamages: 1
+  DEV_ONLY_canTakeDamages: 1
   playerCamera: {fileID: 7034672381660163115}
   actionDistance: 3
   playerDamages: 1

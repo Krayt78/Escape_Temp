@@ -9,6 +9,8 @@ using UnityEngine;
  */
 public class PlayerBetaState : BasePlayerState
 {
+    [SerializeField] private const int LEVEL_STATE = 1;
+
     private StateMachine manager;
 
     private PlayerDNALevel playerDnaLevel;
@@ -20,6 +22,7 @@ public class PlayerBetaState : BasePlayerState
     float[] rangeStateSize = new float[2] { 1.5f, 2.5f };
     float[] rangeStateDamages = new float[2] { 2,2 };
     float[] rangeStateNoise = new float[2] { 2, 10 };
+    float stateResistance = 1f;
 
     private float getDnaLevel()
     {
@@ -30,6 +33,7 @@ public class PlayerBetaState : BasePlayerState
     public override float StateSize {get { return Mathf.Lerp(rangeStateSize[0], rangeStateSize[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateNoise { get { return Mathf.Lerp(rangeStateNoise[0], rangeStateNoise[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
+    public override float StateResistance { get { return stateResistance; } }
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
@@ -38,7 +42,7 @@ public class PlayerBetaState : BasePlayerState
 
     public float stepByMoveSpeed = .5f;
 
-    public PlayerBetaState(GameObject gameObject) : base(gameObject)
+    public PlayerBetaState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
     }
@@ -64,14 +68,6 @@ public class PlayerBetaState : BasePlayerState
     
     public override Type Tick()
     {
-        //delete this shit as soon as possible
-        if ((Input.GetButtonDown("Evolve") || MasterController.EVOLVEPRESSED) && canEvolveToAlpha)
-        {
-            EvolveToAlpha();
-            MasterController.EVOLVEPRESSED = false;
-        }
-           
-
         return null;
     }
 

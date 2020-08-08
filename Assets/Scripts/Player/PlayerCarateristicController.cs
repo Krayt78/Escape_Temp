@@ -8,6 +8,7 @@ public class PlayerCarateristicController : MonoBehaviour
     public float[] sizePerLevel = new float[3];
     public float[] damagesPerLevel = new float[3];
     public float[] noisePerLevel = new float[3];
+    public float resistancePerLevel { get; private set; }
 
     private float targetSpeed;
     private float targetSize;
@@ -62,12 +63,14 @@ public class PlayerCarateristicController : MonoBehaviour
         //InitCharacterisctics();
     }
 
-    public void UpdateCharacteristicValues(float newSpeed, float newSize, float newDamages, float newNoise, float easingSpeed= DEFAULT_EASING_DELAY)
+    public void UpdateCharacteristicValues(float newSpeed, float newSize, float newDamages, float newNoise, float resistance, float easingSpeed= DEFAULT_EASING_DELAY)
     {
         targetSpeed = newSpeed;
         targetSize = newSize;
         targetDamages = newDamages;
         targetNoise = newNoise;
+        resistancePerLevel = resistance;
+
         currentEasingDelayInSeconds += easingSpeed;
 
 
@@ -116,7 +119,7 @@ public class PlayerCarateristicController : MonoBehaviour
         currentEasingDelayInSeconds = 0;
     }
 
-    public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise)
+    public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise, float resistance)
     {
         if (noiseEmitter)
         {
@@ -128,5 +131,7 @@ public class PlayerCarateristicController : MonoBehaviour
         //    collider.height = newSize;
         if (entityController)
             entityController.PlayerDamages = newDamages;
+
+        resistancePerLevel = resistance;
     }
 }
