@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class EnemyAttack : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class EnemyAttack : MonoBehaviour
 
     [SerializeField]
     GameObject laserLoadingEffect;
+
+    [SerializeField]
+    GameObject laserShootEffect;
 
     private Guard guard;
     bool locked = false;
@@ -58,14 +62,16 @@ public class EnemyAttack : MonoBehaviour
     {
         locked = true;
         GameObject loadingeffect = Instantiate(laserLoadingEffect, FiringPoint.transform);
+        Destroy(loadingeffect, loadingeffect.GetComponent<VisualEffect>().GetFloat("Duration"));
         yield return new WaitForSeconds(0.75f);
         guard.EnemyAnimationController.TriggerAttackTurret();
+        GameObject shootEffect= Instantiate(laserShootEffect, FiringPoint.transform);
+        Destroy(shootEffect, shootEffect.GetComponent<VisualEffect>().GetFloat("Duration") + 0.25f);
         GameObject bullet = Instantiate(Bullet, FiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
-
         cooldown = fireRate;
 
         OnFireAtTarget();
-        Destroy(loadingeffect);
         locked = false;
+
     }
 }
