@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class VrGrapplinController : Ability
 {
-   
+   //Temp
+   [SerializeField] Transform movingPlayer;
 
     private PlayerAbilitiesController playerAbilitiesController;
 
@@ -101,7 +102,7 @@ public class VrGrapplinController : Ability
 
     private bool Landed()
     {
-        return Vector3.Distance(transform.position, destination) < 1f;
+        return Vector3.Distance(movingPlayer.position, destination) < 1f;
     }
 
     private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
@@ -124,7 +125,7 @@ public class VrGrapplinController : Ability
     IEnumerator MoveAlongBezier(float t)
     {
         yield return new WaitForSecondsRealtime(0.03f);
-        transform.position = CalculateBezierPoint(t, transform.position, bezierControlPoint, destination);
+        movingPlayer.position = CalculateBezierPoint(t, movingPlayer.position, bezierControlPoint, destination);
     }
 
     private IEnumerator MoveOnBezier()
@@ -132,13 +133,13 @@ public class VrGrapplinController : Ability
         //rigibody.constraints = RigidbodyConstraints.FreezePositionY;
         //rigibody.freezeRotation = true;
         coroutine = true;
-        float y = transform.position.y;
+        float y = movingPlayer.position.y;
 
         playerSoundEffectController.PlayGrapplinRetractSFX();
 
         for (float i = 0; i <= 1; i += 0.002f)
         {
-            if (y > transform.position.y)
+            if (y > movingPlayer.position.y)
             {
                 i += 0.02f;
                 lrRope.enabled = false;
@@ -147,7 +148,7 @@ public class VrGrapplinController : Ability
                 playerSoundEffectController.StopGrapplinSFX();
             }
             MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
-            y = transform.position.y;
+            y = movingPlayer.position.y;
             lrRope.SetPosition(0, grapplinPosition.position);
             yield return MoveCoroutine;
         }
@@ -157,7 +158,7 @@ public class VrGrapplinController : Ability
     {
         lrRope.enabled = true;
         characterController.enabled = false;
-        lrRope.SetPosition(0, transform.position);
+        lrRope.SetPosition(0, movingPlayer.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
 
@@ -223,7 +224,7 @@ public class VrGrapplinController : Ability
                 time = 0;
                 playerSoundEffectController.PlayGrapplinShootSFX();
 
-                grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), transform);
+                grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
                 grp.transform.parent = null;
                 StartCoroutine(LaunchGrapplin(grp));
 
