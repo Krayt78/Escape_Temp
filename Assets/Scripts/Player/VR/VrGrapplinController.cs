@@ -225,6 +225,7 @@ public class VrGrapplinController : Ability
                 playerSoundEffectController.PlayGrapplinShootSFX();
 
                 grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
+                grp.transform.LookAt(destination);
                 grp.transform.parent = null;
                 StartCoroutine(LaunchGrapplin(grp));
 
