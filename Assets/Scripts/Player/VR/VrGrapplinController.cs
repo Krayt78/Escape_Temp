@@ -9,7 +9,7 @@ public class VrGrapplinController : Ability
 
     private PlayerAbilitiesController playerAbilitiesController;
 
-    private VrPlayerSoundEffectController playerSoundEffectController;
+    private PlayerSoundEffectController playerSoundEffectController;
 
     private PlayerMovement playerMovement;
     private CharacterController characterController;
@@ -63,7 +63,7 @@ public class VrGrapplinController : Ability
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         //playerMovement = GetComponent<PlayerMovement>();
         characterController = GetComponentInChildren<CharacterController>();
-        playerSoundEffectController = GetComponent<VrPlayerSoundEffectController>();
+        playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
 
     public override void Start()
@@ -222,7 +222,7 @@ public class VrGrapplinController : Ability
                 canUseGrapplin = false;
                 coroutine = false;
                 time = 0;
-                playerSoundEffectController.PlayGrapplinShootSFX();
+                playerSoundEffectController?.PlayGrapplinShootSFX();
 
                 grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
                 grp.transform.LookAt(destination);
