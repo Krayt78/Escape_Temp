@@ -5,8 +5,12 @@ using UnityEngine;
 public class PlayerMouthController : MonoBehaviour
 {
 
-    public VrPlayerEntityController vrPlayerEntityController;
+    public PlayerEntityController playerEntityController;
 
+    private void Awake()
+    {
+        playerEntityController = GetComponentInParent<PlayerEntityController>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         FoodController food = other.gameObject.GetComponent<FoodController>();

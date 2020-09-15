@@ -11,21 +11,23 @@ public class SliceListener : MonoBehaviour
     Vector3 lastSwordPosition;
     public Transform Sword;
 
-    public void Update()
+    [SerializeField]
+    private float CuttingCooldown;
+    private float LastTimeWeCut;
+    private void Start()
     {
-        SwordVelocity = (Sword.position - lastSwordPosition).magnitude / Time.deltaTime;
-        lastSwordPosition = Sword.position;
+        LastTimeWeCut = Time.time;
     }
 
     public CapsuleCollider SolidCollider;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(SwordVelocity);
-        if (SwordVelocity > cuttingSpeed)
+        if (Time.time >( LastTimeWeCut+ CuttingCooldown))
         {
             SolidCollider.enabled = false;
             slicer.isTouched = true;
         }
+      
     }
 
     private void OnTriggerExit(Collider other)

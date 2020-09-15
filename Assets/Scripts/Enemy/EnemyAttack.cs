@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class EnemyAttack : MonoBehaviour
 {
@@ -21,8 +22,14 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     GameObject FiringPoint;
 
-    private Guard guard;
+    [SerializeField]
+    GameObject laserLoadingEffect;
 
+    [SerializeField]
+    GameObject laserShootEffect;
+
+    private Guard guard;
+    bool locked = false;
 
     public event Action OnFireAtTarget = delegate { };
 
@@ -34,9 +41,9 @@ public class EnemyAttack : MonoBehaviour
 
     public void AttackRoutine(Transform target) 
     {
-        if (CanShoot())
+        if (CanShoot() && !locked)
         {
-            FireAtTarget(target);
+            StartCoroutine(FireAtTarget(target));
         }
     }
 
@@ -49,29 +56,22 @@ public class EnemyAttack : MonoBehaviour
             cooldown -= Time.deltaTime;
             return false;
         }
-
-        
     }
 
-    private void FireAtTarget(Transform target)
+    private IEnumerator FireAtTarget(Transform target)
     {
-
-        /*
-        if (RollADice.RollPercentage(accuracy, 100))
-        {
-            target.GetComponent<EntityController>().TakeDamages(damages);
-            Debug.Log("Hit");
-        }
-        else
-        {
-
-            Debug.Log("Miss");
-        }*/
+        locked = true;
+        GameObject loadingeffect = Instantiate(laserLoadingEffect, FiringPoint.transform);
+        Destroy(loadingeffect, loadingeffect.GetComponent<VisualEffect>().GetFloat("Duration"));
+        yield return new WaitForSeconds(0.75f);
         guard.EnemyAnimationController.TriggerAttackTurret();
+        GameObject shootEffect= Instantiate(laserShootEffect, FiringPoint.transform);
+        Destroy(shootEffect, shootEffect.GetComponent<VisualEffect>().GetFloat("Duration") + 0.25f);
         GameObject bullet = Instantiate(Bullet, FiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
-
         cooldown = fireRate;
 
         OnFireAtTarget();
+        locked = false;
+
     }
 }

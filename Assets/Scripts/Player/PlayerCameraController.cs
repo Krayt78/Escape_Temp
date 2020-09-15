@@ -8,7 +8,7 @@ public class PlayerCameraController : MonoBehaviour
     private float cameraSpeed=90;
     [SerializeField] Vector2 xRotationLimit = new Vector2(-90, 90);
 
-    [SerializeField] Transform playerCamera;
+    [SerializeField] public Transform playerCamera;
     private PlayerInput playerInput;
 
     private float playerOrientation = 0;

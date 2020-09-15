@@ -9,10 +9,11 @@ using UnityEngine;
  */
 public class PlayerBetaState : BasePlayerState
 {
+    [SerializeField] private const int LEVEL_STATE = 1;
+
     private StateMachine manager;
 
     private PlayerDNALevel playerDnaLevel;
-    private VrPlayerDNALevel vrPlayerDNALevel;
     private bool canEvolveToAlpha = false;
     public bool CanEvolveToAlpha { get { return canEvolveToAlpha; } }
 
@@ -21,26 +22,18 @@ public class PlayerBetaState : BasePlayerState
     float[] rangeStateSize = new float[2] { 1.5f, 2.5f };
     float[] rangeStateDamages = new float[2] { 2,2 };
     float[] rangeStateNoise = new float[2] { 2, 10 };
+    float stateResistance = 1f;
 
     private float getDnaLevel()
     {
-        float dnaLevel;
-        if (playerDnaLevel != null)
-        {
-            dnaLevel = playerDnaLevel.DnaLevel;
-        }
-        else
-        {
-            dnaLevel = vrPlayerDNALevel.DnaLevel;
-        }
-
-        return dnaLevel;
+        return playerDnaLevel.DnaLevel;
     }
 
     public override float StateSpeed { get { return Mathf.Lerp(rangeStateSpeed[0], rangeStateSpeed[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateSize {get { return Mathf.Lerp(rangeStateSize[0], rangeStateSize[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateNoise { get { return Mathf.Lerp(rangeStateNoise[0], rangeStateNoise[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
+    public override float StateResistance { get { return stateResistance; } }
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
@@ -49,13 +42,9 @@ public class PlayerBetaState : BasePlayerState
 
     public float stepByMoveSpeed = .5f;
 
-    public PlayerBetaState(GameObject gameObject) : base(gameObject)
+    public PlayerBetaState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
-        if (playerDnaLevel == null)
-        {
-            vrPlayerDNALevel = gameObject.GetComponent<VrPlayerDNALevel>();
-        }
     }
 
     public override void OnStateEnter(StateMachine manager)
@@ -64,23 +53,12 @@ public class PlayerBetaState : BasePlayerState
 
         // manager.gameObject.GetComponent<PlayerAbilitiesController>().enabled = true;//Enable abilities
         //Start easing characteristics
-        if (playerDnaLevel != null)
-        {
-            playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
-        }
-        else
-        {
-            vrPlayerDNALevel.OnDnaLevelChanged += OnDnaLevelChanged;
-        }
+        playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
 
         PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
         if (playerSoundEffectController != null)
         {
             playerSoundEffectController.PlayEvolveToBetaSFX();
-        }
-        else
-        {
-            manager.gameObject.GetComponent<VrPlayerSoundEffectController>().PlayEvolveToBetaSFX();
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
@@ -90,42 +68,21 @@ public class PlayerBetaState : BasePlayerState
     
     public override Type Tick()
     {
-        //delete this shit as soon as possible
-        if (MasterController.EVOLVEPRESSED && canEvolveToAlpha)
-        {
-            EvolveToAlpha();
-            MasterController.EVOLVEPRESSED = false;
-        }
-           
-
         return null;
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Beta state");
-        if (playerDnaLevel != null)
-        {
-            playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
-        }
-        else
-        {
-            vrPlayerDNALevel.OnDnaLevelChanged -= OnDnaLevelChanged;
-        }
+        playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }
 
     private void OnDnaLevelChanged(float dnaLevel)
     {
         if (dnaLevel <= 0)
         {
-            if (playerDnaLevel != null)
-            {
-                playerDnaLevel.LoseLevel();
-            }
-            else
-            {
-                vrPlayerDNALevel.LoseLevel();
-            }
+            playerDnaLevel.LoseLevel();
+
             ((PlayerEvolutionStateMachine)manager).CallOnDevolve();
             manager.SwitchToNewState(typeof(PlayerOmegaState));
             return;
@@ -133,14 +90,8 @@ public class PlayerBetaState : BasePlayerState
 
         if (dnaLevel >= 1)
         {
-            if (playerDnaLevel != null)
-            {
-                playerDnaLevel.ClampDnaLevel();
-            }
-            else
-            {
-                vrPlayerDNALevel.ClampDnaLevel();
-            }
+            playerDnaLevel.ClampDnaLevel();
+
             canEvolveToAlpha = true;
         }
         else
@@ -153,14 +104,8 @@ public class PlayerBetaState : BasePlayerState
 
     public void EvolveToAlpha()
     {
-        if (playerDnaLevel != null)
-        {
-            vrPlayerDNALevel.GoAlpha();
-        }
-        else
-        {
-            vrPlayerDNALevel.LoseLevel();
-        }
+        playerDnaLevel.GoAlpha();
+        
         ((PlayerEvolutionStateMachine)manager).CallOnEvolve();
         manager.SwitchToNewState(typeof(PlayerAlphaState));
     }
@@ -171,10 +116,6 @@ public class PlayerBetaState : BasePlayerState
         if (playerCarateristicController != null)
         {
             playerCarateristicController.UpdateCharacteristicValues(StateSpeed, StateSize, StateDamages, StateNoise, easingCharacteristicsSpeed);
-        }
-        else
-        {
-            manager.gameObject.GetComponent<VrPlayerCarateristicController>().UpdateCharacteristicValues(StateSpeed, StateSize, StateDamages, StateNoise, easingCharacteristicsSpeed);
         }
     }
 }
