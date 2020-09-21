@@ -204,7 +204,6 @@ public class Grapplin : Ability
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
-            
             if (hit.collider.GetComponentInChildren<GrapplinZone>() != null)
             {
                 //Debug.LogWarning("We launch grapplin");

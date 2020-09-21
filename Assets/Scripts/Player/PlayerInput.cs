@@ -13,10 +13,15 @@ public class PlayerInput : MonoBehaviour
     public event Action OnAction = delegate { };
     public event Action OnUseAbility = delegate { };
     public event Action OnChangeAbility = delegate { };
+
+    public event Action OnScan = delegate { }; //The player scan it's surrounding looking for enemys
+
+    public event Action<int> OnSwitchState = delegate { };   //The player wants to go from omega to beta or the other way around
+    public event Action OnEvolveToAlpha = delegate { }; //The player wants to evolve to Alpha
+
     public event Action OnVomit = delegate { }; //The player vomit to lose DNA to get smaller
     public event Action OnStopVomiting = delegate { };
 
-    public event Action OnScan = delegate { }; //The player scan it's surrounding looking for enemys
 
 
     // Start is called before the first frame update
@@ -31,8 +36,8 @@ public class PlayerInput : MonoBehaviour
         Forward = Input.GetAxis("Vertical");
         Right = Input.GetAxis("Horizontal");
 
-        LookUp = -Input.GetAxis("Mouse Y");
-        LookRight = Input.GetAxis("Mouse X");
+        LookUp = -Input.GetAxis("MouseY");
+        LookRight = Input.GetAxis("MouseX");
 
         if (Input.GetButtonDown("Fire1"))
             OnAction();
@@ -55,6 +60,16 @@ public class PlayerInput : MonoBehaviour
     public void OnUseAbilityFunction()
     {
         OnUseAbility();
+    }
+
+    public void CallOnEvolveToAlpha()
+    {
+        OnEvolveToAlpha();
+    }
+
+    public void CallOnSwitchState(int value)
+    {
+        OnSwitchState(value);
     }
 
 }
