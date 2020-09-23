@@ -45,14 +45,13 @@ public class SimpleMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("FUCKING UPDATE");
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
             playerVelocity.y = 0f;
 
         //transform.Rotate(Vector3.up, Input.GetAxis("MouseX") * cameraSpeed * Time.deltaTime);
 
-        Vector3 move = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
+        Vector3 move = -Input.GetAxis("Vertical") * transform.forward - Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move.normalized * Time.deltaTime * playerSpeed);
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)

@@ -19,7 +19,7 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private bool transitionning = false;
 
-    [SerializeField] private enum StartPlayerState { Omega, Beta, Alpha}
+    [SerializeField] private enum StartPlayerState { Critical, Omega, Beta, Alpha}
     [SerializeField] private StartPlayerState startState = StartPlayerState.Beta;
 
     private void Awake()
@@ -138,6 +138,13 @@ public class PlayerEvolutionStateMachine : StateMachine
 
         switch(startState)
         {
+            case StartPlayerState.Critical:
+                if (!availableStates.TryGetValue(typeof(PlayerCriticalState), out value))
+                {
+                    Debug.LogError("NO PLAYER STATE FOUND");
+                    return;
+                }
+                break;
             case StartPlayerState.Omega:
                 if (!availableStates.TryGetValue(typeof(PlayerOmegaState), out value))
                 {
@@ -197,12 +204,6 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void OnGUI()
     {
-        if(CurrentStateName.Equals("PlayerBetaState") && ((PlayerBetaState)CurrentState).CanEvolveToAlpha)
-        {
-            string printString = "Press 'E' to evolve to Alpha";
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 50;
-            GUI.Label(new Rect(650, 50, 300, 500), printString, myStyle);
-        }
+        
     }
 }
