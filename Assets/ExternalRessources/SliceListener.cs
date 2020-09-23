@@ -22,10 +22,11 @@ public class SliceListener : MonoBehaviour
     public CapsuleCollider SolidCollider;
     private void OnTriggerEnter(Collider other)
     {
-        if (Time.time >( LastTimeWeCut+ CuttingCooldown))
+        if (Time.time > ( LastTimeWeCut + CuttingCooldown))
         {
             SolidCollider.enabled = false;
             slicer.isTouched = true;
+            LastTimeWeCut = Time.time;
         }
       
     }
