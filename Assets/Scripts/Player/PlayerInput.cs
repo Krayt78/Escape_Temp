@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     public event Action OnScan = delegate { }; //The player scan it's surrounding looking for enemys
 
+    private int switchValue = 1;
     public event Action<int> OnSwitchState = delegate { };   //The player wants to go from omega to beta or the other way around
     public event Action OnEvolveToAlpha = delegate { }; //The player wants to evolve to Alpha
 
@@ -55,6 +56,14 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonDown("Scan"))
             OnScan();
+
+        if (Input.GetKeyDown(KeyCode.A))
+            CallOnEvolveToAlpha();
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            switchValue = switchValue == 1 ? 2 : 1;
+            CallOnSwitchState(switchValue);
+        }
     }
 
     public void OnUseAbilityFunction()
@@ -70,6 +79,16 @@ public class PlayerInput : MonoBehaviour
     public void CallOnSwitchState(int value)
     {
         OnSwitchState(value);
+    }
+
+    private void OnGUI()
+    {
+            string printString = "Switch with 'K'" + "\n" +
+                                    "Switch state : " + switchValue + "\n" +
+                                    "Alpha with A";
+            GUIStyle myStyle = new GUIStyle();
+            myStyle.fontSize = 25;
+            GUI.Label(new Rect(200, 50, 300, 500), printString, myStyle);
     }
 
 }

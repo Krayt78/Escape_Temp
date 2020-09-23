@@ -149,7 +149,10 @@ public class PlayerDNALevel : MonoBehaviour
     public void GoAlpha()
     {
         if (dnaLevel < 1)
+        {
+            Debug.Log("NOT ENOUGH DNA");
             return;
+        }
 
         CurrentEvolutionLevel = maxEvolutionLevel;
         dnaLevel = 1;
