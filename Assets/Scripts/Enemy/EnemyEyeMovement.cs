@@ -59,4 +59,8 @@ public class EnemyEyeMovement : MonoBehaviour
             ElapsedTime = 0.0f;
         }
     }
+
+    public Transform GetEyeDirection(){
+        return sentinelEye;
+    }
 }

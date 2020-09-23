@@ -13,7 +13,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public List<Transform> visibleTargets = new List<Transform>();
+    public List<KeyValuePair<int, Transform>> visibleTargets = new List<KeyValuePair<int, Transform>>();
     private int previousVisibleTargetCount=0;
 
     public event Action OnTargetSighted = delegate { };
@@ -28,7 +28,16 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine("FindTargetsGlobalAlertWithDelay", .5f);
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, viewRadius);  
+        Vector3 fovLine1 = Quaternion.AngleAxis(viewAngle, transform.up) * transform.forward * viewRadius;
+        Vector3 fovLine2 = Quaternion.AngleAxis(-viewAngle, transform.up) * transform.forward * viewRadius;
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, fovLine1);
+        Gizmos.DrawRay(transform.position, fovLine2);
+    }
 
     IEnumerator FindTargetsWithDelay(float delay)
     {
@@ -57,20 +66,22 @@ public class FieldOfView : MonoBehaviour
         {
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
+                GameObject targetGO = targetsInViewRadius[i].gameObject;
                 Transform target = targetsInViewRadius[i].transform;
-                Vector3 dirToTarget = (target.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+                Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                
+                Debug.Log("NbPointsVisibles : "+targetGO.GetComponent<VisibilityPointHandler>()
+                    .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count);
+                
+                int angleToTarget = (int) Vector3.Angle(eyeTransform.forward, (target.position - transform.position).normalized);
+                if (targetGO.GetComponent<VisibilityPointHandler>()
+                    .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
-                    float dstToTarget = Vector3.Distance(transform.position, target.position);
-
-                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                    {
-                        visibleTargets.Add(target);
-                    }
-                    else
-                    {
-                        AIManager.RemoveEnemyOnSight(transform.gameObject.GetComponent<Guard>());
-                    }
+                    visibleTargets.Add(new KeyValuePair<int, Transform>(angleToTarget, target));
+                }
+                else
+                {
+                    AIManager.RemoveEnemyOnSight(transform.gameObject.GetComponent<Guard>());
                 }
             }
         }

@@ -34,6 +34,7 @@ public class PatrollState : BaseState
         if (guard.Target)
         {
             guard.EnemyPatrol.StopMoving();
+            AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.05f);
             return typeof(SightedState);
         }
 
@@ -41,13 +42,13 @@ public class PatrollState : BaseState
             return typeof(AlertedState);
         }
 
-        if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>())
+        if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>() && !guard.Target)
         {
             guard.EnemyOrientation.OrientationTowardsTarget(guard.NoiseHeard);
-            if(guard.EnemyNavigation.GetDistanceRemaining() < 30f){
-                guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
-                return typeof(NoiseHeardState);
-            }
+            // if(guard.EnemyNavigation.GetDistanceRemaining() < 30f){
+            //     guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
+            //     return typeof(NoiseHeardState);
+            // }
         }
 
         if (guard.EnemyPatrol.DestinationReached())
