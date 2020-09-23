@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public List<Transform> visibleTargets;
+    public List<KeyValuePair<int, Transform>> visibleTargets;
 
     private FieldOfView fieldOfView;
     private EnemyNavigation enemyNavigation;

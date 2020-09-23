@@ -9,9 +9,9 @@ public class Guard : MonoBehaviour
     private bool debugMode;
     [SerializeField]
     public Transform Target { get; private set; }
-    [SerializeField]
-    
+    public int angleToTarget = default;
 
+    [SerializeField]
     public bool isStunned;
 
     [SerializeField]
@@ -132,7 +132,8 @@ public class Guard : MonoBehaviour
 
     private void OnTargetSighted()
     {
-        SetTarget(FieldOfView.visibleTargets[0].transform);
+        SetTarget(FieldOfView.visibleTargets[0].Value);
+        angleToTarget = FieldOfView.visibleTargets[0].Key;
         EnemyAIManager.Instance.AddEnemyOnSight(this);
         EnemyAnimationController.TriggerSight();
     }

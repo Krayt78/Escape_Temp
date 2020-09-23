@@ -34,6 +34,7 @@ public class PatrollState : BaseState
         if (guard.Target)
         {
             guard.EnemyPatrol.StopMoving();
+            AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.05f);
             return typeof(SightedState);
         }
 

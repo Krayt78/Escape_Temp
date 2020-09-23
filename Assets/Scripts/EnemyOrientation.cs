@@ -8,6 +8,7 @@ public class EnemyOrientation : MonoBehaviour
     private float rotationSpeed = 30f;
     private float step;
     private Quaternion targetRotation;
+    private bool isRotating = false;
 
     public void OrientationTowardsTarget(Transform target)
     {
@@ -18,5 +19,14 @@ public class EnemyOrientation : MonoBehaviour
 
         // Rotate our transform a step closer to the target's.
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+    }
+
+    private IEnumerator OrientationTowardsTargetEnumerator(){
+        yield return null;
+    }
+
+    public void TurnToPosition(Transform target)
+    {
+        //StartCoroutine();
     }
 }

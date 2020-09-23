@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System.Collections.Generic;
+
 
 [CustomEditor (typeof (FieldOfView))]
 public class FieldOfViewEditor : Editor {
@@ -16,8 +18,8 @@ public class FieldOfViewEditor : Editor {
 		Handles.DrawLine (fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
 
 		Handles.color = Color.red;
-		foreach (Transform visibleTarget in fow.visibleTargets) {
-			Handles.DrawLine (fow.transform.position, visibleTarget.position);
+		foreach (KeyValuePair<int, Transform> visibleTarget in fow.visibleTargets) {
+			Handles.DrawLine (fow.transform.position, visibleTarget.Value.position);
 		}
 	}
 
