@@ -62,12 +62,13 @@ public class PlayerBetaState : BasePlayerState
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
-        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Beta);
+            //CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Beta);
     }
 
     
     public override Type Tick()
     {
+        Debug.Log("Update beta");
         return null;
     }
 

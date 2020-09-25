@@ -15,6 +15,8 @@ public class SimpleMover : MonoBehaviour
 
     public Transform LeftHand;
     public Transform RightHand;
+    public Transform playerCamera;
+    [SerializeField] private float cameraY = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class SimpleMover : MonoBehaviour
 
         PlayerCameraController cameraController = gameObject.AddComponent<PlayerCameraController>();
         cameraController.playerCamera = Camera.main.transform.parent;
+        playerCamera = cameraController.playerCamera;
     }
 
     void DeactivateHand()
@@ -40,6 +43,9 @@ public class SimpleMover : MonoBehaviour
         RightHand.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRController>().enabled = false;
         LeftHand.localPosition = new Vector3(-0.2f, 0, 0.4f);
         RightHand.localPosition = new Vector3(0.2f, 0, 0.4f);
+
+
+        playerCamera.localPosition = new Vector3(0, cameraY, 0);
     }
 
     // Update is called once per frame
@@ -52,7 +58,7 @@ public class SimpleMover : MonoBehaviour
 
         //transform.Rotate(Vector3.up, Input.GetAxis("MouseX") * cameraSpeed * Time.deltaTime);
 
-        Vector3 move = -Input.GetAxis("Vertical") * transform.forward - Input.GetAxis("Horizontal") * transform.right;
+        Vector3 move = Input.GetAxis("Vertical") * playerCamera.forward + Input.GetAxis("Horizontal") * playerCamera.right;
         controller.Move(move.normalized * Time.deltaTime * playerSpeed);
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
