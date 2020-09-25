@@ -9,7 +9,7 @@ public class PlayerDNALevel : MonoBehaviour
     private PlayerInput playerInput;
 
     private float dnaLevel;
-    public float DnaLevel { get { return dnaLevel; } }
+    public float DnaLevel { get { return dnaLevel; } set { dnaLevel = Mathf.Clamp(0, 1, value); } }
     [SerializeField] private int currentEvolutionLevel;
     public int CurrentEvolutionLevel { get { return currentEvolutionLevel; } 
         set
@@ -17,11 +17,12 @@ public class PlayerDNALevel : MonoBehaviour
             if(currentEvolutionLevel!=value)
             {
                 currentEvolutionLevel = value;
+                Debug.Log("CALL ON CURRENT EVOLUTION LEVEL CHANGED");
                 OncurrentEvolutionLevelChanged(currentEvolutionLevel);
             }
         }
     }
-    private int minEvolutionLevel = 0, maxEvolutionLevel = 2;
+    private int minEvolutionLevel = 0, maxEvolutionLevel = 3;
     private float[] foodToDnaRatio, damagesToDnaRatio;
 
     public event Action<float> OnDnaLevelChanged = delegate { };

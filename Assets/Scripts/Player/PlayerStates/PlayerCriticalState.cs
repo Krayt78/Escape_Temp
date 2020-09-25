@@ -60,7 +60,7 @@ public class PlayerCriticalState : BasePlayerState
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
-        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Critical);
+            //CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Critical);
     }
 
     public override Type Tick()

@@ -59,7 +59,7 @@ public class PlayerOmegaState : BasePlayerState
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
-        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Omega);
+            //CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Omega);
     }
 
     public override Type Tick()
