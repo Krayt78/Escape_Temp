@@ -15,6 +15,7 @@ public class VisibilityPointHandler : MonoBehaviour
     private void Awake()
     {
         visibilityPoints = GetComponentsInChildren<VisibilityPoint>();
+        Debug.Log("nb VisibilityPoints in handler awake : "+ visibilityPoints.Length);
     }
 
     private void Start()
@@ -54,6 +55,7 @@ public class VisibilityPointHandler : MonoBehaviour
     public List<VisibilityPoint> GetVisiblePointsFromTarget(Transform target, float viewAngle, float viewRadius, LayerMask obstacleMask)
     {
         List<VisibilityPoint> visiblePoints = new List<VisibilityPoint>();
+        Debug.Log("nb visibility points in handler : "+visibilityPoints.Length);
         foreach (var point in visibilityPoints)
         {
             Vector3 pointPos = point.transform.position;

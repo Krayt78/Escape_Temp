@@ -13,6 +13,7 @@ public class PatrollState : BaseState
     public PatrollState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
+        this.guard.stateMachine.CurrentStateName = "PatrollState";
     }
 
     public override Type Tick()
@@ -33,6 +34,7 @@ public class PatrollState : BaseState
 
         if (guard.Target)
         {
+            Debug.Log("patrollState has target");
             guard.EnemyPatrol.StopMoving();
             AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.05f);
             return typeof(SightedState);

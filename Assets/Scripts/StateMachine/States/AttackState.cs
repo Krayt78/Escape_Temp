@@ -30,12 +30,20 @@ public class AttackState : BaseState
             return typeof(DeadState);
         }
 
+        if (guard.isStunned)
+        {
+            guard.EnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
+
         if (!guard.Target)
         {
             guard.EnemyPatrol.ResumeMoving();
             
-            if(guard.EnemyPatrol.DestinationReached() && !AIManager.HasEnemySighted() && AIManager.GlobalAlertLevel < 0.33f){
+            if((guard.EnemyPatrol.DestinationReached() && !AIManager.HasEnemySighted() 
+            && AIManager.GlobalAlertLevel < 0.33f) || AIManager.HasOnlyOneEnemyOnSight()){
                 guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
+                guard.EnemyEyeMovement.MoveEyeRandomly();
                 return typeof(LostState);
             }
             else

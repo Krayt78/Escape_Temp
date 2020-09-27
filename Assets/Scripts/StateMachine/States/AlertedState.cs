@@ -40,9 +40,16 @@ public class AlertedState : BaseState
             return typeof(DeadState);
         }
 
+        if (guard.isStunned)
+        {
+            guard.EnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
+
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
+            Debug.Log("guard has not Target");
             AIManager.RemoveEnemyOnSight(guard);
             
             if(AIManager.GlobalAlertLevel < 0.66f)
@@ -50,12 +57,14 @@ public class AlertedState : BaseState
                 guard.EnemyPatrol.ResumeMoving();
                 guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
                 AIManager.RemoveEnemyOnAlert(guard);
+                guard.EnemyEyeMovement.MoveEyeRandomly();
                 return typeof(LostState);
             }
             // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT
         }
         else
         {
+            Debug.Log("guard has Target");
             AIManager.AddEnemyOnSight(guard);
             //orient towards target and chase target
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
@@ -65,14 +74,14 @@ public class AlertedState : BaseState
 
             AlertLevel();
         }
-
+        Debug.Log("globalAlertLevel in Alerted : "+ AIManager.GlobalAlertLevel);
         if(AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-
-        if(guard.AlertLevel > 1f){
+        Debug.Log("guard AlertLevel in Alerted : "+ guard.AlertLevel);
+        if(guard.AlertLevel == 1f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
@@ -97,7 +106,7 @@ public class AlertedState : BaseState
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
 
         float alertLevelCalcul_1 = (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard));
-        float alertLevelCalcul_2 = alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER);
+        float alertLevelCalcul_2 = (alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER)) * 5;
         float alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * (1 / guard.angleToTarget), 0, 1);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + alertLevelCalcul_3, 0, 1));
         return guard.AlertLevel;

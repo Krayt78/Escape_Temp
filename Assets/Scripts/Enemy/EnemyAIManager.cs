@@ -17,6 +17,14 @@ public class EnemyAIManager : MonoBehaviour
     private List<Guard> EnemiesOnAlert = new List<Guard>();
     private List<Guard> EnemiesOnSight = new List<Guard>();
 
+    private void OnGUI()
+    {
+            string printString = "Global Level Alert : " + this.globalAlertLevel;
+            GUIStyle myStyle = new GUIStyle();
+            myStyle.fontSize = 20;
+            GUI.Label(new Rect(450, 50, 300, 500), printString, myStyle);
+    }
+
     private void Awake()
     {
         if(instance)
@@ -28,11 +36,13 @@ public class EnemyAIManager : MonoBehaviour
         this.GlobalAlertLevel = 0f;
     }
 
-    private void Start(){
+    private void Start()
+    {
         StartCoroutine("CheckGlobalAlert", 0.2f);
     }
 
-    IEnumerator CheckGlobalAlert(float delay){
+    IEnumerator CheckGlobalAlert(float delay)
+    {
         while(true){
             yield return new WaitForSeconds(delay);
             AlertLevel();
@@ -44,7 +54,8 @@ public class EnemyAIManager : MonoBehaviour
         this.GlobalAlertLevel = Mathf.Clamp(value, 0f, 1f);
     }
 
-    public void AddEnemyOnSight(Guard enemy){
+    public void AddEnemyOnSight(Guard enemy)
+    {
         if(EnemiesOnSight.Count == 0) currentTimer = 0;
         if(!EnemiesOnSight.Exists(element => element.Equals(enemy)))
         {
@@ -53,21 +64,24 @@ public class EnemyAIManager : MonoBehaviour
         }
     }
 
-    public void AddEnemyOnAlert(Guard enemy){
+    public void AddEnemyOnAlert(Guard enemy)
+    {
         if(!EnemiesOnAlert.Exists(element => element.Equals(enemy)))
         {
             EnemiesOnAlert.Add(enemy);
         } 
     }
 
-    public void RemoveEnemyOnSight(Guard enemy){
+    public void RemoveEnemyOnSight(Guard enemy)
+    {
         if(EnemiesOnSight.Exists(element => element.Equals(enemy)))
         {
             EnemiesOnSight.Remove(enemy);
         }
     }
 
-    public void RemoveEnemyOnAlert(Guard enemy){
+    public void RemoveEnemyOnAlert(Guard enemy)
+    {
         if(EnemiesOnAlert.Exists(element => element.Equals(enemy)))
         {
             EnemiesOnAlert.Remove(enemy);
@@ -75,23 +89,33 @@ public class EnemyAIManager : MonoBehaviour
         if(EnemiesOnSight.Count == 0 && EnemiesOnAlert.Count == 0) SetGlobalAlertLevel(GlobalAlertLevel-0.5f);
     }
 
-    public bool HasEnemyAlerted(){
+    public bool HasEnemyAlerted()
+    {
         return EnemiesOnAlert.Count > 0;
     }
 
-    public bool HasEnemySighted(){
+    public bool HasEnemySighted()
+    {
         return EnemiesOnSight.Count > 0;
     }
 
-    public bool HasCurrentEnemyAlerted(Guard enemy){
+    public bool HasCurrentEnemyAlerted(Guard enemy)
+    {
         return EnemiesOnAlert.Exists(element => element.Equals(enemy));
     }
 
-    public void ClearEnemiesOnSight(){
+    public void ClearEnemiesOnSight()
+    {
         this.EnemiesOnSight.Clear();
     }
 
-    private void AlertLevel(){
+    public bool HasOnlyOneEnemyOnSight()
+    {
+        return this.EnemiesOnSight.Count == 1;
+    }
+
+    private void AlertLevel()
+    {
       //  Debug.Log("ALERTLEVEL HASENEMY ONSIGHT : "+HasEnemySighted());
         if(HasEnemySighted())
         {

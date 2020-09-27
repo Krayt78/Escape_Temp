@@ -34,6 +34,12 @@ public class SightedState : BaseState
             return typeof(DeadState);
         }
 
+        if (guard.isStunned)
+        {
+            guard.EnemyPatrol.StopMoving();
+            return typeof(StunnedState);
+        }
+
         if(guard.Target){
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             AlertLevel();
@@ -44,6 +50,7 @@ public class SightedState : BaseState
         {
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
+            guard.EnemyEyeMovement.MoveEyeRandomly();
             return typeof(LostState);
         }
 
@@ -85,7 +92,7 @@ public class SightedState : BaseState
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
 
         float alertLevelCalcul_1 = (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard));
-        float alertLevelCalcul_2 = alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER);
+        float alertLevelCalcul_2 = (alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER)) * 5;
         float alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * (1 / guard.angleToTarget), 0, 1);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + alertLevelCalcul_3, 0, 1));
         return guard.AlertLevel;
