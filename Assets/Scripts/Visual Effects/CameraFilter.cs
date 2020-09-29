@@ -42,10 +42,12 @@ public class CameraFilter : Singleton<CameraFilter>
         Critical
     }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        base.Awake();
+
         globalCameraVolume = gameObject.GetComponent<Volume>();
-        currentProfile = Profile.Beta;
+        //currentProfile = Profile.Beta;
 
         ColorAdjustments temp;
         Vignette tempVignette;

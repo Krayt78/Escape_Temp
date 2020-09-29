@@ -25,6 +25,12 @@ public class MovementProvider : LocomotionProvider
     private float sizeMin = 1;
     private float sizeMax = 2;
 
+    public void UpdateSize(float newSize, float sizeMin, float sizeMax)
+    {
+        this.sizeMin = sizeMin;
+        this.sizeMax = sizeMax;
+        m_XRRig.cameraYOffset = newSize;
+    }
 
 
     protected override void Awake() {

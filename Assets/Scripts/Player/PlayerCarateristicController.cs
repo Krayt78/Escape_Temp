@@ -23,7 +23,7 @@ public class PlayerCarateristicController : MonoBehaviour
     //Speed
     private PlayerMovement playerMovement;
     //Size
-    //private new CapsuleCollider collider;
+    private new MovementProvider mover;
     private CharacterController characterController;
     //Damages
     private PlayerEntityController entityController;
@@ -52,7 +52,7 @@ public class PlayerCarateristicController : MonoBehaviour
     {
         noiseEmitter = GetComponent<NoiseEmitter>();
         playerMovement = GetComponent<PlayerMovement>();
-        //collider = GetComponent<CapsuleCollider>();
+        mover = GetComponentInChildren<MovementProvider>();
         characterController = GetComponentInChildren<CharacterController>();
         entityController = GetComponent<PlayerEntityController>();
     }
@@ -85,8 +85,7 @@ public class PlayerCarateristicController : MonoBehaviour
     {
         float startTime = Time.time;
         float startNoise = noiseEmitter.rangeNoiseEmitted,
-                //startHeight = collider.height;
-                startHeight = characterController.height;
+                startHeight = mover.xrRig.cameraYOffset;
         float startSpeed = targetSpeed;
 
         while (startTime + currentEasingDelayInSeconds > Time.time)
@@ -98,8 +97,11 @@ public class PlayerCarateristicController : MonoBehaviour
             }
             if (playerMovement)
                 playerMovement.moveSpeed = Mathf.Lerp(startSpeed, targetSpeed, step);
-            //if (collider)
-            //    collider.height = Mathf.Lerp(startHeight, targetSize, step);
+            if (mover)
+            {
+                mover.UpdateSize(Mathf.Lerp(startHeight, targetSize, step), targetSize / 2, targetSize * 2);
+                mover.speed = Mathf.Lerp(startSpeed, targetSpeed, step);
+            }
             //Damages handling
             yield return null;
         }
@@ -110,8 +112,13 @@ public class PlayerCarateristicController : MonoBehaviour
         }
         if (playerMovement)
             playerMovement.moveSpeed = targetSpeed;
-        //if (collider)
-        //    collider.height = targetSize;
+        if (mover)
+        {
+            if (UseVR.Instance.useVr)
+                Camera.main.transform.parent.localPosition = new Vector3(0, targetSize, 0);
+            mover.UpdateSize(targetSize, targetSize/2, targetSize*2);
+            mover.speed = targetSpeed;
+        }
         if (entityController)
             entityController.PlayerDamages = targetDamages;
 
@@ -127,8 +134,11 @@ public class PlayerCarateristicController : MonoBehaviour
         }
         if (playerMovement)
             playerMovement.moveSpeed = newSpeed;
-        //if (collider)
-        //    collider.height = newSize;
+        if (mover)
+        {
+            mover.UpdateSize(newSize, newSize / 2, newSize * 2);
+            mover.speed = newSpeed;
+        }
         if (entityController)
             entityController.PlayerDamages = newDamages;
 

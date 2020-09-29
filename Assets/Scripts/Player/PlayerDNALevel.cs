@@ -76,7 +76,7 @@ public class PlayerDNALevel : MonoBehaviour
 
     private void EatDNA(float value)
     {
-        dnaLevel += value * foodToDnaRatio[CurrentEvolutionLevel];
+        dnaLevel = Mathf.Clamp01(dnaLevel+ value * foodToDnaRatio[CurrentEvolutionLevel]);
 
         OnDnaLevelChanged(dnaLevel);
     }
@@ -91,14 +91,13 @@ public class PlayerDNALevel : MonoBehaviour
 
     public void LoseDnaLevel(float value)
     {
-        dnaLevel -= value;
+        dnaLevel = Mathf.Clamp01(dnaLevel-value);
 
         if (dnaLevel <= 0 && CurrentEvolutionLevel == maxEvolutionLevel)
             LoseLevel();
         else if (dnaLevel <= 0 && CurrentEvolutionLevel == -1)
             OnDies();
 
-        dnaLevel = 0;
         OnDnaLevelChanged(dnaLevel);
     }
 

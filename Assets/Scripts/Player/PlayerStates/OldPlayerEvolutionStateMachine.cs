@@ -171,15 +171,4 @@ public class OldPlayerEvolutionStateMachine : StateMachine
         CurrentStateName = value.ToString();
         CurrentState.OnStateEnter(this);
     }
-
-    private void OnGUI()
-    {
-        if(CurrentStateName.Equals("PlayerBetaState") && ((PlayerBetaState)CurrentState).CanEvolveToAlpha)
-        {
-            string printString = "Press 'E' to evolve to Alpha";
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 50;
-            GUI.Label(new Rect(650, 50, 300, 500), printString, myStyle);
-        }
-    }
 }

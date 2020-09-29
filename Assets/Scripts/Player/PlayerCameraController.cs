@@ -75,6 +75,6 @@ public class PlayerCameraController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.DrawTexture(reticulePosition, reticuleTexture);
+        //GUI.DrawTexture(reticulePosition, reticuleTexture);
     }
 }

@@ -58,11 +58,10 @@ public class PlayerInput : MonoBehaviour
             OnScan();
 
         if (Input.GetKeyDown(KeyCode.A))
-            CallOnEvolveToAlpha();
+            TryEvolveToAlpha();
         if (Input.GetKeyDown(KeyCode.K))
         {
-            switchValue = switchValue == 1 ? 2 : 1;
-            CallOnSwitchState(switchValue);
+            SwitchState();
         }
     }
 
@@ -71,14 +70,20 @@ public class PlayerInput : MonoBehaviour
         OnUseAbility();
     }
 
-    public void CallOnEvolveToAlpha()
+    public void TryEvolveToAlpha()
     {
         OnEvolveToAlpha();
     }
 
-    public void CallOnSwitchState(int value)
+    public void SwitchState()
     {
-        OnSwitchState(value);
+        switchValue = switchValue == 1 ? 2 : 1;
+        OnSwitchState(switchValue);
+    }
+
+    private void CallOnSwitchState(int state)
+    {
+        OnSwitchState(state);
     }
 
     private void OnGUI()

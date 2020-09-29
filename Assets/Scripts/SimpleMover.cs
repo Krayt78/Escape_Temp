@@ -5,6 +5,7 @@ using UnityEngine;
 public class SimpleMover : MonoBehaviour
 {
     private CharacterController controller;
+    public MovementProvider movementProvider;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 8.0f;
@@ -59,12 +60,17 @@ public class SimpleMover : MonoBehaviour
         //transform.Rotate(Vector3.up, Input.GetAxis("MouseX") * cameraSpeed * Time.deltaTime);
 
         Vector3 move = Input.GetAxis("Vertical") * playerCamera.forward + Input.GetAxis("Horizontal") * playerCamera.right;
-        controller.Move(move.normalized * Time.deltaTime * playerSpeed);
+        controller.Move(move.normalized * Time.deltaTime * movementProvider.speed);
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            GetComponentInParent<PlayerEntityController>().EatDNA(.3f);
+        }
     }
 }
