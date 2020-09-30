@@ -60,27 +60,31 @@ public class FieldOfView : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-        Debug.Log("targetMask VALUE : "+targetMask.value);
+        //Debug.Log("targetMask VALUE : "+targetMask.value);
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        Debug.Log("targetsInViewRadius Length : "+targetsInViewRadius.Length);
+        //Debug.Log("targetsInViewRadius Length : "+targetsInViewRadius.Length);
 
         if(targetsInViewRadius.Length > 0)
         {
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 GameObject targetGO = targetsInViewRadius[i].gameObject;
-                Transform target = targetsInViewRadius[i].transform;
+                Transform target;
+                if(targetsInViewRadius[i].GetComponentInChildren<Camera>() != null){
+                    target = targetsInViewRadius[i].GetComponentInChildren<Camera>().transform;
+                }
+                else target = targetsInViewRadius[i].transform;
                 Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                 
-                Debug.Log("targetGO NAME : "+targetGO.name);
-                Debug.Log("NbPointsVisibles : "+targetGO.GetComponent<VisibilityPointHandler>()
-                    .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count);
+                // Debug.Log("targetGO NAME : "+targetGO.name);
+                // Debug.Log("NbPointsVisibles : "+targetGO.GetComponent<VisibilityPointHandler>()
+                //     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count);
                 
                 int angleToTarget = (int) Vector3.Angle(eyeTransform.forward, (target.position - transform.position).normalized);
                 if (targetGO.GetComponent<VisibilityPointHandler>()
                     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
-                    Debug.Log("count getvisiblePointsFromTarget > 1 ");
+                    //Debug.Log("count getvisiblePointsFromTarget > 1 ");
                     visibleTargets.Add(new KeyValuePair<int, Transform>(angleToTarget, target));
                 }
                 else
