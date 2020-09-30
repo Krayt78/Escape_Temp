@@ -71,6 +71,7 @@ public class PlayerDNALevel : MonoBehaviour
     private void LaunchFirstEvents()
     {
         OnDnaLevelChanged(dnaLevel);
+        Debug.Log("FirstEvent");
         OncurrentEvolutionLevelChanged(currentEvolutionLevel);
     }
 
