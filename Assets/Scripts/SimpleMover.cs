@@ -52,7 +52,6 @@ public class SimpleMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("FUCKING UPDATE");
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
             playerVelocity.y = 0f;
@@ -71,6 +70,14 @@ public class SimpleMover : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             GetComponentInParent<PlayerEntityController>().EatDNA(.3f);
+        }
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            GetComponentInParent<PlayerEntityController>().EatHealth(3);
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            GetComponentInParent<PlayerEntityController>().TakeDamages(3);
         }
     }
 }

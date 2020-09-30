@@ -43,7 +43,7 @@ public class OldPlayerDNALevel : MonoBehaviour
     private void Start()
     {
         playerEntityController = GetComponent<PlayerEntityController>();
-        playerEntityController.OnTakeDamages += TakeDamages;
+        //playerEntityController.OnTakeDamages += TakeDamages;
         playerEntityController.OnEatDna += Eat;
 
         Invoke("LaunchFirstEvents", 0.3f);

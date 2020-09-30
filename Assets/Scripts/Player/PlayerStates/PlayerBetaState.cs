@@ -9,7 +9,7 @@ using UnityEngine;
  */
 public class PlayerBetaState : BasePlayerState
 {
-    [SerializeField] private const int LEVEL_STATE = 1;
+    [SerializeField] private const int LEVEL_STATE = 2;
 
     private StateMachine manager;
 
@@ -70,13 +70,11 @@ public class PlayerBetaState : BasePlayerState
     
     public override Type Tick()
     {
-        Debug.Log("Update beta");
         return null;
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Beta state");
         playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }
 

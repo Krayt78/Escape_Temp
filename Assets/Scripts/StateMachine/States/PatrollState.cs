@@ -63,13 +63,12 @@ public class PatrollState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         this.AIManager = EnemyAIManager.Instance;
-        Debug.Log("Entering Patrol state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Patrol state");
+
     }
 }

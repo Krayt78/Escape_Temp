@@ -60,11 +60,8 @@ public class LostState : BaseState
         }
 
         if(guard.EnemyPatrol.IsNextCheckpointTemporary()){
-            Debug.Log("isNext checkpt");
             if(guard.EnemyPatrol.DestinationReached()){
-                Debug.Log("reached dest");
                 guard.EnemyPatrol.GoToNextCheckpoint();
-                Debug.Log("goto next checkpt");
             }
         }
         else

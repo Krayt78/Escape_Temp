@@ -38,13 +38,13 @@ public class PlayerCarateristicController : MonoBehaviour
     {
         if(printDebug)
         {
-            string printString = "Speed: " + (playerMovement != null?playerMovement.moveSpeed.ToString():"null") + "\n" +
-                                    //"Noise: " + noiseEmitter.noiseEmitted + "\n" +
-                                    "Size: " + characterController.height + "\n" +
-                                    "Easing: " + easing;
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 25;
-            GUI.Label(new Rect(10, 110, 300, 500), printString, myStyle);
+            //string printString = "Speed: " + (playerMovement != null?playerMovement.moveSpeed.ToString():"null") + "\n" +
+            //                        //"Noise: " + noiseEmitter.noiseEmitted + "\n" +
+            //                        "Size: " + characterController.height + "\n" +
+            //                        "Easing: " + easing;
+            //GUIStyle myStyle = new GUIStyle();
+            //myStyle.fontSize = 25;
+            //GUI.Label(new Rect(10, 110, 300, 500), printString, myStyle);
         }
     }
 
@@ -99,7 +99,9 @@ public class PlayerCarateristicController : MonoBehaviour
                 playerMovement.moveSpeed = Mathf.Lerp(startSpeed, targetSpeed, step);
             if (mover)
             {
-                mover.UpdateSize(Mathf.Lerp(startHeight, targetSize, step), targetSize / 2, targetSize * 2);
+                float scale = Mathf.Lerp(startHeight, targetSize, step);
+                mover.xrRig.transform.localScale = new Vector3(scale, scale, scale);
+                //mover.UpdateSize(Mathf.Lerp(startHeight, targetSize, step), targetSize / 2, targetSize * 2);
                 mover.speed = Mathf.Lerp(startSpeed, targetSpeed, step);
             }
             //Damages handling
@@ -116,7 +118,10 @@ public class PlayerCarateristicController : MonoBehaviour
         {
             if (UseVR.Instance.useVr)
                 Camera.main.transform.parent.localPosition = new Vector3(0, targetSize, 0);
-            mover.UpdateSize(targetSize, targetSize/2, targetSize*2);
+            
+            mover.xrRig.transform.localScale = new Vector3(targetSize, targetSize, targetSize);
+            //mover.UpdateSize(targetSize, targetSize/2, targetSize*2);
+            
             mover.speed = targetSpeed;
         }
         if (entityController)
@@ -136,7 +141,9 @@ public class PlayerCarateristicController : MonoBehaviour
             playerMovement.moveSpeed = newSpeed;
         if (mover)
         {
-            mover.UpdateSize(newSize, newSize / 2, newSize * 2);
+            mover.xrRig.transform.localScale = new Vector3(newSize, newSize, newSize);
+            //mover.UpdateSize(newSize, newSize / 2, newSize * 2);
+            
             mover.speed = newSpeed;
         }
         if (entityController)

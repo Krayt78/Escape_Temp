@@ -49,7 +49,6 @@ public class AlertedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
-            Debug.Log("guard has not Target");
             AIManager.RemoveEnemyOnSight(guard);
             
             if(AIManager.GlobalAlertLevel < 0.66f)
@@ -74,13 +73,11 @@ public class AlertedState : BaseState
 
             AlertLevel();
         }
-        Debug.Log("globalAlertLevel in Alerted : "+ AIManager.GlobalAlertLevel);
         if(AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-        Debug.Log("guard AlertLevel in Alerted : "+ guard.AlertLevel);
         if(guard.AlertLevel == 1f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
@@ -93,12 +90,10 @@ public class AlertedState : BaseState
     {
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
-        Debug.Log("Entering Alerted state");
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Alerted state");
     }
 
     private float AlertLevel()
@@ -107,7 +102,11 @@ public class AlertedState : BaseState
 
         float alertLevelCalcul_1 = (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard));
         float alertLevelCalcul_2 = (alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER)) * 5;
-        float alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * (1 / guard.angleToTarget), 0, 1);
+        float alertLevelCalcul_3 = 0;
+        if (guard.angleToTarget < 1f)
+            alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2, 0, 1);
+        else
+            alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * (1 / guard.angleToTarget), 0, 1);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + alertLevelCalcul_3, 0, 1));
         return guard.AlertLevel;
     }

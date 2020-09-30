@@ -88,12 +88,12 @@ public class PlayerInput : MonoBehaviour
 
     private void OnGUI()
     {
-            string printString = "Switch with 'K'" + "\n" +
-                                    "Switch state : " + switchValue + "\n" +
-                                    "Alpha with A";
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 25;
-            GUI.Label(new Rect(200, 50, 300, 500), printString, myStyle);
+            //string printString = "Switch with 'K'" + "\n" +
+            //                        "Switch state : " + switchValue + "\n" +
+            //                        "Alpha with A";
+            //GUIStyle myStyle = new GUIStyle();
+            //myStyle.fontSize = 25;
+            //GUI.Label(new Rect(200, 50, 300, 500), printString, myStyle);
     }
 
 }

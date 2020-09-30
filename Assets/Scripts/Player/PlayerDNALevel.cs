@@ -39,11 +39,11 @@ public class PlayerDNALevel : MonoBehaviour
     {
         if (printDebug)
         {
-            string printString = "Evolution level: " + CurrentEvolutionLevel + "\n" +
-                                    "Dna Level: " + dnaLevel;
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 25;
-            GUI.Label(new Rect(10, 50, 300, 500), printString, myStyle);
+            //string printString = "Evolution level: " + CurrentEvolutionLevel + "\n" +
+            //                        "Dna Level: " + dnaLevel;
+            //GUIStyle myStyle = new GUIStyle();
+            //myStyle.fontSize = 25;
+            //GUI.Label(new Rect(10, 50, 300, 500), printString, myStyle);
         }
     }
 
@@ -61,7 +61,7 @@ public class PlayerDNALevel : MonoBehaviour
     private void Start()
     {
         playerEntityController.OnEatDna += EatDNA;
-
+        playerEntityController.OnLifePointEqualZero += GoCriticalState;
         playerInput.OnSwitchState += SwitchState;
         playerInput.OnEvolveToAlpha += GoAlpha;
 
@@ -158,6 +158,12 @@ public class PlayerDNALevel : MonoBehaviour
         dnaLevel = 1;
 
         OnEvolveToAlpha();
+    }
+
+    private void GoCriticalState()
+    {
+        CurrentEvolutionLevel = 0;
+        dnaLevel = 1;
     }
 
     private void SwitchState(int state)

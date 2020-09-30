@@ -55,7 +55,6 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     protected override void Update()
     {
-        Debug.Log("UPDATE : " + CurrentState);
         if(!transitionning)
             base.Update();
     }
@@ -179,11 +178,8 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void SwitchState(int state)
     {
-        Debug.Log("TYPE SWITCH : "+CurrentState.GetType());
         if (CurrentState.GetType() == typeof(PlayerCriticalState) /* || CurrentState.GetType() == typeof(PlayerAlphaState)*/)
             return;
-
-        Debug.Log("SWITCH STATE");
         switch(state)
         {
             case 1:
@@ -207,8 +203,4 @@ public class PlayerEvolutionStateMachine : StateMachine
         SwitchToNewState(typeof(PlayerCriticalState));
     }
 
-    private void OnGUI()
-    {
-        
-    }
 }

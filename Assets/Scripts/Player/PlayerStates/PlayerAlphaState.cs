@@ -9,7 +9,7 @@ using UnityEngine;
  */
 public class PlayerAlphaState : BasePlayerState
 {
-    [SerializeField] private const int LEVEL_STATE = 2;
+    [SerializeField] private const int LEVEL_STATE = 3;
 
     private StateMachine manager;
 
