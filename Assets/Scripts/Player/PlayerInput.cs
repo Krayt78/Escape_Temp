@@ -75,9 +75,20 @@ public class PlayerInput : MonoBehaviour
         OnEvolveToAlpha();
     }
 
+    public void TryEvolveToOmega()
+    {
+        OnSwitchState(1);
+    }
+
+    public void TryEvolveToBeta()
+    {
+        OnSwitchState(2);
+    }
+
+
     public void SwitchState()
     {
-        switchValue = switchValue == 1 ? 2 : 1;
+       switchValue = switchValue == 1 ? 2 : 1;
         OnSwitchState(switchValue);
     }
 
