@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{be85a259-e394-47a4-9e87-ce344bdbc3dd}">
 		<property name="name">
 			<value>ProjectileHitSomething</value>
@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{4f24c0d6-0237-49e3-93ec-1328286377cf}">
+		<property name="uiTrackHeight">
+			<value>28</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{1bd1af5c-b229-4922-8c1e-d68bc98b242c}</destination>
 		</relationship>
@@ -57,8 +60,15 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{4a49e479-da41-454e-81c2-ca966a03acb0}" />
-	<object class="MarkerTrack" id="{493c1e15-0549-463a-b0d2-176dc6b290ee}" />
+	<object class="MarkerTrack" id="{493c1e15-0549-463a-b0d2-176dc6b290ee}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="GroupTrack" id="{249dba5c-7aa0-4d90-924d-1809c0e726a2}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{63012cb0-f9ed-4404-b7fd-8ef1cb0eddc7}</destination>
 		</relationship>

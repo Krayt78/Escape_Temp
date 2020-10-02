@@ -24,12 +24,14 @@ public class PlayerOmegaState : BasePlayerState
     float stateDamages = 1;
     float stateNoise = 1;
     float stateResistance = .5f;
+    float stateStepPerSecond=.1f;
 
     public override float StateSpeed { get { return stateSpeed; } }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
     public override float StateResistance { get { return stateResistance; } }
+    public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
