@@ -16621,6 +16621,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 395172645632669872}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &777886614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777886602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d9455486055e8489a0546c13e33934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dnaConsumed: 0.2
+  DartObject: {fileID: 7885500914730149199, guid: 5f745f49347849e458d0b8504cd7de85,
+    type: 3}
+  FirePoint: {fileID: 829549303}
 --- !u!1001 &779831788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18188,6 +18204,12 @@ Transform:
   m_Father: {fileID: 1731851208}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &829549303 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7267615933745429361, guid: 227dd6ad3a3430b4d82c6f796839c712,
+    type: 3}
+  m_PrefabInstance: {fileID: 395172645632669872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &833914290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44867,7 +44889,7 @@ PrefabInstance:
     - target: {fileID: 395172644689178417, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1009
+      value: 223
       objectReference: {fileID: 0}
     - target: {fileID: 395172644689178417, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
@@ -44877,7 +44899,7 @@ PrefabInstance:
     - target: {fileID: 395172644689178417, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 432.2
+      value: 629
       objectReference: {fileID: 0}
     - target: {fileID: 395172644689178417, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
@@ -44933,6 +44955,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2256625788736958107, guid: 227dd6ad3a3430b4d82c6f796839c712,
+        type: 3}
+      propertyPath: dnaConsumed
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3006553890822423423, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}

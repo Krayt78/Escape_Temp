@@ -5,14 +5,14 @@ using UnityEngine;
 public abstract class Ability : MonoBehaviour
 {
     public PlayerDNALevel PlayerDNALevel { get; private set; }
-    public VrPlayerDNALevel VrPlayerDNALevel { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
+    [SerializeField] protected float dnaConsumed;
+    public float DnaConsumed { get { return dnaConsumed; } }
 
     public virtual void Awake()
     {
         PlayerDNALevel = GetComponent<PlayerDNALevel>();
-        VrPlayerDNALevel = GetComponent<VrPlayerDNALevel>();
         PlayerInput = GetComponent<PlayerInput>();
     }
 
@@ -22,12 +22,9 @@ public abstract class Ability : MonoBehaviour
         {
             PlayerDNALevel.OncurrentEvolutionLevelChanged += LevelChanged;
         }
-        else
-        {
-            VrPlayerDNALevel.OncurrentEvolutionLevelChanged += LevelChanged;
-        }
     }
 
     public abstract void LevelChanged(int level);
+    public abstract bool CanUseAbility();
     public abstract void UseAbility();
 }

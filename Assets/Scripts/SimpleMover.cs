@@ -79,5 +79,9 @@ public class SimpleMover : MonoBehaviour
         {
             GetComponentInParent<PlayerEntityController>().TakeDamages(3);
         }
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            GetComponentInParent<PlayerAbilitiesController>().ChangeCurrentAbility();
+        }
     }
 }

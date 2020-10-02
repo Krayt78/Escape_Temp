@@ -187,6 +187,11 @@ public class Grapplin : Ability
         }
     }
 
+    public override bool CanUseAbility()
+    {
+        return canUseGrapplin;
+    }
+
     public override void UseAbility()
     {
         if (canUseGrapplin)

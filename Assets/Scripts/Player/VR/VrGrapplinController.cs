@@ -22,10 +22,10 @@ public class VrGrapplinController : Ability
 
     [SerializeField]
     private Transform playerCamera;
-    [SerializeField]
+    //[SerializeField]
     private int levelToActivate = 0;
-    [SerializeField]
-    private int levelToDeActivate = 2;
+    //[SerializeField]
+    private int levelToDeActivate = 3;
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
@@ -190,6 +190,11 @@ public class VrGrapplinController : Ability
             Debug.Log("We remove ability");
             playerAbilitiesController.RemoveAbility(this);
         }
+    }
+
+    public override bool CanUseAbility()
+    {
+        return canUseGrapplin;
     }
 
     public override void UseAbility()
