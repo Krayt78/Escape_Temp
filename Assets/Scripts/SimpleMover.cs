@@ -67,17 +67,6 @@ public class SimpleMover : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            GetComponentInParent<PlayerEntityController>().EatDNA(.3f);
-        }
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            GetComponentInParent<PlayerEntityController>().EatHealth(3);
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            GetComponentInParent<PlayerEntityController>().TakeDamages(3);
-        }
+        
     }
 }

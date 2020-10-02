@@ -63,6 +63,19 @@ public class PlayerInput : MonoBehaviour
         {
             SwitchState();
         }
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            GetComponent<PlayerEntityController>().EatDNA(.3f);
+        }
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            GetComponent<PlayerEntityController>().EatHealth(3);
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            GetComponent<PlayerEntityController>().TakeDamages(3);
+        }
     }
 
     public void OnUseAbilityFunction()
