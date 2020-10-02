@@ -11,9 +11,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
 
+    private PlayerCameraController cameraController;
+
     // Start is called before the first frame update
     void Start()
     {
+        cameraController = player.GetComponent<PlayerCameraController>();
         player.GetComponent<EntityController>().OnDies += OnPlayerDies;
         EndOfLevel.instance.OnWinLevel += PlayerWon;
     }
@@ -43,7 +46,8 @@ public class GameController : MonoBehaviour
         pauseMenu.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        player.GetComponent<PlayerCameraController>().enabled = true;
+        if(cameraController!=null)
+            cameraController.enabled = true;
     }
 
     public void ShowPauseMenu()
@@ -51,7 +55,8 @@ public class GameController : MonoBehaviour
         pauseMenu.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        player.GetComponent<PlayerCameraController>().enabled = false;
+        if (cameraController != null)
+            cameraController.enabled = false;
     }
 
     public void PlayerWon()

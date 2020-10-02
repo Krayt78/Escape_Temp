@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{ae4ecd8d-08a0-4fea-8853-1895eaed978e}">
 		<property name="name">
 			<value>RagdollCollision</value>
@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{a3b33a83-5daf-4872-af74-8b4ab47faa9f}">
+		<property name="uiTrackHeight">
+			<value>28</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{d9b63cba-b85f-43e1-8b9d-9edcf690070e}</destination>
 		</relationship>
@@ -57,8 +60,15 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{a974320a-5e7c-43fb-a8a4-77adf78dea91}" />
-	<object class="MarkerTrack" id="{eb8f8ece-fabe-41c8-8e99-12abd74f152f}" />
+	<object class="MarkerTrack" id="{eb8f8ece-fabe-41c8-8e99-12abd74f152f}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="GroupTrack" id="{ba3420e6-1ece-4ebc-a19c-221109fbc5dc}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
 		<relationship name="modules">
 			<destination>{76b2f173-5249-4c8e-b8f7-081fc4417e64}</destination>
 			<destination>{971addff-3202-4a94-8d4e-b167cd117b06}</destination>
@@ -122,8 +132,8 @@
 			<value>-31</value>
 		</property>
 		<relationship name="modulators">
-			<destination>{fac2084d-16fa-407a-9a42-bca94e44d255}</destination>
 			<destination>{fe03bf8c-6415-432d-8cea-181458a83a57}</destination>
+			<destination>{fac2084d-16fa-407a-9a42-bca94e44d255}</destination>
 		</relationship>
 		<relationship name="sounds">
 			<destination>{c6e7e17b-581a-4fc5-bcc9-a6c4ccda6742}</destination>
@@ -196,17 +206,17 @@
 			<value>3</value>
 		</property>
 	</object>
-	<object class="RandomizerModulator" id="{fac2084d-16fa-407a-9a42-bca94e44d255}">
+	<object class="RandomizerModulator" id="{fe03bf8c-6415-432d-8cea-181458a83a57}">
 		<property name="nameOfPropertyBeingModulated">
-			<value>volume</value>
+			<value>pitch</value>
 		</property>
 		<property name="amount">
 			<value>3</value>
 		</property>
 	</object>
-	<object class="RandomizerModulator" id="{fe03bf8c-6415-432d-8cea-181458a83a57}">
+	<object class="RandomizerModulator" id="{fac2084d-16fa-407a-9a42-bca94e44d255}">
 		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
+			<value>volume</value>
 		</property>
 		<property name="amount">
 			<value>3</value>

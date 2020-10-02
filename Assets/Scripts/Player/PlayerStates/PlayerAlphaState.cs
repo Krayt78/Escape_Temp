@@ -22,12 +22,14 @@ public class PlayerAlphaState : BasePlayerState
     float stateDamages = 3;
     float stateNoise = 20;
     float stateResistance = 1000f;
+    float stateStepPerSecond=.5f;
 
     public override float StateSpeed {get{return stateSpeed;} }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
     public override float StateResistance { get { return stateResistance; } }
+    public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1.5f; //The time for the player to turn into an alpha
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }

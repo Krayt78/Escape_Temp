@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{e7caf20d-6076-4caa-a01c-3362f7578f6e}">
 		<property name="name">
 			<value>EnemyScanned</value>
@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{43ffea4c-c6eb-4b86-9baf-e995c4cd94c7}">
+		<property name="uiTrackHeight">
+			<value>28</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{49714d99-147d-4ce6-bd7c-105b4f7dc181}</destination>
 		</relationship>
@@ -57,8 +60,15 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{afb50c48-53d4-4405-a340-da3461b81f12}" />
-	<object class="MarkerTrack" id="{4089285b-5fb3-4bba-a462-98b96678d519}" />
+	<object class="MarkerTrack" id="{4089285b-5fb3-4bba-a462-98b96678d519}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="GroupTrack" id="{ac25bb90-3d8b-4d77-a877-1dbfd3bc2e0e}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
 		<relationship name="modules">
 			<destination>{61cf0d9b-82ff-4151-b0df-e0a4877191bf}</destination>
 		</relationship>
