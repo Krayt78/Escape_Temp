@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5822445970200840412}
   - component: {fileID: 8012825688718249811}
   - component: {fileID: 3208081493445687163}
-  - component: {fileID: 8550056151521114325}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -80,20 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &8550056151521114325
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545701140370426517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7885500914730149199
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +90,7 @@ GameObject:
   - component: {fileID: 4006533682352967063}
   - component: {fileID: 1141608587004226078}
   - component: {fileID: 8905986985229989099}
+  - component: {fileID: 6721542295464459934}
   m_Layer: 0
   m_Name: Dart
   m_TagString: Untagged
@@ -157,3 +143,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   damages: 10
+--- !u!136 &6721542295464459934
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885500914730149199}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}

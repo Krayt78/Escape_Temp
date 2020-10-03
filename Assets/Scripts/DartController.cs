@@ -19,14 +19,16 @@ public class DartController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Collide with : " + other.gameObject.name);
         if (other.gameObject.GetComponentInChildren<PlayerEntityController>() || other.gameObject.GetComponentInParent<PlayerEntityController>())
             return;
-        if(other.GetComponentInChildren<Guard>())
+        if(other.GetComponentInChildren<Guard>() || other.GetComponentInParent<Guard>())
         {
-            Debug.Log("ATATCK");
-            other.GetComponentInChildren<EntityController>().TakeDamages(damages);
+            Debug.Log("ATTACK");
+            other.GetComponentInChildren<EntityController>()?.TakeDamages(damages);
+            other.GetComponentInParent<EntityController>()?.TakeDamages(damages);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 
     private void Destroy()
