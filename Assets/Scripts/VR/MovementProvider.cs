@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
@@ -25,12 +26,11 @@ public class MovementProvider : LocomotionProvider
     private float sizeMin = 1;
     private float sizeMax = 2;
 
-    public void UpdateSize(float newSize, float sizeMin, float sizeMax)
-    {
-        this.sizeMin = sizeMin;
-        this.sizeMax = sizeMax;
-        m_XRRig.cameraYOffset = newSize;
-    }
+
+    private bool wasGrounded=false;
+    public bool IsGrounded{get;private set;}
+    public event Action OnLand = delegate{};
+    public event Action<float> OnMovement = delegate{};
 
 
     protected override void Awake() {
@@ -54,6 +54,7 @@ public class MovementProvider : LocomotionProvider
     private void FixedUpdate()
     {
         ApplyGravity();
+        UpdateGrounded();
     }
 
     private void PositionController() {
@@ -95,11 +96,10 @@ public class MovementProvider : LocomotionProvider
         direction = Quaternion.Euler(headRotation) * direction;
 
         //apply speed and move 
-        Vector3 movement = direction * speed;
+        Vector3 movement = Vector3.ClampMagnitude(direction,1) * speed;
         characterController.Move(movement * Time.deltaTime);
 
-        //Debug.Log(position);
-        
+        OnMovement(position.magnitude*Time.deltaTime);
     }
 
     private void ApplyGravity() {
@@ -109,5 +109,32 @@ public class MovementProvider : LocomotionProvider
         characterController.Move(gravity);
         //xrRig.transform.position = characterController.transform.position;
 
+    }
+    
+    public void UpdateSize(float newSize, float sizeMin, float sizeMax)
+    {
+        this.sizeMin = sizeMin;
+        this.sizeMax = sizeMax;
+        m_XRRig.cameraYOffset = newSize;
+    }
+
+    private void UpdateGrounded() {
+        if(Physics.Raycast(transform.position, -Vector3.up, characterController.bounds.extents.y + 0.1f))
+        {
+            IsGrounded = true;
+            if(!wasGrounded)
+            {
+                OnLand();
+                wasGrounded = true;
+            }
+        }
+        else
+        {
+            IsGrounded = false;
+            if (wasGrounded)
+            {
+                wasGrounded = false;
+            }
+        }
     }
 }

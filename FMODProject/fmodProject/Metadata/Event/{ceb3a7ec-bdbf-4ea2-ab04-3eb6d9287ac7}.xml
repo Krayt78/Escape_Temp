@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{ceb3a7ec-bdbf-4ea2-ab04-3eb6d9287ac7}">
 		<property name="name">
 			<value>TentacleMovement</value>
@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{96d43d58-f1f5-4f00-9cc7-74e259dc46e2}">
+		<property name="uiTrackHeight">
+			<value>28</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{ce550d06-b51a-4be7-b278-66db16a1716f}</destination>
 		</relationship>
@@ -57,8 +60,15 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{3939914a-f359-4ec8-bb83-a10516e45ccc}" />
-	<object class="MarkerTrack" id="{c5943fba-9460-44c9-ad0d-8ebffec491d1}" />
+	<object class="MarkerTrack" id="{c5943fba-9460-44c9-ad0d-8ebffec491d1}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="GroupTrack" id="{0635185e-3c7f-4411-bf64-26f43e65a6a5}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{489220d6-99ab-49bd-a303-7cbd54c272f9}</destination>
 		</relationship>

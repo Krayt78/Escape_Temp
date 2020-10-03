@@ -13,6 +13,8 @@ public class EnemyController : EntityController
 
     public override void TakeDamages(float damages)
     {
+        Debug.Log("TAKE DAMAGES");
+        
         if(damages == 1)
         {
             //TODO : stun for X seconds
@@ -20,7 +22,7 @@ public class EnemyController : EntityController
         }
         else if(damages > 1)
         {
-
+            Debug.Log("DIES");
             Dies();
         }
     }

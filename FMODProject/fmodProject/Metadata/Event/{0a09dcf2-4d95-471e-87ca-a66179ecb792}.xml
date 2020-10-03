@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{0a09dcf2-4d95-471e-87ca-a66179ecb792}">
 		<property name="name">
 			<value>SearchingState</value>
@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{80f0a7f7-e0c1-443b-9692-68236f5e8232}">
+		<property name="uiTrackHeight">
+			<value>28</value>
+		</property>
 		<relationship name="mixerGroup">
 			<destination>{f530c39c-26fc-4763-9527-42d9146f1ace}</destination>
 		</relationship>
@@ -57,8 +60,15 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{2863d9a2-c164-4fcd-b1a0-f1c58026b63e}" />
-	<object class="MarkerTrack" id="{63167666-c38b-49c7-a228-b3eb380ad76e}" />
+	<object class="MarkerTrack" id="{63167666-c38b-49c7-a228-b3eb380ad76e}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="GroupTrack" id="{c75d8b67-805b-4a84-ba60-10ab9de70806}">
+		<property name="uiTrackHeight">
+			<value>100</value>
+		</property>
 		<relationship name="modules">
 			<destination>{3158cf73-2311-4f00-935a-2d05da41c138}</destination>
 		</relationship>
@@ -99,8 +109,8 @@
 			<value>-6</value>
 		</property>
 		<relationship name="modulators">
-			<destination>{9a35b375-ad36-4aeb-a3db-4eb496673625}</destination>
 			<destination>{adf0e9c8-ce87-4c8f-8961-eaa1b31c4248}</destination>
+			<destination>{9a35b375-ad36-4aeb-a3db-4eb496673625}</destination>
 		</relationship>
 		<relationship name="sounds">
 			<destination>{bb1d0f28-b0dc-4b1c-9cc4-0dbd325a1300}</destination>
@@ -142,20 +152,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{4f92c473-6603-4caf-8c03-02ce85c1c5cc}" />
 	<object class="MixerBusFader" id="{35f094a4-a33b-4a27-8719-2586671673d7}" />
-	<object class="RandomizerModulator" id="{9a35b375-ad36-4aeb-a3db-4eb496673625}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>14</value>
-		</property>
-	</object>
 	<object class="RandomizerModulator" id="{adf0e9c8-ce87-4c8f-8961-eaa1b31c4248}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>volume</value>
 		</property>
 		<property name="amount">
 			<value>12</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{9a35b375-ad36-4aeb-a3db-4eb496673625}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>14</value>
 		</property>
 	</object>
 	<object class="SingleSound" id="{bb1d0f28-b0dc-4b1c-9cc4-0dbd325a1300}">
