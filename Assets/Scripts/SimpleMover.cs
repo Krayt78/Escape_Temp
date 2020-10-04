@@ -22,7 +22,7 @@ public class SimpleMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (UseVR.Instance.useVr){
+        if (UseVR.Instance.UseVr){
             Destroy(this);
             return;
         }

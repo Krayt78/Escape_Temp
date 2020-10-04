@@ -116,7 +116,7 @@ public class PlayerCarateristicController : MonoBehaviour
             playerMovement.moveSpeed = targetSpeed;
         if (mover)
         {
-            if (UseVR.Instance.useVr)
+            if (UseVR.Instance.UseVr)
                 Camera.main.transform.parent.localPosition = new Vector3(0, targetSize, 0);
             
             mover.xrRig.transform.localScale = new Vector3(targetSize, targetSize, targetSize);
