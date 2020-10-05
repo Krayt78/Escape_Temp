@@ -10,6 +10,7 @@ public class SightedState : BaseState
 
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
+    private float sightedTime;
 
     public SightedState(Guard guard) : base(guard.gameObject)
     {
@@ -18,18 +19,9 @@ public class SightedState : BaseState
 
     public override Type Tick()
     {
+        sightedTime += Time.deltaTime;
         if (guard.IsDead)
         {
-            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
-            {
-                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.1f);
-            }
-            else
-            {
-                AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel - 0.4f);
-            }
-            AIManager.RemoveEnemyOnAlert(guard);
-            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -48,13 +40,10 @@ public class SightedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target && !AIManager.HasCurrentEnemyAlerted(guard))
         {
-            guard.EnemyPatrol.ResumeMoving();
-            guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
-            guard.EnemyEyeMovement.MoveEyeRandomly();
             return typeof(LostState);
         }
 
-        if (AIManager.HasCurrentEnemyAlerted(guard) || guard.AlertLevel > 0.5f)
+        if (AIManager.HasCurrentEnemyAlerted(guard) || guard.AlertLevel >= 50)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AlertedState);
@@ -66,7 +55,7 @@ public class SightedState : BaseState
             return typeof(PatrollState);
         }
 
-        if((AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0) || AIManager.GlobalAlertLevel > 0.66)
+        if((AIManager.GlobalAlertLevel > 33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0) || AIManager.GlobalAlertLevel > 66f)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
@@ -77,26 +66,28 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        this.AIManager = EnemyAIManager.Instance;
-        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Entering Sighted state");
+        AIManager = EnemyAIManager.Instance;
+        AIManager.AddEnemyOnSight(guard);
+        guard.SetAlertLevel(guard.AlertLevel + 1f);
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
+        guard.EnemyPatrol.StopMoving();
+        this.sightedTime = 0f;
     }
     public override void OnStateExit()
     {
         Debug.Log("Exiting Sighted state");
+        Debug.Log("SightedTime : "+this.sightedTime);
     }
 
     private float AlertLevel()
     {
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-
-        float angleToTargetCalc = guard.angleToTarget == 0 ? 0 : 1/guard.angleToTarget;
-
-        float alertLevelCalcul_1 = (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard));
-        float alertLevelCalcul_2 = (alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER)) * 5;
-        float alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * angleToTargetCalc, 0, 1);
-        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + alertLevelCalcul_3, 0, 1));
+        float angleCalc = 90f - guard.angleToTarget + 1f;
+        float distanceCalc = Mathf.Clamp(20f - distanceBetweenTargetAndGuard, 1f, 20f) * 10f;
+        float calc = (distanceCalc * guard.alertFactor) * (angleCalc * guard.alertFactor) * Time.deltaTime * 100;
+        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + calc, 0f, 100f));
         return guard.AlertLevel;
     }
 

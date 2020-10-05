@@ -11,6 +11,7 @@ public class AIDebugMode : MonoBehaviour
     private string DebugMessage;
 
     private Text DebugText;
+    private Text AlertLevel;
 
     private StateMachine stateMachine;
 
@@ -18,7 +19,11 @@ public class AIDebugMode : MonoBehaviour
     void Start()
     {
         SetDebugText(stateMachine.CurrentStateName);
-       
+    }
+
+    void Update()
+    {
+        setAlertText("Alert : "+GetComponentInParent<Guard>().AlertLevel);
     }
 
     private void Awake()
@@ -27,6 +32,7 @@ public class AIDebugMode : MonoBehaviour
         stateMachine.OnStateChanged += UpdateDebugMessage;
 
         DebugText = GetComponentInChildren<Text>();
+        AlertLevel = GetComponentsInChildren<Text>()[1];
    
     }
 
@@ -41,6 +47,10 @@ public class AIDebugMode : MonoBehaviour
     private void SetDebugText(string text)
     {
         DebugText.text = text;
+    }
+
+    public void setAlertText(string alertText){
+        AlertLevel.text = alertText;
     }
 
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class NoiseHeardState : BaseState
 {
     private Guard guard;
+    private EnemyAIManager AIManager;
 
     public NoiseHeardState(Guard guard) : base(guard.gameObject)
     {
@@ -27,9 +28,12 @@ public class NoiseHeardState : BaseState
 
         if (guard.Target)
         {
-            guard.EnemyPatrol.StopMoving();
             guard.ResetNoise();
             return typeof(SightedState);
+        }
+
+        if(AIManager.HasCurrentEnemyAlerted(guard)){
+            return typeof(AlertedState);
         }
 
         if (guard.EnemyPatrol.DestinationReached())
@@ -45,7 +49,6 @@ public class NoiseHeardState : BaseState
                 return typeof(PatrollState);
         }
 
-
         return null; 
 
     }
@@ -54,6 +57,9 @@ public class NoiseHeardState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering NoiseHeard state");
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.NoiseHeard);
+        //manager.gameObject.GetComponent<GuardSoundEffectController>().Pl
+        this.AIManager = EnemyAIManager.Instance;
     }
 
     public override void OnStateExit()

@@ -13,7 +13,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public List<KeyValuePair<int, Transform>> visibleTargets = new List<KeyValuePair<int, Transform>>();
+    public List<KeyValuePair<float, Transform>> visibleTargets = new List<KeyValuePair<float, Transform>>();
     private int previousVisibleTargetCount=0;
 
     public event Action OnTargetSighted = delegate { };
@@ -79,13 +79,14 @@ public class FieldOfView : MonoBehaviour
                 // Debug.Log("targetGO NAME : "+targetGO.name);
                 // Debug.Log("NbPointsVisibles : "+targetGO.GetComponent<VisibilityPointHandler>()
                 //     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count);
-                
-                int angleToTarget = (int) Vector3.Angle(eyeTransform.forward, (target.position - transform.position).normalized);
+                Debug.Log("Angle in FOV : "+Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward));
+                float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
                 if (targetGO.GetComponent<VisibilityPointHandler>()
                     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
                     //Debug.Log("count getvisiblePointsFromTarget > 1 ");
-                    visibleTargets.Add(new KeyValuePair<int, Transform>(angleToTarget, target));
+                    Debug.Log("targetName : "+target.name);
+                    visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else
                 {
@@ -107,10 +108,10 @@ public class FieldOfView : MonoBehaviour
     void FindGlobalAlertLevelTargets()
     {
         Collider[] targets = new Collider[0];
-        if(AIManager.GlobalAlertLevel > 0.33 && AIManager.GlobalAlertLevel <= 0.66){
+        if(AIManager.GlobalAlertLevel > 33 && AIManager.GlobalAlertLevel <= 66){
             targets = Physics.OverlapSphere(transform.position, viewRadius*30, targetMask);
         }
-        if(AIManager.GlobalAlertLevel > 0.66){
+        if(AIManager.GlobalAlertLevel > 66){
             targets = Physics.OverlapSphere(transform.position, viewRadius*60, targetMask);
         }
 

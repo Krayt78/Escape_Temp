@@ -6,6 +6,7 @@ using UnityEngine;
 public class DeadState : BaseState
 {
     private Guard guard;
+    private EnemyAIManager AIManager;
 
     public DeadState(Guard guard) : base(guard.gameObject)
     {
@@ -21,6 +22,9 @@ public class DeadState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Dead state");
+        this.AIManager = EnemyAIManager.Instance;
+        AIManager.RemoveEnemyOnAlert(guard);
+        AIManager.RemoveEnemyOnSight(guard);
     }
 
     public override void OnStateExit()

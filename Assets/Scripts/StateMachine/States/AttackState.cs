@@ -16,16 +16,6 @@ public class AttackState : BaseState
     {
         if (guard.IsDead)
         {
-            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
-            {
-                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel + 0.2f, 0, 1));
-            }
-            else
-            {
-                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel - 0.4f, 0, 1));
-            }
-            AIManager.RemoveEnemyOnAlert(guard);
-            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -41,9 +31,7 @@ public class AttackState : BaseState
             guard.EnemyPatrol.ResumeMoving();
             
             if((guard.EnemyPatrol.DestinationReached() && !AIManager.HasEnemySighted() 
-            && AIManager.GlobalAlertLevel < 0.33f) || AIManager.HasOnlyOneEnemyOnSight()){
-                guard.EnemyEyeMovement.disabledMoveEyeAtTarget();
-                guard.EnemyEyeMovement.MoveEyeRandomly();
+            && AIManager.GlobalAlertLevel < 33f) || AIManager.HasOnlyOneEnemyOnSight()){
                 return typeof(LostState);
             }
             else
@@ -68,6 +56,7 @@ public class AttackState : BaseState
         Debug.Log("Entering Attack state");
         AIManager = EnemyAIManager.Instance;
         AIManager.onAttack += 1;
+        AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Attack);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
     }
@@ -75,7 +64,6 @@ public class AttackState : BaseState
     public override void OnStateExit()
     {
         AIManager.onAttack -= 1;
-        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         Debug.Log("Exiting Attack state");
     }
 }

@@ -20,8 +20,6 @@ public class PatrollState : BaseState
     {
         if (guard.IsDead)
         {
-            AIManager.RemoveEnemyOnAlert(guard);
-            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -35,8 +33,6 @@ public class PatrollState : BaseState
         if (guard.Target)
         {
             Debug.Log("patrollState has target");
-            guard.EnemyPatrol.StopMoving();
-            AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 0.05f);
             return typeof(SightedState);
         }
 
@@ -46,11 +42,8 @@ public class PatrollState : BaseState
 
         if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>() && !guard.Target)
         {
-            guard.EnemyOrientation.OrientationTowardsTarget(guard.NoiseHeard);
-            // if(guard.EnemyNavigation.GetDistanceRemaining() < 30f){
-            //     guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
-            //     return typeof(NoiseHeardState);
-            // }
+            guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
+            return typeof(NoiseHeardState);
         }
 
         if (guard.EnemyPatrol.DestinationReached())
@@ -62,8 +55,9 @@ public class PatrollState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        this.AIManager = EnemyAIManager.Instance;
         Debug.Log("Entering Patrol state");
+        this.AIManager = EnemyAIManager.Instance;
+        AIManager.RemoveEnemyOnSight(guard);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }

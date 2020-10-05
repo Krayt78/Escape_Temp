@@ -9,19 +9,28 @@ public class EnemyVisualFeedBack : MonoBehaviour
     [SerializeField] Material sightMaterial;
     [SerializeField] Material attackMaterial;
     [SerializeField] Material patrolMaterial;
+    [SerializeField] Material noiseHeardMaterial;
+    [SerializeField] Material alertedMaterial;
+    [SerializeField] Material lostMaterial;
     [SerializeField] List<VisualEffect> feedbackParticleEffects;
 
     StateColor lastStateColor;
 
     Color patrolColor;
+    Color noiseHeardColor;
     Color sightColor;
+    Color alertedColor;
     Color attackColor;
+    Color lostColor;
 
     public enum StateColor
     {
+        Alerted,
         Sight,
         Attack,
         Patrol,
+        NoiseHeard,
+        Lost,
     }
     
     void Start()
@@ -35,6 +44,9 @@ public class EnemyVisualFeedBack : MonoBehaviour
         patrolColor = patrolMaterial.color;
         sightColor = sightMaterial.color;
         attackColor = attackMaterial.color;
+        noiseHeardColor = noiseHeardMaterial.color;
+        alertedColor = alertedMaterial.color;
+        lostColor = lostMaterial.color;
 
         setStateColor(StateColor.Patrol);
         lastStateColor = StateColor.Patrol;
@@ -65,6 +77,18 @@ public class EnemyVisualFeedBack : MonoBehaviour
             {
                 m_feedBackObjectRenderer.material = patrolMaterial;
             }
+            else if (state == StateColor.NoiseHeard)
+            {
+                m_feedBackObjectRenderer.material = noiseHeardMaterial;
+            }
+            else if (state == StateColor.Alerted)
+            {
+                m_feedBackObjectRenderer.material = alertedMaterial;
+            }
+            else if (state == StateColor.Lost)
+            {
+                m_feedBackObjectRenderer.material = lostMaterial;
+            }
         }
 
         foreach (var feedbackParticleEffect in feedbackParticleEffects)
@@ -80,6 +104,18 @@ public class EnemyVisualFeedBack : MonoBehaviour
             else if (state == StateColor.Patrol)
             {
                 feedbackParticleEffect.SetVector4("Color", patrolColor);
+            }
+            else if (state == StateColor.NoiseHeard)
+            {
+                feedbackParticleEffect.SetVector4("Color", noiseHeardColor);
+            }
+            else if (state == StateColor.Alerted)
+            {
+                feedbackParticleEffect.SetVector4("Color", alertedColor);
+            }
+            else if (state == StateColor.Lost)
+            {
+                feedbackParticleEffect.SetVector4("Color", lostColor);
             }
             feedbackParticleEffect.Play();
         }
