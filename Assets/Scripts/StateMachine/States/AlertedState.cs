@@ -39,7 +39,6 @@ public class AlertedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
-            Debug.Log("guard has not Target");
             AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.ResumeMoving();
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
@@ -61,13 +60,11 @@ public class AlertedState : BaseState
 
             AlertLevel();
         }
-        Debug.Log("globalAlertLevel in Alerted : "+ AIManager.GlobalAlertLevel);
         if(AIManager.GlobalAlertLevel > 33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-        Debug.Log("guard AlertLevel in Alerted : "+ guard.AlertLevel);
         if(guard.AlertLevel == 100f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
@@ -84,9 +81,9 @@ public class AlertedState : BaseState
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
+    
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Alerted state");
     }
 
     private float AlertLevel()

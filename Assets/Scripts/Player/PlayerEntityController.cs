@@ -40,6 +40,19 @@ public class PlayerEntityController : EntityController
 
     public Animator handAnimator;
 
+
+    private void OnGUI()
+    {
+        string printString = "LifePoint : " + lifePoint + "\n"
+                                + "DNA : " + playerDNALevel.DnaLevel + "\n"
+                                + "Level : " + playerDNALevel.CurrentEvolutionLevel ;
+        GUIStyle myStyle = new GUIStyle();
+        myStyle.fontSize = 25;
+        myStyle.normal.textColor = Color.white;
+        GUI.Label(new Rect(200, 50, 300, 500), printString, myStyle);
+    }
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -137,7 +150,7 @@ public class PlayerEntityController : EntityController
         if (!canTakeDamages || !DEV_ONLY_canTakeDamages)
             return;
 
-        lifePoint -= damages / playerCarateristic.resistancePerLevel;
+        lifePoint -= (damages / playerCarateristic.resistancePerLevel);
         if (lifePoint <= 0)
         {
             lifePoint = 0;

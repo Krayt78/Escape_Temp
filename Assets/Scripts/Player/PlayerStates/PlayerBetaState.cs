@@ -9,7 +9,7 @@ using UnityEngine;
  */
 public class PlayerBetaState : BasePlayerState
 {
-    [SerializeField] private const int LEVEL_STATE = 1;
+    [SerializeField] private const int LEVEL_STATE = 2;
 
     private StateMachine manager;
 
@@ -21,6 +21,7 @@ public class PlayerBetaState : BasePlayerState
     float[] rangeStateDamages = new float[2] { 2,2 };
     float[] rangeStateNoise = new float[2] { 2, 10 };
     float stateResistance = 1f;
+    float stateStepPerSecond=.3f;
 
     private float getDnaLevel()
     {
@@ -32,6 +33,7 @@ public class PlayerBetaState : BasePlayerState
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateNoise { get { return Mathf.Lerp(rangeStateNoise[0], rangeStateNoise[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateResistance { get { return stateResistance; } }
+    public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
@@ -58,6 +60,8 @@ public class PlayerBetaState : BasePlayerState
         {
             playerSoundEffectController.PlayEvolveToBetaSFX();
         }
+        else
+            Debug.LogWarning("BETA SOUND NULL");
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
         if (CameraFilter.Instance == null)
@@ -70,13 +74,11 @@ public class PlayerBetaState : BasePlayerState
     
     public override Type Tick()
     {
-        Debug.Log("Update beta");
         return null;
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Beta state");
         playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }
 

@@ -22,10 +22,10 @@ public class VrGrapplinController : Ability
 
     [SerializeField]
     private Transform playerCamera;
-    [SerializeField]
-    private int levelToActivate = 0;
-    [SerializeField]
-    private int levelToDeActivate = 2;
+    //[SerializeField]
+    private int levelToActivate = 1;
+    //[SerializeField]
+    private int levelToDeActivate = 3;
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
@@ -179,17 +179,22 @@ public class VrGrapplinController : Ability
 
     public override void LevelChanged(int level)
     {
-
+        Debug.Log("Level changed : " + level);
         if (level == levelToActivate)
         {
             Debug.Log("We add ability");
-            playerAbilitiesController.AddAbility(GetComponent<VrGrapplinController>());
+            playerAbilitiesController.AddAbility(this);
         }
         else if (level == levelToDeActivate)
         {
             Debug.Log("We remove ability");
             playerAbilitiesController.RemoveAbility(this);
         }
+    }
+
+    public override bool CanUseAbility()
+    {
+        return canUseGrapplin;
     }
 
     public override void UseAbility()

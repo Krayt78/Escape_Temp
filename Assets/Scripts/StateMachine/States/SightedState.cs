@@ -78,7 +78,6 @@ public class SightedState : BaseState
     public override void OnStateExit()
     {
         Debug.Log("Exiting Sighted state");
-        Debug.Log("SightedTime : "+this.sightedTime);
     }
 
     private float AlertLevel()

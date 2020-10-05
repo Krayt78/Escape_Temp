@@ -32,7 +32,6 @@ public class RagdolToggle : MonoBehaviour
     // Fonction permettant d'activer le ragdoll de la sentinel
     public void RagdollActive(bool active)
     {
-        Debug.Log("ACTIVE RAGDOLL : " + active);
         // Sentinel bones
         foreach (var collider in childrensCollider)
         {

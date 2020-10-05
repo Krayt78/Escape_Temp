@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerSoundEffectController : MonoBehaviour
 {
     private new Rigidbody rigidbody;
+    private Transform rigTransform;
     FMOD.Studio.Bus MasterBus;
 
     [SerializeField] private bool mute = false;
 
     [Header("Movement")]
     [SerializeField] string[] footstepPerLevelPath;
+    private float currentStepProgression=0;
     int currentLevelFootstep=0;
     [Space(10)]
 
@@ -31,6 +34,7 @@ public class PlayerSoundEffectController : MonoBehaviour
     [Space(10)]
 
     [Header("Evolution")]
+    private PlayerEvolutionStateMachine playerStateMachine;
     [SerializeField] string evolveSFXPath;
     [SerializeField] string devolveSFXPath;
 
@@ -49,7 +53,8 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponentInChildren<Rigidbody>();
+        rigTransform = GetComponentInChildren<XRRig>().transform;
     }
 
     // Start is called before the first frame update
@@ -67,16 +72,18 @@ public class PlayerSoundEffectController : MonoBehaviour
         playerEntityController.OnAttack += PlayAttackSFX;
         playerEntityController.OnScan += PlayScanSFX;
 
-        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
-        if(playerMovement)
+        MovementProvider playerMovement = GetComponentInChildren<MovementProvider>();
+        if(!playerMovement)
+            Debug.LogWarning("No movement provider found");
+        else
         {
-            playerMovement.OnStep += PlayFootstepSFX;
-            playerMovement.OnLand += PlayFootstepSFX;
+            playerMovement.OnMovement+=TryPlayFootstepSFX;
+            playerMovement.OnLand+=PlayFootstepSFX;
         }
 
         GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
 
-        PlayerEvolutionStateMachine playerStateMachine = GetComponent<PlayerEvolutionStateMachine>();
+        playerStateMachine = GetComponent<PlayerEvolutionStateMachine>();
         playerStateMachine.OnEvolve += PlayEvolveSFX;
         playerStateMachine.OnDevolve += PlayDevolveSFX;
 
@@ -90,12 +97,24 @@ public class PlayerSoundEffectController : MonoBehaviour
         
     }
 
+    private void TryPlayFootstepSFX(float movementMagnitude)
+    {
+        // || (movementMagnitude==0 && currentStepProgression!=0))
+        currentStepProgression+=movementMagnitude;
+        if(playerStateMachine.CurrentState != null && currentStepProgression >= ((BasePlayerState)playerStateMachine.CurrentState).StateStepPerSecond )
+        {
+            PlayFootstepSFX();
+        }
+    }
+
     private void PlayFootstepSFX()
     {
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep], transform.position);
+        FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep%4], rigTransform.transform.position);
+
+        currentStepProgression=0;
     }
 
 
@@ -104,7 +123,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(attackSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(attackSFXPath, rigTransform.transform.position);
     }
 
     private void PlayInteracteSFX()
@@ -112,7 +131,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(interactSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(interactSFXPath, rigTransform.transform.position);
     }
 
     private void PlayEatSFX(float value)
@@ -120,7 +139,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(eatSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(eatSFXPath, rigTransform.transform.position);
     }
 
     public void PlayGrapplinShootSFX()
@@ -128,7 +147,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(grapplinShootSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(grapplinShootSFXPath, rigTransform.transform.position);
     }
 
     public void PlayGrapplinThrowSFX()
@@ -170,7 +189,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (!vomitPlaying)
         {
             vomitPlaying = true;
-            vomitInstance = FMODPlayerController.PlaySoundInstance(vomitSFXPath, transform.position);
+            vomitInstance = FMODPlayerController.PlaySoundInstance(vomitSFXPath, rigTransform.transform.position);
         }
     }
 
@@ -188,7 +207,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(hurtSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(hurtSFXPath, rigTransform.transform.position);
     }
 
     private void PlayDiesSFX()
@@ -196,7 +215,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(diesSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(diesSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveSFX()
@@ -204,7 +223,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(evolveSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveSFXPath, rigTransform.transform.position);
     }
 
     public void PlayDevolveSFX()
@@ -212,7 +231,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(devolveSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(devolveSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveToAlphaSFX()
@@ -220,7 +239,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(evolveToAlphaSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveToAlphaSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveToBetaSFX()
@@ -228,7 +247,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(evolveToBetaSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveToBetaSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveToOmegaSFX()
@@ -236,7 +255,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(evolveToOmegaSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveToOmegaSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveToCriticalSFX()
@@ -244,7 +263,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(evolveToCriticalSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveToCriticalSFXPath, rigTransform.transform.position);
     }
 
     public void PlayScanSFX()
@@ -252,7 +271,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(scanSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(scanSFXPath, rigTransform.transform.position);
     }
 
     private void UpdateCurrentLevel(int newLevel)

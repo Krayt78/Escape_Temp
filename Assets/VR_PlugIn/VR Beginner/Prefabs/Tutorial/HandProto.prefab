@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 3495974742971691140}
+--- !u!64 &5199680293267714423
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495949620588457669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5660300469370042733, guid: bf3939cad79ab9040bd9b59ee6829398, type: 3}
 --- !u!1001 &1978352984292964068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,7 +97,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: bf3939cad79ab9040bd9b59ee6829398,
         type: 3}
       propertyPath: m_Name
-      value: HandMale Variant
+      value: HandProto
       objectReference: {fileID: 0}
     - target: {fileID: 591223817767178332, guid: bf3939cad79ab9040bd9b59ee6829398,
         type: 3}
@@ -106,6 +120,12 @@ GameObject:
 --- !u!95 &3495974742971691140 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: bf3939cad79ab9040bd9b59ee6829398,
+    type: 3}
+  m_PrefabInstance: {fileID: 1978352984292964068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1495949620588457669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1132140527543883809, guid: bf3939cad79ab9040bd9b59ee6829398,
     type: 3}
   m_PrefabInstance: {fileID: 1978352984292964068}
   m_PrefabAsset: {fileID: 0}

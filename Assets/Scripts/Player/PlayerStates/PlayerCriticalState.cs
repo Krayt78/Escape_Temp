@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * This is the state the Character is in when he's at level 0 (larva)
+ * This is the state the Character is in when he's at level 0 (critical)
  * 
  */
 public class PlayerCriticalState : BasePlayerState
 {
-    [SerializeField] private const int LEVEL_STATE = -1;
+    [SerializeField] private const int LEVEL_STATE = 0;
 
     private StateMachine manager;
        
     private PlayerDNALevel playerDnaLevel;
-    public float dnaLostSpeed = .0333f;
+    public float dnaLostSpeed = .0033f;
 
 
     float stateSpeed = 7;
@@ -22,12 +22,14 @@ public class PlayerCriticalState : BasePlayerState
     float stateDamages = 0;
     float stateNoise = 1;
     float stateResistance = 0.5f;
+    float stateStepPerSecond=.1f;
 
     public override float StateSpeed { get { return stateSpeed; } }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
     public override float StateNoise { get { return stateNoise; } }
     public override float StateResistance { get { return stateResistance; } }
+    public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
@@ -44,7 +46,6 @@ public class PlayerCriticalState : BasePlayerState
     {
         this.manager = manager;
 
-        Debug.Log("Entering Critical state");
 
         PlayerEntityController entityController = gameObject.GetComponent<PlayerEntityController>();
         if (entityController)
@@ -60,7 +61,7 @@ public class PlayerCriticalState : BasePlayerState
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
-            //CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Critical);
+        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Critical);
     }
 
     public override Type Tick()
@@ -71,8 +72,6 @@ public class PlayerCriticalState : BasePlayerState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Critical state");
-
         PlayerEntityController entityController = gameObject.GetComponent<PlayerEntityController>();
         if (entityController)
         {

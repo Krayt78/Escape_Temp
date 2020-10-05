@@ -64,6 +64,6 @@ public class PatrollState : BaseState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Patrol state");
+
     }
 }

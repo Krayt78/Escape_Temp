@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{86d9a099-5f9f-4be4-9aa8-c63eaa5d1461}">
 		<property name="name">
 			<value>AlphaFootstep</value>
@@ -93,8 +93,8 @@
 			<value>0.60000000000000009</value>
 		</property>
 		<relationship name="modulators">
-			<destination>{189c2fd2-0eb3-4e65-8883-5431c08cd060}</destination>
 			<destination>{f5e35a8c-a24a-4a09-b833-8cc5d40d9c65}</destination>
+			<destination>{189c2fd2-0eb3-4e65-8883-5431c08cd060}</destination>
 		</relationship>
 		<relationship name="sounds">
 			<destination>{9b215daa-3612-46ab-a635-4eb3799884df}</destination>
@@ -127,20 +127,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{a2d1c391-cd0b-4016-bf7a-efeee5a80b8a}" />
 	<object class="MixerBusFader" id="{2a68d35d-6392-4ba3-8aad-abe5ce259f9f}" />
-	<object class="RandomizerModulator" id="{189c2fd2-0eb3-4e65-8883-5431c08cd060}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>7.5</value>
-		</property>
-	</object>
 	<object class="RandomizerModulator" id="{f5e35a8c-a24a-4a09-b833-8cc5d40d9c65}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>volume</value>
 		</property>
 		<property name="amount">
 			<value>7</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{189c2fd2-0eb3-4e65-8883-5431c08cd060}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>7.5</value>
 		</property>
 	</object>
 	<object class="SingleSound" id="{9b215daa-3612-46ab-a635-4eb3799884df}">

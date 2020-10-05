@@ -21,8 +21,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            other.gameObject.GetComponent<EntityController>().TakeDamages(Damages);
-            Debug.Log("Hit");
+            other.gameObject.GetComponentInParent<EntityController>().TakeDamages(Damages);
         }
 
         Destroy(gameObject);

@@ -60,9 +60,7 @@ public class FieldOfView : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-        //Debug.Log("targetMask VALUE : "+targetMask.value);
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        //Debug.Log("targetsInViewRadius Length : "+targetsInViewRadius.Length);
 
         if(targetsInViewRadius.Length > 0)
         {
@@ -76,16 +74,10 @@ public class FieldOfView : MonoBehaviour
                 else target = targetsInViewRadius[i].transform;
                 Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                 
-                // Debug.Log("targetGO NAME : "+targetGO.name);
-                // Debug.Log("NbPointsVisibles : "+targetGO.GetComponent<VisibilityPointHandler>()
-                //     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count);
-                Debug.Log("Angle in FOV : "+Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward));
                 float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
                 if (targetGO.GetComponent<VisibilityPointHandler>()
                     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
-                    //Debug.Log("count getvisiblePointsFromTarget > 1 ");
-                    Debug.Log("targetName : "+target.name);
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else

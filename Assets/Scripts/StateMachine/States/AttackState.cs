@@ -53,7 +53,6 @@ public class AttackState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Attack state");
         AIManager = EnemyAIManager.Instance;
         AIManager.onAttack += 1;
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);

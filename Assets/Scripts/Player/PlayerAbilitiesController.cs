@@ -8,19 +8,28 @@ public class PlayerAbilitiesController : MonoBehaviour
     [SerializeField] public Ability CurrentAbility { get; private set; }
     private List<Ability> playerAbilities = new List<Ability>();
 
+    private PlayerDNALevel playerDNALevel;
+
+
+    private void Awake()
+    {
+        playerDNALevel = GetComponent<PlayerDNALevel>();
+    }
+
     private void UseAbility()
     {
         if (CurrentAbility == null)
         {
             Debug.LogError("no abilities");
         }
-        else
+        else if(CurrentAbility.DnaConsumed <= playerDNALevel.DnaLevel && CurrentAbility.CanUseAbility())
         {
             CurrentAbility.UseAbility();
+            playerDNALevel.LoseDnaLevel(CurrentAbility.DnaConsumed);
         }
     }
 
-    private void ChangeCurrentAbility()
+    public void ChangeCurrentAbility()
     {
         abilitiesIndex++;
         if (abilitiesIndex >= playerAbilities.Count)
@@ -30,6 +39,8 @@ public class PlayerAbilitiesController : MonoBehaviour
 
         CurrentAbility = playerAbilities[abilitiesIndex];
         CurrentAbility.enabled = true;
+
+        Debug.Log(CurrentAbility.name);
     }
 
     public void AddAbility(Ability ability)

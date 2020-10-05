@@ -22,7 +22,7 @@ public class SimpleMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (UseVR.Instance.useVr){
+        if (UseVR.Instance.UseVr){
             Destroy(this);
             return;
         }
@@ -52,7 +52,6 @@ public class SimpleMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("FUCKING UPDATE");
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
             playerVelocity.y = 0f;
@@ -68,9 +67,6 @@ public class SimpleMover : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            GetComponentInParent<PlayerEntityController>().EatDNA(.3f);
-        }
+        
     }
 }

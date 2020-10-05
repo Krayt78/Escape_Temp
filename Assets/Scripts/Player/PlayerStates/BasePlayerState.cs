@@ -13,6 +13,7 @@ public abstract class BasePlayerState : BaseState
     public virtual float StateResistance { get; private set; }
     public virtual float TransformationTimeInSeconds { get; private set; }
 
+    public virtual float StateStepPerSecond{get;private set;}
 
     public BasePlayerState(GameObject gameObject, int levelState) : base(gameObject)
     {
