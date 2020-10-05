@@ -10,9 +10,6 @@ public class EnemyNavigation : MonoBehaviour
 
     public Vector3 targetLastSeenPosition;
 
-
-
-    
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -26,14 +23,11 @@ public class EnemyNavigation : MonoBehaviour
 
     private void SetDestination(Vector3 targetPosition)
     {
-            navMeshAgent.SetDestination(targetPosition);
+        navMeshAgent.SetDestination(targetPosition);
     }
 
     public float GetDistanceRemaining(){
         return navMeshAgent.remainingDistance;
     }
-
-
-
 
 }

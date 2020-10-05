@@ -35,6 +35,7 @@ public class StunnedState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Stunned state");
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
     }
 
     public override void OnStateExit()

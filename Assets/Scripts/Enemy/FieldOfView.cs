@@ -13,7 +13,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public List<KeyValuePair<int, Transform>> visibleTargets = new List<KeyValuePair<int, Transform>>();
+    public List<KeyValuePair<float, Transform>> visibleTargets = new List<KeyValuePair<float, Transform>>();
     private int previousVisibleTargetCount=0;
 
     public event Action OnTargetSighted = delegate { };
@@ -60,7 +60,6 @@ public class FieldOfView : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
-
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         if(targetsInViewRadius.Length > 0)
@@ -68,15 +67,18 @@ public class FieldOfView : MonoBehaviour
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 GameObject targetGO = targetsInViewRadius[i].gameObject;
-                Transform target = targetsInViewRadius[i].transform;
+                Transform target;
+                if(targetsInViewRadius[i].GetComponentInChildren<Camera>() != null){
+                    target = targetsInViewRadius[i].GetComponentInChildren<Camera>().transform;
+                }
+                else target = targetsInViewRadius[i].transform;
                 Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                 
-                
-                int angleToTarget = (int) Vector3.Angle(eyeTransform.forward, (target.position - transform.position).normalized);
+                float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
                 if (targetGO.GetComponent<VisibilityPointHandler>()
                     .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
-                    visibleTargets.Add(new KeyValuePair<int, Transform>(angleToTarget, target));
+                    visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else
                 {
@@ -98,10 +100,10 @@ public class FieldOfView : MonoBehaviour
     void FindGlobalAlertLevelTargets()
     {
         Collider[] targets = new Collider[0];
-        if(AIManager.GlobalAlertLevel > 0.33 && AIManager.GlobalAlertLevel <= 0.66){
+        if(AIManager.GlobalAlertLevel > 33 && AIManager.GlobalAlertLevel <= 66){
             targets = Physics.OverlapSphere(transform.position, viewRadius*30, targetMask);
         }
-        if(AIManager.GlobalAlertLevel > 0.66){
+        if(AIManager.GlobalAlertLevel > 66){
             targets = Physics.OverlapSphere(transform.position, viewRadius*60, targetMask);
         }
 

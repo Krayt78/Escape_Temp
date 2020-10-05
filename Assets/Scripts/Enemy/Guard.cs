@@ -9,7 +9,7 @@ public class Guard : MonoBehaviour
     private bool debugMode;
     [SerializeField]
     public Transform Target { get; private set; }
-    public int angleToTarget = default;
+    public float angleToTarget = default;
 
     [SerializeField]
     public bool isStunned;
@@ -22,7 +22,7 @@ public class Guard : MonoBehaviour
     public bool IsDead { get { return isDead; } private set { isDead = value; } }
     public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
 
-    [Range(0f, 1f)]
+    [Range(0f, 100f)]
     private float alertLevel = 0f;
     // TIME between SIGHTED and ATTACKING
     public readonly float SIGHTED_TIMER = 6f;
@@ -54,6 +54,10 @@ public class Guard : MonoBehaviour
 
     [SerializeField]
     private BaseState CurrentState => stateMachine.CurrentState;
+
+    [SerializeField]
+    [Range(0f,100f)]
+    public float alertFactor = 50f;
 
     private void Start()
     {

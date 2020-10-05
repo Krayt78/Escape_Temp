@@ -26,16 +26,6 @@ public class AlertedState : BaseState
     {
         if (guard.IsDead)
         {
-            if(AIManager.HasEnemySighted() || AIManager.HasEnemyAlerted())
-            {
-                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel + 0.1f, 0, 1));
-            }
-            else
-            {
-                AIManager.SetGlobalAlertLevel(Mathf.Clamp(AIManager.GlobalAlertLevel - 0.4f, 0, 1));
-            }
-            AIManager.RemoveEnemyOnAlert(guard);
-            AIManager.RemoveEnemyOnSight(guard);
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
@@ -50,22 +40,19 @@ public class AlertedState : BaseState
         if (!guard.Target)
         {
             AIManager.RemoveEnemyOnSight(guard);
+            guard.EnemyPatrol.ResumeMoving();
+            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
             
-            if(AIManager.GlobalAlertLevel < 0.66f)
+            if(AIManager.GlobalAlertLevel < 66f)
             {
-                guard.EnemyPatrol.ResumeMoving();
-                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                AIManager.RemoveEnemyOnAlert(guard);
-                guard.EnemyEyeMovement.MoveEyeRandomly();
                 return typeof(LostState);
             }
             // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT
         }
         else
         {
-            Debug.Log("guard has Target");
-            AIManager.AddEnemyOnSight(guard);
             //orient towards target and chase target
+            
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             guard.EnemyPatrol.ResumeMoving();
@@ -73,12 +60,12 @@ public class AlertedState : BaseState
 
             AlertLevel();
         }
-        if(AIManager.GlobalAlertLevel > 0.33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
+        if(AIManager.GlobalAlertLevel > 33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-        if(guard.AlertLevel == 1f){
+        if(guard.AlertLevel == 100f){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
@@ -88,10 +75,13 @@ public class AlertedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        Debug.Log("Entering Alerted state");
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
+        AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
     }
+    
     public override void OnStateExit()
     {
     }
@@ -99,15 +89,10 @@ public class AlertedState : BaseState
     private float AlertLevel()
     {
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-
-        float alertLevelCalcul_1 = (Time.deltaTime * (maxSightDistance / distanceBetweenTargetAndGuard));
-        float alertLevelCalcul_2 = (alertLevelCalcul_1 * (1 / guard.SIGHTED_TIMER)) * 5;
-        float alertLevelCalcul_3 = 0;
-        if (guard.angleToTarget < 1f)
-            alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2, 0, 1);
-        else
-            alertLevelCalcul_3 = Mathf.Clamp(alertLevelCalcul_2 * (1 / guard.angleToTarget), 0, 1);
-        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + alertLevelCalcul_3, 0, 1));
+        float angleCalc = 90f - guard.angleToTarget + 1f;
+        float distanceCalc = Mathf.Clamp(20f - distanceBetweenTargetAndGuard, 1f, 20f) * 10f;
+        float calc = (distanceCalc * guard.alertFactor) * (angleCalc * guard.alertFactor) * Time.deltaTime * 100;
+        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + calc, 0f, 100f));
         return guard.AlertLevel;
     }
 }

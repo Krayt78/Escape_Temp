@@ -15,7 +15,6 @@ public class StaticState : BaseState
         this.guard.stateMachine.CurrentStateName = "StaticState";
     }
 
-
     public override Type Tick()
     {
         if (guard.IsDead)
@@ -55,7 +54,7 @@ public class StaticState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Static state");
-
+        guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }
 

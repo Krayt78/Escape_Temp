@@ -23,7 +23,7 @@ public class VrPlayerNoiseEmitter : NoiseEmitter
         //return new Noise(playerMovement.GetSpeedRatio() * rangeNoiseEmitted,
         //                    new Vector3(transform.position.x, transform.position.y - playerCapsule.height / 2, transform.position.z),
         //                    gameObject);
-        return new Noise(0f * rangeNoiseEmitted,
+        return new Noise(rangeNoiseEmitted,
                             new Vector3(transform.position.x, transform.position.y - playerCapsule.height / 2, transform.position.z),
                             gameObject);
     }
