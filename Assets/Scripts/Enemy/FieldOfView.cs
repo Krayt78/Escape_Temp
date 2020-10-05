@@ -75,8 +75,8 @@ public class FieldOfView : MonoBehaviour
                 Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                 
                 float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
-                if (targetGO.GetComponent<VisibilityPointHandler>()
-                    .GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
+                
+                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
