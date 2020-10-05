@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BasePlayerState : BaseState
 {
-    public int levelState {get; private set ;}
+    public virtual int levelState {get; private set ;}
 
     public virtual float StateSpeed { get; private set; }
     public virtual float StateSize { get; private set; }

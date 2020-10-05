@@ -24,6 +24,7 @@ public class PlayerAlphaState : BasePlayerState
     float stateResistance = 1000f;
     float stateStepPerSecond=.5f;
 
+    public override int levelState { get { return LEVEL_STATE; } }
     public override float StateSpeed {get{return stateSpeed;} }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
@@ -46,7 +47,6 @@ public class PlayerAlphaState : BasePlayerState
     {
         this.manager = manager;
 
-        Debug.Log("Entering Alpha state");
 
         playerEntityController.canTakeDamages = false;
         playerDnaLevel.OnDnaLevelChanged += OnDnaLevelChanged;
@@ -63,7 +63,6 @@ public class PlayerAlphaState : BasePlayerState
 
     public override Type Tick()
     {
-        Debug.Log("lost : " + dnaLostSpeed * Time.deltaTime);
         playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
         
         return null;
@@ -71,7 +70,6 @@ public class PlayerAlphaState : BasePlayerState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Alpha state");
         playerEntityController.canTakeDamages = true;
         playerDnaLevel.OnDnaLevelChanged -= OnDnaLevelChanged;
     }

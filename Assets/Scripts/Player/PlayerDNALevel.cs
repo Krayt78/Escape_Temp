@@ -17,7 +17,6 @@ public class PlayerDNALevel : MonoBehaviour
             if(currentEvolutionLevel!=value)
             {
                 currentEvolutionLevel = value;
-                Debug.Log("CALL ON CURRENT EVOLUTION LEVEL CHANGED");
                 OncurrentEvolutionLevelChanged(currentEvolutionLevel);
             }
         }
@@ -47,10 +46,14 @@ public class PlayerDNALevel : MonoBehaviour
         }
     }
 
+    public void SetCurrentEvolutionLevel(BasePlayerState state)
+    {
+        currentEvolutionLevel = state.levelState;
+    }
+
     private void Awake()
     {
         dnaLevel = 1f;
-        currentEvolutionLevel = 1;
         foodToDnaRatio = new float[] { 1, .34f, .15f };
         damagesToDnaRatio = new float[] { 1, .34f, .033f };
 
@@ -71,7 +74,6 @@ public class PlayerDNALevel : MonoBehaviour
     private void LaunchFirstEvents()
     {
         OnDnaLevelChanged(dnaLevel);
-        Debug.Log("FirstEvent");
         OncurrentEvolutionLevelChanged(currentEvolutionLevel);
     }
 
@@ -96,7 +98,7 @@ public class PlayerDNALevel : MonoBehaviour
 
         if (dnaLevel <= 0 && CurrentEvolutionLevel == maxEvolutionLevel)
             LoseLevel();
-        else if (dnaLevel <= 0 && CurrentEvolutionLevel == -1)
+        else if (dnaLevel <= 0 && CurrentEvolutionLevel == 0)
             OnDies();
 
         OnDnaLevelChanged(dnaLevel);
@@ -122,9 +124,6 @@ public class PlayerDNALevel : MonoBehaviour
         }
 
         CurrentEvolutionLevel++;
-
-        //dnaLevel = .2f;
-        //OnDnaLevelChanged(dnaLevel);
     }
 
     public bool CheckIfGainLevel()
@@ -151,7 +150,6 @@ public class PlayerDNALevel : MonoBehaviour
     {
         if (dnaLevel < 1)
         {
-            Debug.Log("NOT ENOUGH DNA");
             return;
         }
 
@@ -171,6 +169,7 @@ public class PlayerDNALevel : MonoBehaviour
     {
         if (state == CurrentEvolutionLevel)
             return;
+
         if(state < CurrentEvolutionLevel)
         {
             LoseLevel();

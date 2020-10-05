@@ -28,6 +28,7 @@ public class PlayerBetaState : BasePlayerState
         return playerDnaLevel.DnaLevel;
     }
 
+    public override int levelState { get { return LEVEL_STATE; } }
     public override float StateSpeed { get { return Mathf.Lerp(rangeStateSpeed[0], rangeStateSpeed[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateSize {get { return Mathf.Lerp(rangeStateSize[0], rangeStateSize[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }
     public override float StateDamages { get { return Mathf.Lerp(rangeStateDamages[0], rangeStateDamages[1], Mathf.Clamp(getDnaLevel(), 0, 1)); } }

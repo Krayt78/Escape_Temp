@@ -48,7 +48,6 @@ public class PlayerEvolutionStateMachine : StateMachine
         }
 
         playerEntityController.OnLifePointEqualZero += OnLifePointIsZero;
-        Debug.Log("Initialize SWITCH STATE");
         playerDNALevel.OncurrentEvolutionLevelChanged += SwitchState;
         playerDNALevel.OnEvolveToAlpha += EvolveToAlpha;
     }
@@ -173,6 +172,9 @@ public class PlayerEvolutionStateMachine : StateMachine
         
         CurrentState = value;
         CurrentStateName = value.ToString();
+
+        playerDNALevel.SetCurrentEvolutionLevel((BasePlayerState)CurrentState);
+
         CurrentState.OnStateEnter(this);
     }
 
@@ -180,6 +182,7 @@ public class PlayerEvolutionStateMachine : StateMachine
     {
         if (CurrentState.GetType() == typeof(PlayerCriticalState) /* || CurrentState.GetType() == typeof(PlayerAlphaState)*/)
             return;
+
         switch(state)
         {
             case 1:
@@ -194,7 +197,6 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void EvolveToAlpha()
     {
-        Debug.Log("GO ALPHA");
         SwitchToNewState(typeof(PlayerAlphaState));
     }
 

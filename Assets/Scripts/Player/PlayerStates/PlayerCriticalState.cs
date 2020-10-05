@@ -24,6 +24,7 @@ public class PlayerCriticalState : BasePlayerState
     float stateResistance = 0.5f;
     float stateStepPerSecond=.1f;
 
+    public override int levelState { get { return LEVEL_STATE; } }
     public override float StateSpeed { get { return stateSpeed; } }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }

@@ -26,6 +26,7 @@ public class PlayerOmegaState : BasePlayerState
     float stateResistance = .5f;
     float stateStepPerSecond=.1f;
 
+    public override int levelState { get { return LEVEL_STATE; } }
     public override float StateSpeed { get { return stateSpeed; } }
     public override float StateSize { get { return stateSize; } }
     public override float StateDamages { get { return stateDamages; } }
@@ -51,8 +52,6 @@ public class PlayerOmegaState : BasePlayerState
     public override void OnStateEnter(StateMachine manager)
     {
         this.manager = manager;
-
-        Debug.Log("Entering Omega state");
         
         PlayerSoundEffectController playerSoundEffectController = manager.gameObject.GetComponent<PlayerSoundEffectController>();
         if (playerSoundEffectController != null)
@@ -75,7 +74,7 @@ public class PlayerOmegaState : BasePlayerState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Omega state");
+
     }
 
 }
