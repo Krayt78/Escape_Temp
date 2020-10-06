@@ -73,9 +73,9 @@ public class EnemyPatrol : MonoBehaviour
             Vector3 newPos = guardPos + UnityEngine.Random.insideUnitSphere * distance;
             newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
             NavMeshPath path = new NavMeshPath();
-            bool isPathOk = navMeshAgent.CalculatePath(newPos, path);
+            navMeshAgent.CalculatePath(newPos, path);
             
-            if (path.status != NavMeshPathStatus.PathPartial && isPathOk)
+            if (path.status != NavMeshPathStatus.PathPartial)
             {
                 GameObject IAWaypoint = Instantiate(new GameObject(TEMP_WAYPOINT_NAME + i));
                 IAWaypoint.transform.position = newPos;
