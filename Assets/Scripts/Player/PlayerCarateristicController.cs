@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class PlayerCarateristicController : MonoBehaviour
 {
-    public float[] speedPerLevel = new float[3];
-    public float[] sizePerLevel = new float[3];
-    public float[] damagesPerLevel = new float[3];
-    public float[] noisePerLevel = new float[3];
-    public float resistancePerLevel { get; private set; }
-
-    private float targetSpeed;
-    private float targetSize;
-    private float targetDamages;
-    private float targetNoise;
+    public float speed { get; private set; }
+    public float size { get; private set; }
+    public float[] sizeBounds { get; private set; }
+    public float attackDamages { get; private set; }
+    public float defenseRatio { get; private set; }
+    public float dnaAbsorbedRatio { get; private set; }
+    public float noise { get; private set; }
 
     const float DEFAULT_EASING_DELAY = .7f;
     float currentEasingDelayInSeconds;
@@ -24,7 +21,6 @@ public class PlayerCarateristicController : MonoBehaviour
     private PlayerMovement playerMovement;
     //Size
     private new MovementProvider mover;
-    private CharacterController characterController;
     //Damages
     private PlayerEntityController entityController;
     //Noise
@@ -53,56 +49,87 @@ public class PlayerCarateristicController : MonoBehaviour
         noiseEmitter = GetComponent<NoiseEmitter>();
         playerMovement = GetComponent<PlayerMovement>();
         mover = GetComponentInChildren<MovementProvider>();
-        characterController = GetComponentInChildren<CharacterController>();
         entityController = GetComponent<PlayerEntityController>();
     }
 
     private void Start()
     {
-        //GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCharacteristics;
-        //InitCharacterisctics();
+        
     }
 
-    public void UpdateCharacteristicValues(float newSpeed, float newSize, float newDamages, float newNoise, float resistance, float easingSpeed= DEFAULT_EASING_DELAY)
+    public void UpdateCharacteristicValues(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise, float easingSpeed= DEFAULT_EASING_DELAY)
     {
-        targetSpeed = newSpeed;
-        targetSize = newSize;
-        targetDamages = newDamages;
-        targetNoise = newNoise;
-        resistancePerLevel = resistance;
+        speed = newSpeed;
+        size = newSize;
+        sizeBounds = newSizeBounds;
+        attackDamages = newDamages;
+        defenseRatio = newDefenseRatio;
+        dnaAbsorbedRatio = newDnaAbsorbedRatio;
+        noise = newNoise;
 
-        currentEasingDelayInSeconds += easingSpeed;
+        StartCoroutine(EaseNewCaractisticsValue());
 
 
-        if(!easing)
-        {
-            StartCoroutine(EaseUpdateCharactisticsValue());
-            easing = true;
-        }
+        //currentEasingDelayInSeconds += easingSpeed;
+
+        //if(!easing)
+        //{
+        //    StartCoroutine(EaseUpdateCharactisticsValue());
+        //    easing = true;
+        //}
     }
 
+    IEnumerator EaseNewCaractisticsValue()
+    {
+        //Set black vignette
+        yield return new WaitForSeconds(.1f);
+
+        if (playerMovement)
+            playerMovement.moveSpeed = speed;
+        if (mover)
+        {
+            //if (UseVR.Instance.UseVr)
+            //    Camera.main.transform.parent.localPosition = new Vector3(0, size, 0);
+
+            mover.xrRig.transform.localScale = new Vector3(size, size, size);
+            //mover.UpdateSize(size, sizeBounds[0], sizeBounds[1]);
+
+            mover.speed = speed;
+        }
+        if (entityController)
+            entityController.PlayerDamages = attackDamages;
+        if (noiseEmitter)
+        {
+            noiseEmitter.rangeNoiseEmitted = noise;
+        }
+
+        //yield return new WaitForSeconds(.25f);
+        //Remove black vignette
+    }
+
+    
     IEnumerator EaseUpdateCharactisticsValue()
     {
         float startTime = Time.time;
         float startNoise = noiseEmitter.rangeNoiseEmitted,
                 startHeight = mover.xrRig.cameraYOffset;
-        float startSpeed = targetSpeed;
+        float startSpeed = speed;
 
         while (startTime + currentEasingDelayInSeconds > Time.time)
         {
             float step = (Time.time - startTime) / currentEasingDelayInSeconds;
             if (noiseEmitter)
             {
-                noiseEmitter.rangeNoiseEmitted = Mathf.Lerp(startNoise, targetNoise, step);
+                noiseEmitter.rangeNoiseEmitted = Mathf.Lerp(startNoise, noise, step);
             }
             if (playerMovement)
-                playerMovement.moveSpeed = Mathf.Lerp(startSpeed, targetSpeed, step);
+                playerMovement.moveSpeed = Mathf.Lerp(startSpeed, speed, step);
             if (mover)
             {
-                float scale = Mathf.Lerp(startHeight, targetSize, step);
+                float scale = Mathf.Lerp(startHeight, size, step);
                 mover.xrRig.transform.localScale = new Vector3(scale, scale, scale);
                 //mover.UpdateSize(Mathf.Lerp(startHeight, targetSize, step), targetSize / 2, targetSize * 2);
-                mover.speed = Mathf.Lerp(startSpeed, targetSpeed, step);
+                mover.speed = Mathf.Lerp(startSpeed, speed, step);
             }
             //Damages handling
             yield return null;
@@ -110,29 +137,37 @@ public class PlayerCarateristicController : MonoBehaviour
 
         if (noiseEmitter)
         {
-            noiseEmitter.rangeNoiseEmitted = targetNoise;
+            noiseEmitter.rangeNoiseEmitted = noise;
         }
         if (playerMovement)
-            playerMovement.moveSpeed = targetSpeed;
+            playerMovement.moveSpeed = speed;
         if (mover)
         {
             if (UseVR.Instance.UseVr)
-                Camera.main.transform.parent.localPosition = new Vector3(0, targetSize, 0);
+                Camera.main.transform.parent.localPosition = new Vector3(0, size, 0);
             
-            mover.xrRig.transform.localScale = new Vector3(targetSize, targetSize, targetSize);
+            mover.xrRig.transform.localScale = new Vector3(size, size, size);
             //mover.UpdateSize(targetSize, targetSize/2, targetSize*2);
             
-            mover.speed = targetSpeed;
+            mover.speed = speed;
         }
         if (entityController)
-            entityController.PlayerDamages = targetDamages;
+            entityController.PlayerDamages = attackDamages;
 
         easing = false;
         currentEasingDelayInSeconds = 0;
     }
 
-    public void InitCharacterisctics(float newSpeed, float newSize, float newDamages, float newNoise, float resistance)
+    public void InitCharacterisctics(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise)
     {
+        speed = newSpeed;
+        size = newSize;
+        sizeBounds = newSizeBounds;
+        attackDamages = newDamages;
+        defenseRatio = newDefenseRatio;
+        dnaAbsorbedRatio = newDnaAbsorbedRatio;
+        noise = newNoise;
+
         if (noiseEmitter)
         {
             noiseEmitter.rangeNoiseEmitted = newNoise;
@@ -142,13 +177,11 @@ public class PlayerCarateristicController : MonoBehaviour
         if (mover)
         {
             mover.xrRig.transform.localScale = new Vector3(newSize, newSize, newSize);
-            //mover.UpdateSize(newSize, newSize / 2, newSize * 2);
-            
+            //mover.UpdateSize(newSize, newSizeBounds[0], newSizeBounds[1]);
+
             mover.speed = newSpeed;
         }
         if (entityController)
             entityController.PlayerDamages = newDamages;
-
-        resistancePerLevel = resistance;
     }
 }

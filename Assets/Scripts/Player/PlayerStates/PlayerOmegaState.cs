@@ -15,24 +15,9 @@ public class PlayerOmegaState : BasePlayerState
 
 
     private PlayerDNALevel playerDnaLevel;
-    private PlayerDNALevel playerDNALevel;
-    public float dnaLostSpeed = .0333f;
 
-
-    float stateSpeed = 7;
-    float stateSize = 1f;
-    float stateDamages = 1;
-    float stateNoise = 1;
-    float stateResistance = .5f;
-    float stateStepPerSecond=.1f;
 
     public override int levelState { get { return LEVEL_STATE; } }
-    public override float StateSpeed { get { return stateSpeed; } }
-    public override float StateSize { get { return stateSize; } }
-    public override float StateDamages { get { return stateDamages; } }
-    public override float StateNoise { get { return stateNoise; } }
-    public override float StateResistance { get { return stateResistance; } }
-    public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
@@ -40,13 +25,9 @@ public class PlayerOmegaState : BasePlayerState
     public float stepByMoveSpeed = .2f;
 
 
-    public PlayerOmegaState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
+    public PlayerOmegaState(GameObject gameObject, ScriptableCaracEvolutionState caracteristics) : base(gameObject, LEVEL_STATE, caracteristics)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
-        if (playerDnaLevel == null)
-        {
-            playerDNALevel = gameObject.GetComponent<PlayerDNALevel>();
-        }
     }
 
     public override void OnStateEnter(StateMachine manager)

@@ -17,10 +17,10 @@ public class PlayerEvolutionStateMachine : StateMachine
     public event Action OnEvolve = delegate{ };
     public event Action OnDevolve = delegate { };
 
-    private bool transitionning = false;
-
     [SerializeField] private enum StartPlayerState { Critical, Omega, Beta, Alpha}
     [SerializeField] private StartPlayerState startState = StartPlayerState.Beta;
+
+    [SerializeField] private ScriptableCaracEvolutionState[] StateCaracteristics;
 
     private void Awake()
     {
@@ -39,12 +39,15 @@ public class PlayerEvolutionStateMachine : StateMachine
         
         if (playerCarateristic != null)
         {
+            BasePlayerState currentPlayerState = (BasePlayerState)CurrentState;
             playerCarateristic.InitCharacterisctics(
-            ((BasePlayerState)CurrentState).StateSpeed,
-            ((BasePlayerState)CurrentState).StateSize,
-            ((BasePlayerState)CurrentState).StateDamages,
-            ((BasePlayerState)CurrentState).StateNoise,
-            ((BasePlayerState)CurrentState).StateResistance);
+                currentPlayerState.StateSpeed,
+                currentPlayerState.StateSize,
+                currentPlayerState.StateSizeBounds,
+                currentPlayerState.StateAttackDamages,
+                currentPlayerState.StateDefenseRatio,
+                currentPlayerState.StateDnaAbsorbedRatio,
+                currentPlayerState.StateNoise);
         }
 
         playerEntityController.OnLifePointEqualZero += OnLifePointIsZero;
@@ -54,8 +57,7 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     protected override void Update()
     {
-        if(!transitionning)
-            base.Update();
+        base.Update();
     }
     
     public override void SwitchToNewState(Type nextState)
@@ -87,13 +89,15 @@ public class PlayerEvolutionStateMachine : StateMachine
         //Ease caracteristics transition
         if (playerCarateristic != null)
         {
+            BasePlayerState currentPlayerState = (BasePlayerState)CurrentState;
             playerCarateristic.UpdateCharacteristicValues(
-            ((BasePlayerState)CurrentState).StateSpeed,
-            ((BasePlayerState)CurrentState).StateSize,
-            ((BasePlayerState)CurrentState).StateDamages,
-            ((BasePlayerState)CurrentState).StateNoise,
-            ((BasePlayerState)CurrentState).StateResistance,
-            ((BasePlayerState)CurrentState).TransformationTimeInSeconds);
+                currentPlayerState.StateSpeed,
+                currentPlayerState.StateSize,
+                currentPlayerState.StateSizeBounds,
+                currentPlayerState.StateAttackDamages,
+                currentPlayerState.StateDefenseRatio,
+                currentPlayerState.StateDnaAbsorbedRatio,
+                currentPlayerState.StateNoise);
         }
     }
 
@@ -113,10 +117,10 @@ public class PlayerEvolutionStateMachine : StateMachine
     {
         var states = new Dictionary<Type, BaseState>()
         {
-            {typeof(PlayerOmegaState), new PlayerOmegaState(gameObject)},
-            {typeof(PlayerBetaState), new PlayerBetaState(gameObject)},
-            {typeof(PlayerAlphaState), new PlayerAlphaState(gameObject)},
-            {typeof(PlayerCriticalState), new PlayerCriticalState(gameObject)}
+            {typeof(PlayerCriticalState), new PlayerCriticalState(gameObject, StateCaracteristics[0])},
+            {typeof(PlayerOmegaState), new PlayerOmegaState(gameObject, StateCaracteristics[1])},
+            {typeof(PlayerBetaState), new PlayerBetaState(gameObject, StateCaracteristics[2])},
+            {typeof(PlayerAlphaState), new PlayerAlphaState(gameObject, StateCaracteristics[3])}
         };
 
         SetStates(states);

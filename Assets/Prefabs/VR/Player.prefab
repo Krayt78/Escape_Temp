@@ -212,22 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418423bf6b16751409f39e5bb72ea160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedPerLevel:
-  - 6
-  - 6
-  - 12
-  sizePerLevel:
-  - 0.7
-  - 2
-  - 3.5
-  damagesPerLevel:
-  - 1
-  - 2
-  - 3
-  noisePerLevel:
-  - 3
-  - 6
-  - 9
   printDebug: 1
 --- !u!114 &1160081398
 MonoBehaviour:
@@ -243,6 +227,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentStateName: Default
   startState: 1
+  StateCaracteristics:
+  - {fileID: 11400000, guid: 4c4b89dc8df92884b9703020e233677a, type: 2}
+  - {fileID: 11400000, guid: 0682060a3631a304981675b779634bd4, type: 2}
+  - {fileID: 11400000, guid: 4b0c26aa2e8b7b0429df40be8a52622d, type: 2}
+  - {fileID: 11400000, guid: 30f58cec3c060c040ba9842e5ad67345, type: 2}
 --- !u!114 &1160081399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2180a981178567e419cd62160f3444f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDnaLevel: 1
   currentEvolutionLevel: 0
   printDebug: 1
 --- !u!114 &1160081400

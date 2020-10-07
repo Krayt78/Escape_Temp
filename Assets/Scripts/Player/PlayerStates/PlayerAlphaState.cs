@@ -15,21 +15,12 @@ public class PlayerAlphaState : BasePlayerState
 
     private PlayerEntityController playerEntityController;
     private PlayerDNALevel playerDnaLevel;
-    public float dnaLostSpeed = .0333f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
+    public float dnaLostSpeed = .03f; ///The amount of DNA lost per seconds while being Alpha (range from 0 to 1)
 
-    float stateSpeed = 3;
-    float stateSize = 4f;
-    float stateDamages = 3;
-    float stateNoise = 20;
-    float stateResistance = 1000f;
     float stateStepPerSecond=.5f;
 
     public override int levelState { get { return LEVEL_STATE; } }
-    public override float StateSpeed {get{return stateSpeed;} }
-    public override float StateSize { get { return stateSize; } }
-    public override float StateDamages { get { return stateDamages; } }
-    public override float StateNoise { get { return stateNoise; } }
-    public override float StateResistance { get { return stateResistance; } }
+
     public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1.5f; //The time for the player to turn into an alpha
@@ -37,7 +28,7 @@ public class PlayerAlphaState : BasePlayerState
 
     public float stepByMoveSpeed = .8f;
 
-    public PlayerAlphaState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
+    public PlayerAlphaState(GameObject gameObject, ScriptableCaracEvolutionState caracteristics) : base(gameObject, LEVEL_STATE, caracteristics)
     {
         playerEntityController = gameObject.GetComponent<PlayerEntityController>();
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();

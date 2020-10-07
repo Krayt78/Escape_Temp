@@ -23,6 +23,8 @@ public class CameraFilter : Singleton<CameraFilter>
     private ColorAdjustments alphaColorAdjustment;
     private Vignette criticalVignette;
     private Vignette omegaVignette;
+    private Vignette betaVignette;
+    private Vignette alphaVignette;
     [ColorUsage(true, true)]
     [SerializeField]
     private Color alphaStartingColor;
@@ -72,6 +74,14 @@ public class CameraFilter : Singleton<CameraFilter>
         {
             alphaColorAdjustment = temp;
         }
+        if (alphaProfile.TryGet<Vignette>(out tempVignette))
+        {
+            alphaVignette = tempVignette;
+        }
+        if (betaProfile.TryGet<Vignette>(out tempVignette))
+        {
+            betaVignette = tempVignette;
+        }
     }
     
     public void setVolumeProfile(Profile profile)
@@ -85,18 +95,24 @@ public class CameraFilter : Singleton<CameraFilter>
         {
             case Profile.Alpha:
                 globalCameraVolume.profile = alphaProfile;
-                alphaColorAdjustment.saturation.value = 0;
-                alphaColorAdjustment.colorFilter.value = alphaStartingColor;
-                StartCoroutine(alphaColorLerp());
+                //alphaColorAdjustment.saturation.value = 0;
+                //alphaColorAdjustment.colorFilter.value = alphaStartingColor;
+                alphaColorAdjustment.saturation.value = alphaSaturationMax;
+                alphaColorAdjustment.colorFilter.value = alphaMaxColor;
+                //StartCoroutine(alphaColorLerp());
+                StartCoroutine(TransitionToState(alphaVignette));
                 break;
             case Profile.Beta:
                 globalCameraVolume.profile = betaProfile;
+                StartCoroutine(TransitionToState(betaVignette));
                 break;
             case Profile.Omega:
                 globalCameraVolume.profile = omegaProfile;
+                StartCoroutine(TransitionToState(omegaVignette));
                 break;
             case Profile.Critical:
                 globalCameraVolume.profile = criticalProfile;
+                StartCoroutine(TransitionToState(criticalVignette));
                 break;
         }
 
@@ -144,6 +160,18 @@ public class CameraFilter : Singleton<CameraFilter>
             alphaColorAdjustment.saturation.value = Mathf.Lerp(alphaColorAdjustment.saturation.value, alphaSaturationMax, (ElapsedTime / TotalTime));
             alphaColorAdjustment.colorFilter.value = Color.Lerp(alphaColorAdjustment.colorFilter.value, alphaMaxColor, (ElapsedTime / TotalTime));
 
+            yield return null;
+        }
+    }
+
+    private IEnumerator TransitionToState(Vignette stateVignette)
+    {
+        float i = 1;
+        while(i>0)
+        {
+            i -= Time.deltaTime*5;
+            i = Mathf.Clamp01(i);
+            stateVignette.intensity.value = i;
             yield return null;
         }
     }

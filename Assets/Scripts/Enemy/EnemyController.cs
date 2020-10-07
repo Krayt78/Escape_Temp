@@ -15,7 +15,7 @@ public class EnemyController : EntityController
     {
         Debug.Log("TAKE DAMAGES");
         
-        if(damages == 1)
+        if(damages <= 1)
         {
             //TODO : stun for X seconds
             OnStunned(stunDuration);

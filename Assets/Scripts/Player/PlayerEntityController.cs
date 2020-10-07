@@ -94,17 +94,17 @@ public class PlayerEntityController : EntityController
             GameObject hitObject = ray.transform.gameObject;
             if (hitObject.CompareTag("Player"))
             {
-                Debug.Log("Player hit");
+                //Debug.Log("Player hit");
             }
             else if(hitObject.GetComponent<EntityController>())
             {
                 Attack(hitObject.GetComponent<EntityController>());
-                Debug.Log("Attack");
+                //Debug.Log("Attack");
             }
             else if(hitObject.GetComponent<Interactable>())
             {
                 hitObject.GetComponent<Interactable>().Use(this.gameObject);
-                Debug.Log("Interact with " + hitObject.ToString());
+                //Debug.Log("Interact with " + hitObject.ToString());
             }
         }
 
@@ -150,18 +150,18 @@ public class PlayerEntityController : EntityController
         if (!canTakeDamages || !DEV_ONLY_canTakeDamages)
             return;
 
-        lifePoint -= (damages / playerCarateristic.resistancePerLevel);
+        lifePoint -= (damages * playerCarateristic.defenseRatio);
+        CallOnTakeDamages(damages);
         if (lifePoint <= 0)
         {
             lifePoint = 0;
             OnLifePointEqualZero();
         }
-        CallOnTakeDamages(damages);
     }
 
     public void GainHealth(float healing)
     {
-        lifePoint = Mathf.Max(lifePoint + healing, MAX_LIFE_POINT);
+        lifePoint = Mathf.Min(lifePoint + healing, MAX_LIFE_POINT);
         OnRegainHealth(healing);
     }
 

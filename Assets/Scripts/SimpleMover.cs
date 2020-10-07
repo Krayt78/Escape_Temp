@@ -31,7 +31,7 @@ public class SimpleMover : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        Invoke("DeactivateHand", 3);
+        Invoke("DeactivateHand", 1);
 
         PlayerCameraController cameraController = gameObject.AddComponent<PlayerCameraController>();
         cameraController.playerCamera = Camera.main.transform.parent;

@@ -40,11 +40,9 @@ public class Vials : MonoBehaviour
     public void UpdateVialDNAAmount( float amount )
     {
 
-        Debug.Log(amount);
         if(amount > .33f)
         {
             ListOfVialMaterials[0].material.SetFloat("_FillAmount", maximumDNAVial);
-            Debug.Log("First Vial MAxed");
 
             if (amount > .66f)
             {
@@ -64,7 +62,6 @@ public class Vials : MonoBehaviour
             ListOfVialMaterials[0].material.SetFloat("_FillAmount", CalculateVialDnaAmount(amount));
             ListOfVialMaterials[1].material.SetFloat("_FillAmount", minimumDNAVial);
             ListOfVialMaterials[2].material.SetFloat("_FillAmount", minimumDNAVial);
-            Debug.Log("First Vial amount :" +amount);
         }
 
         if (amount >= .99f)
@@ -76,7 +73,7 @@ public class Vials : MonoBehaviour
     // amount must be between 0 and .34
     private float CalculateVialDnaAmount(float amount)
     {
-        Debug.Log(amount);
+
         float result = 0;
 
         //get the amount in a %age

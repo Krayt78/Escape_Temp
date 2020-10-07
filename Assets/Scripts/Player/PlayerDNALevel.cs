@@ -7,7 +7,9 @@ public class PlayerDNALevel : MonoBehaviour
 {
     private PlayerEntityController playerEntityController;
     private PlayerInput playerInput;
+    private PlayerCarateristicController playerCaracteristicController;
 
+    [SerializeField] float startDnaLevel = 1;
     private float dnaLevel;
     public float DnaLevel { get { return dnaLevel; } set { dnaLevel = Mathf.Clamp(0, 1, value); } }
     [SerializeField] private int currentEvolutionLevel;
@@ -22,7 +24,6 @@ public class PlayerDNALevel : MonoBehaviour
         }
     }
     private int minEvolutionLevel = 0, maxEvolutionLevel = 3;
-    private float[] foodToDnaRatio, damagesToDnaRatio;
 
     public event Action<float> OnDnaLevelChanged = delegate { };
     public event Action<int> OncurrentEvolutionLevelChanged = delegate { };
@@ -53,12 +54,11 @@ public class PlayerDNALevel : MonoBehaviour
 
     private void Awake()
     {
-        dnaLevel = 1f;
-        foodToDnaRatio = new float[] { 1, .34f, .15f };
-        damagesToDnaRatio = new float[] { 1, .34f, .033f };
+        dnaLevel = startDnaLevel;
 
         playerEntityController = GetComponent<PlayerEntityController>();
         playerInput = GetComponent<PlayerInput>();
+        playerCaracteristicController = GetComponent<PlayerCarateristicController>();
     }
 
     private void Start()
@@ -79,18 +79,18 @@ public class PlayerDNALevel : MonoBehaviour
 
     private void EatDNA(float value)
     {
-        dnaLevel = Mathf.Clamp01(dnaLevel+ value * foodToDnaRatio[CurrentEvolutionLevel]);
+        dnaLevel = Mathf.Clamp01(dnaLevel+ value * playerCaracteristicController.dnaAbsorbedRatio);
 
         OnDnaLevelChanged(dnaLevel);
     }
 
-    private void TakeDamages(float value)
-    {
-        LoseDnaLevel(value* damagesToDnaRatio[CurrentEvolutionLevel]);
+    //private void TakeDamages(float value)
+    //{
+    //    LoseDnaLevel(value* damagesToDnaRatio[CurrentEvolutionLevel]);
 
-        if (CheckIfLoseLevel())
-            LoseLevel();
-    }
+    //    if (CheckIfLoseLevel())
+    //        LoseLevel();
+    //}
 
     public void LoseDnaLevel(float value)
     {
@@ -161,6 +161,8 @@ public class PlayerDNALevel : MonoBehaviour
 
     private void GoCriticalState()
     {
+        if (CurrentEvolutionLevel == 0)
+            return;
         CurrentEvolutionLevel = 0;
         dnaLevel = 1;
     }
