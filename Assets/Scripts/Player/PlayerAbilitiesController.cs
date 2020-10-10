@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class PlayerAbilitiesController : MonoBehaviour
 
     private PlayerDNALevel playerDNALevel;
 
+    public event Action<Ability> OnAbilityChanged = delegate { };
 
     private void Awake()
     {
@@ -39,6 +41,8 @@ public class PlayerAbilitiesController : MonoBehaviour
 
         CurrentAbility = playerAbilities[abilitiesIndex];
         CurrentAbility.enabled = true;
+
+        OnAbilityChanged(CurrentAbility);
 
         Debug.Log(CurrentAbility.name);
     }
