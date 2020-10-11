@@ -39,9 +39,10 @@ public class TransformationButton : XRBaseInteractable
 
     private void StartPress(XRBaseInteractor interactor)
     {
-        Debug.Log("startpress");
+        //Debug.Log("startpress");
         hoverInteractor = interactor;
-        previousHandHeight = GetLocalYPosition(hoverInteractor.transform.position);
+        // previousHandHeight = GetLocalYPosition(hoverInteractor.transform.position);
+        OnPress.Invoke();
 
         meshRenderer.material = selectMaterial;
 
@@ -49,21 +50,21 @@ public class TransformationButton : XRBaseInteractable
 
     private void EndPress(XRBaseInteractor interactor)
     {
-        Debug.Log("endpress");
+        //Debug.Log("endpress");
         hoverInteractor = null;
         previousHandHeight = 0.0f;
 
-        previousPress = false;
-        SetYPosition(yMax);
+       // previousPress = false;
+        //SetYPosition(yMax);
 
         meshRenderer.material = originalMaterial;
     }
 
     private void Start()
     {
-        SetMinMax();    
+        //SetMinMax();    
     }
-
+    /*
     private void SetMinMax()
     {
         Collider collider = GetComponent<Collider>();
@@ -116,4 +117,5 @@ public class TransformationButton : XRBaseInteractable
         float inRange = Mathf.Clamp(transform.localPosition.y, yMin, yMin + 0.01f);
         return transform.localPosition.y == inRange; ;
     }
+    */
 }

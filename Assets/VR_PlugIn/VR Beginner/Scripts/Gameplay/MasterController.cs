@@ -149,40 +149,12 @@ public class MasterController : MonoBehaviour
 
         CheckForInputs();
 
-      
     }
 
     void CheckForInputs()
     {
         RightTeleportUpdate();
         LeftTeleportUpdate();
-        AbilityUpdate();
-        EvolutionUpdate();
-    }
-
-
-    void EvolutionUpdate()
-    {
-        bool buttonInput;
-        m_LeftInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
-
-
-        if (buttonInput == true)
-        {
-            playerInput?.TryEvolveToAlpha();
-        }
-
-    }
-
-    void AbilityUpdate()
-    {
-        bool buttonInput;
-        m_RightInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
-
-        if(buttonInput == true)
-        {
-            playerInput.OnUseAbilityFunction();
-        }
     }
 
     void RightTeleportUpdate()
@@ -225,6 +197,52 @@ public class MasterController : MonoBehaviour
         }
 
         m_LastFrameRightEnable = m_RightLineVisual.enabled;
+
+        //grapplin
+        CheckIfGrapplinButtonUsed();
+        //changeability
+        CheckIfChangeAbilityButtonUsed();
+        //Scan
+        CheckIfScanButtonUsed();
+
+
+    }
+
+    void CheckIfGrapplinButtonUsed()
+    {
+
+        float buttonInput;
+        m_RightInputDevice.TryGetFeatureValue(CommonUsages.trigger, out buttonInput);
+
+        if (buttonInput > .5f)
+        {
+            Debug.Log(buttonInput);
+            playerInput.OnUseAbilityFunction();
+        }
+    }
+    void CheckIfChangeAbilityButtonUsed()
+    {
+
+        bool buttonInput;
+        m_RightInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
+
+        if (buttonInput)
+        {
+            Debug.Log("OnChangeAbilityFunction");
+            playerInput.OnChangeAbilityFunction();
+        }
+    }
+    void CheckIfScanButtonUsed()
+    {
+
+        bool buttonInput;
+        m_LeftInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
+
+        if (buttonInput)
+        {
+            Debug.Log("OnScanFunction");
+            playerInput.OnScanFunction();
+        }
     }
 
     void LeftTeleportUpdate()
