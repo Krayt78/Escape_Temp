@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class VrGrapplinController : Ability
 {
-   //Temp
-   [SerializeField] Transform movingPlayer;
+    //Temp
+    [SerializeField] Transform movingPlayer;
 
     private PlayerAbilitiesController playerAbilitiesController;
 
@@ -29,25 +29,25 @@ public class VrGrapplinController : Ability
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
-    [SerializeField]
-    private float bezierOffset = 5f;
 
     [SerializeField]
     private float maxRange = 150f;
+
+    [SerializeField]
+    float duration = 10f;
 
     RaycastHit hit;
     Ray ray;
 
     bool canUseGrapplin = true;
-    bool coroutine = false;
+
 
     //Rigidbody rigibody;
     private Vector3 destination = new Vector3();
-    Vector3 bezierControlPoint = new Vector3();
 
     Coroutine MoveCoroutine;
 
-    float time = 0;
+    
 
     [SerializeField]
     GameObject grapplinProjectile;
@@ -59,9 +59,8 @@ public class VrGrapplinController : Ability
         base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
-        //rigibody = GetComponent<Rigidbody>();
+
         playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
-        //playerMovement = GetComponent<PlayerMovement>();
         characterController = GetComponentInChildren<CharacterController>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
@@ -73,18 +72,10 @@ public class VrGrapplinController : Ability
     // Update is called once per frame
     void Update()
     {
-        //Cursor.visible = true;
-        if (!canUseGrapplin)
-        {
-            CheckPosition();
-        }
-
     }
 
     private void FixedUpdate()
     {
-        //ray = new Ray(playerCamera.position, playerCamera.forward);
-
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
     }
@@ -95,8 +86,6 @@ public class VrGrapplinController : Ability
             Debug.LogWarning("We landed");
             canUseGrapplin = true;
             characterController.enabled = true;
-            //rigibody.constraints = RigidbodyConstraints.None;
-            //rigibody.freezeRotation = true;
         }
     }
 
@@ -105,54 +94,31 @@ public class VrGrapplinController : Ability
         return Vector3.Distance(movingPlayer.position, destination) < 1f;
     }
 
-    private Vector3 CalculateBezierPoint(float time, Vector3 pos0, Vector3 pos1, Vector3 pos2)
+
+    IEnumerator MovePlayer(Vector3 destination, float duration)
     {
-        float coef = 1 - time;
-        float sqrTime = time * time;
-        float sqrCoef = coef * coef;
-        Vector3 p = sqrCoef * pos0;
-        p += 2 * coef * time * pos1;
-        p += sqrTime * pos2;
-        return p;
-    }
-
-    private void CreateBezier(Vector3 destination, Vector3 bezierCP)
-    {
-        StartCoroutine(MoveOnBezier());
-
-    }
-
-    IEnumerator MoveAlongBezier(float t)
-    {
-        yield return new WaitForSecondsRealtime(0.03f);
-        movingPlayer.position = CalculateBezierPoint(t, movingPlayer.position, bezierControlPoint, destination);
-    }
-
-    private IEnumerator MoveOnBezier()
-    {
-        //rigibody.constraints = RigidbodyConstraints.FreezePositionY;
-        //rigibody.freezeRotation = true;
-        coroutine = true;
-        float y = movingPlayer.position.y;
-
-        playerSoundEffectController.PlayGrapplinRetractSFX();
-
-        for (float i = 0; i <= 1; i += 0.002f)
+        float time = 0;
+        Vector3 startPosition = movingPlayer.position;
+        while (time < duration)
         {
-            if (y > movingPlayer.position.y)
+            if (Landed())
             {
-                i += 0.02f;
+                Debug.LogWarning("We landed");
+                canUseGrapplin = true;
+                characterController.enabled = true;
+                time = duration;
                 lrRope.enabled = false;
                 Destroy(grp);
-
-                playerSoundEffectController.StopGrapplinSFX();
             }
-            MoveCoroutine = StartCoroutine(MoveAlongBezier(i));
-            y = movingPlayer.position.y;
-            lrRope.SetPosition(0, grapplinPosition.position);
-            yield return MoveCoroutine;
+            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, time/duration);
+            time += Time.deltaTime;
+            yield return null;
         }
+        movingPlayer.position = destination;
+
+        
     }
+
 
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
@@ -174,7 +140,7 @@ public class VrGrapplinController : Ability
 
         playerSoundEffectController.StopGrapplinSFX();
         playerSoundEffectController.PlayGrapplinStickFX(grp.transform.position);
-        CreateBezier(destination, bezierControlPoint);
+        StartCoroutine(MovePlayer(hit.point, duration));
     }
 
     public override void LevelChanged(int level)
@@ -190,6 +156,7 @@ public class VrGrapplinController : Ability
             Debug.Log("We remove ability");
             playerAbilitiesController.RemoveAbility(this);
         }
+        playerAbilitiesController.AddAbility(this);
     }
 
     public override bool CanUseAbility()
@@ -201,49 +168,30 @@ public class VrGrapplinController : Ability
     {
         if (canUseGrapplin)
         {
-
             InitGrapplin();
-
         }
     }
 
     private void InitGrapplin()
     {
-        //ray = new Ray(playerCamera.position, playerCamera.forward);
         //VR : Ray traced from the hand
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
 
-            if (hit.collider.GetComponentInChildren<GrapplinZone>() != null)
-            {
-                //Debug.LogWarning("We launch grapplin");
-                //playerMovement.enabled = false;
-                destination = hit.collider.gameObject.GetComponentInChildren<GrapplinZone>().LandingPoint.position;
+            destination = hit.point;
 
-                bezierControlPoint = destination;
-                bezierControlPoint.y += bezierOffset;
+            canUseGrapplin = false;
 
-                canUseGrapplin = false;
-                coroutine = false;
-                time = 0;
-                playerSoundEffectController?.PlayGrapplinShootSFX();
+            playerSoundEffectController?.PlayGrapplinShootSFX();
 
-                grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
-                grp.transform.LookAt(destination);
-                grp.transform.parent = null;
-                StartCoroutine(LaunchGrapplin(grp));
+            grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
+            grp.transform.LookAt(destination);
+            grp.transform.parent = null;
+             StartCoroutine(LaunchGrapplin(grp));
 
-                //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
-            }
-            else
-            {
-                Debug.LogError("Not found");
-            }
-        }
-        else
-        {
-            Debug.LogError("Hit nothing");
+            //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+
 
         }
     }
