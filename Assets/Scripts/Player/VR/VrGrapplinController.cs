@@ -180,7 +180,10 @@ public class VrGrapplinController : Ability
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
-
+            if (hit.collider.GetComponentInParent<Guard>())
+            {
+                destination = hit.collider.transform.position;
+            }
             destination = hit.point;
 
             canUseGrapplin = false;
