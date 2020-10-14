@@ -111,6 +111,8 @@ public class VrGrapplinController : Ability
                 Destroy(grp);
             }
             movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, time/duration);
+            lrRope.SetPosition(0, grapplinPosition.position);
+
             time += Time.deltaTime;
             yield return null;
         }
