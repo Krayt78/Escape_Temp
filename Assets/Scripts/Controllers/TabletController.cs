@@ -23,10 +23,11 @@ public class TabletController : Interactable
 
     public override void Use(GameObject user)
     {
-        if (user.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-            NbPreuve++;
-        }
+    }
+
+    public void grabTablet()
+    {
+        Destroy(gameObject);
+        NbPreuve++;
     }
 }
