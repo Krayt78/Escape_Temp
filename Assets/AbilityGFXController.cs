@@ -9,12 +9,20 @@ public class AbilityGFXController : MonoBehaviour
 
     GameObject currentGFX;
 
+    LineRenderer aimingLine;
+
     private void Start()
     {
         PlayerAbilitiesController abilitiesController = GetComponentInParent<PlayerAbilitiesController>();
         if(abilitiesController)
             abilitiesController.OnAbilityChanged += AbilityWasChanged;
 
+        aimingLine = GetComponent<LineRenderer>();
+    }
+
+    private void Update()
+    {
+        //UpdateLineRenderer();
     }
 
     private void OnDestroy()
@@ -40,5 +48,11 @@ public class AbilityGFXController : MonoBehaviour
             currentGFX.transform.localPosition = Vector3.zero;
             currentGFX.transform.localRotation = Quaternion.identity;
         }
+    }
+
+    void UpdateLineRenderer()
+    {
+        aimingLine.SetPosition(0, transform.position);
+        aimingLine.SetPosition(1, transform.position + transform.forward * 100);
     }
 }

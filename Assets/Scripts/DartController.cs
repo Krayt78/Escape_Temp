@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class DartController : MonoBehaviour
 {
-    [SerializeField] float speed=10;
+    float speed=8;
     [SerializeField] float damages = 10;
+
+    new Rigidbody rigidbody;
 
     private void Start()
     {
-        Invoke("Destroy", 2f);
+        Invoke("Destroy", 10f);
+        rigidbody = GetComponent<Rigidbody>();
+        rigidbody.velocity = transform.forward*speed;
     }
 
     private void Update()
     {
-        transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
+        //transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
