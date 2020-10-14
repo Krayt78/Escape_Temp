@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8293802858371326443}
   - component: {fileID: 8293802858371326440}
   - component: {fileID: 8293802858371326441}
-  - component: {fileID: 8293802858371326438}
   - component: {fileID: 8293802858371326442}
   - component: {fileID: 1162966151}
   - component: {fileID: 1162966152}
+  - component: {fileID: 3515268634633293733}
   m_Layer: 0
   m_Name: FoodLife
   m_TagString: Untagged
@@ -67,20 +67,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8293802858371326438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8293802858371326439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e421da892e754439b2ad5c46c8cd0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodValue: 1
-  repopTime: 100
 --- !u!114 &8293802858371326442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +192,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5579243, y: 0.16794384, z: 0.39329237}
   m_Center: {x: -0.028075218, y: 0.042098105, z: -0.00866726}
+--- !u!114 &3515268634633293733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293802858371326439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb87c5e8c06d6b409af2a08ce5c03f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodValue: 0.3
+  repopTime: 100
 --- !u!1 &8293802858444491163
 GameObject:
   m_ObjectHideFlags: 0
