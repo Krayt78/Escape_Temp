@@ -82,6 +82,14 @@ public class PlayerInput : MonoBehaviour
     {
         OnUseAbility();
     }
+    public void OnChangeAbilityFunction()
+    {
+        OnChangeAbility();
+    }
+    public void OnScanFunction()
+    {
+        OnScan();
+    }
 
     public void TryEvolveToAlpha()
     {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerCameraController : MonoBehaviour
 {
     private float cameraSpeed=90;
@@ -23,7 +22,9 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponentInChildren<PlayerInput>();
+        if (!playerInput)
+            playerInput = GetComponentInParent<PlayerInput>();
 
         reticulePosition = new Rect((Screen.width - reticuleSize) / 2, (Screen.height -
          reticuleSize) / 2, reticuleSize, reticuleSize);

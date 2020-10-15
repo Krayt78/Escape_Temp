@@ -14,22 +14,12 @@ public class PlayerCriticalState : BasePlayerState
     private StateMachine manager;
        
     private PlayerDNALevel playerDnaLevel;
-    public float dnaLostSpeed = .0033f;
+    private float dnaLostSpeed = .033f;
 
-
-    float stateSpeed = 7;
-    float stateSize = 1f;
-    float stateDamages = 0;
-    float stateNoise = 1;
-    float stateResistance = 0.5f;
     float stateStepPerSecond=.1f;
 
     public override int levelState { get { return LEVEL_STATE; } }
-    public override float StateSpeed { get { return stateSpeed; } }
-    public override float StateSize { get { return stateSize; } }
-    public override float StateDamages { get { return stateDamages; } }
-    public override float StateNoise { get { return stateNoise; } }
-    public override float StateResistance { get { return stateResistance; } }
+
     public override float StateStepPerSecond{get{return stateStepPerSecond;}}
 
     float transformationTimeInSeconds = 1f;
@@ -38,7 +28,7 @@ public class PlayerCriticalState : BasePlayerState
     public float stepByMoveSpeed = .2f;
 
 
-    public PlayerCriticalState(GameObject gameObject) : base(gameObject, LEVEL_STATE)
+    public PlayerCriticalState(GameObject gameObject, ScriptableCaracEvolutionState caracteristics) : base(gameObject, LEVEL_STATE, caracteristics)
     {
         playerDnaLevel = gameObject.GetComponent<PlayerDNALevel>();
     }
@@ -52,6 +42,7 @@ public class PlayerCriticalState : BasePlayerState
         if (entityController)
         {
             entityController.OnRegainHealth += OnEat;
+            entityController.OnEatDna += OnEat;
             entityController.OnTakeDamages += TakeDamages;
         }
 
@@ -73,18 +64,26 @@ public class PlayerCriticalState : BasePlayerState
 
     public override void OnStateExit()
     {
-        PlayerEntityController entityController = gameObject.GetComponent<PlayerEntityController>();
-        if (entityController)
-        {
-            entityController.OnRegainHealth -= OnEat;
-            entityController.OnTakeDamages -= TakeDamages;
-        }
+        //PlayerEntityController entityController = gameObject.GetComponent<PlayerEntityController>();
+        //if (entityController)
+        //{
+        //    entityController.OnRegainHealth -= OnEat;
+        //    entityController.OnEatDna -= OnEat;
+        //    entityController.OnTakeDamages -= TakeDamages;
+        //}
     }
 
     private void OnEat(float value)
     {
+        PlayerEntityController entityController = gameObject.GetComponent<PlayerEntityController>();
+        entityController.OnRegainHealth -= OnEat;
+        entityController.OnEatDna -= OnEat;
+        entityController.OnTakeDamages -= TakeDamages;
+        entityController.GainHealth(1);
+
         if (playerDnaLevel)
             playerDnaLevel.GainLevel();
+
         ((PlayerEvolutionStateMachine)manager).SwitchToNewState(typeof(PlayerOmegaState));
         return;
     }
@@ -102,7 +101,7 @@ public class PlayerCriticalState : BasePlayerState
     {
         if (playerDnaLevel)
         {
-            playerDnaLevel.LoseDnaLevel(damages/(10*stateResistance));
+            playerDnaLevel.LoseDnaLevel(damages/10*StateDefenseRatio);
             CameraFilter.Instance.CriticalFilterFluctation(playerDnaLevel.DnaLevel);
         }
     }

@@ -432,7 +432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5857144812268892557}
   m_LocalRotation: {x: -8.622368e-17, y: 0.70622736, z: 8.696594e-17, w: 0.7079851}
-  m_LocalPosition: {x: -0.00083455804, y: 0.011114684, z: -0.5472789}
+  m_LocalPosition: {x: -0.000834558, y: 0.011114684, z: -0.5472789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5158706089086309865}
@@ -541,8 +541,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7657886372377715611}
+  - component: {fileID: 7437022119252803952}
   m_Layer: 0
-  m_Name: MOD_AlienSnake
+  m_Name: AlienSnake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -557,16 +558,36 @@ Transform:
   m_GameObject: {fileID: 6637495295732486536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4075101213357669158}
   - {fileID: 6496192940505720870}
   - {fileID: 9148186979171293108}
   - {fileID: 129818932962507490}
   - {fileID: 124187526593446976}
+  - {fileID: 6950347220678887558}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7437022119252803952
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637495295732486536}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0ef669ae17e44574996378320dddcfb2, type: 3}
+  m_Controller: {fileID: 9100000, guid: 49f3aa9ba2b431448b3bfbde29975c14, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7162986078016802858
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,3 +760,56 @@ Transform:
   m_Father: {fileID: 5158706089086309865}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8775892080988614256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6950347220678887558}
+  - component: {fileID: 3028859221618151093}
+  - component: {fileID: 3490409575454334809}
+  m_Layer: 0
+  m_Name: DetectionTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6950347220678887558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775892080988614256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5.330484, y: 5.330484, z: 5.330484}
+  m_Children: []
+  m_Father: {fileID: 7657886372377715611}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3028859221618151093
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775892080988614256}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &3490409575454334809
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775892080988614256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
