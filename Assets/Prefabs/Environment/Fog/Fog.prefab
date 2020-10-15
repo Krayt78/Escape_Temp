@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1811140553241805480}
   - component: {fileID: 6160421704214287793}
   - component: {fileID: 1752329969084455538}
-  - component: {fileID: 4565739282290604658}
   m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8566256915548481062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.43, y: 4.0430593, z: 1.86}
-  m_LocalScale: {x: 1, y: -48.35756, z: 1}
+  m_LocalScale: {x: 1, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5c4927b242d44d4ca5d3d7269839807, type: 2}
+  - {fileID: 2100000, guid: f97d4e0f2ae7b2f4bb0d7becbbc2681c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,17 +94,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &4565739282290604658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8566256915548481062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2d748e41039e94f907f53d1b7c2ffc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerFog: {fileID: 0}
-  landscapeFog: {fileID: 8566256915548481062}
