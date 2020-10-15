@@ -45,6 +45,14 @@ public class AlertedState : BaseState
             
             if(AIManager.GlobalAlertLevel < 66f)
             {
+                if(!guard.EnemyPatrol.HasRandomWaypoints()){
+                    if(guard.AlertLevel >= 50){
+                        guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+                    }
+                    else{
+                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    }
+                }
                 return typeof(LostState);
             }
             // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT

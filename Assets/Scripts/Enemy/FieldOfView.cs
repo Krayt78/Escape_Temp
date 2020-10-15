@@ -12,12 +12,14 @@ public class FieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
+    public LayerMask deadEnemiesMask;
 
     public List<KeyValuePair<float, Transform>> visibleTargets = new List<KeyValuePair<float, Transform>>();
     private int previousVisibleTargetCount=0;
 
     public event Action OnTargetSighted = delegate { };
     public event Action OnTargetLost = delegate { };
+    public event Action OnDeadBodyFound = delegate { };
 
     private EnemyAIManager AIManager;
 
@@ -61,6 +63,7 @@ public class FieldOfView : MonoBehaviour
     {
         visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        Collider[] deadEnemiesInViewRadius = Physics.OverlapSphere(transform.position, viewRadius/2, deadEnemiesMask);
 
         if(targetsInViewRadius.Length > 0)
         {
@@ -86,12 +89,34 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+        Debug.Log("deadEnemiesInViewRadius : "+deadEnemiesInViewRadius.Length);
+        if(deadEnemiesInViewRadius.Length > 0){
+            for (int i = 0; i < deadEnemiesInViewRadius.Length; i++)
+            {
+                Debug.Log("bodyFound : "+deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound);
+                if(!deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound){
+                    GameObject targetGO = deadEnemiesInViewRadius[i].gameObject;
+                    Debug.Log("targetGo : "+targetGO.name);
+                    Transform target = deadEnemiesInViewRadius[i].transform;
+                    Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                    
+                    float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
+                    
+                    if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
+                    {
+                        OnDeadBodyFound();
+                        deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound = true;
+                    }
+                }
+            }
+            
+        }
         
         //if the target is visible and first in the array we activate the event so that the ai can walk to it
         if (visibleTargets.Count > 1)
             OnTargetSighted();
         //if we just lost track of the target fire event
-       else if (visibleTargets.Count == 0)
+        else if (visibleTargets.Count == 0)
             OnTargetLost();
 
         previousVisibleTargetCount = visibleTargets.Count;

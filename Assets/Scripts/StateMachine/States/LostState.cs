@@ -9,6 +9,8 @@ public class LostState : BaseState
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
 
+    public float timer = 0f;
+
     private EnemyAIManager AIManager;
 
     public LostState(Guard guard) : base(guard.gameObject)
@@ -18,6 +20,7 @@ public class LostState : BaseState
 
     public override Type Tick()
     {
+        timer += Time.deltaTime;
         if (guard.IsDead)
         {
             guard.EnemyPatrol.StopMoving();
@@ -56,25 +59,9 @@ public class LostState : BaseState
         }
         else
         {
-            if(guard.AlertLevel == 0 && AIManager.GlobalAlertLevel < 66f)
-            {
-                if(AIManager.GlobalAlertLevel < 33f)
-                {
-                    if (guard.IsStaticGuard)
-                    {
-                        return typeof(StaticState);
-                    }
-                    else return typeof(PatrollState);
-                }
-                else
-                {
-                    return typeof(AlertedState);
-                }
-            }
-            else if(guard.EnemyPatrol.DestinationReached()){
-                Debug.Log("reached dest 2");
+            if(guard.EnemyPatrol.DestinationReached() && guard.AlertLevel < 33){
                 guard.EnemyPatrol.GoToNextCheckpoint();
-                Debug.Log("goto next checkpt 2");
+                return typeof(PatrollState);
             }
         }
  
@@ -86,12 +73,13 @@ public class LostState : BaseState
     private void AlertLevelDown()
     {
         //distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 5f), 0f, 100f));
+        guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 3f), 0f, 100f));
     }
 
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Lost state");
+        timer = 0f;
         this.AIManager = EnemyAIManager.Instance;
         guard.EnemyPatrol.ResumeMoving();
         AIManager.RemoveEnemyOnSight(guard);
@@ -99,17 +87,18 @@ public class LostState : BaseState
         guard.EnemyEyeMovement.MoveEyeRandomly();
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
-        if(guard.AlertLevel >= 50){
-            guard.EnemyPatrol.AddRandomWaypointNear(guard.transform.position, true);
-        }
-        else{
-            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-        }
+        // if(guard.AlertLevel >= 50){
+        //     guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+        // }
+        // else{
+        //     guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+        // }
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Lost state");
+        Debug.Log("Time since state lost enter : "+timer);
         guard.EnemyPatrol.RestoreWaypoints();
         
     }

@@ -32,6 +32,14 @@ public class AttackState : BaseState
             
             if((guard.EnemyPatrol.DestinationReached() && !AIManager.HasEnemySighted() 
             && AIManager.GlobalAlertLevel < 33f) || AIManager.HasOnlyOneEnemyOnSight()){
+                if(!guard.EnemyPatrol.HasRandomWaypoints()){
+                    if(guard.AlertLevel >= 50){
+                        guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+                    }
+                    else{
+                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    }
+                }
                 return typeof(LostState);
             }
             else

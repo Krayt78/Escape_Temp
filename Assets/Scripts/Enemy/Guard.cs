@@ -18,6 +18,7 @@ public class Guard : MonoBehaviour
     private bool isDead = false;
     [SerializeField]
     private bool isStaticGuard = false;
+    public bool bodyFound = false;
 
     public bool IsDead { get { return isDead; } private set { isDead = value; } }
     public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
@@ -93,6 +94,7 @@ public class Guard : MonoBehaviour
 
         GetComponent<FieldOfView>().OnTargetSighted += OnTargetSighted;
         GetComponent<FieldOfView>().OnTargetLost += OnTargetLost;
+        GetComponent<FieldOfView>().OnDeadBodyFound += OnDeadBodyFound;
 
         GetComponent<NoiseReceiver>().OnNoiseReceived += OnNoiseReceived;
         GetComponent<EnemyController>().OnStunned += OnStunned;
@@ -130,8 +132,10 @@ public class Guard : MonoBehaviour
 
     private void OnDies()
     {
+        Debug.Log("On dies");
         EnemyRagdolToggle.RagdollActive(true);
         IsDead = true;
+        gameObject.layer = 19;
     }
 
     private void OnTargetSighted()
@@ -140,6 +144,13 @@ public class Guard : MonoBehaviour
         angleToTarget = FieldOfView.visibleTargets[0].Key;
         EnemyAIManager.Instance.AddEnemyOnSight(this);
         EnemyAnimationController.TriggerSight();
+    }
+
+    private void OnDeadBodyFound()
+    {
+        EnemyAIManager.Instance.SetGlobalAlertLevel(EnemyAIManager.Instance.GlobalAlertLevel + 25f);
+        Debug.Log("BODY FOUND!");
+        this.stateMachine.SwitchToNewState(typeof(LostState));
     }
 
     private void OnTargetLost()

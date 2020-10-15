@@ -41,7 +41,6 @@ public class VisibilityPointHandler : MonoBehaviour
     private void PointHidden(bool hidden)
     {
         nbHiddenPoints += hidden ? 1 : -1;
-        Debug.Log(gameObject.name + " NbHiddenPoint : " + nbHiddenPoints);
     }
 
     public Transform GetPoint(int index)

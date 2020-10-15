@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class EnemyPatrol : MonoBehaviour
 {
-
     public event Action OnWaypointReached = delegate { };
 
     [SerializeField]
@@ -15,15 +14,28 @@ public class EnemyPatrol : MonoBehaviour
     private int currentWaypointNumber;
     private int oldWaypointNumber;
     private NavMeshAgent navMeshAgent;
-
-    private EnemyAI.State state;
+    private bool hasRandomWaypoints = false;
 
     private readonly String TEMP_WAYPOINT_NAME = "IA Waypoint Temp ";
 
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+    }
 
+    private void onDrawGizmos()
+    {
+        if(WaypointPatrolList == null || WaypointPatrolList.Count == 0)
+            return;
+        Gizmos.color = Color.green;
+        foreach(var Waypoint in WaypointPatrolList)
+        {
+            if(Waypoint != null)
+            {
+                Gizmos.DrawWireSphere(Waypoint.transform.position, 15f);
+            }
+        }
+        
     }
 
     public void GoToNextCheckpoint()
@@ -32,6 +44,10 @@ public class EnemyPatrol : MonoBehaviour
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
 
+        Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
+        Debug.Log(newPos);
+        newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + 3f;
+        Debug.Log(newPos);
         navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
     }
 
@@ -62,7 +78,7 @@ public class EnemyPatrol : MonoBehaviour
         return false;
     }
 
-    public void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 2.5f)
+    public void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 10f)
     {
         OldWaypointPatrolList = new List<GameObject>(WaypointPatrolList);
         oldWaypointNumber = currentWaypointNumber;
@@ -77,27 +93,32 @@ public class EnemyPatrol : MonoBehaviour
             
             if (path.status != NavMeshPathStatus.PathPartial)
             {
+                Debug.Log("condition in addrandompoint true");
                 GameObject IAWaypoint = Instantiate(new GameObject(TEMP_WAYPOINT_NAME + i));
                 IAWaypoint.transform.position = newPos;
                 WaypointPatrolList.Insert(currentWaypointNumber, IAWaypoint);
+                hasRandomWaypoints = true;
             }
             else i--;
-            
         }
     }
 
     public void RestoreWaypoints()
     {
-        WaypointPatrolList = new List<GameObject>(OldWaypointPatrolList);
-        currentWaypointNumber = oldWaypointNumber;
+        if(OldWaypointPatrolList.Count > 0)
+        {
+            WaypointPatrolList = new List<GameObject>(OldWaypointPatrolList);
+            currentWaypointNumber = oldWaypointNumber;
+            hasRandomWaypoints = false;
+        }
     }
 
     public bool IsNextCheckpointTemporary(){
-        if(WaypointPatrolList.Count > currentWaypointNumber + 1)
-        {
-            return WaypointPatrolList[currentWaypointNumber+1];
-        }
-        else return false;
+        return WaypointPatrolList[currentWaypointNumber].name.Contains(TEMP_WAYPOINT_NAME);
+    }
+
+    public bool HasRandomWaypoints(){
+        return hasRandomWaypoints;
     }
 
 

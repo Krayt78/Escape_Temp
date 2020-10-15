@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 3756661216827166857}
   - component: {fileID: 7697378172346190403}
   m_Layer: 11
-  m_Name: StateGuard
+  m_Name: old_StateGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1024
-  visibleTargets: []
+  deadEnemiesMask:
+    serializedVersion: 2
+    m_Bits: 524288
 --- !u!114 &9199634609167077103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,9 +139,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
+  angleToTarget: 0
   isStunned: 0
   isDead: 0
   isStaticGuard: 0
+  alertFactor: 50
 --- !u!114 &9199634609167077096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +308,8 @@ MonoBehaviour:
   cooldown: 0
   Bullet: {fileID: 6521587158353889600, guid: 1e301c3a0fb5ad5408eb874abca41b74, type: 3}
   FiringPoint: {fileID: 6770435400161179507}
+  laserLoadingEffect: {fileID: 0}
+  laserShootEffect: {fileID: 0}
 --- !u!114 &3756661216827166857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d452c461a971342b740a2904096c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animatorArmor: {fileID: 0}
 --- !u!1 &6770435400155485657
 GameObject:
   m_ObjectHideFlags: 0
