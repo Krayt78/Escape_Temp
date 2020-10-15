@@ -13,7 +13,8 @@ public class FogManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerFog.SetActive(true);
+        landscapeFog.SetActive(false);
     }
 
     // Update is called once per frame
