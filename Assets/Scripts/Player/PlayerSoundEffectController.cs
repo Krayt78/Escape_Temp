@@ -31,6 +31,8 @@ public class PlayerSoundEffectController : MonoBehaviour
     [SerializeField] string grapplinStickSFXPath;
     [SerializeField] string grapplinRetractSFXPath;
     private FMOD.Studio.EventInstance grapplinSoundInstance;
+
+    [SerializeField] string dartLaunchSFXPath;
     [Space(10)]
 
     [Header("Evolution")]
@@ -179,6 +181,14 @@ public class PlayerSoundEffectController : MonoBehaviour
 
         grapplinSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         grapplinSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(grapplinRetractSFXPath, rigidbody);
+    }
+
+    public void PlayDartLaunchSFX()
+    {
+        if (mute)
+            return;
+
+        FMODPlayerController.PlayOnShotSound(dartLaunchSFXPath, rigTransform.transform.position);
     }
 
     private void PlayVomitSFX()
