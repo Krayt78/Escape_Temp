@@ -3,7 +3,17 @@ guid: 0d423ec017d602843a5ab824b87401b7
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Pipe_Angle_triple_01
+    second: {fileID: 2100000, guid: 859277bf3f203e84c8d6846a6c3a449a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Pipe_Angle_triple_02
+    second: {fileID: 2100000, guid: dbf17bb37db51424a8ce8f463e6b522e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -33,7 +43,12 @@ ModelImporter:
     clipAnimations: []
     isReadable: 0
   meshes:
-    lODScreenPercentages: []
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.03125
+    - 0.01
     globalScale: 1
     meshCompression: 0
     addColliders: 0
