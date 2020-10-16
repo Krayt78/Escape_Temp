@@ -7,7 +7,6 @@ public class FMODPlayerController
     //Temp
     private static FMOD.Studio.EventInstance playingVoice;
 
-    private static FMOD.Studio.EventInstance playingMusic;
 
     public static void PlayOnShotSound(string path, Vector3 position)
     {
@@ -44,22 +43,5 @@ public class FMODPlayerController
         playingVoice.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
 
         playingVoice = PlaySoundInstance(path, pos);
-    }
-
-    public static void StartPlayMusic(string musicSFXPath)
-    {
-        playingMusic = FMODUnity.RuntimeManager.CreateInstance(musicSFXPath);
-
-        playingMusic.start();
-    }
-
-    public static void ModulateMusicVolume(float volume)  //Volume between 0 & 1
-    {
-        playingMusic.setVolume(volume);
-    }
-
-    public static void StopMusic()
-    {
-        playingMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }

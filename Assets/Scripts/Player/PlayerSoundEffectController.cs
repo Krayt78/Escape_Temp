@@ -53,6 +53,14 @@ public class PlayerSoundEffectController : MonoBehaviour
     private bool vomitPlaying = false;
     private FMOD.Studio.EventInstance vomitInstance;
 
+
+    public string EventMusicSFX;
+    private static FMOD.Studio.EventInstance playingMusic;
+
+    private float musicVolume = 0;
+    private float musicTargetVolume = 0;
+
+
     private void Awake()
     {
         rigidbody = GetComponentInChildren<Rigidbody>();
@@ -91,12 +99,16 @@ public class PlayerSoundEffectController : MonoBehaviour
 
 
         MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
+
+        StartPlayMusic(EventMusicSFX);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        musicTargetVolume = EnemyAIManager.Instance.GlobalAlertLevel / 10;
+        musicVolume = Mathf.MoveTowards(musicVolume, musicTargetVolume, Time.deltaTime);
+        ModulateMusicVolume(musicVolume);
     }
 
     private void TryPlayFootstepSFX(float movementMagnitude)
@@ -300,5 +312,22 @@ public class PlayerSoundEffectController : MonoBehaviour
     void OnApplicationQuit()
     {
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public static void StartPlayMusic(string musicSFXPath)
+    {
+        playingMusic = FMODUnity.RuntimeManager.CreateInstance(musicSFXPath);
+
+        playingMusic.start();
+    }
+
+    public static void ModulateMusicVolume(float volume)  //Volume between 0 & 1
+    {
+        playingMusic.setVolume(volume);
+    }
+
+    public static void StopMusic()
+    {
+        playingMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }
