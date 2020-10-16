@@ -14,6 +14,13 @@ public class SoundTrigger : MonoBehaviour
 
     private FMOD.Studio.EventInstance soundInstance;
 
+    private SphereCollider collider;
+
+    private void Awake()
+    {
+        collider = GetComponent<SphereCollider>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(soundFXs.Length>0 && active)
