@@ -5,16 +5,24 @@ using UnityEngine;
 public class FogManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject playerFog;
+    GameObject fogPlayer;
+    MeshRenderer fogPlayerRenderer;
     [SerializeField]
-    GameObject landscapeFog;
-
+    float lerpDuration;
+    float deltaTime = 0f;
+    Coroutine coroutine;
+    float tempAlpha;
+    float alphaMax;
+    Color tempColor;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerFog.SetActive(true);
-        landscapeFog.SetActive(false);
+        fogPlayerRenderer = fogPlayer.GetComponent<MeshRenderer>();
+        alphaMax = fogPlayerRenderer.material.color.a;
+        tempColor = fogPlayerRenderer.material.color;
+        Debug.Log(fogPlayerRenderer.material.ToString());
+        Debug.Log(alphaMax);
     }
 
     // Update is called once per frame
@@ -23,19 +31,53 @@ public class FogManager : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && other.gameObject.transform.position.y < gameObject.transform.position.y)
+        {
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine);
+                Debug.Log("StopCoCo");
+            }
+            Debug.Log("EnterTrigger");
+            tempAlpha = fogPlayerRenderer.material.color.a;
+            coroutine = StartCoroutine(lerpFogAlpha(true));
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player" && other.gameObject.transform.position.y < gameObject.transform.position.y)
         {
-            playerFog.SetActive(true);
-            landscapeFog.SetActive(false);
-            Debug.Log("Up trigger");
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine);
+                Debug.Log("StopCoCo");
+            }
+            Debug.Log("ExitTrigger");
+            tempAlpha = fogPlayerRenderer.material.color.a;
+            coroutine = StartCoroutine(lerpFogAlpha(false));
         }
-        else if (other.tag == "Player" && other.gameObject.transform.position.y > gameObject.transform.position.y)
+    }
+
+    private IEnumerator lerpFogAlpha(bool isDecaying)
+    {
+        Debug.Log(tempAlpha);
+        deltaTime = 0;
+        while (deltaTime < lerpDuration)
         {
-            playerFog.SetActive(false);
-            landscapeFog.SetActive(true);
-            Debug.Log("Bottom trigger");
+            if (isDecaying)
+            {
+                tempColor.a = Mathf.Lerp(tempAlpha, 0f, deltaTime / lerpDuration);
+            }
+            else
+            {
+                tempColor.a = Mathf.Lerp(tempAlpha, alphaMax, deltaTime / lerpDuration);
+            }
+            fogPlayerRenderer.material.color = tempColor;
+            deltaTime += Time.deltaTime;
+            yield return null;
         }
     }
 }
