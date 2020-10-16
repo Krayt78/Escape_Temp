@@ -121,5 +121,10 @@ public class EnemyPatrol : MonoBehaviour
         return hasRandomWaypoints;
     }
 
+    public void SetSpeed(float speed)
+    {
+        navMeshAgent.speed = speed;
+    }
+
 
 }

@@ -31,7 +31,7 @@ public class VisibilityPointHandler : MonoBehaviour
         if(visibilityPoints != null){
             foreach (var item in visibilityPoints)
             {
-                Gizmos.DrawSphere(item.transform.position, .5f);
+                Gizmos.DrawSphere(item.transform.position, .1f);
             }
         }
         Gizmos.color = Color.magenta;
@@ -53,6 +53,7 @@ public class VisibilityPointHandler : MonoBehaviour
     public List<VisibilityPoint> GetVisiblePointsFromTarget(Transform target, float viewAngle, float viewRadius, LayerMask obstacleMask)
     {
         List<VisibilityPoint> visiblePoints = new List<VisibilityPoint>();
+        
         foreach (var point in visibilityPoints)
         {
             Vector3 pointPos = point.transform.position;
@@ -61,9 +62,9 @@ public class VisibilityPointHandler : MonoBehaviour
             if (Vector3.Angle(target.forward, dirToTarget) < viewAngle / 2)
             {
                 Debug.DrawRay(target.position, dirToTarget*30, Color.blue, 2f);
-                if(Physics.Raycast(target.position, dirToTarget, 999f, obstacleMask)){
+                if(!Physics.Raycast(target.position, dirToTarget, 999f, obstacleMask)){
                     visiblePoints.Add(point);
-                    StartCoroutine(testVisiblePoint());
+                    //StartCoroutine(testVisiblePoint());
                 }
             }
         }
