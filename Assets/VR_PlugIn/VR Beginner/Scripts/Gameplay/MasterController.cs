@@ -16,6 +16,8 @@ public class MasterController : MonoBehaviour
 
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private GameObject GrappliLineRenderer;
 
     public PlayerInput playerInput;
 
@@ -58,6 +60,8 @@ public class MasterController : MonoBehaviour
 
     bool m_LastFrameRightEnable = false;
     bool m_LastFrameLeftEnable = false;
+
+    bool isGrapplinButtonPressed = false;
 
     LayerMask m_OriginalRightMask;
     LayerMask m_OriginalLeftMask;
@@ -210,14 +214,26 @@ public class MasterController : MonoBehaviour
 
     void CheckIfGrapplinButtonUsed()
     {
-
         float buttonInput;
         m_RightInputDevice.TryGetFeatureValue(CommonUsages.trigger, out buttonInput);
 
         if (buttonInput > .5f)
         {
-            Debug.Log(buttonInput);
+            if (!isGrapplinButtonPressed)
+            {
+
+                isGrapplinButtonPressed = true;
+                GrappliLineRenderer.SetActive(true);
+            }
+         
+        }
+
+        if(buttonInput <.2f && isGrapplinButtonPressed)
+        {
             playerInput.OnUseAbilityFunction();
+
+            isGrapplinButtonPressed = false;
+            GrappliLineRenderer.SetActive(false);
         }
     }
     void CheckIfChangeAbilityButtonUsed()
