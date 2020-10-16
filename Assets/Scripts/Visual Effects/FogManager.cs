@@ -21,7 +21,7 @@ public class FogManager : MonoBehaviour
         fogPlayerRenderer = fogPlayer.GetComponent<MeshRenderer>();
         alphaMax = fogPlayerRenderer.material.color.a;
         tempColor = fogPlayerRenderer.material.color;
-        Debug.Log(tempColor.ToString());
+        Debug.Log(fogPlayerRenderer.material.ToString());
         Debug.Log(alphaMax);
     }
 
