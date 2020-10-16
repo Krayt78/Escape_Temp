@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DartController : MonoBehaviour
 {
-    float speed=8;
+    float speed=12;
     [SerializeField] float damages = 10;
 
     new Rigidbody rigidbody;

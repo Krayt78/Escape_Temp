@@ -99,6 +99,7 @@ public class VrGrapplinController : Ability
     {
         float time = 0;
         Vector3 startPosition = movingPlayer.position;
+        playerSoundEffectController.PlayGrapplinRetractSFX();
         while (time < duration)
         {
             if (Landed())
@@ -116,6 +117,7 @@ public class VrGrapplinController : Ability
             time += Time.deltaTime;
             yield return null;
         }
+        playerSoundEffectController.StopGrapplinSFX();
         movingPlayer.position = destination;
 
         
