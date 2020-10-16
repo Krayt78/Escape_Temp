@@ -11,6 +11,7 @@ public class DartAbilityController : Ability
 
     bool added = false;
 
+    private PlayerSoundEffectController playerSoundEffectController;
 
 
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class DartAbilityController : Ability
     {
         GetComponent<PlayerAbilitiesController>().AddAbility(this);
         added = true;
+        playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
 
     // Update is called once per frame
@@ -47,5 +49,7 @@ public class DartAbilityController : Ability
 
         Instantiate(DartObject, FirePoint.position, FirePoint.rotation);
         lastTimeFired = Time.time;
+
+        playerSoundEffectController.PlayDartLaunchSFX();
     }
 }

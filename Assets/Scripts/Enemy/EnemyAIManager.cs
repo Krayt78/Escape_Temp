@@ -9,13 +9,15 @@ public class EnemyAIManager : MonoBehaviour
 
     [Range(0f, 100f)]
     private float globalAlertLevel = 0f;
-    public float GlobalAlertLevel { get { return globalAlertLevel; } private set { globalAlertLevel = value; } }
+    public float GlobalAlertLevel { get { return globalAlertLevel; } private set { globalAlertLevel = value; FMODPlayerController.ModulateMusicVolume(globalAlertLevel); } }
 
     private float currentTimer = 0f;
     public int onAttack = 0;
 
     private List<Guard> EnemiesOnAlert = new List<Guard>();
     private List<Guard> EnemiesOnSight = new List<Guard>();
+
+    public string EventMusicSFX;
 
     private void OnGUI()
     {
@@ -39,6 +41,8 @@ public class EnemyAIManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine("CheckGlobalAlert", 0.4f);
+        FMODPlayerController.StartPlayMusic(EventMusicSFX);
+        FMODPlayerController.ModulateMusicVolume(0);
     }
 
     IEnumerator CheckGlobalAlert(float delay)
