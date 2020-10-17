@@ -68,6 +68,7 @@ public class VrGrapplinController : Ability
     public override void Start()
     {
         base.Start();
+        dnaConsumed = 0.03f;
     }
     // Update is called once per frame
     void Update()
@@ -91,7 +92,7 @@ public class VrGrapplinController : Ability
 
     private bool Landed()
     {
-        return Vector3.Distance(movingPlayer.position, destination) < 1f;
+        return Vector3.Distance(movingPlayer.position, destination) < 3f;
     }
 
 
