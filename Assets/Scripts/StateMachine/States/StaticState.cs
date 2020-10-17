@@ -12,7 +12,7 @@ public class StaticState : BaseState
     public StaticState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-        this.guard.stateMachine.CurrentStateName = "StaticState";
+        //this.guard.stateMachine.CurrentStateName = "StaticState";
     }
 
     public override Type Tick()
