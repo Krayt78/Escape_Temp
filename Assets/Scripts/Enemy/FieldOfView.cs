@@ -79,7 +79,7 @@ public class FieldOfView : MonoBehaviour
                 
                 float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
                 
-                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
+                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(transform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }

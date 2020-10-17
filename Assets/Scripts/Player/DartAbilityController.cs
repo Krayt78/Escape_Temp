@@ -20,6 +20,7 @@ public class DartAbilityController : Ability
         GetComponent<PlayerAbilitiesController>().AddAbility(this);
         added = true;
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
+        dnaConsumed = 0.06f;
     }
 
     // Update is called once per frame

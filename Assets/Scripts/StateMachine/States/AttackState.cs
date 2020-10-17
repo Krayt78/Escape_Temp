@@ -34,7 +34,8 @@ public class AttackState : BaseState
             && AIManager.GlobalAlertLevel < 33f) || AIManager.HasOnlyOneEnemyOnSight()){
                 if(!guard.EnemyPatrol.HasRandomWaypoints()){
                     if(guard.AlertLevel >= 50){
-                        guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                        //guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
                     }
                     else{
                         guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
@@ -45,6 +46,7 @@ public class AttackState : BaseState
             else
             {
                 guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                return typeof(LostState);
             }
         }
 
@@ -66,11 +68,13 @@ public class AttackState : BaseState
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Attack);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
+        guard.EnemyPatrol.SetSpeed(5f);
     }
 
     public override void OnStateExit()
     {
         AIManager.onAttack -= 1;
         Debug.Log("Exiting Attack state");
+        guard.EnemyPatrol.SetSpeed(3.5f);
     }
 }
