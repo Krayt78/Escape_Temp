@@ -13,7 +13,7 @@ public class PatrollState : BaseState
     public PatrollState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-        this.guard.stateMachine.CurrentStateName = "PatrollState";
+        //this.guard.stateMachine.CurrentStateName = "PatrollState";
     }
 
     public override Type Tick()

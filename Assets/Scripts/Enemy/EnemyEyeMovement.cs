@@ -6,16 +6,25 @@ using Random = UnityEngine.Random;
 
 public class EnemyEyeMovement : MonoBehaviour
 {
+    [Header("Global Settings")]
     [SerializeField] Transform sentinelEye;
     private float rotationSpeed = 50f;
     private float step;
     Vector3 originalRotation;
     Vector3 currentTarget;
     bool moveEye;
-
     private float ElapsedTime = 0.0f;
     private Quaternion randomRotation;
     private Quaternion lastRotation;
+
+    // [Header("Clamp Eye Rotation")]
+    // public float minimumX;
+    // public float maximumX;
+
+    // public float minimumY;
+    // public float maximumY;
+
+    
 
     private void Start()
     {
@@ -38,7 +47,18 @@ public class EnemyEyeMovement : MonoBehaviour
     {
         if (moveEye)
         {
+            // Quaternion OriginalRot = sentinelEye.rotation;
             sentinelEye.LookAt(currentTarget);
+            // Quaternion NewRot = sentinelEye.rotation;
+            // sentinelEye.rotation = OriginalRot;
+            // sentinelEye.rotation = Quaternion.Lerp(transform.rotation, NewRot, rotationSpeed * Time.deltaTime);
+            // float ry = transform.eulerAngles.y;
+            // if (ry >= 180) ry -= 360;
+            // transform.eulerAngles = new Vector3 (
+            //     Mathf.Clamp(sentinelEye.eulerAngles.x, minimumX, maximumX),
+            //     Mathf.Clamp(ry, minimumY, maximumY),
+            //     0
+            // );
         }
         else
         {

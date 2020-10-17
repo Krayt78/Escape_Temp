@@ -9,7 +9,7 @@ public class StateMachine : MonoBehaviour
     protected Dictionary<Type, BaseState> availableStates;
 
     public BaseState CurrentState { get; protected set; }
-    public String CurrentStateName = "PatrollState";
+    public String CurrentStateName = "Default";
     public event Action<BaseState> OnStateChanged;
 
     public void SetStates(Dictionary<Type, BaseState> states)
