@@ -46,9 +46,14 @@ public class BoidController : MonoBehaviour
 
     public LayerMask searchLayer;
 
+    public string flockingSoundPath;
+    private FMOD.Studio.EventInstance soundInstance;
+
     void Start()
     {
-        for (var i = 0; i < spawnCount; i++) Spawn();
+        GameObject firstBoid = Spawn();
+        soundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(flockingSoundPath, firstBoid.GetComponent<Rigidbody>());
+        for (var i = 1; i < spawnCount; i++) Spawn();
     }
 
     public GameObject Spawn()
@@ -62,5 +67,10 @@ public class BoidController : MonoBehaviour
         var boid = Instantiate(boidPrefab, position, rotation) as GameObject;
         boid.GetComponent<BoidBehaviour>().controller = this;
         return boid;
+    }
+
+    private void OnDestroy()
+    {
+        soundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }
