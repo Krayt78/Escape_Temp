@@ -26,13 +26,13 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
             RestartScene();
-        if(Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (pauseMenu.activeInHierarchy)
-                ResumeGame();
-            else
-                ShowPauseMenu();    
-        }
+        //if(Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (pauseMenu.activeInHierarchy)
+        //        ResumeGame();
+        //    else
+        //        ShowPauseMenu();    
+        //}
     }
 
     private void OnPlayerDies()
