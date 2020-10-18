@@ -126,10 +126,10 @@ public class CameraFilter : Singleton<CameraFilter>
             return;
         }
 
-        float saturationPercentage = ((1 - dnaLevel) * 100) * (-1);
-        omegaColorAdjustment.saturation.value = saturationPercentage;
-        omegaColorAdjustment.contrast.value = -saturationPercentage;
-        omegaVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
+        //float saturationPercentage = ((1 - dnaLevel) * 100) * (-1);
+        //omegaColorAdjustment.saturation.value = saturationPercentage;
+        //omegaColorAdjustment.contrast.value = -saturationPercentage;
+        //omegaVignette.intensity.value = Mathf.Clamp(1 - dnaLevel, 0.25f, 0.40f);
     }
 
     public void CriticalFilterFluctation(float dnaLevel)
