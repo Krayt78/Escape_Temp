@@ -36,10 +36,11 @@ public class PlayerEvolutionStateMachine : StateMachine
         InitializePlayerStateMachine();
         SetStartState();
 
-        
+
         if (playerCarateristic != null)
         {
             BasePlayerState currentPlayerState = (BasePlayerState)CurrentState;
+            Debug.Log("BASE PLAYER STATE DEFENSE : " + currentPlayerState.StateDefenseRatio);
             playerCarateristic.InitCharacterisctics(
                 currentPlayerState.StateSpeed,
                 currentPlayerState.StateSize,
@@ -49,6 +50,8 @@ public class PlayerEvolutionStateMachine : StateMachine
                 currentPlayerState.StateDnaAbsorbedRatio,
                 currentPlayerState.StateNoise);
         }
+        else
+            Debug.LogError("No Carateristics found");
 
         playerEntityController.OnLifePointEqualZero += OnLifePointIsZero;
         playerDNALevel.OncurrentEvolutionLevelChanged += SwitchState;

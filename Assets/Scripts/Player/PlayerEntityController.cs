@@ -149,7 +149,7 @@ public class PlayerEntityController : EntityController
     {
         if (!canTakeDamages || !DEV_ONLY_canTakeDamages)
             return;
-
+        Debug.Log("DAMAGES : " + damages + " - RATIOED : " + playerCarateristic.defenseRatio);
         lifePoint -= (damages * playerCarateristic.defenseRatio);
         CallOnTakeDamages(damages);
         if (lifePoint <= 0)
