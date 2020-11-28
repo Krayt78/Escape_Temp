@@ -21,8 +21,9 @@ public class PlayerOmegaState : BasePlayerState
 
     float transformationTimeInSeconds = 1f;
     public override float TransformationTimeInSeconds { get { return transformationTimeInSeconds; } }
+    public override float StateStepPerSecond { get { return stateStepPerSecond; } }
 
-    public float stepByMoveSpeed = .2f;
+    public float stateStepPerSecond = .2f;
 
 
     public PlayerOmegaState(GameObject gameObject, ScriptableCaracEvolutionState caracteristics) : base(gameObject, LEVEL_STATE, caracteristics)
