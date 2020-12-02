@@ -77,15 +77,15 @@ public class FieldOfView : MonoBehaviour
                 // }
                 // else 
                 target = targetsInViewRadius[i].transform;
-                Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
-                
+                Transform eyeTransform = ((EnemyEyeMovement)gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+
                 var targetDirection = target.position - eyeTransform.position;
                 float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
                 //Debug.Log("AngleToTarget : "+angleToTarget);
                 
-                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
+                if(CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, eyeTransform.position, eyeTransform.forward))
+                //if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
-                    Debug.Log("keyValuePairAffectation");
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else
@@ -106,8 +106,9 @@ public class FieldOfView : MonoBehaviour
                     Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                     
                     float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
-                    
-                    if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
+
+                    if (CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, eyeTransform.position, eyeTransform.forward))
+                    //if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                     {
                         OnDeadBodyFound();
                         deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound = true;
@@ -124,6 +125,33 @@ public class FieldOfView : MonoBehaviour
             OnTargetLost();
 
         previousVisibleTargetCount = visibleTargets.Count;
+    }
+
+    private bool CheckEnoughVisibilityPointOnSight(VisibilityPoint[] visibilityPoints, int minPointOnSight, Vector3 eyePosition, Vector3 eyeDirection)
+    {
+        int pointCount=0;
+
+        if (visibilityPoints.Length < minPointOnSight)
+            return false;
+
+        for(int i=0;i<visibilityPoints.Length; i++)
+        {
+            if (visibilityPoints[i] == null)
+                continue;
+            Vector3 pointPosition = visibilityPoints[i].transform.position;
+            Vector3 targetDirection = pointPosition - eyePosition;
+            // float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
+            if (Mathf.Abs(Vector3.SignedAngle(eyeDirection, targetDirection.normalized, Vector3.up)) < viewAngle)
+            {
+                Ray ray = new Ray(eyePosition, targetDirection);
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit, targetDirection.magnitude, obstacleMask))
+                {
+                    pointCount++;
+                }
+            }
+        }
+        return pointCount>=minPointOnSight;
     }
 
     void FindGlobalAlertLevelTargets()

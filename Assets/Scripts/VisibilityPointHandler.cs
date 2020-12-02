@@ -51,6 +51,11 @@ public class VisibilityPointHandler : MonoBehaviour
         return visibilityPoints[index].transform;
     }
 
+    public VisibilityPoint[] GetAllVisibilityPoint()
+    {
+        return visibilityPoints;
+    }
+
     public List<VisibilityPoint> GetVisiblePointsFromTarget(Transform target, float viewAngle, float viewRadius, LayerMask obstacleMask)
     {
         List<VisibilityPoint> visiblePoints = new List<VisibilityPoint>();

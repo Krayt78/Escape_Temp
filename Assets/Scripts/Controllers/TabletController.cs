@@ -11,6 +11,8 @@ public class TabletController : Interactable
 
     public NomTablet nom = new NomTablet();
 
+    [SerializeField] string tabletPickUpSoundPath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +38,7 @@ public class TabletController : Interactable
     {
         nomPreuvesRamasse.Add(this.nom);
         this.gameObject.SetActive(false);
-        // Activation du son pickTablet
+        FMODPlayerController.PlayOnShotSound(tabletPickUpSoundPath, transform.position);
     }
 }
 public enum NomTablet
