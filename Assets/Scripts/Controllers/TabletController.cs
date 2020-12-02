@@ -28,19 +28,13 @@ public class TabletController : Interactable
     public void grabTablet()
     {
         nomPreuvesRamasse.Add(this.nom);
-        Debug.Log("--------------------------");
-        foreach (var nom in nomPreuvesRamasse)
-        {
-            Debug.Log(nom.ToString());
-        }
-        Debug.Log("--------------------------");
 
-        //StartCoroutine(destroyTablet());
+        StartCoroutine(destroyTablet());
     }
 
     public IEnumerator destroyTablet()
     {
-        yield return new WaitForEndOfFrame();
+        yield return null;
         Destroy(gameObject);
     }
 }
