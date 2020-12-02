@@ -102,6 +102,20 @@ public class MovementProvider : LocomotionProvider
         OnMovement(position.magnitude*Time.deltaTime);
     }
 
+    public void MoveCharacter(Vector3 direction)
+    {
+        //Vector3 headRotation = new Vector3(0, head.transform.eulerAngles.y, 0);
+
+        ////rotate the input direction by the horizontal head rotation
+        //Vector3 newDirection = Quaternion.Euler(headRotation) * direction;
+
+        ////apply speed and move 
+        //Vector3 movement = Vector3.ClampMagnitude(newDirection, 1) * speed;
+        characterController.Move(direction * speed * Time.deltaTime);
+
+        OnMovement(direction.magnitude * Time.deltaTime);
+    }
+
     private void ApplyGravity() {
         Vector3 gravity = new Vector3(0, Physics.gravity.y * gravityMultiplier, 0);
         gravity.y *= Time.deltaTime;

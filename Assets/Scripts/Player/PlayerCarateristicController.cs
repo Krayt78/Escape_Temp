@@ -59,6 +59,7 @@ public class PlayerCarateristicController : MonoBehaviour
 
     public void UpdateCharacteristicValues(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise, float easingSpeed= DEFAULT_EASING_DELAY)
     {
+        Debug.Log("DEFENSE RATIO : " + newDefenseRatio);
         speed = newSpeed;
         size = newSize;
         sizeBounds = newSizeBounds;
@@ -160,6 +161,7 @@ public class PlayerCarateristicController : MonoBehaviour
 
     public void InitCharacterisctics(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise)
     {
+        Debug.Log("DEFENSE RATIO : " + newDefenseRatio);
         speed = newSpeed;
         size = newSize;
         sizeBounds = newSizeBounds;

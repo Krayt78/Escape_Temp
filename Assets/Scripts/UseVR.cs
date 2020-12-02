@@ -22,12 +22,12 @@ public class UseVR : MonoBehaviour
 
     private void Start()
     {
-
+        Invoke("ChangeSDK", 1);
     }
 
     private void Update()
     {
-        ChangeSDK();
+        //ChangeSDK();
     }
 
     private void ChangeSDK()

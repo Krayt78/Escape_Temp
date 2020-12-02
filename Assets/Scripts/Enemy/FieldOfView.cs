@@ -94,7 +94,7 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
-        Debug.Log("deadEnemiesInViewRadius : "+deadEnemiesInViewRadius.Length);
+        //Debug.Log("deadEnemiesInViewRadius : "+deadEnemiesInViewRadius.Length);
         if(deadEnemiesInViewRadius.Length > 0){
             for (int i = 0; i < deadEnemiesInViewRadius.Length; i++)
             {

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class TabletController : Interactable
 {
-    int nbPreuve;
+    [SerializeField]
+    static public List<NomTablet> nomPreuvesRamasse;
 
-    public int NbPreuve { get => nbPreuve; set => nbPreuve = value; }
-
+    public NomTablet nom = new NomTablet();
 
     // Start is called before the first frame update
     void Start()
     {
-        NbPreuve = 0;
+        nomPreuvesRamasse = new List<NomTablet>();
     }
 
     // Update is called once per frame
@@ -27,7 +27,13 @@ public class TabletController : Interactable
 
     public void grabTablet()
     {
-        Destroy(gameObject);
-        NbPreuve++;
+        nomPreuvesRamasse.Add(this.nom);
+        this.gameObject.SetActive(false);
     }
+}
+public enum NomTablet
+{
+    tabletJungle,
+    tabletCorail,
+    tabletHQ
 }
