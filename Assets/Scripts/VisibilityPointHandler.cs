@@ -31,7 +31,8 @@ public class VisibilityPointHandler : MonoBehaviour
         if(visibilityPoints != null){
             foreach (var item in visibilityPoints)
             {
-                Gizmos.DrawSphere(item.transform.position, .1f);
+                if(item)
+                    Gizmos.DrawSphere(item.transform.position, .1f);
             }
         }
         Gizmos.color = Color.magenta;

@@ -59,13 +59,15 @@ public class SimpleMover : MonoBehaviour
         //transform.Rotate(Vector3.up, Input.GetAxis("MouseX") * cameraSpeed * Time.deltaTime);
 
         Vector3 move = Input.GetAxis("Vertical") * playerCamera.forward + Input.GetAxis("Horizontal") * playerCamera.right;
-        controller.Move(move.normalized * Time.deltaTime * movementProvider.speed);
+        //controller.Move(move.normalized * Time.deltaTime * movementProvider.speed);
+        if(move.magnitude>.2f)
+            movementProvider.MoveCharacter(move);
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        //controller.Move(playerVelocity * Time.deltaTime);
 
         
     }

@@ -13,6 +13,9 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] string[] footstepPerLevelPath;
+    [SerializeField] string footstepPath;
+    private FMOD.Studio.EventInstance eventFootstep;
+
     private float currentStepProgression=0;
     int currentLevelFootstep=0;
     [Space(10)]
@@ -113,6 +116,7 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void TryPlayFootstepSFX(float movementMagnitude)
     {
+        Debug.Log("TRY PLAY FOOT STEP");
         // || (movementMagnitude==0 && currentStepProgression!=0))
         currentStepProgression+=movementMagnitude;
         if(playerStateMachine.CurrentState != null && currentStepProgression >= ((BasePlayerState)playerStateMachine.CurrentState).StateStepPerSecond )
@@ -126,9 +130,47 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep%4], rigTransform.transform.position);
+        RaycastHit hitResult;
+        if(Physics.Raycast(new Ray(rigTransform.position, -Vector3.up), out hitResult, 3f))
+        {
+            Debug.Log(hitResult.transform.gameObject.name);
+            if (hitResult.transform.gameObject.name == "Terrain_Level1") 
+            {
+                int result = 
+                    hitResult.transform.GetComponent<TerrainManager>().
+                        GetTerrainTextureAtPosition(hitResult.transform.GetComponent<Terrain>(), hitResult.point);
+                SetFootstepParam(result);
+
+            }
+            switch(hitResult.collider.material.name)
+            {
+                case "PMAT_Metal":
+                case "PMAT_Metal (Instance)":
+                    SetFootstepParam(5);
+                    break;
+                case "PMAT_Rock":
+                case "PMAT_Rock (Instance)":
+                    SetFootstepParam(1);
+                    break;
+                case "PMAT_Shroom":
+                case "PMAT_Shroom (Instance)":
+                    SetFootstepParam(3);
+                    break;
+            }
+        }
+
+        //FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep%4], rigTransform.transform.position);
 
         currentStepProgression=0;
+    }
+
+    private void SetFootstepParam(int paramValue)
+    {
+        eventFootstep.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        eventFootstep = FMODUnity.RuntimeManager.CreateInstance(footstepPath);
+        //eventFootstep.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
+        eventFootstep.setParameterByName("Floor-Material", paramValue);
+        eventFootstep.start();
     }
 
 
@@ -183,7 +225,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(grapplinStickSFXPath, stickPosition);
+        FMODPlayerController.PlayOnShotSound(grapplinStickSFXPath, rigTransform.position);
     }
 
     public void PlayGrapplinRetractSFX()
@@ -192,7 +234,7 @@ public class PlayerSoundEffectController : MonoBehaviour
             return;
 
         grapplinSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        grapplinSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(grapplinRetractSFXPath, rigidbody);
+        //grapplinSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(grapplinRetractSFXPath, rigidbody);
     }
 
     public void PlayDartLaunchSFX()
