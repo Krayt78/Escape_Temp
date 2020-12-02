@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 347259994479293693}
   - component: {fileID: 2068433330873857470}
   m_Layer: 0
-  m_Name: tablet
+  m_Name: tabletJungle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5432057707554663153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,8 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders:
-  - {fileID: 2068433330873857470}
+  m_Colliders: []
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -149,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba13a3f56a974c4b8207fd8de665949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nom: 0
 --- !u!65 &2068433330873857470
 BoxCollider:
   m_ObjectHideFlags: 0
