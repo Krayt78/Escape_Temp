@@ -42,12 +42,14 @@ public class NoiseHeardState : BaseState
 
             if (guard.IsStaticGuard)
             {
-                guard.EnemyPatrol.GoToNextCheckpoint();
+                if (guard.EnemyPatrol.DestinationReached())
+                   guard.EnemyPatrol.GoToNextCheckpoint();
                 return typeof(StaticState);
             }
             else
             {
-                guard.EnemyPatrol.GoToNextCheckpoint();
+                if (guard.EnemyPatrol.DestinationReached())
+                   guard.EnemyPatrol.GoToNextCheckpoint();
                 return typeof(PatrollState);
             }
                 

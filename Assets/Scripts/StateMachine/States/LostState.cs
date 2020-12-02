@@ -94,19 +94,21 @@ public class LostState : BaseState
         guard.EnemyPatrol.SetSpeed(1.5f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
-        // if(guard.AlertLevel >= 50){
-        //     guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
-        // }
-        // else{
-        //     guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-        // }
+        if(guard.AlertLevel >= 50){
+            guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+        }
+        else{
+            guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
+            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+        }
     }
 
     public override void OnStateExit()
     {
         Debug.Log("Exiting Lost state");
         Debug.Log("Time since state lost enter : "+timer);
-        //if(guard.EnemyPatrol.HasRandomWaypoints()) guard.EnemyPatrol.RestoreWaypoints();
+        if(guard.EnemyPatrol.HasRandomWaypoints()) guard.EnemyPatrol.RestoreWaypoints();
         guard.EnemyPatrol.SetSpeed(3.5f);
     }
 }

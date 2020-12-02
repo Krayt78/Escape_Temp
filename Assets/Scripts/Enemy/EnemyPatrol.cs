@@ -44,11 +44,11 @@ public class EnemyPatrol : MonoBehaviour
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
 
-        // Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
-        // Debug.Log(newPos);
-        // newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + 3f;
-        // Debug.Log(newPos);
-        navMeshAgent.SetDestination(WaypointPatrolList[currentWaypointNumber].transform.position);
+        Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
+        //Debug.Log(newPos);
+        newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + .5f;
+        //Debug.Log(newPos);
+        navMeshAgent.SetDestination(newPos);
     }
 
     public void StopMoving()

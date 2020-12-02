@@ -10,7 +10,8 @@ public class SightedState : BaseState
 
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
-    private float sightedTime;
+    private float lostTimer = 0;
+    private float sightedTimer = 0;
 
     public SightedState(Guard guard) : base(guard.gameObject)
     {
@@ -19,7 +20,6 @@ public class SightedState : BaseState
 
     public override Type Tick()
     {
-        sightedTime += Time.deltaTime;
         if (guard.IsDead)
         {
             guard.EnemyPatrol.StopMoving();
@@ -33,6 +33,10 @@ public class SightedState : BaseState
         }
 
         if(guard.Target){
+            lostTimer = 0;
+            sightedTimer = 0;
+            guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
+            guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             AlertLevel();
         }
@@ -40,7 +44,18 @@ public class SightedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target && !AIManager.HasCurrentEnemyAlerted(guard))
         {
-            return typeof(LostState);
+            Debug.Log("is in SightedState to Lost");
+            if(lostTimer >= 3f)
+            {
+                return typeof(LostState);
+            }
+            else
+            {
+                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
+                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                lostTimer += Time.deltaTime;
+            } 
         }
 
         if (AIManager.HasCurrentEnemyAlerted(guard) || guard.AlertLevel >= 50)
@@ -49,7 +64,7 @@ public class SightedState : BaseState
             return typeof(AlertedState);
         }
 
-        if(guard.AlertLevel == 0f && !AIManager.HasCurrentEnemyAlerted(guard))
+        if(guard.AlertLevel == 0f && !AIManager.HasCurrentEnemyAlerted(guard) && sightedTimer > 2f)
         {
             guard.EnemyPatrol.ResumeMoving();
             return typeof(PatrollState);
@@ -60,6 +75,8 @@ public class SightedState : BaseState
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
+
+        sightedTimer += Time.deltaTime;
            
         return null;
     }
@@ -67,13 +84,14 @@ public class SightedState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         Debug.Log("Entering Sighted state");
+        lostTimer = 0;
+        sightedTimer = 0;
         AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnSight(guard);
         guard.SetAlertLevel(guard.AlertLevel + 1f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
         guard.EnemyPatrol.StopMoving();
-        this.sightedTime = 0f;
     }
     public override void OnStateExit()
     {

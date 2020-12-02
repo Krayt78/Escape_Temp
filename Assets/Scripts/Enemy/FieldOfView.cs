@@ -69,18 +69,23 @@ public class FieldOfView : MonoBehaviour
         {
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
+                // Debug.Log(targetsInViewRadius[i].gameObject.name);
                 GameObject targetGO = targetsInViewRadius[i].gameObject;
                 Transform target;
-                if(targetsInViewRadius[i].GetComponentInChildren<Camera>() != null){
-                    target = targetsInViewRadius[i].GetComponentInChildren<Camera>().transform;
-                }
-                else target = targetsInViewRadius[i].transform;
+                // if(targetsInViewRadius[i].GetComponentInChildren<Camera>() != null){
+                //     target = targetsInViewRadius[i].GetComponentInChildren<Camera>().transform;
+                // }
+                // else 
+                target = targetsInViewRadius[i].transform;
                 Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                 
-                float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
+                var targetDirection = target.position - eyeTransform.position;
+                float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
+                //Debug.Log("AngleToTarget : "+angleToTarget);
                 
-                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(transform, viewAngle, viewRadius, obstacleMask).Count > 1)
+                if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
+                    Debug.Log("keyValuePairAffectation");
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else
@@ -145,6 +150,7 @@ public class FieldOfView : MonoBehaviour
                         Vector3 newPos = target.position + UnityEngine.Random.insideUnitSphere * 1.25f;
                         newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
                         transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenPosition = newPos;
+                        transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenTransform = target;
                         AIManager.AddEnemyOnAlert(transform.gameObject.GetComponent<Guard>());
                     }
                 }

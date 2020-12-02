@@ -9,6 +9,7 @@ public class EnemyNavigation : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     public Vector3 targetLastSeenPosition;
+    public Transform targetLastSeenTransform;
 
     void Start()
     {

@@ -158,6 +158,7 @@ public class Guard : MonoBehaviour
         EnemyAIManager.Instance.RemoveEnemyOnSight(this);
         if(Target){
             EnemyNavigation.targetLastSeenPosition = Target.transform.position;
+            EnemyNavigation.targetLastSeenTransform = Target.transform;
         }
         EnemyAnimationController.TriggerEndSight();
         SetTarget(null);

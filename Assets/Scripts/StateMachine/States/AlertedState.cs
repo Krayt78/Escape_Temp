@@ -7,8 +7,7 @@ public class AlertedState : BaseState
 {
     private Guard guard;
 
-    private float sightedTimer = 1.5f;
-    private float currentTimer = 0;
+    private float lostTimer = 0;
     
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
@@ -18,7 +17,6 @@ public class AlertedState : BaseState
     public AlertedState(Guard guard) : base(guard.gameObject)
     {
         this.guard = guard;
-        currentTimer = sightedTimer;
     }
 
 
@@ -39,29 +37,41 @@ public class AlertedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target)
         {
-            AIManager.RemoveEnemyOnSight(guard);
-            guard.EnemyPatrol.ResumeMoving();
-            guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-            
-            if(AIManager.GlobalAlertLevel < 66f)
+            if(lostTimer >= 3f)
             {
-                if(!guard.EnemyPatrol.HasRandomWaypoints()){
-                    if(guard.AlertLevel >= 50){
-                        // guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
-                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    }
-                    else{
-                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    }
+                // AIManager.RemoveEnemyOnSight(guard);
+                // guard.EnemyPatrol.ResumeMoving();
+                // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                
+                if(AIManager.GlobalAlertLevel < 66f)
+                {
+                    // if(!guard.EnemyPatrol.HasRandomWaypoints()){
+                    //     if(guard.AlertLevel >= 50){
+                    //         guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+                    //         // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    //     }
+                    //     else{
+                    //         guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    //     }
+                    // }
+                    return typeof(LostState);
                 }
-                return typeof(LostState);
             }
-            // IF YOU ARE NOT IN SIGHT OF ANY ENEMIES, SET DOWN THE GLOBAL LEVEL ALERT
+            else
+            {
+                guard.EnemyPatrol.ResumeMoving();
+                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
+                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                lostTimer += Time.deltaTime;
+            } 
         }
         else
         {
             //orient towards target and chase target
-            
+            lostTimer = 0;
+            guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
+            guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             guard.EnemyPatrol.ResumeMoving();
@@ -84,11 +94,13 @@ public class AlertedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        lostTimer = 0;
         Debug.Log("Entering Alerted state");
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
+        guard.EnemyPatrol.ResumeMoving();
     }
     
     public override void OnStateExit()

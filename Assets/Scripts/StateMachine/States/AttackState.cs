@@ -6,6 +6,7 @@ public class AttackState : BaseState
 
     private Guard guard;
     private EnemyAIManager AIManager;
+    private float lostTimer = 0;
 
     public AttackState(Guard guard) : base(guard.gameObject)
     {
@@ -28,30 +29,50 @@ public class AttackState : BaseState
 
         if (!guard.Target)
         {
-            guard.EnemyPatrol.ResumeMoving();
-            
-            if((guard.EnemyPatrol.DestinationReached() && !AIManager.HasEnemySighted() 
-            && AIManager.GlobalAlertLevel < 33f) || AIManager.HasOnlyOneEnemyOnSight()){
-                if(!guard.EnemyPatrol.HasRandomWaypoints()){
-                    if(guard.AlertLevel >= 50){
-                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                        //guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
-                    }
-                    else{
-                        guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    }
+            if(lostTimer >= 5f)
+            {
+                if(!AIManager.HasEnemySighted()){
+                    // if(!guard.EnemyPatrol.HasRandomWaypoints()){
+                    //     if(guard.AlertLevel >= 50){
+                    //         // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    //         guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
+                    //     }
+                    //     else{
+                    //         guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                    //         guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
+                    //         guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
+                    //     }
+                    // }
+                    return typeof(LostState);
                 }
-                return typeof(LostState);
+                else{
+                    return typeof(AlertedState);
+                }
+                // else
+                // {
+                //     // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                //     // guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
+                //     // guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
+                //     return typeof(LostState);
+                // }
             }
             else
             {
+                guard.EnemyPatrol.ResumeMoving();
                 guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                return typeof(LostState);
-            }
+                guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
+                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                lostTimer += Time.deltaTime;
+            } 
+            
         }
 
         if(guard.Target)
         {
+            lostTimer = 0;
+            guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
+            guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
+            guard.EnemyNavigation.ChaseTarget(guard.Target.position);
             guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyAttack.AttackRoutine(guard.Target);
@@ -65,10 +86,12 @@ public class AttackState : BaseState
     {
         AIManager = EnemyAIManager.Instance;
         AIManager.onAttack += 1;
+        lostTimer = 0;
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Attack);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
         guard.EnemyPatrol.SetSpeed(5f);
+        guard.EnemyPatrol.ResumeMoving();
     }
 
     public override void OnStateExit()
