@@ -6,6 +6,8 @@ public class TabletController : Interactable
 {
     [SerializeField]
     static public List<NomTablet> nomPreuvesRamasse;
+    [SerializeField]
+    GameObject highlightVfx;
 
     public NomTablet nom = new NomTablet();
 
@@ -25,10 +27,16 @@ public class TabletController : Interactable
     {
     }
 
+    public void onGrab()
+    {
+        highlightVfx.SetActive(false);
+    }
+
     public void grabTablet()
     {
         nomPreuvesRamasse.Add(this.nom);
         this.gameObject.SetActive(false);
+        // Activation du son pickTablet
     }
 }
 public enum NomTablet
