@@ -54,7 +54,7 @@ public class VisibilityPointHandler : MonoBehaviour
     public List<VisibilityPoint> GetVisiblePointsFromTarget(Transform target, float viewAngle, float viewRadius, LayerMask obstacleMask)
     {
         List<VisibilityPoint> visiblePoints = new List<VisibilityPoint>();
-        Debug.Log("visibilityPoints : "+visibilityPoints.Length);
+
         
         foreach (var point in visibilityPoints)
         {
@@ -74,19 +74,13 @@ public class VisibilityPointHandler : MonoBehaviour
                 // float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
             if(Mathf.Abs(Vector3.SignedAngle(target.forward, targetDirection.normalized, Vector3.up)) < viewAngle)
             {
-                Debug.DrawRay(target.position, targetDirection, Color.magenta);
+                Debug.DrawRay(target.position, targetDirection, Color.magenta, 3);
                 Ray ray = new Ray(target.position, targetDirection);
                 RaycastHit hit;
-                RaycastHit hit2;
-                if(!Physics.Raycast(ray, out hit, Mathf.Infinity, (int) ~obstacleMask))
+                if (!Physics.Raycast(ray, out hit, targetDirection.magnitude, (int)obstacleMask))
                 {
-                    Debug.Log("OBSTACLE NOT HIT");
-                    if(Physics.Raycast(ray, out hit2, Mathf.Infinity, (int) ~LayerMask.GetMask("VisibilityPoint")))
-                    {
-                        Debug.Log("RAYCAST HIT : "+hit.transform.name);
-                    }
+                    visiblePoints.Add(point);
                 }
-                
             }
         }
         
