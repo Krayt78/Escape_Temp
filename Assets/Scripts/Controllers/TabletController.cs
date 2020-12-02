@@ -28,14 +28,7 @@ public class TabletController : Interactable
     public void grabTablet()
     {
         nomPreuvesRamasse.Add(this.nom);
-
-        StartCoroutine(destroyTablet());
-    }
-
-    public IEnumerator destroyTablet()
-    {
-        yield return null;
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
     }
 }
 public enum NomTablet
