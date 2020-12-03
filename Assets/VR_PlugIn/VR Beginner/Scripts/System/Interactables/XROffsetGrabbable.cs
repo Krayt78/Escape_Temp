@@ -32,6 +32,9 @@ public class XROffsetGrabbable : XRGrabInteractable
 
     protected override void OnSelectEnter(XRBaseInteractor interactor)
     {
+        //i change the layer so that the collider of the grabbed object doesnt collide with our own
+        ChangeLayer(20,interactor.gameObject);
+
         if (interactor is XRDirectInteractor)
         {
             SavedTransform savedTransform = new SavedTransform();
@@ -53,6 +56,9 @@ public class XROffsetGrabbable : XRGrabInteractable
 
     protected override void OnSelectExit(XRBaseInteractor interactor)
     {
+        //i change the layer back to default
+        ChangeLayer(0, interactor.gameObject);
+
         if (interactor is XRDirectInteractor)
         {
             SavedTransform savedTransform = null;
@@ -66,6 +72,11 @@ public class XROffsetGrabbable : XRGrabInteractable
         }
         
         base.OnSelectExit(interactor);
+    }
+
+    private void ChangeLayer(int layer, GameObject obj)
+    {
+        obj.layer = layer;
     }
 
     public override bool IsSelectableBy(XRBaseInteractor interactor)
