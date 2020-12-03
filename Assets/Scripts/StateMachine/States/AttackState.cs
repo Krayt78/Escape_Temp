@@ -59,16 +59,16 @@ public class AttackState : BaseState
             else
             {
                 guard.EnemyPatrol.ResumeMoving();
-                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
                 guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
-                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
                 lostTimer += Time.deltaTime;
             } 
             
         }
-
-        if(guard.Target)
+        else
         {
+            Debug.Log("Reset TIMER");
             lostTimer = 0;
             guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
             guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
