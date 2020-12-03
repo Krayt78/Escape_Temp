@@ -103,15 +103,15 @@ public class PlayerSoundEffectController : MonoBehaviour
 
         MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
 
-        StartPlayMusic(EventMusicSFX);
+        //StartPlayMusic(EventMusicSFX);
     }
 
     // Update is called once per frame
     void Update()
     {
-        musicTargetVolume = EnemyAIManager.Instance.GlobalAlertLevel / 10;
-        musicVolume = Mathf.MoveTowards(musicVolume, musicTargetVolume, Time.deltaTime);
-        ModulateMusicVolume(musicVolume);
+        //musicTargetVolume = EnemyAIManager.Instance.GlobalAlertLevel / 10;
+        //musicVolume = Mathf.MoveTowards(musicVolume, musicTargetVolume, Time.deltaTime);
+        //ModulateMusicVolume(musicVolume);
     }
 
     private void TryPlayFootstepSFX(float movementMagnitude)
