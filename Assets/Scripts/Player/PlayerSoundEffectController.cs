@@ -300,7 +300,8 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
-        FMODPlayerController.PlayOnShotSound(devolveSFXPath, rigTransform.transform.position);
+        FMODPlayerController.PlayOnShotSound(evolveSFXPath, rigTransform.transform.position);
+        //FMODPlayerController.PlayOnShotSound(devolveSFXPath, rigTransform.transform.position);
     }
 
     public void PlayEvolveToAlphaSFX()
