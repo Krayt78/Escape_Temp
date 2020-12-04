@@ -349,6 +349,7 @@ public class PlayerSoundEffectController : MonoBehaviour
             return;
 
         currentLevelFootstep = newLevel;
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("EvolutionState", newLevel);
     }
 
     private void OnDestroy()
