@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.01.00">
+<objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{f27d8c96-29c5-4015-83f4-424b547e5e1c}">
 		<property name="name">
 			<value>Scan</value>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{0a479719-9c2e-4b83-81b6-99976888a72d}">
+		<property name="volume">
+			<value>3</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{e850027d-5dd0-4b99-b627-14ddc1cee084}</destination>
 		</relationship>

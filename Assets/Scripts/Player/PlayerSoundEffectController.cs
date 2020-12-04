@@ -63,6 +63,8 @@ public class PlayerSoundEffectController : MonoBehaviour
     private float musicVolume = 0;
     private float musicTargetVolume = 0;
 
+    private Coroutine modulateWindCoroutine;
+    private bool modulatingWind = false;
 
     private void Awake()
     {
@@ -92,6 +94,8 @@ public class PlayerSoundEffectController : MonoBehaviour
         {
             playerMovement.OnMovement+=TryPlayFootstepSFX;
             playerMovement.OnLand+=PlayFootstepSFX;
+            playerMovement.OnLand += DeactivateFallingWind;
+            playerMovement.OnLeaveGround += ActivateFallingWind;
         }
 
         GetComponent<PlayerDNALevel>().OncurrentEvolutionLevelChanged += UpdateCurrentLevel;
@@ -116,7 +120,6 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void TryPlayFootstepSFX(float movementMagnitude)
     {
-        Debug.Log("TRY PLAY FOOT STEP");
         // || (movementMagnitude==0 && currentStepProgression!=0))
         currentStepProgression+=movementMagnitude;
         if(playerStateMachine.CurrentState != null && currentStepProgression >= ((BasePlayerState)playerStateMachine.CurrentState).StateStepPerSecond )
@@ -130,36 +133,44 @@ public class PlayerSoundEffectController : MonoBehaviour
         if (mute)
             return;
 
+        Vector3 rayOrigin = rigTransform.position;
+        rayOrigin.y += .2f;
+
+
         RaycastHit hitResult;
-        if(Physics.Raycast(new Ray(rigTransform.position, -Vector3.up), out hitResult, 3f))
+       // if (Physics.Raycast(new Ray(rigTransform.position, -Vector3.up), out hitResult, 3f))
+        if (Physics.Raycast(new Ray(rayOrigin, -Vector3.up), out hitResult, /*characterController.bounds.extents.y + */0.3f))
         {
-            Debug.Log(hitResult.transform.gameObject.name);
-            if (hitResult.transform.gameObject.name == "Terrain_Level1") 
+            Debug.Log("RAYCAST");
+
+            TerrainManager terrain = hitResult.transform.GetComponent<TerrainManager>();
+            if (terrain != null)
             {
-                int result = 
-                    hitResult.transform.GetComponent<TerrainManager>().
-                        GetTerrainTextureAtPosition(hitResult.transform.GetComponent<Terrain>(), hitResult.point);
+                int result =
+                    terrain.GetTerrainTextureAtPosition(terrain.GetComponent<Terrain>(), hitResult.point);
                 SetFootstepParam(result);
 
             }
-            switch(hitResult.collider.material.name)
+            else
             {
-                case "PMAT_Metal":
-                case "PMAT_Metal (Instance)":
-                    SetFootstepParam(5);
-                    break;
-                case "PMAT_Rock":
-                case "PMAT_Rock (Instance)":
-                    SetFootstepParam(1);
-                    break;
-                case "PMAT_Shroom":
-                case "PMAT_Shroom (Instance)":
-                    SetFootstepParam(3);
-                    break;
+                switch (hitResult.collider.material.name)
+                {
+                    case "PMAT_Metal":
+                    case "PMAT_Metal (Instance)":
+                        SetFootstepParam(5);
+                        break;
+                    case "PMAT_Rock":
+                    case "PMAT_Rock (Instance)":
+                        SetFootstepParam(1);
+                        break;
+                    case "PMAT_Shroom":
+                    case "PMAT_Shroom (Instance)":
+                        SetFootstepParam(3);
+                        break;
+                }
             }
         }
 
-        //FMODPlayerController.PlayOnShotSound(footstepPerLevelPath[currentLevelFootstep%4], rigTransform.transform.position);
 
         currentStepProgression=0;
     }
@@ -168,7 +179,7 @@ public class PlayerSoundEffectController : MonoBehaviour
     {
         eventFootstep.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         eventFootstep = FMODUnity.RuntimeManager.CreateInstance(footstepPath);
-        //eventFootstep.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
+
         eventFootstep.setParameterByName("Floor-Material", paramValue);
         eventFootstep.start();
     }
@@ -210,9 +221,6 @@ public class PlayerSoundEffectController : MonoBehaviour
     {
         if (mute)
             return;
-
-        grapplinSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        grapplinSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(grapplinThrowSFXPath, rigidbody);
     }
 
     public void StopGrapplinSFX()
@@ -232,9 +240,6 @@ public class PlayerSoundEffectController : MonoBehaviour
     {
         if (mute)
             return;
-
-        grapplinSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        //grapplinSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(grapplinRetractSFXPath, rigidbody);
     }
 
     public void PlayDartLaunchSFX()
@@ -371,5 +376,49 @@ public class PlayerSoundEffectController : MonoBehaviour
     public static void StopMusic()
     {
         playingMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    private void ActivateFallingWind()
+    {
+        if (modulatingWind)
+            StopCoroutine(modulateWindCoroutine);
+        modulateWindCoroutine = StartCoroutine(ModulateMovingInTheWind(1));
+    }
+
+    private void DeactivateFallingWind()
+    {
+        if (modulatingWind)
+            StopCoroutine(modulateWindCoroutine);
+        modulateWindCoroutine = StartCoroutine(ModulateMovingInTheWind(0));
+    }
+
+    private IEnumerator ModulateMovingInTheWind(float targetValue)
+    {
+        modulatingWind = true;
+
+        float currentValue = 0;
+        float startCurrentValue;
+
+        FMOD.Studio.EventInstance windInstance = AmbientSoundManager.Instance.windInstance;
+        FMOD.Studio.PLAYBACK_STATE windState;
+        AmbientSoundManager.Instance.windInstance.getPlaybackState(out windState);
+
+        if (windState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
+        {
+            windInstance.getParameterByName("MovingInTheWind", out currentValue);
+        }
+        startCurrentValue = currentValue;
+
+        float transitionDuration = 1;
+        float startTime = Time.time;
+        while(Time.time < startTime+transitionDuration)
+        {
+            currentValue = Mathf.Lerp(startCurrentValue, targetValue, (Time.time - startTime) / transitionDuration);
+            windInstance.setParameterByName("MovingInTheWind", currentValue);
+            yield return null;
+        }
+        windInstance.setParameterByName("MovingInTheWind", targetValue);
+
+        modulatingWind = false;
     }
 }

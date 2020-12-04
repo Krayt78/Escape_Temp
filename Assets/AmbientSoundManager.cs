@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AmbientSoundManager : MonoBehaviour
 {
+    private static AmbientSoundManager instance;
+    public static AmbientSoundManager Instance { get { return instance; } }
+
     [SerializeField] Transform PlayerToFollow;
     [SerializeField] Terrain currentTerrain;
 
@@ -13,7 +16,7 @@ public class AmbientSoundManager : MonoBehaviour
     [SerializeField] string secondLayerEvent;
     [SerializeField] string thirdLayerEvent;
 
-    private FMOD.Studio.EventInstance windInstance;
+    public FMOD.Studio.EventInstance windInstance;
     private FMOD.Studio.EventInstance firstLayerInstance;
     private FMOD.Studio.EventInstance secondLayerInstance;
     private FMOD.Studio.EventInstance thirdLayerInstance;
@@ -29,6 +32,17 @@ public class AmbientSoundManager : MonoBehaviour
     private float lastTimePlayedSecondLayer;
     [SerializeField] float thirdLayerDelayBetweenPlay=70;
     private float lastTimePlayedThirdLayer;
+
+
+    private void Awake()
+    {
+        if(instance)
+        {
+            Destroy(this);
+            return;
+        }
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()

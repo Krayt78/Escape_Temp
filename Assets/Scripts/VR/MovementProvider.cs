@@ -30,6 +30,7 @@ public class MovementProvider : LocomotionProvider
     private bool wasGrounded=false;
     public bool IsGrounded{get;private set;}
     public event Action OnLand = delegate{};
+    public event Action OnLeaveGround = delegate { };
     public event Action<float> OnMovement = delegate{};
 
 
@@ -121,7 +122,6 @@ public class MovementProvider : LocomotionProvider
         gravity.y *= Time.deltaTime;
         
         characterController.Move(gravity);
-        //xrRig.transform.position = characterController.transform.position;
 
     }
     
@@ -133,7 +133,10 @@ public class MovementProvider : LocomotionProvider
     }
 
     private void UpdateGrounded() {
-        if(Physics.Raycast(transform.position, -Vector3.up, characterController.bounds.extents.y + 0.1f))
+        Vector3 rayOrigin = m_XRRig.transform.position;
+        rayOrigin.y += .2f;
+
+        if (Physics.Raycast(rayOrigin, -Vector3.up, /*characterController.bounds.extents.y + */0.3f))
         {
             IsGrounded = true;
             if(!wasGrounded)
@@ -147,6 +150,7 @@ public class MovementProvider : LocomotionProvider
             IsGrounded = false;
             if (wasGrounded)
             {
+                OnLeaveGround();
                 wasGrounded = false;
             }
         }
