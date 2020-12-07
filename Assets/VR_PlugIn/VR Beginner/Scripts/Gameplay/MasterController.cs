@@ -30,7 +30,7 @@ public class MasterController : MonoBehaviour
     public bool DisableSetupForDebug = false;
     public Transform StartingPosition;
     public GameObject TeleporterParent;
-    
+
     [Header("Reference")]
     public XRRayInteractor RightTeleportInteractor;
     public XRRayInteractor LeftTeleportInteractor;
@@ -40,9 +40,9 @@ public class MasterController : MonoBehaviour
 
     public MagicTractorBeam RightTractorBeam;
     public MagicTractorBeam LeftTractorBeam;
-    
+
     XRRig m_Rig;
-    
+
     InputDevice m_LeftInputDevice;
     InputDevice m_RightInputDevice;
 
@@ -51,7 +51,7 @@ public class MasterController : MonoBehaviour
 
     HandPrefab m_RightHandPrefab;
     HandPrefab m_LeftHandPrefab;
-    
+
     XRReleaseController m_RightController;
     XRReleaseController m_LeftController;
 
@@ -63,21 +63,23 @@ public class MasterController : MonoBehaviour
 
     bool isGrapplinButtonPressed = false;
 
+    bool startButtonStillPress = false;
+
     LayerMask m_OriginalRightMask;
     LayerMask m_OriginalLeftMask;
-    
+
     List<XRBaseInteractable> m_InteractableCache = new List<XRBaseInteractable>(16);
 
     void Awake()
     {
         s_Instance = this;
         m_Rig = GetComponent<XRRig>();
-       
+
     }
 
     void OnEnable()
     {
-         InputDevices.deviceConnected += RegisterDevices;
+        InputDevices.deviceConnected += RegisterDevices;
     }
 
     void OnDisable()
@@ -98,25 +100,25 @@ public class MasterController : MonoBehaviour
 
         m_OriginalRightMask = RightTeleportInteractor.interactionLayerMask;
         m_OriginalLeftMask = LeftTeleportInteractor.interactionLayerMask;
-        
+
         if (!DisableSetupForDebug)
         {
             transform.position = StartingPosition.position;
             transform.rotation = StartingPosition.rotation;
-            
-            if(TeleporterParent != null)
+
+            if (TeleporterParent != null)
                 TeleporterParent.SetActive(false);
         }
-        
+
         InputDeviceCharacteristics leftTrackedControllerFilter = InputDeviceCharacteristics.HeldInHand | InputDeviceCharacteristics.Left;
         List<InputDevice> foundControllers = new List<InputDevice>();
-        
+
         InputDevices.GetDevicesWithCharacteristics(leftTrackedControllerFilter, foundControllers);
 
         if (foundControllers.Count > 0)
             m_LeftInputDevice = foundControllers[0];
-        
-        
+
+
         InputDeviceCharacteristics rightTrackedControllerFilter = InputDeviceCharacteristics.HeldInHand | InputDeviceCharacteristics.Right;
 
         InputDevices.GetDevicesWithCharacteristics(rightTrackedControllerFilter, foundControllers);
@@ -145,10 +147,10 @@ public class MasterController : MonoBehaviour
             }
         }
     }
-    
+
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
 
         CheckForInputs();
@@ -168,16 +170,14 @@ public class MasterController : MonoBehaviour
 
     void RightTeleportUpdate()
     {
-       
-
         //grapplin
         CheckIfGrapplinButtonUsed();
         //changeability
         CheckIfChangeAbilityButtonUsed();
         //Scan
         CheckIfScanButtonUsed();
-
-
+        // Start
+        CheckIfStartButtonPressed();
     }
 
     void CheckIfGrapplinButtonUsed()
@@ -193,10 +193,10 @@ public class MasterController : MonoBehaviour
                 isGrapplinButtonPressed = true;
                 GrappliLineRenderer.SetActive(true);
             }
-         
+
         }
 
-        if(buttonInput <.2f && isGrapplinButtonPressed)
+        if (buttonInput < .2f && isGrapplinButtonPressed)
         {
             playerInput.OnUseAbilityFunction();
 
@@ -204,6 +204,7 @@ public class MasterController : MonoBehaviour
             GrappliLineRenderer.SetActive(false);
         }
     }
+
     void CheckIfChangeAbilityButtonUsed()
     {
 
@@ -227,8 +228,22 @@ public class MasterController : MonoBehaviour
             Debug.Log("OnScanFunction");
             playerInput.OnScanFunction();
         }
+    }
 
+    void CheckIfStartButtonPressed()
+    {
+        bool isPressed;
+        m_LeftInputDevice.TryGetFeatureValue(CommonUsages.menuButton, out isPressed);
+        if (isPressed && !startButtonStillPress)
+        {
+            startButtonStillPress = true;
+            playerInput.OnOpenMenu();
+        }
 
+        if (!isPressed)
+        {
+            startButtonStillPress = false;
+        }
     }
 
     void CheckIfRightLaserUsed()
@@ -311,6 +326,4 @@ public class MasterController : MonoBehaviour
 
         m_LastFrameLeftEnable = m_LeftLineVisual.enabled;
     }
-
-    
 }

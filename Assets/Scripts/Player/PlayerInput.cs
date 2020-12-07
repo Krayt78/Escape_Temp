@@ -23,7 +23,9 @@ public class PlayerInput : MonoBehaviour
     public event Action OnVomit = delegate { }; //The player vomit to lose DNA to get smaller
     public event Action OnStopVomiting = delegate { };
 
+    public event Action OnStart = delegate { };
 
+    bool onStartProcessIsWorking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -104,6 +106,16 @@ public class PlayerInput : MonoBehaviour
     public void TryEvolveToBeta()
     {
         OnSwitchState(2);
+    }
+
+    public void OnOpenMenu()
+    {
+        if (!onStartProcessIsWorking)
+        {
+            onStartProcessIsWorking = true;
+            OnStart();
+            onStartProcessIsWorking = false;
+        }
     }
 
 
