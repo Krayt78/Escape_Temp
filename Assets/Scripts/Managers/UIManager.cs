@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     [SerializeField] GameObject player;
+    [SerializeField] Transform uiFocalPoint;
     [SerializeField] List<GameObject> listMenu;
     [SerializeField] Camera playerCamera;
     [SerializeField] float maxRangeDisplay;
@@ -38,12 +39,20 @@ public class UIManager : MonoBehaviour
         Vector3 cameraPosition = playerCamera.transform.position;
         
         ray = new Ray(cameraPosition, playerCamera.transform.forward);
-        float distance = maxRangeDisplay;
+        Debug.DrawRay(cameraPosition, playerCamera.transform.forward, Color.cyan, 5.0f);
+        float offset = 0;
         if (Physics.Raycast(ray, out hit, maxRangeDisplay))
         {
-            distance = hit.distance;
+            offset = 2 - hit.distance;
         }
 
-        menu.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z + distance);
+        menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
+        menu.transform.LookAt(cameraPosition);
+
+        Debug.Log("=======================================");
+        Debug.Log(menu.transform.position.x);
+        Debug.Log(menu.transform.position.y);
+        Debug.Log(menu.transform.position.z);
+        Debug.Log("=======================================");
     }
 }
