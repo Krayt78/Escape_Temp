@@ -48,11 +48,5 @@ public class UIManager : MonoBehaviour
 
         menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
         menu.transform.LookAt(cameraPosition);
-
-        Debug.Log("=======================================");
-        Debug.Log(menu.transform.position.x);
-        Debug.Log(menu.transform.position.y);
-        Debug.Log(menu.transform.position.z);
-        Debug.Log("=======================================");
     }
 }
