@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
+    [SerializeField] private GameObject gameOverMenu;
 
     [SerializeField] private List<GameObject> HandsController;
     [SerializeField] private List<GameObject> UIInteractors;
@@ -85,6 +86,12 @@ public class GameController : MonoBehaviour
     public void PlayerWon()
     {
         winMenu.SetActive(true);
+    }
+
+    public void PlayerLoose()
+    {
+        Time.timeScale = 0;
+        gameOverMenu.SetActive(true);
     }
 
     public void RestartScene()

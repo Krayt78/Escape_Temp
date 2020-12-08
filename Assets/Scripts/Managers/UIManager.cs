@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     private PlayerInput playerInput;
+    private PlayerDNALevel playerDNALevel;
     [SerializeField] GameObject player;
     [SerializeField] Transform uiFocalPoint;
     [SerializeField] List<GameObject> listMenu;
@@ -17,7 +18,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         playerInput = player.GetComponent<PlayerInput>();
-        playerInput.OnStart += OnStartEvent;
+        playerDNALevel = player.GetComponent<PlayerDNALevel>();
+        playerInput.OnStart += OnDisplayUIEvent;
+        playerDNALevel.OnDies += OnDisplayUIEvent;
     }
 
     // Update is called once per frame
@@ -26,26 +29,23 @@ public class UIManager : MonoBehaviour
         
     }
 
-    private void OnStartEvent()
-    {
-        foreach (var menu in listMenu)
-        {
-            moveUIInFrontOfPlayer(menu);
-        }
-    }
-
-    private void moveUIInFrontOfPlayer(GameObject menu)
+    private void OnDisplayUIEvent()
     {
         Vector3 cameraPosition = playerCamera.transform.position;
-        
         ray = new Ray(cameraPosition, playerCamera.transform.forward);
-        Debug.DrawRay(cameraPosition, playerCamera.transform.forward, Color.cyan, 5.0f);
         float offset = 0;
         if (Physics.Raycast(ray, out hit, maxRangeDisplay))
         {
             offset = 2 - hit.distance;
         }
+        foreach (var menu in listMenu)
+        {
+            moveUIInFrontOfPlayer(menu, cameraPosition, offset);
+        }
+    }
 
+    private void moveUIInFrontOfPlayer(GameObject menu, Vector3 cameraPosition, float offset)
+    {
         menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
         menu.transform.LookAt(cameraPosition);
     }
