@@ -85,7 +85,7 @@ public class Echo : MonoBehaviour
 
     IEnumerator DeactivateEnemyesXrayCoroutine(GameObject enemy)
     {
-       yield return new WaitForSeconds(Constants.ENNEMIES_XRAYED_STATE_DURATION);
+       yield return new WaitForSeconds(Constants.XRAYED_STATE_DURATION);
 
         // enemy.gameObject.layer = Constants.ENNEMIES_LAYER;
         enemy.gameObject.GetComponent<EchoReceiver>().SetXrayed(false);
@@ -109,10 +109,10 @@ public class Echo : MonoBehaviour
     {
         XrayedObjectsList.Add(other.gameObject);
         //  other.gameObject.layer = Constants.ENNEMIES_XRAYED_LAYER;
-
-        other.gameObject.GetComponent<EchoReceiver>().SetXrayed(true);
-
-
+        EchoReceiver receiver = other.GetComponentInChildren<EchoReceiver>();
+        if (receiver == null)
+            receiver = other.GetComponentInParent<EchoReceiver>();
+        receiver.SetXrayed(true);
         ///PLAY SCANNED
     }
 
@@ -125,7 +125,6 @@ public class Echo : MonoBehaviour
         }
         else
             Debug.LogError("XrayedObjectsList does not contain "+ other.gameObject.ToString()+" so he cant remove it.");
-
     }
 
     public bool CheckIfGrowing()
