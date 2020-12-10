@@ -29,9 +29,14 @@ public class AttackState : BaseState
 
         if (!guard.Target)
         {
-            if(lostTimer >= 5f)
+            if (guard.EnemyNavigation.targetLastSeenTransform == null)
             {
-                if(!AIManager.HasEnemySighted()){
+                return typeof(LostState);
+            }
+            else if (lostTimer >= 5f)
+            {
+                if (!AIManager.HasEnemySighted())
+                {
                     // if(!guard.EnemyPatrol.HasRandomWaypoints()){
                     //     if(guard.AlertLevel >= 50){
                     //         // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
@@ -45,7 +50,8 @@ public class AttackState : BaseState
                     // }
                     return typeof(LostState);
                 }
-                else{
+                else
+                {
                     return typeof(AlertedState);
                 }
                 // else
@@ -63,8 +69,8 @@ public class AttackState : BaseState
                 guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
                 guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
                 lostTimer += Time.deltaTime;
-            } 
-            
+            }
+
         }
         else
         {
