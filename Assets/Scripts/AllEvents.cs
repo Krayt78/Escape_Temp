@@ -125,3 +125,11 @@ public class LifeAmountChangedEvent : SDD.Events.Event
 public class MainMenuLoadedEvent : SDD.Events.Event
 {
 }
+
+public class OnHealthUpdatedEvent : SDD.Events.Event
+{
+    public float Health { get; set; }
+    public float MaxHealth { get; set; }
+}
+
+
