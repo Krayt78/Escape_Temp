@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class HandHealthBar : MonoBehaviour
 {
     [SerializeField] Image HealthImage;
-    [SerializeField] PlayerEntityController playerEntityController;
     private float HealthRedTreshold = .3f;
     public void SubscribeEvents()
     {
@@ -33,9 +32,23 @@ public class HandHealthBar : MonoBehaviour
         UnsubscribeEvents();
     }
 
+    //Can be optimised by using bool on the colours instead 
     private void OnHealthUpdated(OnHealthUpdatedEvent e)
     {
-        HealthImage.fillAmount = playerEntityController.lifePoint / PlayerEntityController.MAX_LIFE_POINT;
+        Debug.Log("health/max :" + e.Health +"/"+ e.MaxHealth);
+        float percentage = e.Health / e.MaxHealth;
+
+        if (percentage > 0)
+        {
+            HealthImage.fillAmount = e.Health / e.MaxHealth;
+            HealthImage.color = Color.green;
+        }
+        else
+        {
+            HealthImage.fillAmount = 1;
+            HealthImage.color = Color.red;
+        }
+       
     }
 
 }
