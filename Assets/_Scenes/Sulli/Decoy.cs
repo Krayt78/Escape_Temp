@@ -26,12 +26,10 @@ public class Decoy : MonoBehaviour
         noiseEmitter.rangeNoiseEmitted = noiseRange;
         decoySoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         decoySoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(decoyFXPath, decoyRigibody);
+        noiseEmitter.EmitNoise();
         Destroy(this.gameObject, timeBeforeExplosion);
     }
-    private void Update()
-    {
-        noiseEmitter.EmitNoise();
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer.Equals(11))

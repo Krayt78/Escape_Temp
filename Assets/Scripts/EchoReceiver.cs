@@ -22,7 +22,15 @@ public class EchoReceiver : MonoBehaviour
 
             foreach (GameObject gfx in Gfx)
             {
-                gfx.layer = Constants.ENNEMIES_XRAYED_LAYER;
+                Debug.Log(gfx.layer);
+                if (gfx.layer == Constants.ENNEMIES_LAYER)
+                {
+                    gfx.layer = Constants.ENNEMIES_XRAYED_LAYER;
+                }
+                else if (gfx.layer == Constants.FOOD_LAYER)
+                {
+                    gfx.layer = Constants.FOOD_XRAYED_LAYER;
+                }
             }
 
             isXrayed = true;
@@ -37,11 +45,19 @@ public class EchoReceiver : MonoBehaviour
 
     IEnumerator DeactivateXrayCoroutine()
     {
-        yield return new WaitForSeconds(Constants.ENNEMIES_XRAYED_STATE_DURATION);
+        yield return new WaitForSeconds(Constants.XRAYED_STATE_DURATION);
 
         foreach(GameObject gfx in Gfx)
         {
-            gfx.layer = Constants.ENNEMIES_LAYER;
+            if (gfx.layer == Constants.ENNEMIES_XRAYED_LAYER)
+            {
+                gfx.layer = Constants.ENNEMIES_LAYER;
+            }
+            else if (gfx.layer == Constants.FOOD_XRAYED_LAYER)
+            {
+                gfx.layer = Constants.FOOD_LAYER;
+            }
+            
         }
 
         isXrayed = false;

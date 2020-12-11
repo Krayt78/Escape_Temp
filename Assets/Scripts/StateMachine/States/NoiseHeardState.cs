@@ -64,6 +64,7 @@ public class NoiseHeardState : BaseState
     {
         Debug.Log("Entering NoiseHeard state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.NoiseHeard);
+        guard.SetAlertLevel(55);
         //manager.gameObject.GetComponent<GuardSoundEffectController>().Pl
         this.AIManager = EnemyAIManager.Instance;
     }
