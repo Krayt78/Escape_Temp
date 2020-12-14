@@ -4,28 +4,45 @@ using UnityEngine;
 
 public class DoorAnimatorController : MonoBehaviour
 {
-    [SerializeField] bool IsDoorFunctioning;
+    [SerializeField] bool IsDoorActivated;
+
+    Animator _animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _animator = GetComponent<Animator>();
     }
 
     public void ChangeDoorActivation(bool Activated)
     {
-        IsDoorFunctioning = Activated;
-
-        //for test purposes 
-        Destroy(gameObject);
+        IsDoorActivated = Activated;
     }
 
+
+    private void OpenDoor()
+    {
+        _animator.SetTrigger("Opening");
+    }
+
+    private void CloseDoor()
+    {
+        _animator.SetTrigger("Closing");
+    }
+
+    //no need to look at who triggers since the layer only reacts to the player
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(IsDoorActivated)
+         OpenDoor();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (IsDoorActivated)
+            CloseDoor();
+    }
 
     //On trigger open door via anim 
 }
