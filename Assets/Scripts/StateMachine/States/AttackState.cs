@@ -97,7 +97,6 @@ public class AttackState : BaseState
     public override void OnStateExit()
     {
         AIManager.onAttack -= 1;
-        Debug.Log("Exiting Attack state");
         guard.EnemyPatrol.SetSpeed(3.5f);
     }
 }

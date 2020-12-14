@@ -62,7 +62,6 @@ public class NoiseHeardState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering NoiseHeard state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.NoiseHeard);
         //manager.gameObject.GetComponent<GuardSoundEffectController>().Pl
         this.AIManager = EnemyAIManager.Instance;
@@ -70,6 +69,5 @@ public class NoiseHeardState : BaseState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting NoiseHeard state");
     }
 }
