@@ -161,7 +161,6 @@ public class PlayerCarateristicController : MonoBehaviour
 
     public void InitCharacterisctics(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise)
     {
-        Debug.Log("DEFENSE RATIO : " + newDefenseRatio);
         speed = newSpeed;
         size = newSize;
         sizeBounds = newSizeBounds;

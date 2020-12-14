@@ -60,7 +60,7 @@ public class PlayerInput : MonoBehaviour
             OnScan();
 
         if (Input.GetKeyDown(KeyCode.A))
-            //TryEvolveToAlpha();
+            TryEvolveToAlpha();
         if (Input.GetKeyDown(KeyCode.K))
         {
             SwitchState();

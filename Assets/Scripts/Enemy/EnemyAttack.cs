@@ -63,6 +63,7 @@ public class EnemyAttack : MonoBehaviour
         locked = true;
         GameObject loadingeffect = Instantiate(laserLoadingEffect, FiringPoint.transform);
         Destroy(loadingeffect, loadingeffect.GetComponent<VisualEffect>().GetFloat("Duration"));
+        GetComponent<GuardSoundEffectController>()?.PlayLoadingFireSFX();
         yield return new WaitForSeconds(0.75f);
         guard.EnemyAnimationController.TriggerAttackTurret();
         GameObject shootEffect= Instantiate(laserShootEffect, FiringPoint.transform);

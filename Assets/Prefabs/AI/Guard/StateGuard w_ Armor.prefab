@@ -590,6 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diesSFXPath: event:/Sentinel/Actions/Dies
   hurtSFXPath: event:/Sentinel/Actions/Hurt
+  loadingFireSFXPath: event:/Sentinel/Actions/LoadingShoot
   fireAttackSFXPath: event:/Sentinel/Actions/FireAttack
   projectileHitSmthSFXPath: event:/Sentinel/Actions/ProjectileHitSomething
   projectileMovementSFXPath: event:/Sentinel/Actions/ProjectileMovement
@@ -598,14 +599,21 @@ MonoBehaviour:
   ennemiScannedSFXPath: event:/Sentinel/Actions/EnnemiScanned
   motorAttackStateSFXPath: event:/Sentinel/Armor/MotorAttackState
   motorPatrolStateSFXPath: event:/Sentinel/Armor/MotorPatrolState
+  motorSightedStateSFXPath: event:/Sentinel/Armor/MotorSightedState
+  motorAlertedStateSFXPath: event:/Sentinel/Armor/MotorAlertedState
+  motorLostStateSFXPath: event:/Sentinel/Armor/MotorLostState
   motorStopSFXPath: event:/Sentinel/Armor/MotorStop
   enteringPatrolStateSFXPath: event:/Sentinel/States/PatrolState
+  enteringSightedStateSFXPath: event:/Sentinel/States/EnteringSightedState
+  enteringAlertedStateSFXPath: event:/Sentinel/States/EnteringAlertedState
   enteringAttackStateSFXPath: event:/Sentinel/States/EnteringAttackState
+  enteringLostStateSFXPath: event:/Sentinel/States/EnteringLostState
   patrolStateSFXPath: event:/Sentinel/States/EnteringPatrolState
+  sightedStateSFXPath: event:/Sentinel/States/SightedState
+  alertedStateSFXPath: event:/Sentinel/States/AlertedState
   attackStateSFXPath: event:/Sentinel/States/AttackState
-  playerLostSFXPath: event:/Sentinel/States/PlayerLost
-  searchingStateSFXPath: event:/Sentinel/States/SearchingState
-  spottedSmthSFXPath: event:/Sentinel/States/SpottedSomething
+  lostStateSFXPath: event:/Sentinel/States/LostState
+  stateTransition: event:/Sentinel/States/StateTransition
 --- !u!114 &1014100991790816346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,6 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetLastSeenPosition: {x: 0, y: 0, z: 0}
+  targetLastSeenTransform: {fileID: 0}
 --- !u!114 &8262919992601365204
 MonoBehaviour:
   m_ObjectHideFlags: 0
