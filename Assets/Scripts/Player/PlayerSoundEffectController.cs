@@ -274,7 +274,6 @@ public class PlayerSoundEffectController : MonoBehaviour
     {
         if (mute)
             return;
-
         FMODPlayerController.PlayOnShotSound(hurtSFXPath, rigTransform.transform.position);
     }
 
@@ -381,6 +380,8 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void ActivateFallingWind()
     {
+        if (!AmbientSoundManager.Instance)
+            return;
         if (modulatingWind)
             StopCoroutine(modulateWindCoroutine);
         modulateWindCoroutine = StartCoroutine(ModulateMovingInTheWind(1));
@@ -388,6 +389,8 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void DeactivateFallingWind()
     {
+        if (!AmbientSoundManager.Instance)
+            return;
         if (modulatingWind)
             StopCoroutine(modulateWindCoroutine);
         modulateWindCoroutine = StartCoroutine(ModulateMovingInTheWind(0));

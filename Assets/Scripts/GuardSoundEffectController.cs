@@ -12,6 +12,7 @@ public class GuardSoundEffectController : MonoBehaviour
     [Header("Actions")]
     [SerializeField] string diesSFXPath;
     [SerializeField] string hurtSFXPath;
+    [SerializeField] string loadingFireSFXPath;
     [SerializeField] string fireAttackSFXPath;
     [SerializeField] string projectileHitSmthSFXPath;
     [SerializeField] string projectileMovementSFXPath;
@@ -23,17 +24,25 @@ public class GuardSoundEffectController : MonoBehaviour
     [Header("Armor")]
     [SerializeField] string motorAttackStateSFXPath;
     [SerializeField] string motorPatrolStateSFXPath;
+    [SerializeField] string motorSightedStateSFXPath;
+    [SerializeField] string motorAlertedStateSFXPath; //=noiseHeard
+    [SerializeField] string motorLostStateSFXPath;
     [SerializeField] string motorStopSFXPath;
     [Space(10)]
 
     [Header("States")]
     [SerializeField] string enteringPatrolStateSFXPath;
+    [SerializeField] string enteringSightedStateSFXPath;
+    [SerializeField] string enteringAlertedStateSFXPath;
     [SerializeField] string enteringAttackStateSFXPath;
+    [SerializeField] string enteringLostStateSFXPath;
+
     [SerializeField] string patrolStateSFXPath;
+    [SerializeField] string sightedStateSFXPath;
+    [SerializeField] string alertedStateSFXPath; //=noiseHeard
     [SerializeField] string attackStateSFXPath;
-    [SerializeField] string playerLostSFXPath;
-    [SerializeField] string searchingStateSFXPath;
-    [SerializeField] string spottedSmthSFXPath;
+    [SerializeField] string lostStateSFXPath;
+    [SerializeField] string stateTransition;
 
 
     private bool dead = false;
@@ -70,6 +79,11 @@ public class GuardSoundEffectController : MonoBehaviour
         FMODPlayerController.PlayOnShotSound(hurtSFXPath, transform.position);
     }
 
+    public void PlayLoadingFireSFX()
+    {
+        FMODPlayerController.PlayOnShotSound(loadingFireSFXPath, transform.position);
+    }
+
     private void PlayFireAttackSFX()
     {
         FMODPlayerController.PlayOnShotSound(fireAttackSFXPath, transform.position);
@@ -102,6 +116,24 @@ public class GuardSoundEffectController : MonoBehaviour
         motorSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(motorPatrolStateSFXPath, rigidbody);
     }
 
+    private void PlayMotorSightedSFX()
+    {
+        motorSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        motorSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(motorSightedStateSFXPath, rigidbody);
+    }
+
+    private void PlayMotorAlertedSFX()
+    {
+        motorSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        motorSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(motorAlertedStateSFXPath, rigidbody);
+    }
+
+    private void PlayMotorLostSFX()
+    {
+        motorSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        motorSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(motorLostStateSFXPath, rigidbody);
+    }
+
     private void PlayMotorStopSFX()
     {
         motorSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -112,8 +144,29 @@ public class GuardSoundEffectController : MonoBehaviour
     {
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         guardSoundInstance = FMODPlayerController.PlaySoundInstance(enteringPatrolStateSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(stateTransition, transform.position);
 
-        Invoke("PlayPatrolStateSFX", GetEventLenghtInSeconds(guardSoundInstance));
+        Invoke("PlayPatrolStateSFX", FMODPlayerController.GetEventLenghtInSeconds(guardSoundInstance));
+        PlayMotorPatrolSFX();
+    }
+
+    public void PlayEnteringSightedStateSFX()
+    {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        guardSoundInstance = FMODPlayerController.PlaySoundInstance(enteringSightedStateSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(stateTransition, transform.position);
+
+        Invoke("PlaySightedStateSFX", FMODPlayerController.GetEventLenghtInSeconds(guardSoundInstance));
+        PlayMotorPatrolSFX();
+    }
+
+    public void PlayEnteringAlertedStateSFX()
+    {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        guardSoundInstance = FMODPlayerController.PlaySoundInstance(enteringAlertedStateSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(stateTransition, transform.position);
+
+        Invoke("PlayAlertedStateSFX", FMODPlayerController.GetEventLenghtInSeconds(guardSoundInstance));
         PlayMotorPatrolSFX();
     }
 
@@ -121,9 +174,19 @@ public class GuardSoundEffectController : MonoBehaviour
     {
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         guardSoundInstance = FMODPlayerController.PlaySoundInstance(enteringAttackStateSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(stateTransition, transform.position);
 
-        Invoke("PlayAttackStateSFX", GetEventLenghtInSeconds(guardSoundInstance));
-        PlayMotorAttackSFX();
+        Invoke("PlayAttackStateSFX", FMODPlayerController.GetEventLenghtInSeconds(guardSoundInstance));
+    }
+
+    public void PlayEnteringLostStateSFX()
+    {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        guardSoundInstance = FMODPlayerController.PlaySoundInstance(enteringLostStateSFXPath, transform.position);
+        FMODPlayerController.PlayOnShotSound(stateTransition, transform.position);
+
+        Invoke("PlayLostStateSFX", FMODPlayerController.GetEventLenghtInSeconds(guardSoundInstance));
+        PlayMotorPatrolSFX();
     }
 
     private void PlayPatrolStateSFX()
@@ -131,6 +194,26 @@ public class GuardSoundEffectController : MonoBehaviour
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         if (!dead)
             guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(patrolStateSFXPath, rigidbody);
+
+        PlayMotorPatrolSFX();
+    }
+
+    private void PlaySightedStateSFX()
+    {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        if (!dead)
+            guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(sightedStateSFXPath, rigidbody);
+
+        PlayMotorSightedSFX();
+    }
+
+    public void PlayAlertedStateSFX()
+    {
+        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        if (!dead)
+            guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(alertedStateSFXPath, rigidbody);
+
+        PlayMotorAlertedSFX();
     }
 
     private void PlayAttackStateSFX()
@@ -138,26 +221,17 @@ public class GuardSoundEffectController : MonoBehaviour
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         if(!dead)
             guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(attackStateSFXPath, rigidbody);
+
+        PlayMotorAttackSFX();
     }
 
-    public void PlayPlayerLostSFX()
+    public void PlayLostStateSFX()
     {
         guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        guardSoundInstance = FMODPlayerController.PlaySoundInstance(playerLostSFXPath, transform.position);
+        if (!dead)
+            guardSoundInstance = FMODPlayerController.PlaySoundInstance(lostStateSFXPath, transform.position);
 
-        Invoke("PlaySearchingStateSFX", GetEventLenghtInSeconds(guardSoundInstance));
-        PlayMotorPatrolSFX();
-    }
-
-    private void PlaySearchingStateSFX()
-    {
-        guardSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        guardSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(searchingStateSFXPath, rigidbody);
-    }
-
-    public void PlaySpottedSmthSFX()
-    {
-        FMODPlayerController.PlayOnShotSound(spottedSmthSFXPath, transform.position);
+        PlayMotorLostSFX();
     }
 
     public void StopGuardSoundInstance()
@@ -170,15 +244,6 @@ public class GuardSoundEffectController : MonoBehaviour
         motorSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
-    private float GetEventLenghtInSeconds(FMOD.Studio.EventInstance instance)
-    {
-        int length;
-        FMOD.Studio.EventDescription desc;
-        instance.getDescription(out desc);
-        desc.getLength(out length);
-
-        return ((float)length) / 1000.0f;
-    }
 
     private void OnDisable()
     {
