@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,22 +12,30 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<GameObject> listMenu;
     [SerializeField] Camera playerCamera;
     [SerializeField] float maxRangeDisplay;
+    private static UIManager instance = null;
+    public static UIManager Instance { get { return instance; } }
+    [SerializeField] private Canvas abilityImageCanvas;
     private RaycastHit hit;
     private Ray ray;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if(instance)
+        {
+            Destroy(this);
+            return;
+        }
+        instance = this;
+    }
     void Start()
     {
         playerInput = player.GetComponent<PlayerInput>();
         playerDNALevel = player.GetComponent<PlayerDNALevel>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        abilityImageCanvas.enabled = false;
     }
 
     private void OnDisplayUIEvent()
@@ -48,5 +57,15 @@ public class UIManager : MonoBehaviour
     {
         menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
         menu.transform.LookAt(cameraPosition);
+    }
+
+    public void ShowAbilityUI()
+    {
+        abilityImageCanvas.enabled = true;
+    }
+
+    public void HideAbilityUI()
+    {
+        abilityImageCanvas.enabled = false;
     }
 }
