@@ -7,7 +7,7 @@ public class FMODPlayerController
 {
     //Temp
     private static FMOD.Studio.EventInstance playingVoice;
-    public event Action OnVoiceFinishedPlaying = delegate{};
+    public static event Action OnVoiceFinishedPlaying = delegate{};
 
     public static void PlayOnShotSound(string path, Vector3 position)
     {
