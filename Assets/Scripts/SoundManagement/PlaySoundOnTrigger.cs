@@ -23,7 +23,6 @@ public class PlaySoundOnTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         played = true;
-        Debug.Log("Play : " + (eventPath + eventIndex));
         FMODPlayerController.PlayVoice(eventPath + eventIndex, transform.position);
     }
 }
