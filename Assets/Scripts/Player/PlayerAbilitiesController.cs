@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAbilitiesController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerAbilitiesController : MonoBehaviour
     private List<Ability> playerAbilities = new List<Ability>();
 
     private PlayerDNALevel playerDNALevel;
-
+    [SerializeField] private Image currentAbilityImage; //this field is used to change the ui of the current ability
     public event Action<Ability> OnAbilityChanged = delegate { };
 
     private void Awake()
@@ -41,7 +42,8 @@ public class PlayerAbilitiesController : MonoBehaviour
 
         CurrentAbility = playerAbilities[abilitiesIndex];
         CurrentAbility.enabled = true;
-
+        if (CurrentAbility.abilityUISprite != null)
+            currentAbilityImage.sprite = CurrentAbility.abilityUISprite;
         OnAbilityChanged(CurrentAbility);
 
         Debug.Log(CurrentAbility.name);

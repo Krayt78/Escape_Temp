@@ -7,6 +7,8 @@ public abstract class Ability : MonoBehaviour
     public PlayerDNALevel PlayerDNALevel { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
 
+    public Sprite abilityUISprite;
+
     [SerializeField] protected float dnaConsumed;
     public float DnaConsumed { get { return dnaConsumed; } }
 
