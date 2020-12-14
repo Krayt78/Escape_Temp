@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDD.Events;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -157,12 +158,16 @@ public class PlayerEntityController : EntityController
             lifePoint = 0;
             OnLifePointEqualZero();
         }
+
+        EventManager.Instance.Raise(new OnHealthUpdatedEvent() { Health = lifePoint, MaxHealth = MAX_LIFE_POINT });
     }
 
     public void GainHealth(float healing)
     {
         lifePoint = Mathf.Min(lifePoint + healing, MAX_LIFE_POINT);
         OnRegainHealth(healing);
+
+        EventManager.Instance.Raise(new OnHealthUpdatedEvent() {Health = lifePoint, MaxHealth = MAX_LIFE_POINT });
     }
 
     protected override void Dies()

@@ -65,6 +65,8 @@ public class MasterController : MonoBehaviour
 
     bool startButtonStillPress = false;
 
+    bool changeAbilityButtonStillPress = false;
+
     LayerMask m_OriginalRightMask;
     LayerMask m_OriginalLeftMask;
 
@@ -208,13 +210,18 @@ public class MasterController : MonoBehaviour
     void CheckIfChangeAbilityButtonUsed()
     {
 
-        bool buttonInput;
-        m_RightInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out buttonInput);
+        bool isPressed;
+        m_RightInputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out isPressed);
 
-        if (buttonInput)
+        if (isPressed && !changeAbilityButtonStillPress)
         {
-            Debug.Log("OnChangeAbilityFunction");
+            changeAbilityButtonStillPress = true;
             playerInput.OnChangeAbilityFunction();
+        }
+
+        if (!isPressed)
+        {
+            changeAbilityButtonStillPress = false;
         }
     }
     void CheckIfScanButtonUsed()

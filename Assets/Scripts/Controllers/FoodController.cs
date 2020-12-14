@@ -19,9 +19,10 @@ public class FoodController : Interactable
 
     public void DestroyFood()
     {
+        Debug.Log("Eat");
         //Destroy(gameObject);
-        Invoke("ReactiveFood", repopTime);
         gameObject.SetActive(false);
+        Invoke("ReactiveFood", repopTime);
     }
 
     private void ReactiveFood()

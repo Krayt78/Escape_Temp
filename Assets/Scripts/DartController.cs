@@ -23,6 +23,9 @@ public class DartController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        // Optimisable par tags
+
         Debug.Log("Collide with : " + other.gameObject.name);
         if (other.gameObject.GetComponentInChildren<PlayerEntityController>() || other.gameObject.GetComponentInParent<PlayerEntityController>())
             return;
@@ -32,6 +35,14 @@ public class DartController : MonoBehaviour
             other.GetComponentInChildren<EntityController>()?.TakeDamages(damages);
             other.GetComponentInParent<EntityController>()?.TakeDamages(damages);
             Destroy(gameObject);
+        }
+
+
+        //Interactible objects with dart
+
+        if (other.tag.Equals("Dart_Interactible"))
+        {
+
         }
     }
 
