@@ -38,7 +38,7 @@ public class FMODPlayerController
         sound.release();
     }
 
-    public static void PlayVoice(string path, Vector3 pos)
+    public static float PlayVoice(string path, Vector3 pos)
     {
         //if (playingVoice.isValid())
         playingVoice.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
@@ -46,7 +46,7 @@ public class FMODPlayerController
         playingVoice = PlaySoundInstance(path, pos);
 
         float eventLength = GetEventLenghtInSeconds(playingVoice);
-        Invoke("CallOnVoiceFinishedPlaying", eventLength);
+        return eventLength;
     }
 
     private void CallOnVoiceFinishedPlaying()
