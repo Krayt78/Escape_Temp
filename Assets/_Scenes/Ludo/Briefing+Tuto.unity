@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a23f5c328a53e847b6a51c9190c7d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDoor: {fileID: 3761121669987502339}
+  myDoor: {fileID: 0}
   ActivatedConsoleMat: {fileID: 2100000, guid: 564e563b2f382c04fa3eac379d5d59df, type: 2}
   DeactivatedConsoleMat: {fileID: 2100000, guid: 0fc597b9e32cdad4eaa982ddca60f031,
     type: 2}
@@ -1612,19 +1612,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3761121669987502336}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3761121669987502339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3761121669987502337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c81b94954f1ab439585b286061e121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDoorFunctioning: 0
 --- !u!4 &5458850446087189425
 Transform:
   m_ObjectHideFlags: 0

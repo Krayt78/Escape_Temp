@@ -34,6 +34,7 @@ public class DoorAnimatorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("collide");
         if(IsDoorActivated)
          OpenDoor();
     }
