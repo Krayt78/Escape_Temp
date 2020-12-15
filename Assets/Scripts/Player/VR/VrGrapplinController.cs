@@ -16,7 +16,6 @@ public class VrGrapplinController : Ability
 
     public LineRenderer lrRope;
     private int nbPoints = 2;
-    //private Vector3[] positions = new Vector3[50];
 
     public Transform grapplinPosition;
 
@@ -41,13 +40,7 @@ public class VrGrapplinController : Ability
 
     bool canUseGrapplin = true;
 
-
-    //Rigidbody rigibody;
     private Vector3 destination = new Vector3();
-
-    Coroutine MoveCoroutine;
-
-    
 
     [SerializeField]
     GameObject grapplinProjectile;
@@ -70,29 +63,15 @@ public class VrGrapplinController : Ability
         base.Start();
         dnaConsumed = 0.03f;
     }
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     private void FixedUpdate()
     {
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
     }
-    private void CheckPosition()
-    {
-        if (Landed())
-        {
-            Debug.LogWarning("We landed");
-            canUseGrapplin = true;
-            characterController.enabled = true;
-        }
-    }
 
     private bool Landed()
     {
-        return Vector3.Distance(movingPlayer.position, destination) < 3f;
+        return Vector3.Distance(movingPlayer.position, destination) < 1.5f;
     }
 
 
@@ -118,10 +97,7 @@ public class VrGrapplinController : Ability
             time += Time.deltaTime;
             yield return null;
         }
-        playerSoundEffectController.StopGrapplinSFX();
-        movingPlayer.position = destination;
-
-        
+        playerSoundEffectController.StopGrapplinSFX(); 
     }
 
 
@@ -196,11 +172,9 @@ public class VrGrapplinController : Ability
             grp = Instantiate(grapplinProjectile, grapplinPosition.position, new Quaternion(), movingPlayer);
             grp.transform.LookAt(destination);
             grp.transform.parent = null;
-             StartCoroutine(LaunchGrapplin(grp));
+            StartCoroutine(LaunchGrapplin(grp));
 
             //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
-
-
         }
     }
 }
