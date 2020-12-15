@@ -95,7 +95,6 @@ public class AlertedState : BaseState
     public override void OnStateEnter(StateMachine manager)
     {
         lostTimer = 0;
-        Debug.Log("Entering Alerted state");
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);

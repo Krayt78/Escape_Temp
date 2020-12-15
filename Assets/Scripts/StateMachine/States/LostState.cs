@@ -84,7 +84,6 @@ public class LostState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Lost state");
         timer = 0f;
         this.AIManager = EnemyAIManager.Instance;
         guard.EnemyPatrol.ResumeMoving();
@@ -106,8 +105,6 @@ public class LostState : BaseState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Lost state");
-        Debug.Log("Time since state lost enter : "+timer);
         if(guard.EnemyPatrol.HasRandomWaypoints()) guard.EnemyPatrol.RestoreWaypoints();
         guard.EnemyPatrol.SetSpeed(3.5f);
     }

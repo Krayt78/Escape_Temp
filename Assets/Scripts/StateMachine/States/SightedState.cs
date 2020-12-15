@@ -83,7 +83,6 @@ public class SightedState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Sighted state");
         lostTimer = 0;
         sightedTimer = 0;
         AIManager = EnemyAIManager.Instance;
@@ -95,7 +94,6 @@ public class SightedState : BaseState
     }
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Sighted state");
     }
 
     private float AlertLevel()
