@@ -24,10 +24,7 @@ public class Tutorial_Scripted : MonoBehaviour
     {
 
     }
-    private void CompleteGrapplinTutorial()
-    {
 
-    }
     private void CompleteDartTutorial()
     {
 
