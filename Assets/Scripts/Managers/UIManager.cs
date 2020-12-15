@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour
     public void SubscribeEvents()
     {
         EventManager.Instance.AddListener<OnTabletGrabEvent>(onTabletGrab);
-
     }
 
     public void UnsubscribeEvents()
@@ -53,6 +52,16 @@ public class UIManager : MonoBehaviour
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
         abilityImageCanvas.enabled = false;
+
+        HideAllUi();
+    }
+
+    private void HideAllUi()
+    {
+        foreach (var menu in listMenu)
+        {
+            menu.SetActive(false);
+        }
     }
 
     private void OnDisplayUIEvent()
