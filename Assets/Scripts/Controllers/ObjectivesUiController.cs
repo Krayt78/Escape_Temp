@@ -32,6 +32,7 @@ public class ObjectivesUiController : MonoBehaviour
 
     public void onTabletGrab(OnTabletGrabEvent e)
     {
+        Debug.Log(e.nom);
         if (e.nom == NomTablet.tabletJungle)
         {
             checkJungleObjectif.SetActive(true);
