@@ -40,7 +40,7 @@ public class PlayerEvolutionStateMachine : StateMachine
         if (playerCarateristic != null)
         {
             BasePlayerState currentPlayerState = (BasePlayerState)CurrentState;
-            Debug.Log("BASE PLAYER STATE DEFENSE : " + currentPlayerState.StateDefenseRatio);
+
             playerCarateristic.InitCharacterisctics(
                 currentPlayerState.StateSpeed,
                 currentPlayerState.StateSize,

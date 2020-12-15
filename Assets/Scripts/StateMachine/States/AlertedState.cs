@@ -98,7 +98,7 @@ public class AlertedState : BaseState
         this.AIManager = EnemyAIManager.Instance;
         AIManager.AddEnemyOnAlert(guard);
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
-        manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAlertedStateSFX();
         guard.EnemyPatrol.ResumeMoving();
     }
     

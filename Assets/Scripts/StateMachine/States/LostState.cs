@@ -92,7 +92,7 @@ public class LostState : BaseState
         //guard.EnemyEyeMovement.MoveEyeRandomly();
         guard.EnemyPatrol.SetSpeed(1.5f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
-        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayPlayerLostSFX();
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringLostStateSFX();
         if(guard.AlertLevel >= 50){
             guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
         }

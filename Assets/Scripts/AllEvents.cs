@@ -132,4 +132,7 @@ public class OnHealthUpdatedEvent : SDD.Events.Event
     public float MaxHealth { get; set; }
 }
 
-
+public class OnTabletGrabEvent : SDD.Events.Event
+{
+    public NomTablet nom { get; set; }
+}

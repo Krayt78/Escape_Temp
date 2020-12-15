@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SDD.Events;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public class TabletController : Interactable
         nomPreuvesRamasse.Add(this.nom);
         this.gameObject.SetActive(false);
         FMODPlayerController.PlayOnShotSound(tabletPickUpSoundPath, transform.position);
+        EventManager.Instance.Raise(new OnTabletGrabEvent() { nom = this.nom });
     }
 }
 public enum NomTablet

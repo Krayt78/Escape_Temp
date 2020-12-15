@@ -89,7 +89,7 @@ public class SightedState : BaseState
         AIManager.AddEnemyOnSight(guard);
         guard.SetAlertLevel(guard.AlertLevel + 1f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Sight);
-        manager.gameObject.GetComponent<GuardSoundEffectController>().PlaySpottedSmthSFX();
+        manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringSightedStateSFX();
         guard.EnemyPatrol.StopMoving();
     }
     public override void OnStateExit()

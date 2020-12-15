@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlaySoundOnTrigger : MonoBehaviour
 {
@@ -8,12 +9,13 @@ public class PlaySoundOnTrigger : MonoBehaviour
     public int eventIndex = 0;
     public float delay = 0f;
     public bool played = false;
+    [SerializeField] public bool shouldGoNextScene;
 
     private void OnTriggerEnter(Collider other)
     {
         if (played)
             return;
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             StartCoroutine(PlayWithDelayCoroutine());
         }
@@ -23,7 +25,18 @@ public class PlaySoundOnTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         played = true;
-        Debug.Log("Play : " + (eventPath + eventIndex));
-        FMODPlayerController.PlayVoice(eventPath + eventIndex, transform.position);
+        float lengthSound = FMODPlayerController.PlayVoice(eventPath + eventIndex, transform.position);
+        if (shouldGoNextScene)
+        {
+            StartCoroutine(GoNextSceneCoroutine(lengthSound));
+        }
+    }
+
+    public IEnumerator GoNextSceneCoroutine(float delayStart)
+    {
+        // On passe a la scène suivante une seconde après la fin du son
+        yield return new WaitForSeconds(delayStart + 1);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
