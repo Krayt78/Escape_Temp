@@ -38,9 +38,9 @@ public class TabletController : Interactable
     public void grabTablet()
     {
         nomPreuvesRamasse.Add(this.nom);
-        this.gameObject.SetActive(false);
-        FMODPlayerController.PlayOnShotSound(tabletPickUpSoundPath, transform.position);
         EventManager.Instance.Raise(new OnTabletGrabEvent() { nom = this.nom });
+        FMODPlayerController.PlayOnShotSound(tabletPickUpSoundPath, transform.position);
+        this.gameObject.SetActive(false);
     }
 }
 public enum NomTablet

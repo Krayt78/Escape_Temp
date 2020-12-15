@@ -28,13 +28,15 @@ public class Decoy : MonoBehaviour
         decoySoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(decoyFXPath, decoyRigibody);
         noiseEmitter.EmitNoise();
         Destroy(this.gameObject, timeBeforeExplosion);
+        decoyAnimations.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer.Equals(11))
         {
-            Debug.Log("sentinel");
+           
+            decoyAnimations.enabled = true;
             
         }
     }

@@ -13,12 +13,26 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<GameObject> listMenu;
     [SerializeField] Camera playerCamera;
     [SerializeField] float maxRangeDisplay;
+
+    [SerializeField] GameObject checkJungleObjectif;
+    [SerializeField] GameObject checkCoralObjectif;
+    [SerializeField] GameObject checkHQObjectif;
+
     private static UIManager instance = null;
     public static UIManager Instance { get { return instance; } }
     [SerializeField] private Canvas abilityImageCanvas;
     private RaycastHit hit;
     private Ray ray;
 
+    public void SubscribeEvents()
+    {
+        EventManager.Instance.AddListener<OnTabletGrabEvent>(onTabletGrab);
+    }
+
+    public void UnsubscribeEvents()
+    {
+        EventManager.Instance.RemoveListener<OnTabletGrabEvent>(onTabletGrab);
+    }
 
     private void Awake()
     {
@@ -38,6 +52,16 @@ public class UIManager : MonoBehaviour
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
         abilityImageCanvas.enabled = false;
+
+        HideAllUi();
+    }
+
+    private void HideAllUi()
+    {
+        foreach (var menu in listMenu)
+        {
+            menu.SetActive(false);
+        }
     }
 
     private void OnDisplayUIEvent()
@@ -69,5 +93,24 @@ public class UIManager : MonoBehaviour
     public void HideAbilityUI()
     {
         abilityImageCanvas.enabled = false;
+    }
+
+    public void onTabletGrab(OnTabletGrabEvent e)
+    {
+        Debug.Log("=======================================");
+        Debug.Log(e.nom);
+        Debug.Log("=======================================");
+        if (e.nom == NomTablet.tabletJungle)
+        {
+            checkJungleObjectif.SetActive(true);
+        }
+        else if (e.nom == NomTablet.tabletCorail)
+        {
+            checkCoralObjectif.SetActive(true);
+        }
+        else if (e.nom == NomTablet.tabletHQ)
+        {
+            checkHQObjectif.SetActive(true);
+        }
     }
 }
