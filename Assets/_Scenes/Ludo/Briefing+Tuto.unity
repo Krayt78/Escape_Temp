@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -332,13 +332,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811231237}
-  m_LocalRotation: {x: 0.28026354, y: -0.6574727, z: 0.28938994, w: 0.6367381}
-  m_LocalPosition: {x: 11.87, y: -0.22, z: -0.18}
+  m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 11.914, y: -0.188, z: 0.06}
   m_LocalScale: {x: 3.2036, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 939199559}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 47.514004, y: -91.836006, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 90, z: 0}
 --- !u!65 &811231239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2341,6 +2341,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8501686167037114225, guid: 80f1e5e7b8e693642a018a569b01135a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f1e5e7b8e693642a018a569b01135a, type: 3}
 --- !u!114 &3761121669987502344 stripped
@@ -2379,6 +2384,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 869054731623115379, guid: ecaad92b84a47e347a15adda1f19a164,
+        type: 3}
+      propertyPath: IsDoorActivated
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2044079267536251917, guid: ecaad92b84a47e347a15adda1f19a164,
         type: 3}
       propertyPath: m_Name
@@ -2439,5 +2449,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1446911865063095690, guid: ecaad92b84a47e347a15adda1f19a164, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ecaad92b84a47e347a15adda1f19a164, type: 3}
