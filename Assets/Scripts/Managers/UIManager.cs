@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private static UIManager instance = null;
     public static UIManager Instance { get { return instance; } }
     [SerializeField] private Canvas abilityImageCanvas;
+    [SerializeField] Transform abilityImageParent;
     private RaycastHit hit;
     private Ray ray;
 
@@ -51,9 +52,27 @@ public class UIManager : MonoBehaviour
         playerDNALevel = player.GetComponent<PlayerDNALevel>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
-        abilityImageCanvas.enabled = false;
+        abilityImageCanvas.enabled = true;
 
         HideAllUi();
+    }
+
+    private void Update()
+    {
+        //Vector3 targetDirection = playerCamera.transform.position - abilityImageParent.position;
+        Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
+        float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
+        //Debug.Log("angle : "+angle);
+        if(targetDir.magnitude < 0.6 && angle < 45)
+        {
+            // Debug.Log("SHOW ABILITY UI");
+            ShowAbilityUI();
+        }
+        else
+        {
+            // Debug.Log("HIDE ABILITY UI");
+            HideAbilityUI();
+        }
     }
 
     private void HideAllUi()
