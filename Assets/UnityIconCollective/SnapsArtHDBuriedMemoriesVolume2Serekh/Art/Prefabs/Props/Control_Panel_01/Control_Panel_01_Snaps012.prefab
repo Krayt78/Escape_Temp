@@ -9,11 +9,24 @@ MeshCollider:
   m_GameObject: {fileID: 4741796441118883476}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
+  m_Enabled: 0
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+--- !u!65 &6645160536927755812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741796441118883476}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7365255, y: 1.4752136, z: 0.9977887}
+  m_Center: {x: 0, y: 0.73760575, z: -0.13149366}
 --- !u!1001 &4741796441118980148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,7 +36,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
       propertyPath: m_Name
-      value: Control_Panel_01
+      value: Control_Panel_01_Snaps012
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
       propertyPath: m_LocalPosition.x

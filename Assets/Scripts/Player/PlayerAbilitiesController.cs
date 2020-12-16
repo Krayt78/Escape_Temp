@@ -8,11 +8,14 @@ public class PlayerAbilitiesController : MonoBehaviour
 {
     private int abilitiesIndex = 0;
     [SerializeField] public Ability CurrentAbility { get; private set; }
+
     private List<Ability> playerAbilities = new List<Ability>();
 
     private PlayerDNALevel playerDNALevel;
     [SerializeField] private Image currentAbilityImage; //this field is used to change the ui of the current ability
     public event Action<Ability> OnAbilityChanged = delegate { };
+
+    public bool isAbilityActivated = true;
 
     private void Awake()
     {
@@ -25,7 +28,7 @@ public class PlayerAbilitiesController : MonoBehaviour
         {
             Debug.LogError("no abilities");
         }
-        else if(CurrentAbility.DnaConsumed <= playerDNALevel.DnaLevel && CurrentAbility.CanUseAbility())
+        else if(CurrentAbility.DnaConsumed <= playerDNALevel.DnaLevel && CurrentAbility.CanUseAbility() && isAbilityActivated)
         {
             CurrentAbility.UseAbility();
             playerDNALevel.LoseDnaLevel(CurrentAbility.DnaConsumed);
