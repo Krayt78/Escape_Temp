@@ -39,6 +39,9 @@ public class AbilityGFXController : MonoBehaviour
             currentGFX = Instantiate(dartLauncherPrefab, transform);
             currentGFX.transform.localPosition = Vector3.zero;
             currentGFX.transform.localRotation = Quaternion.identity;
+        }else if (newAbility.GetType() == typeof(DecoyController))
+        {
+            Destroy(currentGFX);
         }
     }
 }

@@ -29,7 +29,7 @@ public class DartAbilityController : Ability
         
     }
 
-    public override void LevelChanged(int level)
+    public override void AssimilateFood(int level)
     {
         if (added)
             return;

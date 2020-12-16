@@ -173,20 +173,6 @@ public class Grapplin : Ability
         CreateBezier(destination, bezierControlPoint);
     }
 
-    public override void LevelChanged(int level)
-    {
-        
-        if (level == levelToActivate)
-        {
-            Debug.Log("We add ability");
-            playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
-        }else if(level == levelToDeActivate)
-        {
-            Debug.Log("We remove ability");
-            playerAbilitiesController.RemoveAbility(this);
-        }
-    }
-
     public override bool CanUseAbility()
     {
         return canUseGrapplin;

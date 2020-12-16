@@ -7,8 +7,6 @@ public class VrGrapplinController : Ability
     //Temp
     [SerializeField] Transform movingPlayer;
 
-    private PlayerAbilitiesController playerAbilitiesController;
-
     private PlayerSoundEffectController playerSoundEffectController;
 
     private PlayerMovement playerMovement;
@@ -21,10 +19,6 @@ public class VrGrapplinController : Ability
 
     [SerializeField]
     private Transform playerCamera;
-    //[SerializeField]
-    private int levelToActivate = 1;
-    //[SerializeField]
-    private int levelToDeActivate = 3;
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
@@ -52,8 +46,6 @@ public class VrGrapplinController : Ability
         base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
-
-        playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         characterController = GetComponentInChildren<CharacterController>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
@@ -122,22 +114,6 @@ public class VrGrapplinController : Ability
         playerSoundEffectController.StopGrapplinSFX();
         playerSoundEffectController.PlayGrapplinStickFX(grp.transform.position);
         StartCoroutine(MovePlayer(hit.point, duration));
-    }
-
-    public override void LevelChanged(int level)
-    {
-        Debug.Log("Level changed : " + level);
-        if (level == levelToActivate)
-        {
-            Debug.Log("We add ability");
-            playerAbilitiesController.AddAbility(this);
-        }
-        else if (level == levelToDeActivate)
-        {
-            Debug.Log("We remove ability");
-            playerAbilitiesController.RemoveAbility(this);
-        }
-        playerAbilitiesController.AddAbility(this);
     }
 
     public override bool CanUseAbility()
