@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class FoodController : Interactable
 {
+    private enum AbilityToUnlock 
+    { 
+        None, 
+        Grapplin, 
+        Decoy, 
+        Dart 
+    };
+
     [SerializeField] private float foodValue = 1;
 
-    [SerializeField] private string abilityUnlockable = "";
+    [SerializeField] private AbilityToUnlock abilityToUnlock = new AbilityToUnlock();
     public float FoodValue { get { return foodValue; } }
     [SerializeField] float repopTime = 100f;
 
+
+    public  void Start()
+    {
+        Debug.Log(abilityToUnlock.ToString());
+    }
     public override void Use(GameObject user)
     {
         if(user.CompareTag("Player"))
         {
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.EatDNA(foodValue);
-            user.GetComponentInChildren<PlayerMouthController>().playerEntityController.AssimilateAbility(abilityUnlockable);
+            user.GetComponentInChildren<PlayerMouthController>().playerEntityController.AssimilateAbility(abilityToUnlock.ToString());
             DestroyFood();
         }
     }
@@ -31,6 +44,7 @@ public class FoodController : Interactable
     private void ReactiveFood()
     {
         gameObject.SetActive(true);
-    }
 
+    }
 }
+
