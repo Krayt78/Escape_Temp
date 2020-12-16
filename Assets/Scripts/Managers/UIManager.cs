@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         playerDNALevel = player.GetComponent<PlayerDNALevel>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
-        abilityImageCanvas.enabled = true;
+        abilityImageCanvas.enabled = false;
 
         HideAllUi();
     }
