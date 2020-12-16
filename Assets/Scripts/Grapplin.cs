@@ -227,4 +227,9 @@ public class Grapplin : Ability
 
         }
     }
+
+    public override void AssimilateFood(string abilityToAssimilate, float assimilationRate)
+    {
+        throw new NotImplementedException();
+    }
 }

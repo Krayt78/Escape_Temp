@@ -26,7 +26,7 @@ public class PlayerDNALevel : MonoBehaviour
     private int minEvolutionLevel = 0, maxEvolutionLevel = 3;
 
     public event Action<float> OnDnaLevelChanged = delegate { };
-    public event Action<float> OnFoodEaten = delegate { };
+    public event Action<string,float> OnFoodAssimilation = delegate { };
     public event Action<int> OncurrentEvolutionLevelChanged = delegate { };
     public event Action OnDies = delegate { };
 
@@ -65,6 +65,7 @@ public class PlayerDNALevel : MonoBehaviour
     private void Start()
     {
         playerEntityController.OnEatDna += EatDNA;
+        playerEntityController.OnAssimilateAbility += AssimilateAbility;
         playerEntityController.OnLifePointEqualZero += GoCriticalState;
         playerInput.OnSwitchState += SwitchState;
         playerInput.OnEvolveToAlpha += GoAlpha;
@@ -81,11 +82,13 @@ public class PlayerDNALevel : MonoBehaviour
     private void EatDNA(float value)
     {
         dnaLevel = Mathf.Clamp01(dnaLevel+ value * playerCaracteristicController.dnaAbsorbedRatio);
-        float assimilationRate = UnityEngine.Random.Range(0.1f, 0.35f);
-        OnFoodEaten(assimilationRate);
         OnDnaLevelChanged(dnaLevel);
     }
-
+    private void AssimilateAbility(string abilityToAssimilate)
+    {
+        float assimilationRate = UnityEngine.Random.Range(0.1f, 0.35f);
+        OnFoodAssimilation(abilityToAssimilate, assimilationRate);
+    }
     //private void TakeDamages(float value)
     //{
     //    LoseDnaLevel(value* damagesToDnaRatio[CurrentEvolutionLevel]);

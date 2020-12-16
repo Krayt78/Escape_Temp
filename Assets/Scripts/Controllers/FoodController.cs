@@ -5,6 +5,8 @@ using UnityEngine;
 public class FoodController : Interactable
 {
     [SerializeField] private float foodValue = 1;
+
+    [SerializeField] private string abilityUnlockable = "";
     public float FoodValue { get { return foodValue; } }
     [SerializeField] float repopTime = 100f;
 
@@ -13,6 +15,7 @@ public class FoodController : Interactable
         if(user.CompareTag("Player"))
         {
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.EatDNA(foodValue);
+            user.GetComponentInChildren<PlayerMouthController>().playerEntityController.AssimilateAbility(abilityUnlockable);
             DestroyFood();
         }
     }

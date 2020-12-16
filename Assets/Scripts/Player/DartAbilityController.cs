@@ -15,27 +15,11 @@ public class DartAbilityController : Ability
 
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        GetComponent<PlayerAbilitiesController>().AddAbility(this);
-        added = true;
+        base.Start();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
         dnaConsumed = 0.06f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void AssimilateFood(int level)
-    {
-        if (added)
-            return;
-
-        GetComponent<PlayerAbilitiesController>().AddAbility(this);
-        added = true;
     }
 
     public override bool CanUseAbility()
@@ -52,5 +36,23 @@ public class DartAbilityController : Ability
         lastTimeFired = Time.time;
 
         playerSoundEffectController.PlayDartLaunchSFX();
+    }
+
+    public override void AssimilateFood(string ability,float assimilationRate)
+    {
+        if (ability != "Dart")
+            return;
+
+        if (assimilationProcess >= 1)
+        {
+            assimilationProcess = 1;
+           // abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
+            playerAbilitiesController.AddAbility(this);
+        }
+        else
+        {
+            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
+            assimilationProcess += assimilationRate;
+        }
     }
 }

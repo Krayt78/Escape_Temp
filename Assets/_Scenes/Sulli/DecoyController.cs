@@ -7,6 +7,25 @@ public class DecoyController : Ability
     public GameObject decoy;
     private GameObject decoyStatus;
 
+    public override void AssimilateFood(string ability,float assimilationRate)
+    {
+        if (ability != "Decoy")
+            return;
+
+        if (assimilationProcess >= 1)
+        {
+            assimilationProcess = 1;
+
+           // abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
+            playerAbilitiesController.AddAbility(this);
+        }
+        else
+        {
+            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
+            assimilationProcess += assimilationRate;
+        }
+    }
+
     public override bool CanUseAbility()
     {
         return decoyStatus == null;

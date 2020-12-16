@@ -69,6 +69,9 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             GetComponent<PlayerEntityController>().EatDNA(.3f);
+            GetComponent<PlayerEntityController>().AssimilateAbility("Grapplin");
+            GetComponent<PlayerEntityController>().AssimilateAbility("Decoy");
+            GetComponent<PlayerEntityController>().AssimilateAbility("Dart");
         }
         if(Input.GetKeyDown(KeyCode.H))
         {
