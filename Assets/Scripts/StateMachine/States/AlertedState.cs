@@ -79,7 +79,7 @@ public class AlertedState : BaseState
 
             AlertLevel();
         }
-        if(AIManager.GlobalAlertLevel > 33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0)
+        if(AIManager.GlobalAlertLevel > 33f && AIManager.HasCurrentEnemyAlerted(guard) && AIManager.onAttack > 0 && AIManager.onAttack < 2)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);

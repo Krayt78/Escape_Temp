@@ -33,7 +33,7 @@ public class LostState : BaseState
             return typeof(StunnedState);
         }
 
-        Debug.Log("loststate, guard has Target : "+guard.Target);
+        //Debug.Log("loststate, guard has Target : "+guard.Target);
         if(guard.Target)
         {
             if (guard.AlertLevel >= 100 || (AIManager.onAttack > 0 && AIManager.HasCurrentEnemyAlerted(guard)))
@@ -79,7 +79,7 @@ public class LostState : BaseState
     {
         //distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 3f), 0f, 100f));
-        Debug.Log("Alert level down : "+guard.AlertLevel);
+       // Debug.Log("Alert level down : "+guard.AlertLevel);
     }
 
     public override void OnStateEnter(StateMachine manager)

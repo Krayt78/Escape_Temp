@@ -149,6 +149,7 @@ public class FieldOfView : MonoBehaviour
             // float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
             if (Mathf.Abs(Vector3.SignedAngle(eyeDirection, targetDirection.normalized, Vector3.up)) < viewAngle)
             {
+                Debug.DrawRay(eyePosition, targetDirection, Color.magenta, 3);
                 Ray ray = new Ray(eyePosition, targetDirection);
                 RaycastHit hit;
                 if (!Physics.Raycast(ray, out hit, targetDirection.magnitude, obstacleMask))
@@ -164,16 +165,17 @@ public class FieldOfView : MonoBehaviour
     {
         Collider[] targets = new Collider[0];
         if(AIManager.GlobalAlertLevel > 33 && AIManager.GlobalAlertLevel <= 66){
-            targets = Physics.OverlapSphere(transform.position, viewRadius*30, targetMask);
+            targets = Physics.OverlapSphere(transform.position, viewRadius*10, targetMask);
         }
         if(AIManager.GlobalAlertLevel > 66){
-            targets = Physics.OverlapSphere(transform.position, viewRadius*60, targetMask);
+            targets = Physics.OverlapSphere(transform.position, viewRadius*20, targetMask);
         }
 
         if(targets.Length > 0)
         {
             for (int i = 0; i < targets.Length; i++)
             {
+                if(i == 3) break;
                 Transform target = targets[i].transform;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 float dstToTarget = Vector3.Distance(transform.position, target.position);

@@ -21,7 +21,6 @@ public class DeadState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Dead state");
         this.AIManager = EnemyAIManager.Instance;
         AIManager.RemoveEnemyOnAlert(guard);
         AIManager.RemoveEnemyOnSight(guard);
@@ -29,6 +28,5 @@ public class DeadState : BaseState
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Dead state");
     }
 }

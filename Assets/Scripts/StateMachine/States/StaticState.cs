@@ -54,13 +54,11 @@ public class StaticState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Static state");
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Static state");
     }
 }
