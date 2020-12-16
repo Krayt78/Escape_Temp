@@ -86,7 +86,7 @@ public class PlayerDNALevel : MonoBehaviour
     }
     private void AssimilateAbility(string abilityToAssimilate)
     {
-        float assimilationRate = UnityEngine.Random.Range(0.1f, 0.35f);
+        float assimilationRate = UnityEngine.Random.Range(0.2f, 0.35f);
         OnFoodAssimilation(abilityToAssimilate, assimilationRate);
     }
     //private void TakeDamages(float value)

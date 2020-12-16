@@ -21,7 +21,6 @@ public class FoodController : Interactable
 
     public  void Start()
     {
-        Debug.Log(abilityToUnlock.ToString());
     }
     public override void Use(GameObject user)
     {
