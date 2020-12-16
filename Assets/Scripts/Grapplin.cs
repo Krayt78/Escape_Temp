@@ -173,20 +173,6 @@ public class Grapplin : Ability
         CreateBezier(destination, bezierControlPoint);
     }
 
-    public override void LevelChanged(int level)
-    {
-        
-        if (level == levelToActivate)
-        {
-            Debug.Log("We add ability");
-            playerAbilitiesController.AddAbility(GetComponent<Grapplin>());
-        }else if(level == levelToDeActivate)
-        {
-            Debug.Log("We remove ability");
-            playerAbilitiesController.RemoveAbility(this);
-        }
-    }
-
     public override bool CanUseAbility()
     {
         return canUseGrapplin;
@@ -240,5 +226,10 @@ public class Grapplin : Ability
             Debug.LogError("Hit nothing");
 
         }
+    }
+
+    public override void AssimilateFood(string abilityToAssimilate, float assimilationRate)
+    {
+        throw new NotImplementedException();
     }
 }

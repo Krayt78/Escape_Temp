@@ -4,39 +4,32 @@ using UnityEngine;
 
 public class DecoyController : Ability
 {
-    public int levelToActivate = 0;
-    public int levelToDeActivate = 1;
-
-    private PlayerAbilitiesController playerAbilitiesController;
-
     public GameObject decoy;
     private GameObject decoyStatus;
 
-    public override void Awake()
+    public override void AssimilateFood(string ability,float assimilationRate)
     {
-        base.Awake();
-        playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
+        if (ability != "Decoy")
+            return;
+
+        if (assimilationProcess >= 1)
+        {
+            assimilationProcess = 1;
+
+           // abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
+            playerAbilitiesController.AddAbility(this);
+        }
+        else
+        {
+            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
+            assimilationProcess += assimilationRate;
+        }
     }
+
     public override bool CanUseAbility()
     {
         return decoyStatus == null;
     }
-
-    public override void LevelChanged(int level)
-    {
-        Debug.Log("Level changed : " + level);
-        if (level == levelToActivate)
-        {
-            Debug.Log("We add ability :" + this.name);
-            playerAbilitiesController.AddAbility(this);
-        }
-        else if (level == levelToDeActivate)
-        {
-            Debug.Log("We remove ability" + this.name);
-            playerAbilitiesController.RemoveAbility(this);
-        }
-    }
-
     public override void UseAbility()
     {
         if (CanUseAbility())

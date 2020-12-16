@@ -34,6 +34,7 @@ public class PlayerEntityController : EntityController
 
     [SerializeField] private float eatingDelay = 1.0f;
     public event Action<float> OnEatDna = delegate { };
+    public event Action<string> OnAssimilateAbility = delegate { };
 
     [SerializeField] private float vomitRatePerSeconds = .2f; //The amount of dna vomited per seconds
 
@@ -129,7 +130,16 @@ public class PlayerEntityController : EntityController
     {
         OnEatDna(value);
     }
+    public void AssimilateAbility(string abilityToAssimilate)
+    {
+        if (string.IsNullOrEmpty(abilityToAssimilate))
+        {
+            Debug.LogError("There is no ability to assimilate. \nPlease check the inspector and assign the correct value : Decoy, Dart or Grapplin");
+            return;
+        }
 
+        OnAssimilateAbility(abilityToAssimilate);
+    }
     private void IsMoving()
     {
         if (echo.isActive)

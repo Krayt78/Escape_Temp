@@ -7,8 +7,6 @@ public class VrGrapplinController : Ability
     //Temp
     [SerializeField] Transform movingPlayer;
 
-    private PlayerAbilitiesController playerAbilitiesController;
-
     private PlayerSoundEffectController playerSoundEffectController;
 
     private PlayerMovement playerMovement;
@@ -21,30 +19,22 @@ public class VrGrapplinController : Ability
 
     [SerializeField]
     private Transform playerCamera;
-    //[SerializeField]
-    private int levelToActivate = 1;
-    //[SerializeField]
-    private int levelToDeActivate = 3;
 
     [SerializeField]
     private float grapplinThrowSpeed = 15f;
-
     [SerializeField]
     private float maxRange = 150f;
-
     [SerializeField]
     float duration = 10f;
 
     RaycastHit hit;
     Ray ray;
+    private Vector3 destination = new Vector3();
 
     bool canUseGrapplin = true;
 
-    private Vector3 destination = new Vector3();
-
     [SerializeField]
     GameObject grapplinProjectile;
-
     GameObject grp;
 
     public override void Awake()
@@ -52,8 +42,6 @@ public class VrGrapplinController : Ability
         base.Awake();
         lrRope.positionCount = nbPoints;
         lrRope.enabled = false;
-
-        playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
         characterController = GetComponentInChildren<CharacterController>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
     }
@@ -63,6 +51,7 @@ public class VrGrapplinController : Ability
         base.Start();
         dnaConsumed = 0.03f;
     }
+
     private void FixedUpdate()
     {
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
@@ -73,7 +62,6 @@ public class VrGrapplinController : Ability
     {
         return Vector3.Distance(movingPlayer.position, destination) < 1.5f;
     }
-
 
     IEnumerator MovePlayer(Vector3 destination, float duration)
     {
@@ -91,15 +79,14 @@ public class VrGrapplinController : Ability
                 lrRope.enabled = false;
                 Destroy(grp);
             }
-            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, time/duration);
+            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, time / duration);
             lrRope.SetPosition(0, grapplinPosition.position);
 
             time += Time.deltaTime;
             yield return null;
         }
-        playerSoundEffectController.StopGrapplinSFX(); 
+        playerSoundEffectController.StopGrapplinSFX();
     }
-
 
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
@@ -124,20 +111,22 @@ public class VrGrapplinController : Ability
         StartCoroutine(MovePlayer(hit.point, duration));
     }
 
-    public override void LevelChanged(int level)
+    public override void AssimilateFood(string ability, float assimilationRate)
     {
-        Debug.Log("Level changed : " + level);
-        if (level == levelToActivate)
+        if (ability != "Grapplin")
+            return;
+        if (assimilationProcess >= 1)
         {
-            Debug.Log("We add ability");
+            assimilationProcess = 1;
+
+            //abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
             playerAbilitiesController.AddAbility(this);
         }
-        else if (level == levelToDeActivate)
+        else
         {
-            Debug.Log("We remove ability");
-            playerAbilitiesController.RemoveAbility(this);
+            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
+            assimilationProcess += assimilationRate;
         }
-        playerAbilitiesController.AddAbility(this);
     }
 
     public override bool CanUseAbility()
