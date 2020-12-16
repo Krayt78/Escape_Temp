@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<GameObject> UIInteractors;
 
     private PlayerCameraController cameraController;
+    private PlayerAbilitiesController playerAbilitiesController;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,10 @@ public class GameController : MonoBehaviour
         playerInput = player.GetComponent<PlayerInput>();
         //EndOfLevel.instance.OnWinLevel += PlayerWon;
         playerInput.OnStart += OnPauseEvent;
+        playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
+
+        //Lorsque qu'on fait un restart, le timeScale restait a 0
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -46,16 +51,19 @@ public class GameController : MonoBehaviour
     {
         ShowPauseMenu();
         pauseMenu.GetComponentInChildren<Button>().interactable = false;
+        playerAbilitiesController.isAbilityActivated = false;
     }
     
     private void OnPauseEvent()
     {
         if (pauseMenu.activeInHierarchy)
         {
+            playerAbilitiesController.isAbilityActivated = true;
             ResumeGame();
         }
         else
         {
+            playerAbilitiesController.isAbilityActivated = false;
             ShowPauseMenu();
         }
     }
