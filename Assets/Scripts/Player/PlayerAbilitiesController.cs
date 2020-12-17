@@ -8,15 +8,18 @@ public class PlayerAbilitiesController : MonoBehaviour
 {
     private int abilitiesIndex = 0;
     [SerializeField] public Ability CurrentAbility { get; private set; }
+    [SerializeField] private Image currentAbilityImage; //this field is used to change the ui of the current ability
 
     private List<Ability> playerAbilities = new List<Ability>();
-
     private PlayerDNALevel playerDNALevel;
-    [SerializeField] private Image currentAbilityImage; //this field is used to change the ui of the current ability
+    
     public event Action<Ability> OnAbilityChanged = delegate { };
 
-    public bool isAbilityActivated = true;
+    [HideInInspector] public bool isAbilityActivated = true;
+    [HideInInspector] public FMOD.Studio.EventInstance onNoDNAForUsingCapacity;
 
+    public string noDNAForCapacitySoundFXPath;
+    
     private void Awake()
     {
         playerDNALevel = GetComponent<PlayerDNALevel>();
@@ -32,6 +35,9 @@ public class PlayerAbilitiesController : MonoBehaviour
         {
             CurrentAbility.UseAbility();
             playerDNALevel.LoseDnaLevel(CurrentAbility.DnaConsumed);
+        }else if(CurrentAbility.DnaConsumed > playerDNALevel.DnaLevel)
+        {
+            onNoDNAForUsingCapacity = FMODPlayerController.PlaySoundAttachedToGameObject(noDNAForCapacitySoundFXPath, GetComponentInChildren<Rigidbody>()); 
         }
     }
 
