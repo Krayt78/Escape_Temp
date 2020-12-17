@@ -32,6 +32,8 @@ public class VrGrapplinController : Ability
     private Vector3 destination = new Vector3();
 
     bool canUseGrapplin = true;
+    
+
 
     [SerializeField]
     GameObject grapplinProjectile;
@@ -115,18 +117,7 @@ public class VrGrapplinController : Ability
     {
         if (ability != "Grapplin")
             return;
-        if (assimilationProcess >= 1)
-        {
-            assimilationProcess = 1;
-
-            //abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
-            playerAbilitiesController.AddAbility(this);
-        }
-        else
-        {
-            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
-            assimilationProcess += assimilationRate;
-        }
+        base.AssimilateFood(ability, assimilationRate); 
     }
 
     public override bool CanUseAbility()

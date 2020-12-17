@@ -4,22 +4,24 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
 {
-    public PlayerDNALevel PlayerDNALevel { get; private set; }
-    public PlayerInput PlayerInput { get; private set; }
+    [HideInInspector] public PlayerDNALevel PlayerDNALevel { get; private set; }
+    [HideInInspector] public PlayerInput PlayerInput { get; private set; }
 
-    public PlayerAbilitiesController playerAbilitiesController;
+    [HideInInspector] public PlayerAbilitiesController playerAbilitiesController;
 
-    public Sprite abilityUISprite;
+    [HideInInspector] public FMOD.Studio.EventInstance onEatSoundInstance;
+    [HideInInspector] public FMOD.Studio.EventInstance abilityUnlockedSoundInstance;
+    [HideInInspector] public bool playUnlockedAbilitySound = true;
+    [HideInInspector] public bool playFirstEatFoodSound = true;
 
-    public float assimilationProcess = 0.0f;
+    [HideInInspector] public float assimilationProcess = 0.0f;
 
     [SerializeField] public string FirstEatFoodSoundFXPath;
     [SerializeField] public string AbilityUnlockedSoundFXPath;
 
     [SerializeField] protected float dnaConsumed;
 
-    public FMOD.Studio.EventInstance onEatSoundInstance;
-    public FMOD.Studio.EventInstance abilityUnlockedSoundInstance;
+    public Sprite abilityUISprite;
 
     public float DnaConsumed { get { return dnaConsumed; } }
 
@@ -38,7 +40,30 @@ public abstract class Ability : MonoBehaviour
         }
     }
 
-    public abstract void AssimilateFood(string abilityToAssimilate,float assimilationRate);
+    public virtual void AssimilateFood(string abilityToAssimilate,float assimilationRate)
+    {
+        if (assimilationProcess >= 1)
+        {
+            assimilationProcess = 1;
+            if (playUnlockedAbilitySound)
+            {
+                abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponentInChildren<Rigidbody>());
+                playUnlockedAbilitySound = false;
+            }
+
+            playerAbilitiesController.AddAbility(this);
+        }
+        else
+        {
+            if (playFirstEatFoodSound)
+            {
+                onEatSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(FirstEatFoodSoundFXPath, GetComponentInChildren<Rigidbody>());
+                playFirstEatFoodSound = false;
+            }
+            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
+            assimilationProcess += assimilationRate;
+        }
+    }
     public abstract bool CanUseAbility();
     public abstract void UseAbility();
 }

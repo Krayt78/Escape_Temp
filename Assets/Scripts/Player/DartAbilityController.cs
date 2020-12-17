@@ -42,17 +42,6 @@ public class DartAbilityController : Ability
     {
         if (ability != "Dart")
             return;
-
-        if (assimilationProcess >= 1)
-        {
-            assimilationProcess = 1;
-           // abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponent<Rigidbody>());
-            playerAbilitiesController.AddAbility(this);
-        }
-        else
-        {
-            //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
-            assimilationProcess += assimilationRate;
-        }
+        base.AssimilateFood(ability, assimilationRate);
     }
 }
