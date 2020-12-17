@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class EnemyAIManager : MonoBehaviour
 {
     private static EnemyAIManager instance;
     public static EnemyAIManager Instance { get { return instance; } }
+    public event Action OnStopAlarm = delegate { };
 
     [Range(0f, 100f)]
     private float globalAlertLevel = 0f;
@@ -48,11 +50,12 @@ public class EnemyAIManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
             AlertLevel();
         }
-    }
+    }   
 
     public void SetGlobalAlertLevel(float value)
     {
         this.GlobalAlertLevel = Mathf.Clamp(value, 0f, 100f);
+        if(GlobalAlertLevel < 50) OnStopAlarm();
     }
 
     public void AddEnemyOnSight(Guard enemy)
