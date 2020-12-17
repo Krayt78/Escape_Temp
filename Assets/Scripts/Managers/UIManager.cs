@@ -44,6 +44,12 @@ public class UIManager : MonoBehaviour
             return;
         }
         instance = this;
+        SubscribeEvents();
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 
     // Start is called before the first frame update
