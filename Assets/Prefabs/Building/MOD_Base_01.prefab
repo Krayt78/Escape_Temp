@@ -3300,6 +3300,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5645921702774785172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570320028632096523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b9773e68b347e4096b1c18bb4ecf58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 13410931670715271}
+        m_MethodName: DestroyConsole
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1593441700528942426
 GameObject:
   m_ObjectHideFlags: 0
@@ -7729,6 +7755,32 @@ Transform:
   m_Father: {fileID: 149596448561965919}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4757002969085165418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717792216704172124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b9773e68b347e4096b1c18bb4ecf58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3321476980093513204}
+        m_MethodName: DestroyConsole
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4792551882870097451
 GameObject:
   m_ObjectHideFlags: 0
@@ -15634,6 +15686,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2923495594807575998}
     m_Modifications:
+    - target: {fileID: 1553390359763694083, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dart_Interactible
+      objectReference: {fileID: 0}
     - target: {fileID: 2374157814729562089, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15689,6 +15746,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4700864057517174100, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dart_Interactible
+      objectReference: {fileID: 0}
     - target: {fileID: 8819357887562571683, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
         type: 3}
       propertyPath: m_Name
@@ -15696,21 +15758,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f8c9d7964d11cf43a3e222cf7f1724e, type: 3}
+--- !u!4 &8359952764655510966 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2374157814729562089, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6122141539792220767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8748540743293888211 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3287408098199344268, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
     type: 3}
   m_PrefabInstance: {fileID: 6122141539792220767}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &2399897700455280779 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8482549094291833556, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6122141539792220767}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &5995432304565663540 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 559073768177386859, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6122141539792220767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2399897700455280779 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8482549094291833556, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
     type: 3}
   m_PrefabInstance: {fileID: 6122141539792220767}
   m_PrefabAsset: {fileID: 0}
@@ -15726,9 +15794,39 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 6122141539792220767}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8359952764655510966 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2374157814729562089, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+--- !u!1 &1570320028632096523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4700864057517174100, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
     type: 3}
   m_PrefabInstance: {fileID: 6122141539792220767}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &13410931670715271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114078914000026072, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6122141539792220767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570320028632096523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a23f5c328a53e847b6a51c9190c7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4717792216704172124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1553390359763694083, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6122141539792220767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3321476980093513204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8858148342189137835, guid: 9f8c9d7964d11cf43a3e222cf7f1724e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6122141539792220767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717792216704172124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a23f5c328a53e847b6a51c9190c7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
