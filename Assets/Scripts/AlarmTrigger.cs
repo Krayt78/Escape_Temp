@@ -20,7 +20,7 @@ public class AlarmTrigger : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            this.AIManager.SetGlobalAlertLevel(1);
+            this.AIManager.SetGlobalAlertLevel(100);
             alarmSoundInstance = FMODPlayerController.PlaySoundInstance(AlarmSFXPath, transform.position);
         }
     }
