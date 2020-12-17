@@ -22,8 +22,8 @@ public class DecoyController : Ability
     {
         if (CanUseAbility())
         {
-            Vector3 pos = this.GetComponentInChildren<Rigidbody>().position - this.GetComponentInChildren<Rigidbody>().transform.forward;
-            pos = pos + this.GetComponentInChildren<Rigidbody>().transform.up * 2;
+            Vector3 pos = this.GetComponentInChildren<Rigidbody>().position - this.GetComponentInChildren<Rigidbody>().transform.forward*2;
+            pos = pos + this.GetComponentInChildren<Rigidbody>().transform.up*1.75f;
             decoyStatus = Instantiate(decoy, pos , rotation: this.transform.rotation);
             
         }

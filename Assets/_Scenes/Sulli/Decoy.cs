@@ -32,12 +32,11 @@ public class Decoy : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    { 
         if (other.gameObject.layer.Equals(11))
         {
-           
+            this.transform.LookAt(other.transform);
             decoyAnimations.enabled = true;
-            
         }
     }
 
