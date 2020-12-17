@@ -6,7 +6,7 @@ public class Door_ControlPanel : MonoBehaviour
 {
 
     [SerializeField] DoorAnimatorController myDoor;
-    Material _material;
+    MeshRenderer _meshRenderer;
 
     [SerializeField] Material ActivatedConsoleMat;
     [SerializeField] Material DeactivatedConsoleMat;
@@ -15,7 +15,7 @@ public class Door_ControlPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _material = GetComponent<MeshRenderer>().material;
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void ActivateDoor()
@@ -25,13 +25,16 @@ public class Door_ControlPanel : MonoBehaviour
 
     public void DestroyConsole()
     {
-        _material = DeactivatedConsoleMat;
+        Debug.Log("DestroyConsole");
+        _meshRenderer.material = DeactivatedConsoleMat;
+        //_meshRenderer.materials[0] = DeactivatedConsoleMat;
         ActivateDoor();
     }
 
     public void RepairConsole()
     {
-        _material = ActivatedConsoleMat;
+       // _meshRenderer.materials[0] = ActivatedConsoleMat;
+        _meshRenderer.material = DeactivatedConsoleMat;
         //do something 
     }
 }

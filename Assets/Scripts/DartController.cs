@@ -42,6 +42,7 @@ public class DartController : MonoBehaviour
 
         if (other.tag.Equals("Dart_Interactible"))
         {
+            Debug.Log("Touched " + other.name);
             other.GetComponent<Dart_Interactible_Event_Caller>().OnTouchedByDart();
         }
     }
