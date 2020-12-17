@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerDNALevel playerDNALevel;
+    private PlayerAbilitiesController playerAbilities;
     [SerializeField] GameObject player;
     [SerializeField] Transform uiFocalPoint;
     [SerializeField] List<GameObject> listMenu;
@@ -50,6 +51,7 @@ public class UIManager : MonoBehaviour
     {
         playerInput = player.GetComponent<PlayerInput>();
         playerDNALevel = player.GetComponent<PlayerDNALevel>();
+        playerAbilities = player.GetComponent<PlayerAbilitiesController>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
         abilityImageCanvas.enabled = false;
@@ -59,18 +61,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        //Vector3 targetDirection = playerCamera.transform.position - abilityImageParent.position;
         Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
         float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
-        //Debug.Log("angle : "+angle);
-        if(targetDir.magnitude < 0.6 && angle < 45)
+        if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
         {
-            // Debug.Log("SHOW ABILITY UI");
             ShowAbilityUI();
         }
         else
         {
-            // Debug.Log("HIDE ABILITY UI");
             HideAbilityUI();
         }
     }

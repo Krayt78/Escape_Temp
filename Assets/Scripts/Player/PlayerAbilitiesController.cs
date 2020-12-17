@@ -80,6 +80,11 @@ public class PlayerAbilitiesController : MonoBehaviour
         }
     }
 
+    public bool HasAbility()
+    {
+        return playerAbilities.Count > 0;
+    }
+
     private void Start()
     {
         PlayerInput playerInput = GetComponent<PlayerInput>();
