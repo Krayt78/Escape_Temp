@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2111992556076141582}
   - component: {fileID: 9065912145084026851}
   - component: {fileID: 2384725329957402850}
+  - component: {fileID: 7590158715007504408}
   m_Layer: 0
   m_Name: MOD_Rock_5_1_LOD4
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7590158715007504408
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3813042605001527946}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4295998, y: 2.2216072, z: 2.5888743}
+  m_Center: {x: -0.00007647276, y: 0.8154155, z: -0.00049084425}
 --- !u!1 &4918226571329011556
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +104,7 @@ GameObject:
   - component: {fileID: 4145029053635797749}
   - component: {fileID: 322837755387493813}
   - component: {fileID: 7666496719038248845}
+  - component: {fileID: 6357222449567084494}
   m_Layer: 0
   m_Name: MOD_Rock_5_1_LOD2
   m_TagString: Untagged
@@ -158,6 +173,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6357222449567084494
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918226571329011556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4300833, y: 2.2224138, z: 2.589185}
+  m_Center: {x: 0.00016528368, y: 0.81581885, z: -0.00064611435}
 --- !u!1 &6277417773997377112
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7009439318305453131}
   - component: {fileID: 7580993560838316687}
-  - component: {fileID: -8382418206428674348}
   m_Layer: 0
   m_Name: MOD_Rock_5_1
   m_TagString: Untagged
@@ -183,7 +210,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6277417773997377112}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -33.778137, y: -41.23905, z: 179.68451}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
@@ -230,20 +257,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2384725329957402850}
   m_Enabled: 1
---- !u!64 &-8382418206428674348
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277417773997377112}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8952572952071105458, guid: 7910283887e62b447bbba024fbd37ccb, type: 3}
 --- !u!1 &8010166944987115598
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +268,7 @@ GameObject:
   - component: {fileID: 7804263007087652209}
   - component: {fileID: 3287974709761404161}
   - component: {fileID: 5940029646601194888}
+  - component: {fileID: 2245478832023047579}
   m_Layer: 0
   m_Name: MOD_Rock_5_1_LOD1
   m_TagString: Untagged
@@ -323,6 +337,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &2245478832023047579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8010166944987115598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4304137, y: 2.2224138, z: 2.590849}
+  m_Center: {x: 0.000000059604645, y: 0.81581885, z: 0.00009161234}
 --- !u!1 &8401450055926124130
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +361,7 @@ GameObject:
   - component: {fileID: 6918574078117991072}
   - component: {fileID: 8159452735067667657}
   - component: {fileID: 5218088114915927587}
+  - component: {fileID: 8200370633597015175}
   m_Layer: 0
   m_Name: MOD_Rock_5_1_LOD0
   m_TagString: Untagged
@@ -402,6 +430,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8200370633597015175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401450055926124130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4304137, y: 2.2224138, z: 2.591032}
+  m_Center: {x: 0.000000059604645, y: 0.81581885, z: 0}
 --- !u!1 &8813209602716948576
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +454,7 @@ GameObject:
   - component: {fileID: 1826191333068228670}
   - component: {fileID: 4394108911144470671}
   - component: {fileID: 3316932634460537725}
+  - component: {fileID: 1997210672875620926}
   m_Layer: 0
   m_Name: MOD_Rock_5_1_LOD3
   m_TagString: Untagged
@@ -481,3 +523,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1997210672875620926
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813209602716948576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4300833, y: 2.2216072, z: 2.589185}
+  m_Center: {x: 0.00016528368, y: 0.8154155, z: -0.00064611435}
