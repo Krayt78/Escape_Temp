@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FoodController : Interactable
 {
+    Transform initialTransform;
     private enum AbilityToUnlock 
     { 
         None, 
@@ -21,6 +22,7 @@ public class FoodController : Interactable
 
     public  void Start()
     {
+        initialTransform = this.transform;
     }
     public override void Use(GameObject user)
     {
@@ -42,6 +44,8 @@ public class FoodController : Interactable
 
     private void ReactiveFood()
     {
+        gameObject.transform.position = initialTransform.position;
+        gameObject.transform.rotation = initialTransform.rotation;
         gameObject.SetActive(true);
 
     }
