@@ -55,7 +55,7 @@ public class EnemyAIManager : MonoBehaviour
     public void SetGlobalAlertLevel(float value)
     {
         this.GlobalAlertLevel = Mathf.Clamp(value, 0f, 100f);
-        if(GlobalAlertLevel < 50) OnStopAlarm();
+        if(GlobalAlertLevel < 1) OnStopAlarm();
     }
 
     public void AddEnemyOnSight(Guard enemy)
