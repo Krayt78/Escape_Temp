@@ -84,7 +84,7 @@ public class AlertedState : BaseState
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
-        if(guard.AlertLevel == 100f){
+        if(guard.AlertLevel == 100f && AIManager.onAttack < 3){
             guard.EnemyPatrol.StopMoving();
             return typeof(AttackState);
         }
