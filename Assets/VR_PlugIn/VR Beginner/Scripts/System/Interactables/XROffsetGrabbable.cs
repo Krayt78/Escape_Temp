@@ -20,6 +20,7 @@ public class XROffsetGrabbable : XRGrabInteractable
     
     Dictionary<XRBaseInteractor, SavedTransform> m_SavedTransforms = new Dictionary<XRBaseInteractor, SavedTransform>();
 
+
     Rigidbody m_Rb;
 
     protected override void Awake()
@@ -33,7 +34,7 @@ public class XROffsetGrabbable : XRGrabInteractable
     protected override void OnSelectEnter(XRBaseInteractor interactor)
     {
         //i change the layer so that the collider of the grabbed object doesnt collide with our own
-        ChangeLayer(20,interactor.gameObject);
+        ChangeLayer(20, gameObject);
 
         if (interactor is XRDirectInteractor)
         {
@@ -49,6 +50,7 @@ public class XROffsetGrabbable : XRGrabInteractable
 
             interactor.attachTransform.position = haveAttach ? attachTransform.position : m_Rb.worldCenterOfMass;
             interactor.attachTransform.rotation = haveAttach ? attachTransform.rotation : m_Rb.rotation;
+
         }
 
         base.OnSelectEnter(interactor);
@@ -57,7 +59,7 @@ public class XROffsetGrabbable : XRGrabInteractable
     protected override void OnSelectExit(XRBaseInteractor interactor)
     {
         //i change the layer back to default
-        ChangeLayer(0, interactor.gameObject);
+        ChangeLayer(0, gameObject);
 
         if (interactor is XRDirectInteractor)
         {
@@ -68,10 +70,19 @@ public class XROffsetGrabbable : XRGrabInteractable
                 interactor.attachTransform.localRotation = savedTransform.OriginalRotation;
 
                 m_SavedTransforms.Remove(interactor);
+
             }
         }
         
         base.OnSelectExit(interactor);
+    }
+    /// <summary>This method was added by ian to enable dropping of objects 
+    /// when we need to do it in code (e.g. at level end or when exhausted)
+    /// </summary>
+    /// <param name="interactor">Usually the player's hand</param>
+    public void CustomForceDrop(XRBaseInteractor interactor)
+    {
+        OnSelectExit(interactor);
     }
 
     private void ChangeLayer(int layer, GameObject obj)

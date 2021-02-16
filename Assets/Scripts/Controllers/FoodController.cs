@@ -19,10 +19,13 @@ public class FoodController : Interactable
     public float FoodValue { get { return foodValue; } }
     [SerializeField] float repopTime = 100f;
 
+    private XROffsetGrabbable xROffsetGrabbable;
+
 
     public  void Start()
     {
         initialTransform = this.transform;
+        xROffsetGrabbable = GetComponent<XROffsetGrabbable>();
     }
     public override void Use(GameObject user)
     {
@@ -30,6 +33,7 @@ public class FoodController : Interactable
         {
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.EatDNA(foodValue);
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.AssimilateAbility(abilityToUnlock.ToString());
+            
             DestroyFood();
         }
     }
@@ -37,9 +41,15 @@ public class FoodController : Interactable
     public void DestroyFood()
     {
         Debug.Log("Eat");
+        ReleaseHandInteraction();
         //Destroy(gameObject);
         gameObject.SetActive(false);
-        Invoke("ReactiveFood", repopTime);
+        //Invoke("ReactiveFood", repopTime);
+    }
+
+    private void ReleaseHandInteraction()
+    {
+        xROffsetGrabbable.CustomForceDrop(xROffsetGrabbable.selectingInteractor);
     }
 
     private void ReactiveFood()
