@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 5793508792682932684}
   - component: {fileID: 5793508792682932686}
   - component: {fileID: 5793508792682932673}
-  - component: {fileID: 5793508792682932685}
   - component: {fileID: 2557811821150026912}
   - component: {fileID: 8704978844525252755}
   - component: {fileID: 6434489699074971482}
@@ -149,21 +148,6 @@ MonoBehaviour:
   foodValue: 1
   abilityToUnlock: 3
   repopTime: 100
---- !u!114 &5793508792682932685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5793508792682932672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3e9ac1464bceb478bf747a4cfe6dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMaterial: {fileID: 2100000, guid: 42888fb1dbd7dac4293332ce36853c03, type: 2}
-  outlineColor: {r: 0, g: 1, b: 0.08045983, a: 0.50980395}
-  outlineWidth: 0.007
 --- !u!114 &2557811821150026912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +169,7 @@ MonoBehaviour:
   m_OnFirstHoverEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5793508792682932685}
+      - m_Target: {fileID: 0}
         m_MethodName: EnableOutline
         m_Mode: 6
         m_Arguments:
@@ -202,7 +186,7 @@ MonoBehaviour:
   m_OnHoverExit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5793508792682932685}
+      - m_Target: {fileID: 0}
         m_MethodName: EnableOutline
         m_Mode: 6
         m_Arguments:
