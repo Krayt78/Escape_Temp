@@ -66,6 +66,11 @@ public class PlayerSoundEffectController : MonoBehaviour
     private Coroutine modulateWindCoroutine;
     private bool modulatingWind = false;
 
+    [Space(10)]
+
+    [Header("Voices")]
+    [SerializeField] string firstEatFoodEvent;
+
     private void Awake()
     {
         rigidbody = GetComponentInChildren<Rigidbody>();
@@ -86,6 +91,7 @@ public class PlayerSoundEffectController : MonoBehaviour
         playerEntityController.OnDies += PlayDiesSFX;
         playerEntityController.OnAttack += PlayAttackSFX;
         playerEntityController.OnScan += PlayScanSFX;
+        playerEntityController.OnEatDna += PlayFirstEatFood;
 
         MovementProvider playerMovement = GetComponentInChildren<MovementProvider>();
         if(!playerMovement)
@@ -424,5 +430,11 @@ public class PlayerSoundEffectController : MonoBehaviour
         windInstance.setParameterByName("MovingInTheWind", targetValue);
 
         modulatingWind = false;
+    }
+
+    private void PlayFirstEatFood(float amount)
+    {
+        FMODPlayerController.PlayOnShotSound(firstEatFoodEvent, rigTransform.transform.position);
+        GetComponent<PlayerEntityController>().OnEatDna -= PlayFirstEatFood;
     }
 }

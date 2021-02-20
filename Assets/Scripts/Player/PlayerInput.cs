@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     public event Action OnScan = delegate { }; //The player scan it's surrounding looking for enemys
 
-    private int switchValue = 1;
+    public int switchValue = 1;
     public event Action<int> OnSwitchState = delegate { };   //The player wants to go from omega to beta or the other way around
     public event Action OnEvolveToAlpha = delegate { }; //The player wants to evolve to Alpha
 
@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
     }
 
     // Update is called once per frame

@@ -9,14 +9,11 @@ public abstract class Ability : MonoBehaviour
 
     [HideInInspector] public PlayerAbilitiesController playerAbilitiesController;
 
-    [HideInInspector] public FMOD.Studio.EventInstance onEatSoundInstance;
     [HideInInspector] public FMOD.Studio.EventInstance abilityUnlockedSoundInstance;
     [HideInInspector] public bool playUnlockedAbilitySound = true;
-    [HideInInspector] public bool playFirstEatFoodSound = true;
 
     [HideInInspector] public float assimilationProcess = 0.0f;
 
-    [SerializeField] public string FirstEatFoodSoundFXPath;
     [SerializeField] public string AbilityUnlockedSoundFXPath;
 
     [SerializeField] protected float dnaConsumed;
@@ -42,6 +39,7 @@ public abstract class Ability : MonoBehaviour
 
     public virtual void AssimilateFood(string abilityToAssimilate,float assimilationRate)
     {
+        assimilationProcess += assimilationRate;
         if (assimilationProcess >= 1)
         {
             assimilationProcess = 1;
@@ -55,13 +53,8 @@ public abstract class Ability : MonoBehaviour
         }
         else
         {
-            if (playFirstEatFoodSound)
-            {
-                onEatSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(FirstEatFoodSoundFXPath, GetComponentInChildren<Rigidbody>());
-                playFirstEatFoodSound = false;
-            }
             //Faudrait play une voice line qu'une fois pour indiquer qu'en mangeant il assimile la nourriture
-            assimilationProcess += assimilationRate;
+            //assimilationProcess += assimilationRate;
         }
     }
     public abstract bool CanUseAbility();

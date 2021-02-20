@@ -51,6 +51,7 @@ public class PlayerDNALevel : MonoBehaviour
     public void SetCurrentEvolutionLevel(BasePlayerState state)
     {
         currentEvolutionLevel = state.levelState;
+        playerInput.switchValue = state.levelState;
     }
 
     private void Awake()
