@@ -26,6 +26,7 @@ public class VrGrapplinController : Ability
     private float maxRange = 150f;
     [SerializeField]
     float duration = 10f;
+    float grapplinSpeed = 3f;
 
     RaycastHit hit;
     Ray ray;
@@ -70,24 +71,21 @@ public class VrGrapplinController : Ability
         float time = 0;
         Vector3 startPosition = movingPlayer.position;
         playerSoundEffectController.PlayGrapplinRetractSFX();
-        while (time < duration)
+        while (!Landed())
         {
-            if (Landed())
-            {
-                Debug.LogWarning("We landed");
-                canUseGrapplin = true;
-                characterController.enabled = true;
-                time = duration;
-                lrRope.enabled = false;
-                Destroy(grp);
-            }
-            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, time / duration);
+            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, grapplinSpeed);
             lrRope.SetPosition(0, grapplinPosition.position);
 
             time += Time.deltaTime;
             yield return null;
         }
+        Debug.LogWarning("We landed");
+        canUseGrapplin = true;
+        characterController.enabled = true;
+        time = duration;
+        lrRope.enabled = false;
         playerSoundEffectController.StopGrapplinSFX();
+        Destroy(grp);
     }
 
     private IEnumerator LaunchGrapplin(GameObject grp)
