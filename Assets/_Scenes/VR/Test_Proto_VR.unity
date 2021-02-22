@@ -3726,9 +3726,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8535730676145156033, guid: a0a62adb8ea66224d8618eedb7456d9b,
         type: 3}
-      propertyPath: PlayerToFollow
+      propertyPath: bodyToFollow
       value: 
-      objectReference: {fileID: 1282879676}
+      objectReference: {fileID: 1968666492}
     - target: {fileID: 8535730676145156033, guid: a0a62adb8ea66224d8618eedb7456d9b,
         type: 3}
       propertyPath: currentTerrain
@@ -20922,12 +20922,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 633522227820229902, guid: 0a87adead177ebd419f9585e83286d76, type: 3}
---- !u!4 &1282879676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7267615934672020169, guid: 227dd6ad3a3430b4d82c6f796839c712,
-    type: 3}
-  m_PrefabInstance: {fileID: 395172645632669872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1283797321
 GameObject:
   m_ObjectHideFlags: 0
@@ -32788,6 +32782,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cb8c43c74bd8714b9b941000952eb18, type: 3}
+--- !u!54 &1968666492 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 395172645632669881, guid: 227dd6ad3a3430b4d82c6f796839c712,
+    type: 3}
+  m_PrefabInstance: {fileID: 395172645632669872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1979240041 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 433435761760039268, guid: 4c85c895dda1e9b44982050de8aeb6b5,
