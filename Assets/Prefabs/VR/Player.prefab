@@ -132,7 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAbilitiesController: {fileID: 0}
   playUnlockedAbilitySound: 1
+  playFirstEatFoodSound: 1
   assimilationProcess: 0
+  FirstEatFoodSoundFXPath: event:/Tutorial/VoiceInfo_FirstEatFood
   AbilityUnlockedSoundFXPath: event:/Tutorial/VoiceInfo_UnlockGrapplin
   dnaConsumed: 0
   abilityUISprite: {fileID: 21300000, guid: b2b79b026b1ba8e499bf6d7d6533361f, type: 3}
@@ -198,7 +200,6 @@ MonoBehaviour:
   alphaIdleSFXPath: event:/Player/Evolution/AlphaIdle
   vomitSFXPath: event:/Player/Evolution/Vomit
   EventMusicSFX: event:/Music/Music
-  firstEatFoodEvent: event:/Tutorial/VoiceInfo_FirstEatFood
 --- !u!114 &1160081396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,8 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31426a7d8eaf3545b1eb081733475cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentStateName: Beta
-  startState: 2
+  CurrentStateName: Default
+  startState: 1
   StateCaracteristics:
   - {fileID: 11400000, guid: 4c4b89dc8df92884b9703020e233677a, type: 2}
   - {fileID: 11400000, guid: 0682060a3631a304981675b779634bd4, type: 2}
@@ -292,7 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6485373b9c889554db3bbac3ac3b8e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchValue: 1
 --- !u!114 &7946398781057695985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +307,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAbilitiesController: {fileID: 0}
   playUnlockedAbilitySound: 1
+  playFirstEatFoodSound: 1
   assimilationProcess: 0
+  FirstEatFoodSoundFXPath: event:/Tutorial/VoiceInfo_FirstEatFood
   AbilityUnlockedSoundFXPath: event:/Tutorial/VoiceInfo_UnlockDecoy
   dnaConsumed: 0
   abilityUISprite: {fileID: 21300000, guid: 7dcc815dc7839c44eb98025bc83936bb, type: 3}
