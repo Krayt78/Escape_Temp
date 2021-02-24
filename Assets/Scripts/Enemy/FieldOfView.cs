@@ -22,10 +22,19 @@ public class FieldOfView : MonoBehaviour
     public event Action OnDeadBodyFound = delegate { };
 
     private EnemyAIManager AIManager;
+    private EnemyBase guard;
 
     void Start()
     {
         this.AIManager = EnemyAIManager.Instance;
+        if(gameObject.GetComponent<Guard>() != null)
+        {
+            this.guard = gameObject.GetComponent<Guard>();
+        }
+        else
+        {
+            this.guard = gameObject.GetComponent<Drone>();
+        }
         StartCoroutine("FindTargetsWithDelay", .2f);
         StartCoroutine("FindTargetsGlobalAlertWithDelay", .5f);
     }
@@ -69,32 +78,31 @@ public class FieldOfView : MonoBehaviour
         {
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
-                // Debug.Log(targetsInViewRadius[i].gameObject.name);
                 GameObject targetGO = targetsInViewRadius[i].gameObject;
                 Transform target;
-                // if(targetsInViewRadius[i].GetComponentInChildren<Camera>() != null){
-                //     target = targetsInViewRadius[i].GetComponentInChildren<Camera>().transform;
-                // }
-                // else 
                 target = targetsInViewRadius[i].transform;
-                Transform eyeTransform = ((EnemyEyeMovement)gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                Transform eyeTransform;
+                if(gameObject.GetComponentInParent(typeof(EnemyEyeMovement)) != null) 
+                {
+                    eyeTransform = ((EnemyEyeMovement)gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                }
+                else{
+                    eyeTransform = transform;
+                }
 
                 var targetDirection = target.position - eyeTransform.position;
                 float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
-                //Debug.Log("AngleToTarget : "+angleToTarget);
                 
                 if(CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, eyeTransform.position, eyeTransform.forward))
-                //if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                 {
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
                 else
                 {
-                    AIManager.RemoveEnemyOnSight(transform.gameObject.GetComponent<Guard>());
+                    AIManager.RemoveEnemyOnSight(guard);
                 }
             }
         }
-        //Debug.Log("deadEnemiesInViewRadius : "+deadEnemiesInViewRadius.Length);
         if(deadEnemiesInViewRadius.Length > 0){
             for (int i = 0; i < deadEnemiesInViewRadius.Length; i++)
             {
@@ -182,12 +190,12 @@ public class FieldOfView : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
-                    if(!AIManager.HasCurrentEnemyAlerted(transform.gameObject.GetComponent<Guard>())){
+                    if(!AIManager.HasCurrentEnemyAlerted(guard)){
                         Vector3 newPos = target.position + UnityEngine.Random.insideUnitSphere * 1.25f;
                         newPos.y = Terrain.activeTerrain.SampleHeight(newPos);
-                        transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenPosition = newPos;
-                        transform.gameObject.GetComponent<Guard>().EnemyNavigation.targetLastSeenTransform = target;
-                        AIManager.AddEnemyOnAlert(transform.gameObject.GetComponent<Guard>());
+                        guard.EnemyNavigation.targetLastSeenPosition = newPos;
+                        guard.EnemyNavigation.targetLastSeenTransform = target;
+                        AIManager.AddEnemyOnAlert(guard);
                     }
                 }
             }

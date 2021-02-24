@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class NoiseHeardState : BaseState
 {
-    private Guard guard;
+    private EnemyBase guard;
     private EnemyAIManager AIManager;
 
-    public NoiseHeardState(Guard guard) : base(guard.gameObject)
+    public NoiseHeardState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
@@ -20,7 +20,7 @@ public class NoiseHeardState : BaseState
             guard.EnemyPatrol.StopMoving();
             return typeof(DeadState);
         }
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -62,10 +62,11 @@ public class NoiseHeardState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
+        this.AIManager = EnemyAIManager.Instance;
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.NoiseHeard);
         guard.SetAlertLevel(55);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAlertedStateSFX();
-        this.AIManager = EnemyAIManager.Instance;
+        
     }
 
     public override void OnStateExit()

@@ -7,8 +7,8 @@ public class EnemyAI : MonoBehaviour
     public List<KeyValuePair<float, Transform>> visibleTargets;
 
     private FieldOfView fieldOfView;
-    private EnemyNavigation enemyNavigation;
-    private EnemyPatrol enemyPatrol;
+    private SentinelNavigation enemyNavigation;
+    private SentinelPatrol enemyPatrol;
 
     
 
@@ -19,8 +19,8 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         fieldOfView = GetComponent<FieldOfView>();
-        enemyNavigation = GetComponent<EnemyNavigation>();
-        enemyPatrol = GetComponent<EnemyPatrol>();
+        enemyNavigation = GetComponent<SentinelNavigation>();
+        enemyPatrol = GetComponent<SentinelPatrol>();
 
         visibleTargets = fieldOfView.visibleTargets;
 

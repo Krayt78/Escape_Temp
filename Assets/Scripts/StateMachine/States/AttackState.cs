@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-
-    private Guard guard;
+    private EnemyBase guard;
     private EnemyAIManager AIManager;
     private float lostTimer = 0;
 
-    public AttackState(Guard guard) : base(guard.gameObject)
+    public AttackState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
@@ -21,7 +20,7 @@ public class AttackState : BaseState
             return typeof(DeadState);
         }
 
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -67,7 +66,7 @@ public class AttackState : BaseState
                 guard.EnemyPatrol.ResumeMoving();
                 guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
                 guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
-                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
+                if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
                 lostTimer += Time.deltaTime;
             }
 
@@ -79,7 +78,7 @@ public class AttackState : BaseState
             guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
             guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
             guard.EnemyNavigation.ChaseTarget(guard.Target.position);
-            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
+            if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
             guard.EnemyAttack.AttackRoutine(guard.Target);
         }
@@ -98,6 +97,7 @@ public class AttackState : BaseState
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
         guard.EnemyPatrol.SetSpeed(5f);
         guard.EnemyPatrol.ResumeMoving();
+        guard.EnemyAnimationController.TriggerAttack();
     }
 
     public override void OnStateExit()

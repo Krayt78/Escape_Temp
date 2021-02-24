@@ -23,6 +23,10 @@ public class Bullet : MonoBehaviour
         {
             other.gameObject.GetComponentInParent<EntityController>().TakeDamages(Damages);
         }
+        if(other.gameObject.GetComponent<EnemyController>() != null)
+        {
+            return;
+        }
 
         Destroy(gameObject);
     }

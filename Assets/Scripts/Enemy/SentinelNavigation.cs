@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyNavigation : MonoBehaviour
+public class SentinelNavigation : EnemyNavigationBase
 {
-
     private NavMeshAgent navMeshAgent;
-
-    public Vector3 targetLastSeenPosition;
-    public Transform targetLastSeenTransform;
 
     void Start()
     {
@@ -17,17 +11,17 @@ public class EnemyNavigation : MonoBehaviour
         navMeshAgent.Warp(transform.position);
     }
 
-    public void ChaseTarget(Vector3 targetPosition)
+    public override void ChaseTarget(Vector3 targetPosition)
     {
         SetDestination(targetPosition);
     }
 
-    private void SetDestination(Vector3 targetPosition)
+    public override void SetDestination(Vector3 targetPosition)
     {
         navMeshAgent.SetDestination(targetPosition);
     }
 
-    public float GetDistanceRemaining(){
+    public override float GetDistanceRemaining(){
         return navMeshAgent.remainingDistance;
     }
 

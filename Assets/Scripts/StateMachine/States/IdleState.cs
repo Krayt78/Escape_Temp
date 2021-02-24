@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    private Guard guard;
+    private EnemyBase guard;
 
-    public IdleState(Guard guard) : base(guard.gameObject)
+    public IdleState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
 
     public override Type Tick()
     {
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -35,11 +35,9 @@ public class IdleState : BaseState
 
     public override void OnStateEnter(StateMachine manager)
     {
-        Debug.Log("Entering Idle state");
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("Exiting Idle state");
     }
 }

@@ -12,15 +12,28 @@ public class EnemyOrientation : MonoBehaviour
 
     public void OrientationTowardsTarget(Transform target)
     {
+        if(GetComponent<DronePatrol>() == null)
+        {
+            // The step size is equal to speed times frame time.
+            step = rotationSpeed * Time.deltaTime;
+            targetRotation = Quaternion.LookRotation(new Vector3(target.position.x, 0, target.position.z)
+                - new Vector3(transform.position.x, 0, transform.position.z));
 
-        // The step size is equal to speed times frame time.
-        step = rotationSpeed * Time.deltaTime;
-        targetRotation = Quaternion.LookRotation(new Vector3(target.position.x, 0, target.position.z)
-                                                    - new Vector3(transform.position.x, 0, transform.position.z));
-            //target.position - transform.position);
-
-        // Rotate our transform a step closer to the target's.
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+            // Rotate our transform a step closer to the target's.
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+        }
+        else
+        {
+            if(!GetComponent<DronePatrol>().isRotating)
+            {
+                step = rotationSpeed * 5 * Time.deltaTime;
+                targetRotation = Quaternion.LookRotation(new Vector3(target.position.x, Terrain.activeTerrain.SampleHeight(target.position) + 5f, target.position.z)
+                    - new Vector3(transform.position.x, Terrain.activeTerrain.SampleHeight(transform.position) + 5f, transform.position.z));
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+            }
+            
+        }
+        
     }
 
     private IEnumerator OrientationTowardsTargetEnumerator(){

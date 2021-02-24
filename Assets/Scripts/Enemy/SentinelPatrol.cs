@@ -4,8 +4,9 @@ using UnityEngine;
 using System;
 using UnityEngine.AI;
 
-public class EnemyPatrol : MonoBehaviour
+public class SentinelPatrol : EnemyPatrolBase
 {
+    [SerializeField]
     public event Action OnWaypointReached = delegate { };
 
     [SerializeField]
@@ -38,30 +39,28 @@ public class EnemyPatrol : MonoBehaviour
         
     }
 
-    public void GoToNextCheckpoint()
+    public override void GoToNextCheckpoint()
     {
         if (WaypointPatrolList.Count == (currentWaypointNumber + 1))
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
 
         Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
-        //Debug.Log(newPos);
         newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + .5f;
-        //Debug.Log(newPos);
         navMeshAgent.SetDestination(newPos);
     }
 
-    public void StopMoving()
+    public override void StopMoving()
     {
         navMeshAgent.isStopped = true;
     }
 
-    public void ResumeMoving()
+    public override void ResumeMoving()
     {
         navMeshAgent.isStopped = false;
     }
 
-    public bool DestinationReached()
+    public override bool DestinationReached()
     {
         // Check if we've reached the destination
         if (!navMeshAgent.pathPending)
@@ -78,7 +77,7 @@ public class EnemyPatrol : MonoBehaviour
         return false;
     }
 
-    public void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 10f)
+    public override void AddRandomWaypointNear(Vector3 guardPos, bool isRandom = false, int minNbPoints = 0, int maxNbPoints = 1, float distance = 10f)
     {
         OldWaypointPatrolList = new List<GameObject>(WaypointPatrolList);
         oldWaypointNumber = currentWaypointNumber;
@@ -103,7 +102,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    public void RestoreWaypoints()
+    public override void RestoreWaypoints()
     {
         if(OldWaypointPatrolList.Count > 0)
         {
@@ -113,15 +112,16 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    public bool IsNextCheckpointTemporary(){
-        return WaypointPatrolList[currentWaypointNumber].name.Contains(TEMP_WAYPOINT_NAME);
-    }
-
-    public bool HasRandomWaypoints(){
+    public override bool HasRandomWaypoints(){
         return hasRandomWaypoints;
     }
 
-    public void SetSpeed(float speed)
+    public override bool IsNextCheckpointTemporary()
+    {
+        return WaypointPatrolList[currentWaypointNumber].name.Contains(TEMP_WAYPOINT_NAME);
+    }
+
+    public override void SetSpeed(float speed)
     {
         navMeshAgent.speed = speed;
     }

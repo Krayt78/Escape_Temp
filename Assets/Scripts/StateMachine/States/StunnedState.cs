@@ -6,9 +6,9 @@ using UnityEngine;
 public class StunnedState : BaseState
 {
 
-    private Guard guard;
+    private EnemyBase guard;
 
-    public StunnedState(Guard guard) : base(guard.gameObject)
+    public StunnedState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
@@ -21,7 +21,7 @@ public class StunnedState : BaseState
             return typeof(DeadState);
         }
 
-        if (!guard.isStunned)
+        if (!guard.IsStunned)
         {
             guard.EnemyPatrol.ResumeMoving();
      

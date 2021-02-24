@@ -69,14 +69,20 @@ public class VrPlayerEntityController : EntityController
             if (hitObject.CompareTag("Player"))
             {
                 Debug.Log("Player hit");
+                UIManager.Instance.HideAbilityUI();
+            }
+            else if(hitObject.GetComponent<LineRenderer>()){
+                UIManager.Instance.ShowAbilityUI();
             }
             else if(hitObject.GetComponent<EntityController>())
             {
                 Attack(hitObject.GetComponent<EntityController>());
+                UIManager.Instance.HideAbilityUI();
                 Debug.Log("Attack");
             }
             else if(hitObject.GetComponent<Interactable>())
             {
+                UIManager.Instance.HideAbilityUI();
                 hitObject.GetComponent<Interactable>().Use(this.gameObject);
                 Debug.Log("Interact with " + hitObject.ToString());
             }

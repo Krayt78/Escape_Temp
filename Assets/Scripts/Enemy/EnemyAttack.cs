@@ -28,14 +28,15 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     GameObject laserShootEffect;
 
-    private Guard guard;
+    private EnemyBase guard;
     bool locked = false;
 
     public event Action OnFireAtTarget = delegate { };
 
     private void Start()
     {
-        guard = GetComponentInParent<Guard>();
+        if(GetComponentInParent<Guard>() != null) guard = GetComponentInParent<Guard>();
+        else guard = GetComponentInParent<Drone>();
     }
 
 
@@ -66,7 +67,7 @@ public class EnemyAttack : MonoBehaviour
         GetComponent<GuardSoundEffectController>()?.PlayLoadingFireSFX();
         yield return new WaitForSeconds(0.75f);
         guard.EnemyAnimationController.TriggerAttackTurret();
-        GameObject shootEffect= Instantiate(laserShootEffect, FiringPoint.transform);
+        GameObject shootEffect = Instantiate(laserShootEffect, FiringPoint.transform);
         Destroy(shootEffect, shootEffect.GetComponent<VisualEffect>().GetFloat("Duration") + 0.25f);
         GameObject bullet = Instantiate(Bullet, FiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
         cooldown = fireRate;

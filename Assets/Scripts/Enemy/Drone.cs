@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : EnemyBase
+public class Drone : EnemyBase
 {
     [SerializeField]
     private bool debugMode;
@@ -30,11 +30,13 @@ public class Guard : EnemyBase
     public override float AlertLevel { get { return alertLevel; } protected set => alertLevel = value; }
     [SerializeField]
     [Range(0f, 100f)]
-    public float alertFactor = 50f;
+    private float alertFactor = 50f;
     public override float AlertFactor { get => alertFactor; protected set => alertFactor = value; }
 
     // TIME between SIGHTED and ATTACKING
     public readonly float SIGHTED_TIMER = 6f;
+
+    
 
     public override Transform NoiseHeard { get; protected set; }
     public override FieldOfView FieldOfView { get; protected set; }
@@ -57,7 +59,6 @@ public class Guard : EnemyBase
 
     [SerializeField]
     private BaseState CurrentState => stateMachine.CurrentState;
-
     private RagdolToggle EnemyRagdolToggle;
 
     private void Start()
@@ -65,13 +66,13 @@ public class Guard : EnemyBase
 
         FieldOfView = GetComponent<FieldOfView>();
         EnemyEyeMovement = GetComponent<EnemyEyeMovement>();
-        EnemyNavigation = GetComponent<SentinelNavigation>();
-        EnemyPatrol = GetComponent<SentinelPatrol>();
+        EnemyNavigation = GetComponent<DroneNavigation>();
+        EnemyPatrol = GetComponent<DronePatrol>();
         EnemyAttack = GetComponent<EnemyAttack>();
         EnemyOrientation = GetComponent<EnemyOrientation>();
         NoiseReceiver = GetComponent<NoiseReceiver>();
         EnemyController = GetComponent<EnemyController>();
-        EnemyAnimationController = GetComponent<SentinelAnimationController>();
+        EnemyAnimationController = GetComponent<DroneAnimationController>();
         EnemyNoiseEmitter = GetComponent<NoiseEmitter>();
         EnemyRagdolToggle = GetComponent<RagdolToggle>();
         EnemyVisualFeedBack = GetComponent<EnemyVisualFeedBack>();
@@ -82,7 +83,7 @@ public class Guard : EnemyBase
             GuardingOrientation = transform.rotation;
         }
 
-        IsStunned = false;
+        isStunned = false;
 
         //Emit sound regularly
         InvokeRepeating("EmitNoise", 2.0f, 2.0f);
@@ -140,9 +141,9 @@ public class Guard : EnemyBase
     private void OnTargetSighted()
     {
         SetTarget(FieldOfView.visibleTargets[0].Value);
-        angleToTarget = FieldOfView.visibleTargets[0].Key;
+        AngleToTarget = FieldOfView.visibleTargets[0].Key;
         EnemyAIManager.Instance.AddEnemyOnSight(this);
-        EnemyAnimationController.TriggerSight();
+        // EnemyAnimationController.TriggerSight();
     }
 
     private void OnDeadBodyFound()
@@ -154,16 +155,18 @@ public class Guard : EnemyBase
     private void OnTargetLost()
     {
         EnemyAIManager.Instance.RemoveEnemyOnSight(this);
-        if(Target){
+        if (Target)
+        {
             EnemyNavigation.targetLastSeenPosition = Target.transform.position;
             EnemyNavigation.targetLastSeenTransform = Target.transform;
         }
-        EnemyAnimationController.TriggerEndSight();
+        EnemyAnimationController.TriggerEndAttack();
         SetTarget(null);
     }
 
     private void OnAttack()
     {
+        Debug.Log("drone onAttack");
         EnemyAnimationController.TriggerAttack();
     }
 
@@ -217,5 +220,4 @@ public class Guard : EnemyBase
     {
         this.AlertLevel = value;
     }
-    
 }

@@ -7,13 +7,12 @@ using UnityEngine;
 public class PatrollState : BaseState
 {
 
-    private Guard guard;
+    private EnemyBase guard;
     private EnemyAIManager AIManager;
 
-    public PatrollState(Guard guard) : base(guard.gameObject)
+    public PatrollState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
-        //this.guard.stateMachine.CurrentStateName = "PatrollState";
     }
 
     public override Type Tick()
@@ -24,7 +23,7 @@ public class PatrollState : BaseState
             return typeof(DeadState);
         }
 
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -32,7 +31,6 @@ public class PatrollState : BaseState
 
         if (guard.Target)
         {
-            Debug.Log("patrollState has target");
             return typeof(SightedState);
         }
 
@@ -40,7 +38,7 @@ public class PatrollState : BaseState
             return typeof(AlertedState);
         }
 
-        if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>() && !guard.Target)
+        if (guard.NoiseHeard && !guard.NoiseHeard.GetComponent<Guard>() && !guard.NoiseHeard.GetComponent<Drone>() && !guard.Target)
         {
             guard.EnemyNavigation.ChaseTarget(guard.NoiseHeard.position);
             return typeof(NoiseHeardState);

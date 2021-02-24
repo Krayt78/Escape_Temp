@@ -16,8 +16,8 @@ public class EnemyAIManager : MonoBehaviour
     private float currentTimer = 0f;
     public int onAttack = 0;
 
-    private List<Guard> EnemiesOnAlert = new List<Guard>();
-    private List<Guard> EnemiesOnSight = new List<Guard>();
+    private List<EnemyBase> EnemiesOnAlert = new List<EnemyBase>();
+    private List<EnemyBase> EnemiesOnSight = new List<EnemyBase>();
 
 
     private void OnGUI()
@@ -58,7 +58,7 @@ public class EnemyAIManager : MonoBehaviour
         if(GlobalAlertLevel < 1) OnStopAlarm();
     }
 
-    public void AddEnemyOnSight(Guard enemy)
+    public void AddEnemyOnSight(EnemyBase enemy)
     {
         if(EnemiesOnSight.Count == 0) currentTimer = 0;
         if(!EnemiesOnSight.Exists(element => element.Equals(enemy)))
@@ -68,7 +68,7 @@ public class EnemyAIManager : MonoBehaviour
         }
     }
 
-    public void AddEnemyOnAlert(Guard enemy)
+    public void AddEnemyOnAlert(EnemyBase enemy)
     {
         if(!EnemiesOnAlert.Exists(element => element.Equals(enemy)))
         {
@@ -76,7 +76,7 @@ public class EnemyAIManager : MonoBehaviour
         } 
     }
 
-    public void RemoveEnemyOnSight(Guard enemy)
+    public void RemoveEnemyOnSight(EnemyBase enemy)
     {
         if(EnemiesOnSight.Exists(element => element.Equals(enemy)))
         {
@@ -86,7 +86,7 @@ public class EnemyAIManager : MonoBehaviour
         if(EnemiesOnSight.Count == 0 && EnemiesOnAlert.Count == 0) SetGlobalAlertLevel(0);
     }
 
-    public void RemoveEnemyOnAlert(Guard enemy)
+    public void RemoveEnemyOnAlert(EnemyBase enemy)
     {
         if(EnemiesOnAlert.Exists(element => element.Equals(enemy)))
         {
@@ -106,7 +106,7 @@ public class EnemyAIManager : MonoBehaviour
         return EnemiesOnSight.Count > 0;
     }
 
-    public bool HasCurrentEnemyAlerted(Guard enemy)
+    public bool HasCurrentEnemyAlerted(EnemyBase enemy)
     {
         return EnemiesOnAlert.Exists(element => element.Equals(enemy));
     }

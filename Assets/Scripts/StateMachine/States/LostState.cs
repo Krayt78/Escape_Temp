@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LostState : BaseState
 {
-    private Guard guard;
+    private EnemyBase guard;
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
 
@@ -13,7 +13,7 @@ public class LostState : BaseState
 
     private EnemyAIManager AIManager;
 
-    public LostState(Guard guard) : base(guard.gameObject)
+    public LostState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
@@ -27,7 +27,7 @@ public class LostState : BaseState
             return typeof(DeadState);
         }
 
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -93,12 +93,12 @@ public class LostState : BaseState
         guard.EnemyPatrol.SetSpeed(1.5f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringLostStateSFX();
-        if(guard.AlertLevel >= 50){
+        if(guard.AlertLevel >= 50 && guard.GetComponent<Drone>() != null){
             guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
         }
         else{
             guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
-            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+            if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
             guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
         }
     }
