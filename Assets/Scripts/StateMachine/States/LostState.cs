@@ -33,7 +33,6 @@ public class LostState : BaseState
             return typeof(StunnedState);
         }
 
-        //Debug.Log("loststate, guard has Target : "+guard.Target);
         if(guard.Target)
         {
             if (guard.AlertLevel >= 100 || (AIManager.onAttack > 0 && AIManager.HasCurrentEnemyAlerted(guard)))
@@ -77,9 +76,7 @@ public class LostState : BaseState
 
     private void AlertLevelDown()
     {
-        //distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel - (Time.deltaTime * 3f), 0f, 100f));
-       // Debug.Log("Alert level down : "+guard.AlertLevel);
     }
 
     public override void OnStateEnter(StateMachine manager)
@@ -89,7 +86,6 @@ public class LostState : BaseState
         guard.EnemyPatrol.ResumeMoving();
         AIManager.RemoveEnemyOnSight(guard);
         AIManager.RemoveEnemyOnAlert(guard);
-        //guard.EnemyEyeMovement.MoveEyeRandomly();
         guard.EnemyPatrol.SetSpeed(1.5f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringLostStateSFX();
