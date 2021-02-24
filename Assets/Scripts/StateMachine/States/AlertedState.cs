@@ -38,21 +38,8 @@ public class AlertedState : BaseState
         {
             if(lostTimer >= 3f)
             {
-                // AIManager.RemoveEnemyOnSight(guard);
-                // guard.EnemyPatrol.ResumeMoving();
-                // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                
                 if(AIManager.GlobalAlertLevel < 66f)
                 {
-                    // if(!guard.EnemyPatrol.HasRandomWaypoints()){
-                    //     if(guard.AlertLevel >= 50){
-                    //         guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
-                    //         // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    //     }
-                    //     else{
-                    //         guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    //     }
-                    // }
                     return typeof(LostState);
                 }
             }
