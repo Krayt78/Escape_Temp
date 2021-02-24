@@ -24,6 +24,8 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void Awake()
     {
+        InitializePlayerStateMachine();
+
         playerEntityController = GetComponent<PlayerEntityController>();
         playerDNALevel = GetComponent<PlayerDNALevel>();
         playerAbilities = GetComponent<PlayerAbilitiesController>();
@@ -33,10 +35,7 @@ public class PlayerEvolutionStateMachine : StateMachine
 
     private void Start()
     {
-        InitializePlayerStateMachine();
         SetStartState();
-
-
         if (playerCarateristic != null)
         {
             BasePlayerState currentPlayerState = (BasePlayerState)CurrentState;

@@ -59,7 +59,6 @@ public class PlayerCarateristicController : MonoBehaviour
 
     public void UpdateCharacteristicValues(float newSpeed, float newSize, float[] newSizeBounds, float newDamages, float newDefenseRatio, float newDnaAbsorbedRatio, float newNoise, float easingSpeed= DEFAULT_EASING_DELAY)
     {
-        Debug.Log("DEFENSE RATIO : " + newDefenseRatio);
         speed = newSpeed;
         size = newSize;
         sizeBounds = newSizeBounds;
@@ -89,11 +88,10 @@ public class PlayerCarateristicController : MonoBehaviour
             playerMovement.moveSpeed = speed;
         if (mover)
         {
-            //if (UseVR.Instance.UseVr)
-            //    Camera.main.transform.parent.localPosition = new Vector3(0, size, 0);
-
+            float previousSize = mover.xrRig.transform.localScale.y;
             mover.xrRig.transform.localScale = new Vector3(size, size, size);
-            //mover.UpdateSize(size, sizeBounds[0], sizeBounds[1]);
+            if(size>previousSize)
+                mover.xrRig.GetComponent<CharacterController>().Move(Vector3.up * 2);
 
             mover.speed = speed;
         }

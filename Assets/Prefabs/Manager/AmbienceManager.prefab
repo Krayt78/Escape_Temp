@@ -478,31 +478,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc990a50585d111428cec21985998429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerToFollow: {fileID: 0}
+  bodyToFollow: {fileID: 0}
   currentTerrain: {fileID: 0}
-  windEvent: event:/Ambiance/WindAmbient
-  firstLayerEvent: event:/Ambiance/WoodCrack
-  secondLayerEvent: event:/Ambiance/Cricket
-  thirdLayerEvent: event:/Ambiance/Hyena
-  windEmitter: {fileID: 8535730674790725289}
-  firstLayerEmitters:
-  - {fileID: 8535730676431099989}
-  - {fileID: 8535730675947029340}
-  - {fileID: 8535730676547956616}
-  - {fileID: 8535730676606909556}
-  secondLayerEmitters:
-  - {fileID: 8535730675442241710}
-  - {fileID: 8535730676190777512}
-  - {fileID: 8535730675693639605}
-  - {fileID: 8535730675278596404}
-  thirdLayerEmitters:
-  - {fileID: 8535730675497120278}
-  - {fileID: 8535730676253928556}
-  - {fileID: 8535730676566035134}
-  - {fileID: 8535730674924245873}
-  firstLayerDelayBetweenPlay: 30
-  secondLayerDelayBetweenPlay: 48
-  thirdLayerDelayBetweenPlay: 70
+  tutorialEvent: event:/Ambiance/AmbientTutorial
+  forestEvent: event:/Ambiance/AmbientForest
+  oceanEvent: event:/Ambiance/AmbientOcean
 --- !u!1 &8535730676190777518
 GameObject:
   m_ObjectHideFlags: 0
