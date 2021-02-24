@@ -36,44 +36,25 @@ public class AttackState : BaseState
             {
                 if (!AIManager.HasEnemySighted())
                 {
-                    // if(!guard.EnemyPatrol.HasRandomWaypoints()){
-                    //     if(guard.AlertLevel >= 50){
-                    //         // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    //         guard.EnemyPatrol.AddRandomWaypointNear(guard.EnemyNavigation.targetLastSeenPosition, true);
-                    //     }
-                    //     else{
-                    //         guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                    //         guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
-                    //         guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
-                    //     }
-                    // }
                     return typeof(LostState);
                 }
                 else
                 {
                     return typeof(AlertedState);
                 }
-                // else
-                // {
-                //     // guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
-                //     // guard.EnemyOrientation.OrientationTowardsTarget(guard.Target);
-                //     // guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
-                //     return typeof(LostState);
-                // }
             }
             else
             {
                 guard.EnemyPatrol.ResumeMoving();
-                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
+                guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
                 guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
-                if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenTransform.position);
+                if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
                 lostTimer += Time.deltaTime;
             }
 
         }
         else
         {
-            Debug.Log("Reset TIMER");
             lostTimer = 0;
             guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
             guard.EnemyNavigation.targetLastSeenTransform = guard.Target;

@@ -29,6 +29,8 @@ public class EnemyOrientation : MonoBehaviour
                 step = rotationSpeed * 5 * Time.deltaTime;
                 targetRotation = Quaternion.LookRotation(new Vector3(target.position.x, Terrain.activeTerrain.SampleHeight(target.position) + 5f, target.position.z)
                     - new Vector3(transform.position.x, Terrain.activeTerrain.SampleHeight(transform.position) + 5f, transform.position.z));
+                targetRotation.x = 0;
+                targetRotation.z = 0;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
             }
             

@@ -31,23 +31,12 @@ public class DronePatrol : EnemyPatrolBase
             PathFinding();
         }
         float distance = Vector3.Distance(new Vector3(targetPosition.x, 0, targetPosition.z), new Vector3(transform.position.x, 0, transform.position.z));
-        Debug.Log("distance : "+distance);
-        // if (canMove && Vector3.distance(transform.position))
-        // if (canMove)
-        // {
-        //     transform.rotation = Quaternion.AngleAxis(transform.rotation.eulerAngles.y + (speed * Time.deltaTime) / 2, Vector3.up);
-        //     // if(distance > 4f) 
-        //     // {
-        //     //     transform.position += transform.forward * speed * Time.deltaTime;
-        //     // }
-        // }
+
         if (onTarget)
         {
             PathFinding();
             float step = speed * Time.deltaTime;
-            targetPosition.y = Terrain.activeTerrain.SampleHeight(targetPosition) + 5f;
-            // y = terrain sample height + 5f // TO ADD
-            Debug.Log("distance : " + distance);
+            targetPosition.y = Terrain.activeTerrain.SampleHeight(targetPosition) + 10f;
             if(distance > 6f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
@@ -56,34 +45,11 @@ public class DronePatrol : EnemyPatrolBase
             {
                 OrientationTowardsTarget();
             }
-            
-            //Turn();
         }
-    }
-
-    private void Turn()
-    {
-        // Vector3 targetDirection = transform.position - targetPosition;
-        // float signedAngle = Mathf.Abs(Vector3.SignedAngle(transform.forward, targetDirection.normalized, Vector3.up));
-        // Quaternion rotationToTarget = Quaternion.AngleAxis(signedAngle, Vector3.up);
-        // transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationToTarget, 180);
-        // if(targetPosition != null)
-        // {
-        //     Vector3 pos = targetPosition - transform.position;
-        //     Debug.DrawRay(transform.position, pos * detectionDistance, Color.cyan);
-        //     Quaternion rotation = Quaternion.LookRotation(pos);
-        //     rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.z, 0);
-        //     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180);
-        //     // transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
-        //     // transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.z, 0);
-        // } 
-        
-        
     }
 
     private void PathFinding()
     {
-        Debug.Log("pathfinding");
         RaycastHit hit;
         Vector3 raycastOffset = Vector3.zero;
 
@@ -123,17 +89,12 @@ public class DronePatrol : EnemyPatrolBase
         else
         {
             isRotating = false;
-            // Turn();
         }
 
     }
 
     public override void GoToNextCheckpoint()
     {
-        Debug.Log("GoToNextCheckPoint drone");
-        //isMoving = true;
-        // do nothing
-        //ajouter comportement avec waypoints
         if (WaypointPatrolList.Count == (currentWaypointNumber + 1))
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
@@ -148,8 +109,10 @@ public class DronePatrol : EnemyPatrolBase
     public void OrientationTowardsTarget()
     {
         float step = 30 * 5 * Time.deltaTime;
-        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetPosition.x, Terrain.activeTerrain.SampleHeight(targetPosition) + 5f, targetPosition.z)
+        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetPosition.x, Terrain.activeTerrain.SampleHeight(targetPosition) + 10f, targetPosition.z)
             - new Vector3(transform.position.x, Terrain.activeTerrain.SampleHeight(transform.position) + 5f, transform.position.z));
+        targetRotation.x = 0;
+        targetRotation.z = 0;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
     }
 
@@ -168,7 +131,6 @@ public class DronePatrol : EnemyPatrolBase
 
     public override bool DestinationReached()
     {
-        Debug.Log("DestinationReached drone");
         if(targetPosition == Vector3.zero) return true;
         else return (Vector3.Distance(new Vector3(targetPosition.x, 0, targetPosition.z), new Vector3(transform.position.x, 0, transform.position.z)) < 6);
     }
@@ -195,7 +157,7 @@ public class DronePatrol : EnemyPatrolBase
         isMoving = true;
         canMove = false;
         onTarget = true;
-        pos.y = Terrain.activeTerrain.SampleHeight(pos) + 5f;
+        pos.y = Terrain.activeTerrain.SampleHeight(pos) + 10f;
         targetPosition = pos;
     }
 
