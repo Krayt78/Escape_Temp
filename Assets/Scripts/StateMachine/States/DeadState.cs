@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class DeadState : BaseState
 {
-    private Guard guard;
+    private EnemyBase guard;
     private EnemyAIManager AIManager;
 
-    public DeadState(Guard guard) : base(guard.gameObject)
+    public DeadState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }

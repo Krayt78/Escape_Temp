@@ -385,12 +385,12 @@ GameObject:
   - component: {fileID: 1014100991790816346}
   - component: {fileID: 340897990855427195}
   - component: {fileID: 8816052375809840466}
-  - component: {fileID: 5466818140407036009}
   - component: {fileID: 8262919992601365204}
   - component: {fileID: 7912495944996205763}
   - component: {fileID: 7241542291936504553}
   - component: {fileID: 6852265252787740648}
   - component: {fileID: 5130429992329635616}
+  - component: {fileID: 4884945960152327490}
   m_Layer: 11
   m_Name: StateGuard w_ Armor
   m_TagString: Untagged
@@ -683,20 +683,6 @@ MonoBehaviour:
   - {fileID: 8202481214356513610}
   - {fileID: 3554251870148284152}
   - {fileID: 7344412969325947613}
---- !u!114 &5466818140407036009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7016531009929077399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011703b3f3cc69f44bb4379aa63a1f17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLastSeenPosition: {x: 0, y: 0, z: 0}
-  targetLastSeenTransform: {fileID: 0}
 --- !u!114 &8262919992601365204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,6 +756,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 30
+--- !u!114 &4884945960152327490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016531009929077399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011703b3f3cc69f44bb4379aa63a1f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLastSeenPosition: {x: 0, y: 0, z: 0}
+  targetLastSeenTransform: {fileID: 0}
 --- !u!1 &7617289542263088525
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : MonoBehaviour
+public class Guard : EnemyBase
 {
     [SerializeField]
     private bool debugMode;
     [SerializeField]
-    public Transform Target { get; private set; }
-    public float angleToTarget = default;
+    public override Transform Target { get; protected set; }
+    private float angleToTarget = default;
+    public override float AngleToTarget { get => angleToTarget; protected set => angleToTarget = value; }
 
     [SerializeField]
-    public bool isStunned;
+    private bool isStunned;
+    public override bool IsStunned { get => isStunned; protected set => isStunned = value; }
 
     [SerializeField]
     private bool isDead = false;
@@ -20,58 +22,56 @@ public class Guard : MonoBehaviour
     private bool isStaticGuard = false;
     public bool bodyFound = false;
 
-    public bool IsDead { get { return isDead; } private set { isDead = value; } }
-    public bool IsStaticGuard { get { return isStaticGuard; } private set { isStaticGuard = value; } }
+    public override bool IsDead { get { return isDead; } protected set => isDead = value; }
+    public override bool IsStaticGuard { get { return isStaticGuard; } protected set => isStaticGuard = value; }
 
     [Range(0f, 100f)]
     private float alertLevel = 0f;
+    public override float AlertLevel { get { return alertLevel; } protected set => alertLevel = value; }
+    [SerializeField]
+    [Range(0f, 100f)]
+    public float alertFactor = 50f;
+    public override float AlertFactor { get => alertFactor; protected set => alertFactor = value; }
+
     // TIME between SIGHTED and ATTACKING
     public readonly float SIGHTED_TIMER = 6f;
 
-    public float AlertLevel { get { return alertLevel; } private set { alertLevel = value; } }
-
-    public Transform NoiseHeard { get; private set; }
-    public FieldOfView FieldOfView { get; private set; }
-    public EnemyEyeMovement EnemyEyeMovement { get; private set; }
-    public EnemyNavigation EnemyNavigation { get; private set; }
-    public EnemyPatrol EnemyPatrol { get; private set; }
-    public EnemyAttack EnemyAttack { get; private set; }
-    public EnemyOrientation EnemyOrientation { get; private set; }
-    public NoiseReceiver NoiseReceiver { get; private set; }
-    public EnemyController EnemyController { get; private set; }
-    public EnemyAnimationController EnemyAnimationController { get; private set; }
-    public NoiseEmitter EnemyNoiseEmitter { get; private set; }
-    public EnemyVisualFeedBack EnemyVisualFeedBack { get; private set; }
+    public override Transform NoiseHeard { get; protected set; }
+    public override FieldOfView FieldOfView { get; protected set; }
+    public override EnemyEyeMovement EnemyEyeMovement { get; protected set; }
+    public override EnemyNavigationBase EnemyNavigation { get; protected set; }
+    public override EnemyPatrolBase EnemyPatrol { get; protected set; }
+    public override EnemyAttack EnemyAttack { get; protected set; }
+    public override EnemyOrientation EnemyOrientation { get; protected set; }
+    public override NoiseReceiver NoiseReceiver { get; protected set; }
+    public override EnemyController EnemyController { get; protected set; }
+    public override EnemyAnimationControllerBase EnemyAnimationController { get; protected set; }
+    public override NoiseEmitter EnemyNoiseEmitter { get; protected set; }
+    public override EnemyVisualFeedBack EnemyVisualFeedBack { get; protected set; }
 
     //variables to store the orientation and position in case of a static guard;
-    public Vector3 GuardingPosition { get; private set; }
-    public Quaternion GuardingOrientation { get; private set; }
-
-    private RagdolToggle EnemyRagdolToggle;
-
-    // public bool isStunned { get; private set; }
+    public override Vector3 GuardingPosition { get; protected set; }
+    public override Quaternion GuardingOrientation { get; protected set; }
 
     public StateMachine stateMachine => GetComponent<StateMachine>();
 
     [SerializeField]
     private BaseState CurrentState => stateMachine.CurrentState;
 
-    [SerializeField]
-    [Range(0f,100f)]
-    public float alertFactor = 50f;
+    private RagdolToggle EnemyRagdolToggle;
 
     private void Start()
     {
 
         FieldOfView = GetComponent<FieldOfView>();
         EnemyEyeMovement = GetComponent<EnemyEyeMovement>();
-        EnemyNavigation = GetComponent<EnemyNavigation>();
-        EnemyPatrol = GetComponent<EnemyPatrol>();
+        EnemyNavigation = GetComponent<SentinelNavigation>();
+        EnemyPatrol = GetComponent<SentinelPatrol>();
         EnemyAttack = GetComponent<EnemyAttack>();
         EnemyOrientation = GetComponent<EnemyOrientation>();
         NoiseReceiver = GetComponent<NoiseReceiver>();
         EnemyController = GetComponent<EnemyController>();
-        EnemyAnimationController = GetComponent<EnemyAnimationController>();
+        EnemyAnimationController = GetComponent<SentinelAnimationController>();
         EnemyNoiseEmitter = GetComponent<NoiseEmitter>();
         EnemyRagdolToggle = GetComponent<RagdolToggle>();
         EnemyVisualFeedBack = GetComponent<EnemyVisualFeedBack>();
@@ -82,7 +82,7 @@ public class Guard : MonoBehaviour
             GuardingOrientation = transform.rotation;
         }
 
-        isStunned = false;
+        IsStunned = false;
 
         //Emit sound regularly
         InvokeRepeating("EmitNoise", 2.0f, 2.0f);
@@ -132,7 +132,6 @@ public class Guard : MonoBehaviour
 
     private void OnDies()
     {
-        Debug.Log("On dies");
         EnemyRagdolToggle.RagdollActive(true);
         IsDead = true;
         gameObject.layer = 19;
@@ -149,7 +148,6 @@ public class Guard : MonoBehaviour
     private void OnDeadBodyFound()
     {
         EnemyAIManager.Instance.SetGlobalAlertLevel(EnemyAIManager.Instance.GlobalAlertLevel + 25f);
-        Debug.Log("BODY FOUND!");
         this.stateMachine.SwitchToNewState(typeof(LostState));
     }
 
@@ -166,7 +164,7 @@ public class Guard : MonoBehaviour
 
     private void OnAttack()
     {
-        EnemyAnimationController.TriggerEndSight();
+        EnemyAnimationController.TriggerAttack();
     }
 
     private void OnNoiseReceived(Noise noise)
@@ -174,35 +172,28 @@ public class Guard : MonoBehaviour
         if (noise.emitter.GetComponent<Guard>())
             return;
         NoiseHeard = noise.emitter.transform;
-        Debug.Log("noise heard");
     }
 
     private void OnStunned(float stunDuration)
     {
-        SetIsStunned(true);
+        IsStunned = true;
         EnemyAnimationController.TriggerStunned();
         StartCoroutine(RecoverFromStun(stunDuration));
     }
 
-    private void SetIsStunned(bool stunned)
-    {
-        isStunned = stunned;
-    }
-
-    IEnumerator RecoverFromStun(float stunDuration)
+    private IEnumerator RecoverFromStun(float stunDuration)
     {
         yield return new WaitForSeconds(stunDuration);
 
-        SetIsStunned(false);
+        IsStunned = false;
         EnemyAnimationController.TriggerEndStunned();
     }
 
-    public void SetTarget(Transform target)
+    public override void SetTarget(Transform target)
     {
         Target = target;
-        //EnemyAIManager.Instance.Add
     }
-    public void ResetNoise()
+    public override void ResetNoise()
     {
         NoiseHeard = null;
     }
@@ -222,7 +213,7 @@ public class Guard : MonoBehaviour
         GetComponentInChildren<AIDebugMode>().gameObject.SetActive(true);
     }
 
-    public void SetAlertLevel(float value)
+    public override void SetAlertLevel(float value)
     {
         this.AlertLevel = value;
     }

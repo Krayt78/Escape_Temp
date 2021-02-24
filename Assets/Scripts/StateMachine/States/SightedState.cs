@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SightedState : BaseState
 {
-    private Guard guard;
+    private EnemyBase guard;
     private EnemyAIManager AIManager;
 
     private float distanceBetweenTargetAndGuard;
@@ -13,7 +13,7 @@ public class SightedState : BaseState
     private float lostTimer = 0;
     private float sightedTimer = 0;
 
-    public SightedState(Guard guard) : base(guard.gameObject)
+    public SightedState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
     }
@@ -26,7 +26,7 @@ public class SightedState : BaseState
             return typeof(DeadState);
         }
 
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
@@ -37,7 +37,7 @@ public class SightedState : BaseState
             sightedTimer = 0;
             guard.EnemyNavigation.targetLastSeenPosition = guard.Target.position;
             guard.EnemyNavigation.targetLastSeenTransform = guard.Target;
-            guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
+            if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.Target.position);
             AlertLevel();
         }
 
@@ -53,7 +53,7 @@ public class SightedState : BaseState
             {
                 guard.EnemyNavigation.ChaseTarget(guard.EnemyNavigation.targetLastSeenPosition);
                 guard.EnemyOrientation.OrientationTowardsTarget(guard.EnemyNavigation.targetLastSeenTransform);
-                guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
+                if(guard.EnemyEyeMovement != null) guard.EnemyEyeMovement.MoveEyeAtTarget(guard.EnemyNavigation.targetLastSeenPosition);
                 lostTimer += Time.deltaTime;
             } 
         }
@@ -99,9 +99,9 @@ public class SightedState : BaseState
     private float AlertLevel()
     {
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
-        float angleCalc = 90f - guard.angleToTarget + 1f;
+        float angleCalc = 90f - guard.AngleToTarget + 1f;
         float distanceCalc = Mathf.Clamp(20f - distanceBetweenTargetAndGuard, 1f, 20f) * 10f;
-        float calc = (distanceCalc * guard.alertFactor) * (angleCalc * guard.alertFactor) * Time.deltaTime * 100;
+        float calc = (distanceCalc * guard.AlertFactor) * (angleCalc * guard.AlertFactor) * Time.deltaTime * 100;
         guard.SetAlertLevel(Mathf.Clamp(guard.AlertLevel + calc, 0f, 100f));
         return guard.AlertLevel;
     }

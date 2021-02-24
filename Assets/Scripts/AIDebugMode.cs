@@ -23,7 +23,11 @@ public class AIDebugMode : MonoBehaviour
 
     void Update()
     {
-        setAlertText("Alert : "+GetComponentInParent<Guard>().AlertLevel);
+        if(GetComponentInParent<Guard>() != null)
+        {
+            setAlertText("Alert : "+GetComponentInParent<Guard>().AlertLevel);
+        }
+        else setAlertText("Alert : "+GetComponentInParent<Drone>().AlertLevel);
     }
 
     private void Awake()

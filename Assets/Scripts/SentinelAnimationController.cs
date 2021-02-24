@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnimationController : MonoBehaviour
+public class SentinelAnimationController : EnemyAnimationControllerBase
 {
     [SerializeField]
-    private Animator animator;
+    private Animator animatorSentinel;
     [SerializeField]
-    private Animator animatorArmor;
-    private Guard guard;
+    private Animator animatorArmorSentinel;
+    public override Animator animator { get; protected set; }
+    public override Animator animatorArmor { get; protected set; }
+    public override EnemyBase guard { get; protected set; }
 
-    bool isTopCanonLastAttack;
+    public override bool isTopCanonLastAttack { get; protected set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        //animator = GetComponentInChildren<Animator>();
+        // animator = GetComponentInChildren<Animator>();
         guard = GetComponentInParent<Guard>();
+        SetAnimator();
         isTopCanonLastAttack = false;
+    }
+
+    private void SetAnimator()
+    {
+        this.animator = animatorSentinel;
+        this.animatorArmor = animatorArmorSentinel;
     }
 
     public void TriggerStunned()
@@ -30,7 +39,7 @@ public class EnemyAnimationController : MonoBehaviour
         animator.SetTrigger("endStunned");
     }
 
-    public void TriggerIdle()
+    public override void TriggerIdle()
     {
         animator.SetTrigger("idle");
     }
@@ -40,11 +49,11 @@ public class EnemyAnimationController : MonoBehaviour
         animator.SetTrigger("death");
     }
 
-    public void TriggerAttack()
+    public override void TriggerAttack()
     {
         animator.SetTrigger("attack");
     }
-    public void TriggerAttackTurret()
+    public override void TriggerAttackTurret()
     {
         if (!isTopCanonLastAttack)
         {
@@ -58,6 +67,10 @@ public class EnemyAnimationController : MonoBehaviour
         }
     }
 
+    public override void TriggerEndAttack()
+    {
+    }
+
     public void TriggerSight()
     {
         animator.SetTrigger("sight");
@@ -67,9 +80,11 @@ public class EnemyAnimationController : MonoBehaviour
         animator.SetTrigger("endSight");
     }
 
-    public void Fire()
+    public override void Fire()
     {
         guard.EnemyAttack.AttackRoutine(guard.Target);
     }
+
+    
 
 }

@@ -6,10 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class StaticState : BaseState
 {
+    private EnemyBase guard;
 
-    private Guard guard;
-
-    public StaticState(Guard guard) : base(guard.gameObject)
+    public StaticState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
         //this.guard.stateMachine.CurrentStateName = "StaticState";
@@ -23,7 +22,7 @@ public class StaticState : BaseState
             return typeof(DeadState);
         }
 
-        if (guard.isStunned)
+        if (guard.IsStunned)
         {
             guard.EnemyPatrol.StopMoving();
             return typeof(StunnedState);
