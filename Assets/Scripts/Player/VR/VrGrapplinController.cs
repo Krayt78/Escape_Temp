@@ -37,6 +37,7 @@ public class VrGrapplinController : Ability
 
     bool hitSmth = false;
 
+    ControllerColliderHit controllerHit;
 
     [SerializeField]
     GameObject grapplinProjectile;
@@ -68,12 +69,13 @@ public class VrGrapplinController : Ability
 
     private void OnControllerHit(ControllerColliderHit hit)
     {
+        controllerHit = hit;
         hitSmth = true;
     }
 
     private bool Landed()
     {
-        return Vector3.Distance(movingPlayer.position, destination) < 1.5f;
+        return Vector3.Distance(movingPlayer.position, destination) < .1f;// 1.5f;
     }
 
     IEnumerator MovePlayer(Vector3 destination, float duration)
@@ -86,23 +88,37 @@ public class VrGrapplinController : Ability
 
         while (!Landed() && !hitSmth)
         {
-            //UTILISER LE RETOUR DE CHARACTERCONTROLLER.MOVE POUR SAVOIR SI ON A COLLISIONNER
-            if(characterController.Move((destination - startPosition).normalized * grapplinSpeed * Time.deltaTime)!=CollisionFlags.None)
-            {
-                break;
-            }
-            //movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, grapplinSpeed*Time.deltaTime);
+            characterController.Move((destination - startPosition).normalized * grapplinSpeed * Time.deltaTime);
+
             lrRope.SetPosition(0, grapplinPosition.position);
 
             time += Time.deltaTime;
             yield return null;
         }
+        Vector3 direction = Vector3.zero;
+        if (hitSmth)
+        {
+            direction = GetCollisionDirection(characterController.transform.position, controllerHit.point);
+        }
+        else
+        {
+            direction = GetCollisionDirection(characterController.transform.position, destination);
+        }
+        float characterHeight = characterController.height * characterController.transform.localScale.y;
+
+        Vector3 ledgeTargetPoint;
+
+        if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
+        {
+            yield return MakeCharacterClimbLedge(ledgeTargetPoint);
+        }
+
+        hitSmth = false;
 
         masterController.OnCharacterControllerHit -= OnControllerHit;
 
-        hitSmth = false;
         canUseGrapplin = true;
-        //characterController.enabled = true;
+
         playerMovement.disableMovement = false;
         time = duration;
         lrRope.enabled = false;
@@ -113,7 +129,7 @@ public class VrGrapplinController : Ability
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
         lrRope.enabled = true;
-        //characterController.enabled = true;
+
         playerMovement.disableMovement = true;
 
         lrRope.SetPosition(0, movingPlayer.position);
@@ -180,10 +196,51 @@ public class VrGrapplinController : Ability
         }
     }
 
-    //private bool SomethingInFrontOfCamera()
-    //{
+    public Vector3 GetCollisionDirection(Vector3 characterPos, Vector3 hitPoint)
+    {
+        Vector3 retour = hitPoint - characterPos;
+        return new Vector3(retour.x, 0, retour.z).normalized;
+    }
 
-    //}
+    public bool CheckForClimbableLedge(Vector3 ledgeDirection, float characterHeight, float maxHeightCheckFromControllerCenter, out Vector3 ledgeMoveToPoint, float ledgeDistanceCheck=1.3f)
+    {
+        Ray rayon = new Ray(characterController.transform.position/* + characterController.center*/ + ledgeDirection*ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
+        RaycastHit hitInfo, hitInfo2;
+
+        if (Physics.Raycast(rayon, out hitInfo, maxHeightCheckFromControllerCenter))
+        {
+
+            Ray rayon2 = new Ray(hitInfo.point, Vector3.up);
+            if (Vector3.Dot(hitInfo.normal, Vector3.up) < 0.5f              //Si la normale n'est pas trop penchée
+                || Physics.Raycast(rayon2, out hitInfo2, characterHeight))  //S'il y a la place pour le personnage
+            {
+                ledgeMoveToPoint = Vector3.zero;
+                return false;
+            }
+
+            ledgeMoveToPoint = hitInfo.point;
+            return true;
+        }
+        ledgeMoveToPoint = Vector3.zero;
+        return false;
+    }
+
+    private IEnumerator MakeCharacterClimbLedge(Vector3 targetPos, float maxMoveSpeed = 4)
+    {
+        Transform charTransform = characterController.transform;
+        while(Mathf.Abs(charTransform.position.y-targetPos.y) > .2f)
+        {
+            characterController.Move(Vector3.MoveTowards(charTransform.position, new Vector3(charTransform.position.x, targetPos.y, charTransform.position.z), maxMoveSpeed * Time.deltaTime)
+                                        - charTransform.position);
+            yield return null;
+        }
+        while (Vector3.Distance(charTransform.position, targetPos) > .2f)
+        {
+            characterController.Move(Vector3.MoveTowards(charTransform.position, targetPos, maxMoveSpeed * Time.deltaTime)
+                                        - charTransform.position);
+            yield return null;
+        }
+    }
 }
 
 

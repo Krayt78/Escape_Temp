@@ -336,34 +336,6 @@ public class MasterController : MonoBehaviour
         m_LastFrameLeftEnable = m_LeftLineVisual.enabled;
     }
 
-    public void CheckForLedge()
-    {
-        float characterHeight = characterController.height * transform.localScale.y;
-
-        Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0;
-        cameraForward = cameraForward.normalized;
-        Ray rayon = new Ray(transform.position + cameraForward + Vector3.up * characterHeight, -Vector3.up);
-        RaycastHit hitInfo, hitInfo2;
-
-        if (Physics.Raycast(rayon, out hitInfo, characterHeight - .1f))
-        {
-            Ray rayon2 = new Ray(hitInfo.point, Vector3.up);
-            if (Physics.Raycast(rayon2, out hitInfo2, characterHeight))
-            {
-                return;
-            }
-
-            characterController.enabled = false;
-            transform.position = hitInfo.point + cameraForward;
-            characterController.enabled = true;
-        }
-    }
-
-
-    ///DEFINIR UNE HAUTEUR MAX A PARTIR DE LAQUELLE ON PEUT S'ACCROCHER
-    ///VERIFIER SI LE POINT DE COLLISION NE DEPASSE PAS CETTE HAUTEUR
-    ///DEPLACER LE JOUEUR SUR CE REBORD SI C'EST LE CAS
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         OnCharacterControllerHit(hit);
