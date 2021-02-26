@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6607168161166366900}
   - component: {fileID: 8805885302106644349}
   m_Layer: 22
-  m_Name: Food
+  m_Name: FoodSnake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8293802858371326439}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.35, y: 0.74, z: -13.84}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8293802858444491162}
   - {fileID: 932311933580129390}
@@ -194,10 +194,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gfx:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 45619957561987541}
+  - {fileID: 730247535658627441}
+  - {fileID: 6975422530362924836}
+  - {fileID: 5483063681261855087}
 --- !u!136 &8805885302106644349
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -208,10 +208,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.28592855
-  m_Height: 0.9723557
-  m_Direction: 1
-  m_Center: {x: 0.12004703, y: 0.2770617, z: 0}
+  m_Radius: 0.3487903
+  m_Height: 1.7434318
+  m_Direction: 2
+  m_Center: {x: 0.014841199, y: 0.30008888, z: 0.11730325}
 --- !u!1 &8293802858444491163
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +475,30 @@ PrefabInstance:
 --- !u!4 &932311933580129390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6694617252844665704, guid: 6cb998b01e1405941be3f3a0d69b2601,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771418071665692422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &45619957561987541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5816998378051067603, guid: 6cb998b01e1405941be3f3a0d69b2601,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771418071665692422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &730247535658627441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6501630420771028599, guid: 6cb998b01e1405941be3f3a0d69b2601,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771418071665692422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6975422530362924836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3518894596785344546, guid: 6cb998b01e1405941be3f3a0d69b2601,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771418071665692422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5483063681261855087 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2022102447749738089, guid: 6cb998b01e1405941be3f3a0d69b2601,
     type: 3}
   m_PrefabInstance: {fileID: 5771418071665692422}
   m_PrefabAsset: {fileID: 0}
