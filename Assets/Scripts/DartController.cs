@@ -29,11 +29,15 @@ public class DartController : MonoBehaviour
         Debug.Log("Collide with : " + other.gameObject.name);
         if (other.gameObject.GetComponentInChildren<PlayerEntityController>() || other.gameObject.GetComponentInParent<PlayerEntityController>())
             return;
-        if(other.GetComponentInChildren<Guard>() || other.GetComponentInParent<Guard>())
+
+        EnemyController controller = other.gameObject.GetComponentInChildren<EnemyController>();
+        if(controller == null)
+            controller = other.gameObject.GetComponentInParent<EnemyController>();
+        if(controller != null)
         {
             Debug.Log("ATTACK");
-            other.GetComponentInChildren<EntityController>()?.TakeDamages(damages);
-            other.GetComponentInParent<EntityController>()?.TakeDamages(damages);
+            controller.TakeDamages(damages);
+            // controller.TakeDamages(damages);
             Destroy(gameObject);
         }
 

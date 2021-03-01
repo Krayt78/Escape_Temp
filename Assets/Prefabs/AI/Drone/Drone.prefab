@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &205755938297277961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7917406484987925253}
+  m_Layer: 11
+  m_Name: FirePoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7917406484987925253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205755938297277961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.465, y: 0, z: 0.438}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7664595787577341310}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &443472781275308638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,6 +2316,7 @@ Transform:
   - {fileID: 876402276607829292}
   - {fileID: 1525207252138432513}
   - {fileID: 1525207251878103369}
+  - {fileID: 7917406484987925253}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2503,6 +2534,7 @@ MonoBehaviour:
   cooldown: 0
   Bullet: {fileID: 4905676209591555903, guid: 544e41732924d3041874d16ec1c81a95, type: 3}
   FiringPoint: {fileID: 1525207251878103368}
+  SecondFiringPoint: {fileID: 205755938297277961}
   laserLoadingEffect: {fileID: 6405622603939603641, guid: adaf1639be04e9944b6e43ebe77e87b7,
     type: 3}
   laserShootEffect: {fileID: 7508520591334393483, guid: 9159b63ac7a0f9b4ab1692df9d58ab5d,
@@ -2550,7 +2582,7 @@ MonoBehaviour:
   isDead: 0
   isStaticGuard: 0
   bodyFound: 0
-  alertFactor: 0.05
+  alertFactor: 0.01
 --- !u!114 &2587810515551481732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3122,15 +3154,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f18915d1b42e940acb34b2ec616c06, type: 3}
---- !u!4 &2086881752987124354 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
-    type: 3}
-  m_PrefabInstance: {fileID: 3287017040071735606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &8850898941137237164 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 6289665163012083098, guid: e8f18915d1b42e940acb34b2ec616c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 3287017040071735606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2086881752987124354 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
     type: 3}
   m_PrefabInstance: {fileID: 3287017040071735606}
   m_PrefabAsset: {fileID: 0}
@@ -3223,15 +3255,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f18915d1b42e940acb34b2ec616c06, type: 3}
---- !u!4 &634900343430564629 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
-    type: 3}
-  m_PrefabInstance: {fileID: 4153547077476462753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &7993111070034410811 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 6289665163012083098, guid: e8f18915d1b42e940acb34b2ec616c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 4153547077476462753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &634900343430564629 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
     type: 3}
   m_PrefabInstance: {fileID: 4153547077476462753}
   m_PrefabAsset: {fileID: 0}
