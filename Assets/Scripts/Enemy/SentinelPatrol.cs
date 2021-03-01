@@ -92,7 +92,6 @@ public class SentinelPatrol : EnemyPatrolBase
             
             if (path.status != NavMeshPathStatus.PathPartial)
             {
-                Debug.Log("condition in addrandompoint true");
                 GameObject IAWaypoint = Instantiate(new GameObject(TEMP_WAYPOINT_NAME + i));
                 IAWaypoint.transform.position = newPos;
                 WaypointPatrolList.Insert(currentWaypointNumber, IAWaypoint);
