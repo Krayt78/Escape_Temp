@@ -132,7 +132,7 @@ public class MasterController : MonoBehaviour
             m_RightInputDevice = foundControllers[0];
 
         if (m_Rig.TrackingOriginMode != TrackingOriginModeFlags.Floor)
-            m_Rig.cameraYOffset = 1.8f;
+            m_Rig.cameraYOffset = 1.75f;
     }
 
     void RegisterDevices(InputDevice connectedDevice)
