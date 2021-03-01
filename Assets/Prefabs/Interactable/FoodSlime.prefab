@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7322982945074783478}
   - component: {fileID: 7322982945074783479}
   - component: {fileID: 7322982945074783476}
+  - component: {fileID: 2115189727855616697}
+  - component: {fileID: 1112345826830964310}
   m_Layer: 22
   m_Name: FoodSlime
   m_TagString: Untagged
@@ -122,10 +124,32 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelectEnter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7322982945074783472}
+        m_MethodName: StartGrab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSelectExit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7322982945074783472}
+        m_MethodName: EndGrab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnActivate:
     m_PersistentCalls:
       m_Calls: []
@@ -192,6 +216,33 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.50577104
   m_Center: {x: 0, y: 0.13574399, z: -0.0021010637}
+--- !u!114 &2115189727855616697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322982945074783477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d22bc0593699f488a70c676b055725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodIdleEvent: event:/Environment/FoodFishIdle
+  rb: {fileID: 7322982945074783475}
+--- !u!135 &1112345826830964310
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322982945074783477}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 50
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7322982946027984491
 GameObject:
   m_ObjectHideFlags: 0
