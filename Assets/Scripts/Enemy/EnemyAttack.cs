@@ -23,6 +23,9 @@ public class EnemyAttack : MonoBehaviour
     GameObject FiringPoint;
 
     [SerializeField]
+    GameObject SecondFiringPoint;
+
+    [SerializeField]
     GameObject laserLoadingEffect;
 
     [SerializeField]
@@ -38,7 +41,6 @@ public class EnemyAttack : MonoBehaviour
         if(GetComponentInParent<Guard>() != null) guard = GetComponentInParent<Guard>();
         else guard = GetComponentInParent<Drone>();
     }
-
 
     public void AttackRoutine(Transform target) 
     {
@@ -62,6 +64,16 @@ public class EnemyAttack : MonoBehaviour
     private IEnumerator FireAtTarget(Transform target)
     {
         locked = true;
+        if(GetComponent<Drone>() != null)
+        {
+            GameObject loadingeffect2 = Instantiate(laserLoadingEffect, SecondFiringPoint.transform);
+            Destroy(loadingeffect2, loadingeffect2.GetComponent<VisualEffect>().GetFloat("Duration"));
+            GetComponent<GuardSoundEffectController>()?.PlayLoadingFireSFX();
+            yield return new WaitForSeconds(0.5f);
+            GameObject shootEffect2 = Instantiate(laserShootEffect, SecondFiringPoint.transform);
+            Destroy(shootEffect2, shootEffect2.GetComponent<VisualEffect>().GetFloat("Duration") + 0.25f);
+            GameObject bullet2 = Instantiate(Bullet, SecondFiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
+        }
         GameObject loadingeffect = Instantiate(laserLoadingEffect, FiringPoint.transform);
         Destroy(loadingeffect, loadingeffect.GetComponent<VisualEffect>().GetFloat("Duration"));
         GetComponent<GuardSoundEffectController>()?.PlayLoadingFireSFX();
