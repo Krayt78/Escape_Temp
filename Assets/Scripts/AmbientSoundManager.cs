@@ -10,35 +10,14 @@ public class AmbientSoundManager : MonoBehaviour
     [SerializeField] Rigidbody bodyToFollow;
     [SerializeField] Terrain currentTerrain;
 
+    private string currentTerrainPath;
+
+
     [SerializeField] string tutorialEvent;
     [SerializeField] string forestEvent;
     [SerializeField] string oceanEvent;
 
     public FMOD.Studio.EventInstance ambienceInstance;
-
-    //[SerializeField] string windEvent;
-
-    //[SerializeField] string firstLayerEvent;
-    //[SerializeField] string secondLayerEvent;
-    //[SerializeField] string thirdLayerEvent;
-
-    //public FMOD.Studio.EventInstance windInstance;
-    //private FMOD.Studio.EventInstance firstLayerInstance;
-    //private FMOD.Studio.EventInstance secondLayerInstance;
-    //private FMOD.Studio.EventInstance thirdLayerInstance;
-
-    //[SerializeField] Rigidbody windEmitter;
-    //[SerializeField] Rigidbody[] firstLayerEmitters;
-    //[SerializeField] Rigidbody[] secondLayerEmitters;
-    //[SerializeField] Rigidbody[] thirdLayerEmitters;
-
-    //[SerializeField] float firstLayerDelayBetweenPlay=30;
-    //private float lastTimePlayedFirstLayer;
-    //[SerializeField] float secondLayerDelayBetweenPlay=48;
-    //private float lastTimePlayedSecondLayer;
-    //[SerializeField] float thirdLayerDelayBetweenPlay=70;
-    //private float lastTimePlayedThirdLayer;
-
 
     private void Awake()
     {
@@ -54,12 +33,8 @@ public class AmbientSoundManager : MonoBehaviour
     void Start()
     {
         //A changer en fonction du terrain
-        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(forestEvent, bodyToFollow);
+        //ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(forestEvent, bodyToFollow);
 
-        //windInstance = FMODPlayerController.PlaySoundAttachedToGameObject(windEvent, windEmitter);
-        //Invoke("PlayFirstLayerSound", firstLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
-        //Invoke("PlaySecondLayerSound", secondLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
-        //Invoke("PlayThirdLayerSound", thirdLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
     }
 
     // Update is called once per frame
@@ -71,69 +46,107 @@ public class AmbientSoundManager : MonoBehaviour
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
     }
 
-    //private void PlayFirstLayerSound()
-    //{
-    //    int lenght;
-    //    FMOD.Studio.EventDescription desc;
+    private void OnDestroy()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        ambienceInstance.release();
+    }
 
-    //    firstLayerInstance =
-    //        FMODPlayerController.PlaySoundAttachedToGameObject(
-    //            firstLayerEvent,
-    //            firstLayerEmitters[Random.Range(0, firstLayerEmitters.Length)]);
+    public void PlayAmbiance(string eventPath, bool isExterior = true)
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
 
-    //    if(firstLayerInstance.getDescription(out desc) == FMOD.RESULT.OK)
-    //    {
-    //        if(desc.getLength(out lenght) == FMOD.RESULT.OK)
-    //        {
-    //            Invoke("PlayFirstLayerSound", (float)(lenght / 1000) + firstLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
-    //            return;
-    //        }
-    //    }
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(eventPath, bodyToFollow);
 
-    //    Debug.LogWarning("CAN NOT PLAY AMBIENT SOUND");
-    //}
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-    //private void PlaySecondLayerSound()
-    //{
-    //    int lenght;
-    //    FMOD.Studio.EventDescription desc;
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
-    //    secondLayerInstance =
-    //        FMODPlayerController.PlaySoundAttachedToGameObject(
-    //            secondLayerEvent,
-    //            secondLayerEmitters[Random.Range(0, secondLayerEmitters.Length)]);
+        if (isExterior)
+            currentTerrainPath = eventPath;
+    }
 
-    //    if (secondLayerInstance.getDescription(out desc) == FMOD.RESULT.OK)
-    //    {
-    //        if (desc.getLength(out lenght) == FMOD.RESULT.OK)
-    //        {
-    //            Invoke("PlaySecondLayerSound", (float)(lenght / 1000) + secondLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
-    //            return;
-    //        }
-    //    }
+    public void PlayCurrentTerrainAmbience()
+    {
+        if (string.IsNullOrEmpty(currentTerrainPath))
+            return;
 
-    //    Debug.LogWarning("CAN NOT PLAY AMBIENT SOUND");
-    //}
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
 
-    //private void PlayThirdLayerSound()
-    //{
-    //    int lenght;
-    //    FMOD.Studio.EventDescription desc;
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(currentTerrainPath, bodyToFollow);
 
-    //    thirdLayerInstance =
-    //        FMODPlayerController.PlaySoundAttachedToGameObject(
-    //            thirdLayerEvent,
-    //            thirdLayerEmitters[Random.Range(0, thirdLayerEmitters.Length)]);
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-    //    if (thirdLayerInstance.getDescription(out desc) == FMOD.RESULT.OK)
-    //    {
-    //        if (desc.getLength(out lenght) == FMOD.RESULT.OK)
-    //        {
-    //            Invoke("PlayThirdLayerSound", (float)(lenght / 1000) + thirdLayerDelayBetweenPlay * Random.Range(.5f, 2.5f));
-    //            return;
-    //        }
-    //    }
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+    }
 
-    //    Debug.LogWarning("CAN NOT PLAY AMBIENT SOUND");
-    //}
+    public void PlayTutorialAmbience()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
+
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(tutorialEvent, bodyToFollow);
+
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+
+        currentTerrainPath = tutorialEvent;
+    }
+
+    public void PlayForestAmbience()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
+
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(forestEvent, bodyToFollow);
+
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+
+        currentTerrainPath = forestEvent;
+    }
+
+    public void PlayOceanAmbience()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
+
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(oceanEvent, bodyToFollow);
+
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+
+        currentTerrainPath = oceanEvent;
+    }
+
+    public void PlayMainBaseAmbience()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
+
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(tutorialEvent, bodyToFollow);
+
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+
+        currentTerrainPath = tutorialEvent;
+    }
+
+    public void PlayBuildingAmbience()
+    {
+        ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambienceInstance.release();
+
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(tutorialEvent, bodyToFollow);
+
+        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+
+        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+    }
 }
