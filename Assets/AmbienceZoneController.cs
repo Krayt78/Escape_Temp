@@ -13,7 +13,7 @@ public class AmbienceZoneController : MonoBehaviour
     {
         //Is player in trigger?
         BoxCollider myCollider = GetComponent<BoxCollider>();
-        Collider[] colliders = Physics.OverlapBox(transform.position + myCollider.center, myCollider.size / 2);
+        Collider[] colliders = Physics.OverlapBox(transform.position + myCollider.center, myCollider.size / 2, Quaternion.identity, LayerMask.GetMask("AiTarget"));
         foreach(Collider c in colliders)
         {
             if (c.GetComponent<MasterController>())
