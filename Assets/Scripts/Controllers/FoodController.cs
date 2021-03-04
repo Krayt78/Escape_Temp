@@ -21,6 +21,8 @@ public class FoodController : Interactable
 
     private XROffsetGrabbable xROffsetGrabbable;
 
+    private bool isGrabbed = false;
+
 
     public  void Start()
     {
@@ -29,7 +31,7 @@ public class FoodController : Interactable
     }
     public override void Use(GameObject user)
     {
-        if(user.CompareTag("Player"))
+        if(user.CompareTag("Player") && isGrabbed)
         {
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.EatDNA(foodValue);
             user.GetComponentInChildren<PlayerMouthController>().playerEntityController.AssimilateAbility(abilityToUnlock.ToString());
@@ -58,6 +60,16 @@ public class FoodController : Interactable
         gameObject.transform.rotation = initialTransform.rotation;
         gameObject.SetActive(true);
 
+    }
+
+    public void StartGrab()
+    {
+        isGrabbed = true;
+    }
+
+    public void EndGrab()
+    {
+        isGrabbed = false;
     }
 }
 

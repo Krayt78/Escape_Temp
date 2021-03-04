@@ -54,8 +54,6 @@ public class PlayerAbilitiesController : MonoBehaviour
         if (CurrentAbility.abilityUISprite != null)
             currentAbilityImage.sprite = CurrentAbility.abilityUISprite;
         OnAbilityChanged(CurrentAbility);
-
-        Debug.Log(CurrentAbility.name);
     }
 
     public void AddAbility(Ability ability)

@@ -15,13 +15,13 @@ public class TerrainManager : MonoBehaviour
 
     void Start()
     {
-        //GetTerrainProps();
+        GetTerrainProps();
     }
 
     private void GetTerrainProps()
     {
-        currentTerrain = Terrain.activeTerrain;
-        mTerrainData = Terrain.activeTerrain.terrainData;
+        currentTerrain = GetComponent<Terrain>();
+        mTerrainData = currentTerrain.terrainData;
         alphamapWidth = mTerrainData.alphamapWidth;
         alphamapHeight = mTerrainData.alphamapHeight;
 
@@ -67,6 +67,11 @@ public class TerrainManager : MonoBehaviour
     {
         if (t != currentTerrain)
             GetTerrainProps(t);
+        return GetActiveTerrainTextureIdx(pos);
+    }
+
+    public int GetTerrainTextureAtPosition(Vector3 pos)
+    {
         return GetActiveTerrainTextureIdx(pos);
     }
 

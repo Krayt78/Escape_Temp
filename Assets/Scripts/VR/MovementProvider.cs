@@ -34,6 +34,8 @@ public class MovementProvider : LocomotionProvider
     public event Action<float> OnMovement = delegate{};
 
 
+    public bool disableMovement = false;
+
     protected override void Awake() {
         characterController = xrRig.GetComponent<CharacterController>();
         head = xrRig.cameraGameObject;
@@ -54,7 +56,8 @@ public class MovementProvider : LocomotionProvider
 
     private void FixedUpdate()
     {
-        ApplyGravity();
+        if(!disableMovement)
+            ApplyGravity();
         UpdateGrounded();
     }
 
@@ -84,7 +87,7 @@ public class MovementProvider : LocomotionProvider
     }
 
     private void CheckForMovement(InputDevice device) {
-        if(device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 position))
+        if(!disableMovement && device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 position))
             StartMove(position);
     }
 
@@ -112,6 +115,10 @@ public class MovementProvider : LocomotionProvider
 
         ////apply speed and move 
         //Vector3 movement = Vector3.ClampMagnitude(newDirection, 1) * speed;
+
+        if (disableMovement)
+            return;
+
         characterController.Move(direction * speed * Time.deltaTime);
 
         OnMovement(direction.magnitude * Time.deltaTime);

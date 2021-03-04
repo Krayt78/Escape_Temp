@@ -71,10 +71,34 @@ public class PlayerSoundEffectController : MonoBehaviour
     [Header("Voices")]
     [SerializeField] string firstEatFoodEvent;
 
+    private Dictionary<string, int> textureToParamTableConvert;
+
+    private void InitTextureTableConvert()
+    {
+        textureToParamTableConvert = new Dictionary<string, int>();
+
+        textureToParamTableConvert.Add("Grass",4);
+        textureToParamTableConvert.Add("Principal_Road",0);
+        textureToParamTableConvert.Add("Rock",1);
+        textureToParamTableConvert.Add("Second_Road",4);
+        textureToParamTableConvert.Add("Dirt",0);
+        textureToParamTableConvert.Add("Coral",1);
+
+        textureToParamTableConvert.Add("alien_exo", 1);
+        textureToParamTableConvert.Add("Alien_Surface", 5);
+        textureToParamTableConvert.Add("CellGrowth", 4);
+
+        textureToParamTableConvert.Add("PMAT_Metal", 5);
+        textureToParamTableConvert.Add("PMAT_Rock", 1);
+        textureToParamTableConvert.Add("PMAT_Wood", 3);
+    }
+
     private void Awake()
     {
         rigidbody = GetComponentInChildren<Rigidbody>();
         rigTransform = GetComponentInChildren<XRRig>().transform;
+
+        InitTextureTableConvert();
     }
 
     // Start is called before the first frame update
@@ -152,27 +176,19 @@ public class PlayerSoundEffectController : MonoBehaviour
             if (terrain != null)
             {
                 int result =
-                    terrain.GetTerrainTextureAtPosition(terrain.GetComponent<Terrain>(), hitResult.point);
-                SetFootstepParam(result);
+                    terrain.GetTerrainTextureAtPosition(hitResult.point);
+
+                int soundIndex = -1;
+                if(textureToParamTableConvert.TryGetValue(terrain.mTerrainData.terrainLayers[result].name, out soundIndex))
+                    SetFootstepParam(soundIndex);
 
             }
             else
             {
-                switch (hitResult.collider.material.name)
-                {
-                    case "PMAT_Metal":
-                    case "PMAT_Metal (Instance)":
-                        SetFootstepParam(5);
-                        break;
-                    case "PMAT_Rock":
-                    case "PMAT_Rock (Instance)":
-                        SetFootstepParam(1);
-                        break;
-                    case "PMAT_Shroom":
-                    case "PMAT_Shroom (Instance)":
-                        SetFootstepParam(3);
-                        break;
-                }
+
+                int soundIndex = -1;
+                if (textureToParamTableConvert.TryGetValue(hitResult.collider.material.name.Split(' ')[0], out soundIndex))
+                    SetFootstepParam(soundIndex);
             }
         }
 

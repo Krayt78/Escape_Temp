@@ -11,7 +11,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class MasterController : MonoBehaviour
 {
-    //delete this shit a s soon as possible
     public static bool EVOLVEPRESSED = false;
 
     [SerializeField]
@@ -72,11 +71,15 @@ public class MasterController : MonoBehaviour
 
     List<XRBaseInteractable> m_InteractableCache = new List<XRBaseInteractable>(16);
 
+    private CharacterController characterController;
+    public event Action<ControllerColliderHit> OnCharacterControllerHit = delegate { };
+
     void Awake()
     {
         s_Instance = this;
         m_Rig = GetComponent<XRRig>();
 
+        characterController = GetComponent<CharacterController>();
     }
 
     void OnEnable()
@@ -129,7 +132,7 @@ public class MasterController : MonoBehaviour
             m_RightInputDevice = foundControllers[0];
 
         if (m_Rig.TrackingOriginMode != TrackingOriginModeFlags.Floor)
-            m_Rig.cameraYOffset = 1.8f;
+            m_Rig.cameraYOffset = 1.75f;
     }
 
     void RegisterDevices(InputDevice connectedDevice)
@@ -156,7 +159,6 @@ public class MasterController : MonoBehaviour
             Application.Quit();
 
         CheckForInputs();
-
     }
 
     void CheckForInputs()
@@ -332,5 +334,10 @@ public class MasterController : MonoBehaviour
             m_LeftHandPrefab.Animator.SetBool("Pointing", m_PreviousLeftClicked);
 
         m_LastFrameLeftEnable = m_LeftLineVisual.enabled;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        OnCharacterControllerHit(hit);
     }
 }

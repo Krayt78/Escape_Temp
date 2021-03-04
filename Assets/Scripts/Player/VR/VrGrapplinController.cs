@@ -9,8 +9,9 @@ public class VrGrapplinController : Ability
 
     private PlayerSoundEffectController playerSoundEffectController;
 
-    private PlayerMovement playerMovement;
+    private MovementProvider playerMovement;
     private CharacterController characterController;
+    private MasterController masterController;
 
     public LineRenderer lrRope;
     private int nbPoints = 2;
@@ -26,15 +27,17 @@ public class VrGrapplinController : Ability
     private float maxRange = 150f;
     [SerializeField]
     float duration = 10f;
-    float grapplinSpeed = 1f;
+    float grapplinSpeed = 10f;
 
     RaycastHit hit;
     Ray ray;
     private Vector3 destination = new Vector3();
 
     bool canUseGrapplin = true;
-    
 
+    bool hitSmth = false;
+
+    ControllerColliderHit controllerHit;
 
     [SerializeField]
     GameObject grapplinProjectile;
@@ -47,6 +50,9 @@ public class VrGrapplinController : Ability
         lrRope.enabled = false;
         characterController = GetComponentInChildren<CharacterController>();
         playerSoundEffectController = GetComponent<PlayerSoundEffectController>();
+        playerMovement = GetComponentInChildren<MovementProvider>();
+
+        masterController = GetComponentInChildren<MasterController>();
     }
 
     public override void Start()
@@ -57,13 +63,19 @@ public class VrGrapplinController : Ability
 
     private void FixedUpdate()
     {
-        ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
-        Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
+        //ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
+        //Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
+    }
+
+    private void OnControllerHit(ControllerColliderHit hit)
+    {
+        controllerHit = hit;
+        hitSmth = true;
     }
 
     private bool Landed()
     {
-        return Vector3.Distance(movingPlayer.position, destination) < 1.5f;
+        return Vector3.Distance(movingPlayer.position, destination) < .1f;// 1.5f;
     }
 
     IEnumerator MovePlayer(Vector3 destination, float duration)
@@ -71,17 +83,43 @@ public class VrGrapplinController : Ability
         float time = 0;
         Vector3 startPosition = movingPlayer.position;
         playerSoundEffectController.PlayGrapplinRetractSFX();
-        while (!Landed())
+
+        masterController.OnCharacterControllerHit += OnControllerHit;
+
+        while (!Landed() && !hitSmth)
         {
-            movingPlayer.position = Vector3.MoveTowards(movingPlayer.position, destination, grapplinSpeed);
+            characterController.Move((destination - startPosition).normalized * grapplinSpeed * Time.deltaTime);
+
             lrRope.SetPosition(0, grapplinPosition.position);
 
             time += Time.deltaTime;
             yield return null;
         }
-        Debug.LogWarning("We landed");
+        Vector3 direction = Vector3.zero;
+        if (hitSmth)
+        {
+            direction = GetCollisionDirection(characterController.transform.position, controllerHit.point);
+        }
+        else
+        {
+            direction = GetCollisionDirection(characterController.transform.position, destination);
+        }
+        float characterHeight = characterController.height * characterController.transform.localScale.y;
+
+        Vector3 ledgeTargetPoint;
+
+        if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
+        {
+            yield return MakeCharacterClimbLedge(ledgeTargetPoint);
+        }
+
+        hitSmth = false;
+
+        masterController.OnCharacterControllerHit -= OnControllerHit;
+
         canUseGrapplin = true;
-        characterController.enabled = true;
+
+        playerMovement.disableMovement = false;
         time = duration;
         lrRope.enabled = false;
         playerSoundEffectController.StopGrapplinSFX();
@@ -91,7 +129,9 @@ public class VrGrapplinController : Ability
     private IEnumerator LaunchGrapplin(GameObject grp)
     {
         lrRope.enabled = true;
-        characterController.enabled = false;
+
+        playerMovement.disableMovement = true;
+
         lrRope.SetPosition(0, movingPlayer.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
@@ -153,6 +193,52 @@ public class VrGrapplinController : Ability
             StartCoroutine(LaunchGrapplin(grp));
 
             //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+        }
+    }
+
+    public Vector3 GetCollisionDirection(Vector3 characterPos, Vector3 hitPoint)
+    {
+        Vector3 retour = hitPoint - characterPos;
+        return new Vector3(retour.x, 0, retour.z).normalized;
+    }
+
+    public bool CheckForClimbableLedge(Vector3 ledgeDirection, float characterHeight, float maxHeightCheckFromControllerCenter, out Vector3 ledgeMoveToPoint, float ledgeDistanceCheck=1.3f)
+    {
+        Ray rayon = new Ray(characterController.transform.position/* + characterController.center*/ + ledgeDirection*ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
+        RaycastHit hitInfo, hitInfo2;
+
+        if (Physics.Raycast(rayon, out hitInfo, maxHeightCheckFromControllerCenter))
+        {
+
+            Ray rayon2 = new Ray(hitInfo.point, Vector3.up);
+            if (Vector3.Dot(hitInfo.normal, Vector3.up) < 0.5f              //Si la normale n'est pas trop penchée
+                || Physics.Raycast(rayon2, out hitInfo2, characterHeight))  //S'il y a la place pour le personnage
+            {
+                ledgeMoveToPoint = Vector3.zero;
+                return false;
+            }
+
+            ledgeMoveToPoint = hitInfo.point;
+            return true;
+        }
+        ledgeMoveToPoint = Vector3.zero;
+        return false;
+    }
+
+    private IEnumerator MakeCharacterClimbLedge(Vector3 targetPos, float maxMoveSpeed = 4)
+    {
+        Transform charTransform = characterController.transform;
+        while(Mathf.Abs(charTransform.position.y-targetPos.y) > .2f)
+        {
+            characterController.Move(Vector3.MoveTowards(charTransform.position, new Vector3(charTransform.position.x, targetPos.y, charTransform.position.z), maxMoveSpeed * Time.deltaTime)
+                                        - charTransform.position);
+            yield return null;
+        }
+        while (Vector3.Distance(charTransform.position, targetPos) > .2f)
+        {
+            characterController.Move(Vector3.MoveTowards(charTransform.position, targetPos, maxMoveSpeed * Time.deltaTime)
+                                        - charTransform.position);
+            yield return null;
         }
     }
 }

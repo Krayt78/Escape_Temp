@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 5546642730548977903}
   - component: {fileID: 4118226449080275076}
   - component: {fileID: 8431375433460302550}
-  - component: {fileID: 7916379342368630986}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5546642730548977903
 Transform:
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7916379342368630986
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833082120160711805}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0255513, y: 1.1409823, z: 2.0494728}
-  m_Center: {x: 0.002575338, y: 0.45136708, z: 0.0049784184}
 --- !u!1 &2005326862618386233
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,13 +90,12 @@ GameObject:
   - component: {fileID: 6941148216255819753}
   - component: {fileID: 7545811188004482685}
   - component: {fileID: 6680473796050570812}
-  - component: {fileID: 2289487441629979295}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6941148216255819753
 Transform:
@@ -173,19 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2289487441629979295
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2005326862618386233}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0352316, y: 1.1329459, z: 2.0562224}
-  m_Center: {x: -0.00014698505, y: 0.4575482, z: 0.0004105568}
 --- !u!1 &2255435490024209383
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,13 +169,13 @@ GameObject:
   - component: {fileID: 5709556642752395681}
   - component: {fileID: 2059447867701328948}
   - component: {fileID: 1899778063369289811}
-  - component: {fileID: 4353752869584470516}
+  - component: {fileID: 8075677470071156357}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5709556642752395681
 Transform:
@@ -266,8 +238,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4353752869584470516
-BoxCollider:
+--- !u!64 &8075677470071156357
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -276,9 +248,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0338771, y: 1.1338965, z: 2.0556855}
-  m_Center: {x: 0, y: 0.45707294, z: 0.000000059604645}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 291461308204319821, guid: e6abe4042074f8a4d8f30ad6662e2e2a, type: 3}
 --- !u!1 &3801402824544556323
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,13 +263,12 @@ GameObject:
   - component: {fileID: 1289480931954882625}
   - component: {fileID: 137294074749916896}
   - component: {fileID: 2954129912779744920}
-  - component: {fileID: 8447980879703311291}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1289480931954882625
 Transform:
@@ -359,19 +331,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8447980879703311291
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3801402824544556323}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0347147, y: 1.129712, z: 2.0479803}
-  m_Center: {x: -0.00031250715, y: 0.45591992, z: 0.0010572672}
 --- !u!1 &4302104818144226258
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,13 +342,12 @@ GameObject:
   - component: {fileID: 5940302250265479770}
   - component: {fileID: 2374452264893139259}
   - component: {fileID: 3163780024074055084}
-  - component: {fileID: 6474860541510685983}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5940302250265479770
 Transform:
@@ -452,19 +410,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6474860541510685983
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302104818144226258}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0299754, y: 1.1307943, z: 2.0529747}
-  m_Center: {x: 0.0003632307, y: 0.45646107, z: 0.0035544634}
 --- !u!1 &7112742125155394994
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,13 +421,12 @@ GameObject:
   - component: {fileID: 385942927443176445}
   - component: {fileID: 32460649155806951}
   - component: {fileID: 7659285075280935449}
-  - component: {fileID: 622532375887072674}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &385942927443176445
 Transform:
@@ -545,19 +489,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &622532375887072674
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7112742125155394994}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0345905, y: 1.126938, z: 2.0520294}
-  m_Center: {x: -0.0002503395, y: 0.4560135, z: 0.002385378}
 --- !u!1 &7508834437224604270
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,13 +500,13 @@ GameObject:
   - component: {fileID: 4171299322582184394}
   - component: {fileID: 1399477601946862668}
   - component: {fileID: 1434761162353669464}
-  - component: {fileID: 8190561145939454641}
+  - component: {fileID: 2845204622925223096}
   m_Layer: 10
   m_Name: MOD_Rock_2_3_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4171299322582184394
 Transform:
@@ -638,8 +569,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8190561145939454641
-BoxCollider:
+--- !u!64 &2845204622925223096
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -648,9 +579,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0342507, y: 1.1336777, z: 2.0553784}
-  m_Center: {x: 0.00016975403, y: 0.45718232, z: 0.0003925562}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 291461308204319821, guid: e6abe4042074f8a4d8f30ad6662e2e2a, type: 3}
 --- !u!1 &8163179522603252534
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +598,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5121201211807402277
 Transform:

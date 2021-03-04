@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RagdolToggle : MonoBehaviour
 {
-    protected Animator animator;
+    [SerializeField] GameObject objToDisapear;
+    protected Animator[] animators;
     protected Rigidbody rigidbody;
     protected SphereCollider sphereCollider;
     protected EnemyPatrolBase enemyPatrol;
@@ -14,17 +15,21 @@ public class RagdolToggle : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        animators = GetComponentsInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
         if(GetComponent<SentinelPatrol>() != null)
         {
             enemyPatrol = GetComponent<SentinelPatrol>();
+            childrensCollider = GetComponentsInChildren<Collider>();
+            childrensRigibody = GetComponentsInChildren<Rigidbody>();
         }
-        else enemyPatrol = GetComponent<DronePatrol>();
-
-        childrensCollider = GetComponentsInChildren<Collider>();
-        childrensRigibody = GetComponentsInChildren<Rigidbody>();
+        else 
+        {
+            enemyPatrol = GetComponent<DronePatrol>();
+            childrensCollider = GetComponentsInChildren<Collider>();
+            childrensRigibody = GetComponentsInChildren<Rigidbody>();
+        }
     }
 
     private void Start()
@@ -47,10 +52,26 @@ public class RagdolToggle : MonoBehaviour
             rigibody.isKinematic = !active;
         }
 
+        if(GetComponent<Drone>() != null)
+        {
+            rigidbody.useGravity = active;
+        }
+        else
+        {
+            rigidbody.isKinematic = active;
+        }
         // Guard root
-        animator.enabled = !active;
+        foreach (var animator in animators)
+        {
+            animator.enabled = !active;
+        }
+        if(objToDisapear != null)
+        {
+            Destroy(objToDisapear, 0.2f);
+        }
+        // animator.enabled = !active;
         rigidbody.detectCollisions = !active;
-        rigidbody.isKinematic = active;
+        
         sphereCollider.enabled = !active;
         enemyPatrol.enabled = !active;
     }
