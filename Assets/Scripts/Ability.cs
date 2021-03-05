@@ -9,7 +9,6 @@ public abstract class Ability : MonoBehaviour
 
     [HideInInspector] public PlayerAbilitiesController playerAbilitiesController;
 
-    [HideInInspector] public FMOD.Studio.EventInstance abilityUnlockedSoundInstance;
     [HideInInspector] public bool playUnlockedAbilitySound = true;
 
     [HideInInspector] public float assimilationProcess = 0.0f;
@@ -45,7 +44,8 @@ public abstract class Ability : MonoBehaviour
             assimilationProcess = 1;
             if (playUnlockedAbilitySound)
             {
-                abilityUnlockedSoundInstance = FMODPlayerController.PlaySoundAttachedToGameObject(AbilityUnlockedSoundFXPath, GetComponentInChildren<Rigidbody>());
+                VoiceEvent firstEatVoiceEvent = new VoiceEvent(AbilityUnlockedSoundFXPath, VoiceManager.Priority.High);
+                VoiceManager.Instance.AddVoiceToQueue(firstEatVoiceEvent);
                 playUnlockedAbilitySound = false;
             }
 

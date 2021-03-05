@@ -10,7 +10,7 @@ public class SentinelPatrol : EnemyPatrolBase
     public event Action OnWaypointReached = delegate { };
 
     [SerializeField]
-    private List<GameObject> WaypointPatrolList = new List<GameObject>();
+    public List<GameObject> WaypointPatrolList = new List<GameObject>();
     private List<GameObject> OldWaypointPatrolList = new List<GameObject>();
     private int currentWaypointNumber;
     private int oldWaypointNumber;
@@ -24,7 +24,7 @@ public class SentinelPatrol : EnemyPatrolBase
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    private void onDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if(WaypointPatrolList == null || WaypointPatrolList.Count == 0)
             return;
@@ -33,10 +33,25 @@ public class SentinelPatrol : EnemyPatrolBase
         {
             if(Waypoint != null)
             {
-                Gizmos.DrawWireSphere(Waypoint.transform.position, 15f);
+                Gizmos.DrawWireSphere(Waypoint.transform.position, .5f);
             }
         }
-        
+
+        Gizmos.color = Color.blue;
+        int waypointCount = WaypointPatrolList.Count;
+        for (int i = 0; i < waypointCount; i++)
+        {
+            if(WaypointPatrolList[i]!=null && WaypointPatrolList[(i + 1) % waypointCount]!=null)
+            Gizmos.DrawLine(WaypointPatrolList[i].transform.position,
+                WaypointPatrolList[(i + 1) % waypointCount].transform.position);
+        }
+
+    }
+
+    public void AddWaypoint(WaypointController waypoint)
+    {
+        WaypointPatrolList.Add(waypoint.gameObject);
+        waypoint.parentList.Add(this);
     }
 
     public override void GoToNextCheckpoint()

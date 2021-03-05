@@ -450,7 +450,8 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void PlayFirstEatFood(float amount)
     {
-        FMODPlayerController.PlayOnShotSound(firstEatFoodEvent, rigTransform.transform.position);
+        VoiceEvent firstEatVoiceEvent = new VoiceEvent(firstEatFoodEvent, VoiceManager.Priority.High);
+        VoiceManager.Instance.AddVoiceToQueue(firstEatVoiceEvent);
         GetComponent<PlayerEntityController>().OnEatDna -= PlayFirstEatFood;
     }
 }
