@@ -13,11 +13,20 @@ public class AiWaypointManagement : Editor
     {
         myTarget = (SentinelPatrol)target;
 
-        Vector3[] newWaypointPosition = new Vector3[myTarget.WaypointPatrolList.Count];
 
 
         if(myTarget.WaypointPatrolList!=null)
         {
+            for (int i = 0; i < myTarget.WaypointPatrolList.Count; i++)
+            {
+                if (myTarget.WaypointPatrolList[i]==null)
+                {
+                    myTarget.WaypointPatrolList.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            Vector3[] newWaypointPosition = new Vector3[myTarget.WaypointPatrolList.Count];
 
             EditorGUI.BeginChangeCheck();
             for (int i = 0; i < newWaypointPosition.Length; i++)
@@ -61,7 +70,7 @@ public class AiWaypointManagement : Editor
             Transform lastWaypointTransform = myTarget.WaypointPatrolList[myTarget.WaypointPatrolList.Count - 1].transform;
             newPoint = Instantiate(wayPointPrefab,
                                 lastWaypointTransform.position + lastWaypointTransform.forward,
-                                Quaternion.identity, myTarget.WaypointPatrolList[myTarget.WaypointPatrolList.Count - 1].transform.parent);
+                                Quaternion.identity, lastWaypointTransform.transform.parent);
         }
         else
         {
