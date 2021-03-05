@@ -15,22 +15,26 @@ public class AiWaypointManagement : Editor
 
         Vector3[] newWaypointPosition = new Vector3[myTarget.WaypointPatrolList.Count];
 
-        EditorGUI.BeginChangeCheck();
 
-        for (int i = 0; i < newWaypointPosition.Length; i++)
+        if(myTarget.WaypointPatrolList!=null)
         {
-            newWaypointPosition[i] = Handles.PositionHandle(myTarget.WaypointPatrolList[i].transform.position, Quaternion.identity);
-        }
 
-        if (EditorGUI.EndChangeCheck())
-        {
-            Undo.RecordObject(myTarget, "Change Look At Target Position");
-
+            EditorGUI.BeginChangeCheck();
             for (int i = 0; i < newWaypointPosition.Length; i++)
             {
-                myTarget.WaypointPatrolList[i].transform.position = newWaypointPosition[i];
+                newWaypointPosition[i] = Handles.PositionHandle(myTarget.WaypointPatrolList[i].transform.position, Quaternion.identity);
             }
-            //myTarget.Update();
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(myTarget, "Change Look At Target Position");
+
+                for (int i = 0; i < newWaypointPosition.Length; i++)
+                {
+                    myTarget.WaypointPatrolList[i].transform.position = newWaypointPosition[i];
+                }
+                //myTarget.Update();
+            }
         }
     }
 
