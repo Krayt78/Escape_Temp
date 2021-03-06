@@ -14921,6 +14921,7 @@ GameObject:
   - component: {fileID: 5552811595863300247}
   - component: {fileID: 7755786004171283733}
   - component: {fileID: 9121277047985569973}
+  - component: {fileID: 4105238572814863501}
   m_Layer: 0
   m_Name: Terrain_(-1081.0, 0.0, -800.0)
   m_TagString: Untagged
@@ -14986,6 +14987,22 @@ TerrainCollider:
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 49913f67f5e9b244cab21afbf2150490, type: 2}
   m_EnableTreeColliders: 1
+--- !u!114 &4105238572814863501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7055653495664486584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2eba32d440536409a5524b5c5f5db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerrainData: {fileID: 0}
+  alphamapWidth: 0
+  alphamapHeight: 0
+  mNumTextures: 0
 --- !u!1 &8881854008969515958
 GameObject:
   m_ObjectHideFlags: 0
@@ -22988,15 +23005,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 188bf2edd6c4c2a47948be07b7a1b468, type: 3}
---- !u!4 &4605554054582264467 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7915160616634078307, guid: 188bf2edd6c4c2a47948be07b7a1b468,
-    type: 3}
-  m_PrefabInstance: {fileID: 5922932413236688624}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4605554053695668609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7915160615113111409, guid: 188bf2edd6c4c2a47948be07b7a1b468,
+    type: 3}
+  m_PrefabInstance: {fileID: 5922932413236688624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4605554054582264467 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7915160616634078307, guid: 188bf2edd6c4c2a47948be07b7a1b468,
     type: 3}
   m_PrefabInstance: {fileID: 5922932413236688624}
   m_PrefabAsset: {fileID: 0}
@@ -44553,15 +44570,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 188bf2edd6c4c2a47948be07b7a1b468, type: 3}
---- !u!4 &4605554054023884709 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7915160615113111409, guid: 188bf2edd6c4c2a47948be07b7a1b468,
-    type: 3}
-  m_PrefabInstance: {fileID: 5922932414519089364}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4605554053264198839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7915160616634078307, guid: 188bf2edd6c4c2a47948be07b7a1b468,
+    type: 3}
+  m_PrefabInstance: {fileID: 5922932414519089364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4605554054023884709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7915160615113111409, guid: 188bf2edd6c4c2a47948be07b7a1b468,
     type: 3}
   m_PrefabInstance: {fileID: 5922932414519089364}
   m_PrefabAsset: {fileID: 0}

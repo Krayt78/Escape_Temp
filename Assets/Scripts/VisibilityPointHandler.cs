@@ -23,7 +23,7 @@ public class VisibilityPointHandler : MonoBehaviour
             visibilityPoints[i].OnValueChanged += PointHidden;
     }
 
-    private void OnDrawGizmos(){
+    private void OnDrawGizmosSelected(){
         Gizmos.color = Color.red;
         //Debug.Log("PointIsVisible : "+pointVisible);
         if(pointVisible) Gizmos.DrawRay(transform.position, transform.forward);
