@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private bool isMenu = false;
     private PlayerInput playerInput;
     [SerializeField] private GameObject player;
+    [SerializeField] Camera playerCamera;
 
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject creditsMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject gameOverMenu;
@@ -16,12 +21,15 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<GameObject> HandsController;
     [SerializeField] private List<GameObject> UIInteractors;
 
+    [SerializeField] private Animator mainMenuAnim;
+
     private PlayerCameraController cameraController;
     private PlayerAbilitiesController playerAbilitiesController;
 
     // Start is called before the first frame update
     void Start()
     {
+        optionsMenu.SetActive(false);
         cameraController = player.GetComponent<PlayerCameraController>();
         player.GetComponent<EntityController>().OnDies += OnPlayerDies;
         playerInput = player.GetComponent<PlayerInput>();
@@ -44,6 +52,10 @@ public class GameController : MonoBehaviour
                 ResumeGame();
             else
                 ShowPauseMenu();
+        }
+        if(isMenu)
+        {
+            ShowMenu();
         }
     }
 
@@ -81,12 +93,8 @@ public class GameController : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        Time.timeScale= 0;
         pauseMenu.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        if (cameraController != null)
-            cameraController.enabled = false;
+        MenuLock();
 
         activateUiInteractor(true);
     }
@@ -143,4 +151,55 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    private void ShowMenu()
+    {
+        mainMenu.SetActive(true);
+        MenuLock();
+        activateUiInteractor(true);
+
+    }
+
+    public void ShowOptions()
+    {
+        SetSubmenuOpen(optionsMenu);
+        MenuLock();
+    }
+
+    public void ShowCredits()
+    {
+        SetSubmenuOpen(creditsMenu);
+        MenuLock();
+    }
+
+    private void MenuLock()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        if (cameraController != null)
+            cameraController.enabled = false;
+    }
+
+    private void SetSubmenuOpen(GameObject subMenu)
+    {
+        if(optionsMenu.active || creditsMenu.active)
+        {
+            optionsMenu.SetActive(false);
+            creditsMenu.SetActive(false);
+        }
+        else
+        { 
+            // mainMenu.GetComponentInChildren<Animator>().SetInteger("state", 1);
+            mainMenu.GetComponentInChildren<Animator>().Play("Base Layer.Main_Menu_Open", 0, 1);
+        }
+        subMenu.SetActive(true);
+    }
+
+    public void HideOptions()
+    {
+        mainMenuAnim.SetBool("open", false);
+        optionsMenu.SetActive(false);
+    }
+    
 }
