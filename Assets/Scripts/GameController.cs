@@ -29,7 +29,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        optionsMenu.SetActive(false);
+        if (optionsMenu != null)
+            optionsMenu.SetActive(false);
         cameraController = player.GetComponent<PlayerCameraController>();
         player.GetComponent<EntityController>().OnDies += OnPlayerDies;
         playerInput = player.GetComponent<PlayerInput>();
@@ -110,10 +111,16 @@ public class GameController : MonoBehaviour
         gameOverMenu.SetActive(true);
     }
 
+    public void LoadScene(string sceneName)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
         Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitApplication()
@@ -162,7 +169,8 @@ public class GameController : MonoBehaviour
 
     public void ShowOptions()
     {
-        SetSubmenuOpen(optionsMenu);
+        if (optionsMenu != null)
+            SetSubmenuOpen(optionsMenu);
         MenuLock();
     }
 
@@ -199,7 +207,8 @@ public class GameController : MonoBehaviour
     public void HideOptions()
     {
         mainMenuAnim.SetBool("open", false);
-        optionsMenu.SetActive(false);
+        if (optionsMenu != null)
+            optionsMenu.SetActive(false);
     }
     
 }

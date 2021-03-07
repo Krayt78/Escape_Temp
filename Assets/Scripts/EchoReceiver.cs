@@ -22,7 +22,7 @@ public class EchoReceiver : MonoBehaviour
 
             foreach (GameObject gfx in Gfx)
             {
-                Debug.Log(gfx.layer);
+
                 if (gfx.layer == Constants.ENNEMIES_LAYER)
                 {
                     gfx.layer = Constants.ENNEMIES_XRAYED_LAYER;

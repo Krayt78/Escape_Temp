@@ -61,7 +61,8 @@ public class SentinelPatrol : EnemyPatrolBase
         else currentWaypointNumber++;
 
         Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
-        newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + .5f;
+
+        //newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + .5f;
         navMeshAgent.SetDestination(newPos);
     }
 
