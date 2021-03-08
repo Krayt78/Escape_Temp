@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8293802858371326442}
   - component: {fileID: 1162966151}
   - component: {fileID: 6607168161166366900}
-  - component: {fileID: 8805885302106644349}
   - component: {fileID: 1298029214125628752}
   - component: {fileID: 2963981126935201332}
+  - component: {fileID: 4790969070931973239}
   m_Layer: 22
   m_Name: FoodSnake
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 8293802858371326439}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.35, y: 0.74, z: -13.84}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 8293802858444491162}
   - {fileID: 932311933580129390}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 8805885302106644349}
+  - {fileID: 4790969070931973239}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -222,20 +222,6 @@ MonoBehaviour:
   - {fileID: 730247535658627441}
   - {fileID: 6975422530362924836}
   - {fileID: 5483063681261855087}
---- !u!136 &8805885302106644349
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8293802858371326439}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3487903
-  m_Height: 1.7434318
-  m_Direction: 2
-  m_Center: {x: 0.014841199, y: 0.30008888, z: 0.11730325}
 --- !u!135 &1298029214125628752
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -263,6 +249,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodIdleEvent: event:/Environment/FoodSnakeIdle
   rb: {fileID: 8293802858371326441}
+--- !u!65 &4790969070931973239
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293802858371326439}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6048713, y: 0.6738672, z: 1.5926924}
+  m_Center: {x: 0.014111757, y: 0.30418372, z: 0.13170958}
 --- !u!1 &8293802858444491163
 GameObject:
   m_ObjectHideFlags: 0
