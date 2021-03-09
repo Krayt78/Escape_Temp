@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool isMenu = false;
     private PlayerInput playerInput;
     [SerializeField] private GameObject player;
-    [SerializeField] Camera playerCamera;
+    //[SerializeField] Camera playerCamera;
 
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject optionsMenu;
