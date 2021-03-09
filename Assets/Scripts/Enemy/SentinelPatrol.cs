@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class SentinelPatrol : EnemyPatrolBase
 {
+    public GameObject wayPointPrefab;
+
     [SerializeField]
     public event Action OnWaypointReached = delegate { };
 
