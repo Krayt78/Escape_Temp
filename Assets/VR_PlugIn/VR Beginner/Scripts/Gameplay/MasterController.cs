@@ -200,7 +200,7 @@ public class MasterController : MonoBehaviour
 
         }
 
-        if (buttonInput < .2f && isGrapplinButtonPressed)
+        if (buttonInput < .2f && isGrapplinButtonPressed && playerInput != null)
         {
             playerInput.OnUseAbilityFunction();
 
