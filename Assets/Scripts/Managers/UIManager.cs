@@ -75,16 +75,11 @@ public class UIManager : MonoBehaviour
         float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
         if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
         {
-            Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
-            float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
-            if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
-            {
-                ShowAbilityUI();
-            }
-            else
-            {
-                HideAbilityUI();
-            }
+            ShowAbilityUI();
+        }
+        else
+        {
+            HideAbilityUI();
         }
     }
 
