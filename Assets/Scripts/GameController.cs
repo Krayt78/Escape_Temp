@@ -23,20 +23,23 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private Animator mainMenuAnim;
 
-    private PlayerCameraController cameraController;
     private PlayerAbilitiesController playerAbilitiesController;
 
     // Start is called before the first frame update
     void Start()
     {
-        optionsMenu.SetActive(false);
-        cameraController = player.GetComponent<PlayerCameraController>();
-        player.GetComponent<EntityController>().OnDies += OnPlayerDies;
-        playerInput = player.GetComponent<PlayerInput>();
-        //EndOfLevel.instance.OnWinLevel += PlayerWon;
-        playerInput.OnStart += OnPauseEvent;
-        playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
-
+        if(optionsMenu != null)
+        {
+            optionsMenu.SetActive(false);
+        }
+        if(!isMenu)
+        {
+            player.GetComponent<EntityController>().OnDies += OnPlayerDies;
+            playerInput = player.GetComponent<PlayerInput>();
+            playerInput.OnStart += OnPauseEvent;
+            playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
+        }
+    
         //Lorsque qu'on fait un restart, le timeScale restait a 0
         Time.timeScale = 1;
     }
@@ -87,8 +90,6 @@ public class GameController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         activateUiInteractor(false);
-        if (cameraController!=null)
-            cameraController.enabled = true;
     }
 
     public void ShowPauseMenu()
@@ -177,8 +178,6 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        if (cameraController != null)
-            cameraController.enabled = false;
     }
 
     private void SetSubmenuOpen(GameObject subMenu)

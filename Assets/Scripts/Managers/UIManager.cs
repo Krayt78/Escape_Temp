@@ -60,22 +60,27 @@ public class UIManager : MonoBehaviour
         playerAbilities = player.GetComponent<PlayerAbilitiesController>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
-        abilityImageCanvas.enabled = false;
-
+        if(abilityImageParent != null)
+        {
+            abilityImageCanvas.enabled = false;
+        }
         HideAllUi();
     }
 
     private void Update()
     {
-        Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
-        float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
-        if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
+        if(abilityImageParent != null)
         {
-            ShowAbilityUI();
-        }
-        else
-        {
-            HideAbilityUI();
+            Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
+            float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
+            if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
+            {
+                ShowAbilityUI();
+            }
+            else
+            {
+                HideAbilityUI();
+            }
         }
     }
 
@@ -136,4 +141,5 @@ public class UIManager : MonoBehaviour
             checkHQObjectif.SetActive(true);
         }
     }
+
 }
