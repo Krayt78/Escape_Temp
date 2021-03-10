@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool isMenu = false;
     private PlayerInput playerInput;
     [SerializeField] private GameObject player;
-    [SerializeField] Camera playerCamera;
+    //[SerializeField] Camera playerCamera;
 
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject optionsMenu;
@@ -111,10 +111,16 @@ public class GameController : MonoBehaviour
         gameOverMenu.SetActive(true);
     }
 
+    public void LoadScene(string sceneName)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
         Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitApplication()
@@ -163,7 +169,8 @@ public class GameController : MonoBehaviour
 
     public void ShowOptions()
     {
-        SetSubmenuOpen(optionsMenu);
+        if (optionsMenu != null)
+            SetSubmenuOpen(optionsMenu);
         MenuLock();
     }
 
@@ -198,7 +205,8 @@ public class GameController : MonoBehaviour
     public void HideOptions()
     {
         mainMenuAnim.SetBool("open", false);
-        optionsMenu.SetActive(false);
+        if (optionsMenu != null)
+            optionsMenu.SetActive(false);
     }
     
 }

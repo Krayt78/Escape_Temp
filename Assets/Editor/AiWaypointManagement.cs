@@ -6,7 +6,6 @@ using UnityEditor;
 [CustomEditor(typeof(SentinelPatrol))]
 public class AiWaypointManagement : Editor
 {
-    [SerializeField] GameObject wayPointPrefab;
     SentinelPatrol myTarget;
 
     private void OnSceneGUI()
@@ -68,13 +67,13 @@ public class AiWaypointManagement : Editor
         if(myTarget.WaypointPatrolList.Count!=0)
         {
             Transform lastWaypointTransform = myTarget.WaypointPatrolList[myTarget.WaypointPatrolList.Count - 1].transform;
-            newPoint = Instantiate(wayPointPrefab,
+            newPoint = Instantiate(myTarget.wayPointPrefab,
                                 lastWaypointTransform.position + lastWaypointTransform.forward,
                                 Quaternion.identity, lastWaypointTransform.transform.parent);
         }
         else
         {
-            newPoint = Instantiate(wayPointPrefab, myTarget.transform.position + myTarget.transform.forward, Quaternion.identity);
+            newPoint = Instantiate(myTarget.wayPointPrefab, myTarget.transform.position + myTarget.transform.forward, Quaternion.identity);
         }
         myTarget.AddWaypoint(newPoint.GetComponent<WaypointController>());
     }

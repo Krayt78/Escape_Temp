@@ -60,16 +60,20 @@ public class UIManager : MonoBehaviour
         playerAbilities = player.GetComponent<PlayerAbilitiesController>();
         playerInput.OnStart += OnDisplayUIEvent;
         playerDNALevel.OnDies += OnDisplayUIEvent;
-        if(abilityImageParent != null)
-        {
+        if(abilityImageCanvas!=null)
             abilityImageCanvas.enabled = false;
-        }
+
         HideAllUi();
     }
 
     private void Update()
     {
-        if(abilityImageParent != null)
+        if (abilityImageParent == null)
+            return;
+
+        Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
+        float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
+        if(targetDir.magnitude < 0.6 && angle < 30 && playerAbilities.HasAbility())
         {
             Vector3 targetDir = abilityImageParent.position - playerCamera.transform.position;
             float angle = Vector3.Angle(targetDir, playerCamera.transform.forward);
@@ -88,7 +92,8 @@ public class UIManager : MonoBehaviour
     {
         foreach (var menu in listMenu)
         {
-            menu.SetActive(false);
+            if(menu!=null)
+                menu.SetActive(false);
         }
     }
 
@@ -103,12 +108,15 @@ public class UIManager : MonoBehaviour
         }
         foreach (var menu in listMenu)
         {
-            moveUIInFrontOfPlayer(menu, cameraPosition, offset);
+            if (menu != null)
+                moveUIInFrontOfPlayer(menu, cameraPosition, offset);
         }
     }
 
     private void moveUIInFrontOfPlayer(GameObject menu, Vector3 cameraPosition, float offset)
     {
+        if (menu == null)
+            return;
         menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
         menu.transform.LookAt(cameraPosition);
     }
