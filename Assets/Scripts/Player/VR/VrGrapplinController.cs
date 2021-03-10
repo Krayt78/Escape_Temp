@@ -88,7 +88,7 @@ public class VrGrapplinController : Ability
 
         while (!Landed() && !hitSmth)
         {
-            characterController.Move((destination - startPosition).normalized * grapplinSpeed * Time.deltaTime);
+            characterController.Move((destination - movingPlayer.position).normalized * grapplinSpeed * Time.deltaTime);
 
             lrRope.SetPosition(0, grapplinPosition.position);
 

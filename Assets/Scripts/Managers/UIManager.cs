@@ -144,4 +144,5 @@ public class UIManager : MonoBehaviour
             checkHQObjectif.SetActive(true);
         }
     }
+
 }

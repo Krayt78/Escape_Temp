@@ -12,7 +12,8 @@ public class TabletController : Interactable
 
     public NomTablet nom = new NomTablet();
 
-    [SerializeField] string tabletPickUpSoundPath;
+    [SerializeField] private string tabletPickUpSoundPath;
+    [SerializeField] private string tabletVoicePickUpPath;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,12 @@ public class TabletController : Interactable
         nomPreuvesRamasse.Add(this.nom);
         EventManager.Instance.Raise(new OnTabletGrabEvent() { nom = this.nom });
         FMODPlayerController.PlayOnShotSound(tabletPickUpSoundPath, transform.position);
+
+        if (tabletVoicePickUpPath != null)
+        {
+            VoiceEvent pickUpProof1 = new VoiceEvent(tabletVoicePickUpPath, VoiceManager.Priority.High);
+            VoiceManager.Instance.AddVoiceToQueue(pickUpProof1);
+        }
         this.gameObject.SetActive(false);
     }
 }

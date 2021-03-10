@@ -58,8 +58,16 @@ public class XROffsetGrabbable : XRGrabInteractable
 
     protected override void OnSelectExit(XRBaseInteractor interactor)
     {
-        //i change the layer back to default
-        ChangeLayer(0, gameObject);
+        if (gameObject.GetComponent<FoodController>())
+        {
+            // On remet le layer a Food
+            ChangeLayer(22, gameObject);
+        }
+        else
+        {
+            //i change the layer back to default
+            ChangeLayer(0, gameObject);
+        }
 
         if (interactor is XRDirectInteractor)
         {
