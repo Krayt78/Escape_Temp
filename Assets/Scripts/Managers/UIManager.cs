@@ -110,9 +110,9 @@ public class UIManager : MonoBehaviour
 
     private void moveUIInFrontOfPlayer(GameObject menu, Vector3 cameraPosition, float offset)
     {
-        if (menu == null)
-            return;
-        menu.transform.position = new Vector3(uiFocalPoint.position.x, uiFocalPoint.position.y, uiFocalPoint.position.z - offset);
+        Vector3 direction = playerCamera.transform.forward;
+        direction = direction.normalized;
+        menu.transform.position = cameraPosition + direction * maxRangeDisplay;
         menu.transform.LookAt(cameraPosition);
     }
 
