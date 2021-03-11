@@ -7,9 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestGrenade
-  m_Shader: {fileID: 4800000, guid: 1408e03254b557644b24f0e24b5781de, type: 3}
-  m_ShaderKeywords: _POSITIONFEATURE_Y _POSITIONSPACEFEATURE_WORLD _SOFTINTERSECTION1FEATURE_OFF
+  m_Name: TestHolo
+  m_Shader: {fileID: 4800000, guid: e99f8b80b1693284587af0c131f61f3d, type: 3}
+  m_ShaderKeywords: _FRESNELFEATURE_ON _LINE2FEATURE_ON _LINEGLITCHFEATURE_ON _MASKLOCALFEATURE_ON
+    _POSITIONFEATURE_Y _POSITIONSPACEFEATURE_WORLD _RANDOMGLITCHFEATURE_ON _SOFTINTERSECTION1FEATURE_OFF
     _SOFTINTERSECTION2FEATURE_OFF _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -53,11 +54,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a267a567aca03024995d8342e3a961d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask2:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a267a567aca03024995d8342e3a961d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -81,13 +82,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Alpha: 1
+    - _Alpha: 0.6
     - _AlphaClip: 0
     - _AlphaMaskAffect: 0.5
     - _AlphaMaskFeature: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _ColorGlitchAffect: 0.5
+    - _ColorGlitchAffect: 0.543
     - _ColorGlitchFeature: 0
     - _Cull: 2
     - _CullMode: 2
@@ -97,15 +98,15 @@ Material:
     - _DissolveHide: -1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelAlphaPower: 2
-    - _FresnelAlphaScale: 1
-    - _FresnelFeature: 0
-    - _FresnelPower: 2
-    - _FresnelScale: 1
+    - _FresnelAlphaPower: 3
+    - _FresnelAlphaScale: 0.5
+    - _FresnelFeature: 1
+    - _FresnelPower: 1
+    - _FresnelScale: 0.5
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GrainAffect: 1
+    - _GrainAffect: 0
     - _GrainFeature: 0
     - _Line1Alpha: 0.15
     - _Line1Feature: 0
@@ -114,21 +115,22 @@ Material:
     - _Line1InvertedThickness: 0
     - _Line1Speed: -3.57
     - _Line2Alpha: 0.1
-    - _Line2Feature: 0
-    - _Line2Frequency: 1
-    - _Line2Hardness: 2
+    - _Line2Feature: 1
+    - _Line2Frequency: 3
+    - _Line2Hardness: 1
     - _Line2InvertedThickness: 0.255
-    - _Line2Speed: -1
+    - _Line2Speed: 0
     - _LineBothFeature: 0
-    - _LineGlitchFeature: 0
+    - _LineGlitchFeature: 1
     - _LineGlitchFrequency: 0.2
     - _LineGlitchHardness: 5
     - _LineGlitchInvertedThickness: 0.825
     - _LineGlitchSpeed: -0.26
     - _MaskFalloff: 0
     - _MaskFeature: 0
+    - _MaskInversion: 0
     - _MaskInvesion: 0
-    - _MaskLocalFeature: 0
+    - _MaskLocalFeature: 1
     - _MaskSoftness: 0
     - _MaskSoftness2: 0
     - _Metallic: 0
@@ -140,11 +142,11 @@ Material:
     - _PositionFeature: 1
     - _PositionSpaceFeature: 0
     - _QueueOffset: 0
-    - _RandomGlitchAmount: 0.089
-    - _RandomGlitchConstant: 0
-    - _RandomGlitchFeature: 0
-    - _RandomGlitchTiling: 2.83
-    - _RandomOffset: 47512.453
+    - _RandomGlitchAmount: 0.036
+    - _RandomGlitchConstant: 0.039
+    - _RandomGlitchFeature: 1
+    - _RandomGlitchTiling: 1
+    - _RandomOffset: 99478.164
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -174,11 +176,11 @@ Material:
     - _GrainScale: {r: 50, g: 50, b: 50, a: 0}
     - _GrainValues: {r: 0, g: 1, b: 0, a: 0}
     - _LineGlitchOffset: {r: 0.03, g: 0, b: 0, a: 0}
-    - _MainColor: {r: 0.620945, g: 1.420074, b: 3.953349, a: 0.05098039}
+    - _MainColor: {r: 0.031984407, g: 1.9284729, b: 6.780678, a: 0.05098039}
     - _Mask2Speed: {r: 0, g: 0, b: 0, a: 0}
-    - _MaskCenter: {r: 0, g: 0, b: 0, a: 0}
-    - _MaskSize: {r: 0, g: 0, b: 0, a: 0}
-    - _RandomGlitchOffset: {r: -0.5, g: 0, b: 0, a: 0}
+    - _MaskCenter: {r: 1.32, g: 1.8, b: 0, a: 0}
+    - _MaskSize: {r: 0.36, g: 2.37, b: 1.26, a: 0}
+    - _RandomGlitchOffset: {r: 0.5, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &8409014669755613277
 MonoBehaviour:
