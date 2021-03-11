@@ -57,6 +57,8 @@ public class PatrollState : BaseState
         AIManager.RemoveEnemyOnSight(guard);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Patrol);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringPatrolStateSFX();
+
+        manager.GetComponent<EnemyEyeMovement>().ResetEye();
     }
 
     public override void OnStateExit()

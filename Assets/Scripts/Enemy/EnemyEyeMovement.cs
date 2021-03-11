@@ -83,4 +83,9 @@ public class EnemyEyeMovement : MonoBehaviour
     public Transform GetEyeDirection(){
         return sentinelEye;
     }
+
+    public void ResetEye()
+    {
+        sentinelEye.localRotation = Quaternion.Euler(0,-90,0);
+    }
 }
