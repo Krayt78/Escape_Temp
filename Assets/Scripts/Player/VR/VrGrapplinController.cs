@@ -42,6 +42,8 @@ public class VrGrapplinController : Ability
     [SerializeField]
     GameObject grapplinProjectile;
     GameObject grp;
+    [SerializeField]
+    LineRenderer GrapplinAbilityLine;
 
     public override void Awake()
     {
@@ -59,6 +61,9 @@ public class VrGrapplinController : Ability
     {
         base.Start();
         dnaConsumed = 0.03f;
+        Vector3 endLinePosition = GrapplinAbilityLine.GetPosition(1);
+        endLinePosition.x = - maxRange;
+        GrapplinAbilityLine.SetPosition(1, endLinePosition);
     }
 
     private void FixedUpdate()
