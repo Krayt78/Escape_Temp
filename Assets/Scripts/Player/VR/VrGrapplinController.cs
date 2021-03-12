@@ -27,7 +27,7 @@ public class VrGrapplinController : Ability
     private float maxRange = 150f;
     [SerializeField]
     float duration = 10f;
-    float grapplinSpeed = 10f;
+    float grapplinSpeed = 30f;
 
     RaycastHit hit;
     Ray ray;

@@ -20,6 +20,12 @@ public class FoodSoundController : MonoBehaviour
         soundInstance.release();
     }
 
+    private void OnDisable()
+    {
+        soundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        soundInstance.release();
+    }
+
     private void OnDestroy()
     {
         soundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

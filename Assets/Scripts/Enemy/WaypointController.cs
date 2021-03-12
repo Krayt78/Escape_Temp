@@ -11,7 +11,8 @@ public class WaypointController : MonoBehaviour
     {
         for(int i=0;i<parentList.Count;i++)
         {
-            parentList[i].WaypointPatrolList.Remove(gameObject);
+            if(parentList[i]!=null)
+                parentList[i].WaypointPatrolList?.Remove(gameObject);
         }
     }
 }

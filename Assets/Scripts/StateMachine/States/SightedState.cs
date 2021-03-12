@@ -8,6 +8,8 @@ public class SightedState : BaseState
     private EnemyBase guard;
     private EnemyAIManager AIManager;
 
+    private FieldOfView fov;
+
     private float distanceBetweenTargetAndGuard;
     private float maxSightDistance = 10f;
     private float lostTimer = 0;
@@ -16,6 +18,7 @@ public class SightedState : BaseState
     public SightedState(EnemyBase guard) : base(guard.gameObject)
     {
         this.guard = guard;
+        fov = guard.GetComponent<FieldOfView>();
     }
 
     public override Type Tick()
@@ -99,6 +102,11 @@ public class SightedState : BaseState
     private float AlertLevel()
     {
         distanceBetweenTargetAndGuard = Vector3.Distance(guard.transform.position, guard.Target.transform.position);
+        //if (distanceBetweenTargetAndGuard > fov.viewRadius)
+        //    return guard.AlertLevel;
+        //if (guard.AngleToTarget > fov.viewRadius / 2)
+        //    return guard.AlertLevel;
+
         float angleCalc = 90f - guard.AngleToTarget + 1f;
         float distanceCalc = Mathf.Clamp(20f - distanceBetweenTargetAndGuard, 1f, 20f) * 10f;
         float calc = (distanceCalc * guard.AlertFactor) * (angleCalc * guard.AlertFactor) * Time.deltaTime * 100;

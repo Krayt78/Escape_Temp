@@ -78,7 +78,7 @@ public class EnemyAttack : MonoBehaviour
         Destroy(loadingeffect, loadingeffect.GetComponent<VisualEffect>().GetFloat("Duration"));
         GetComponent<GuardSoundEffectController>()?.PlayLoadingFireSFX();
         yield return new WaitForSeconds(0.75f);
-        guard.EnemyAnimationController.TriggerAttackTurret();
+        guard.EnemyAnimationController?.TriggerAttackTurret();
         GameObject shootEffect = Instantiate(laserShootEffect, FiringPoint.transform);
         Destroy(shootEffect, shootEffect.GetComponent<VisualEffect>().GetFloat("Duration") + 0.25f);
         GameObject bullet = Instantiate(Bullet, FiringPoint.transform.position, Quaternion.LookRotation((target.position - FiringPoint.transform.position).normalized));
