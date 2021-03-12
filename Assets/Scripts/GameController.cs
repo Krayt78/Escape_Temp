@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDies()
     {
-        ShowPauseMenu();
+        PlayerLoose();
         pauseMenu.GetComponentInChildren<Button>().interactable = false;
         playerAbilitiesController.isAbilityActivated = false;
     }
@@ -96,7 +96,6 @@ public class GameController : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         MenuLock();
-
         activateUiInteractor(true);
     }
 
@@ -107,8 +106,9 @@ public class GameController : MonoBehaviour
 
     public void PlayerLoose()
     {
-        Time.timeScale = 0;
         gameOverMenu.SetActive(true);
+        MenuLock();
+        activateUiInteractor(true);
     }
 
     public void LoadScene(string sceneName)
