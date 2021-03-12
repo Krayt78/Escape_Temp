@@ -44,10 +44,13 @@ public class CheckpointManager : MonoBehaviour
 
     public void GoToLastCheckpoint()
     {
-        playerTransform.position = lastCheckpoint.position;
-        playerTransform.rotation = lastCheckpoint.rotation;
-        Time.timeScale = 1;
-        transformIsReseting = false;
+        if(lastCheckpoint != null && playerTransform != null)
+        {
+            playerTransform.position = lastCheckpoint.position;
+            playerTransform.rotation = lastCheckpoint.rotation;
+            Time.timeScale = 1;
+            transformIsReseting = false;
+        }
     }
 
     public void setCheckPoint(Transform newCheckPoint)
