@@ -142,7 +142,7 @@ public class Guard : EnemyBase
         SetTarget(FieldOfView.visibleTargets[0].Value);
         angleToTarget = FieldOfView.visibleTargets[0].Key;
         EnemyAIManager.Instance.AddEnemyOnSight(this);
-        EnemyAnimationController.TriggerSight();
+        EnemyAnimationController?.TriggerSight();
     }
 
     private void OnDeadBodyFound()
@@ -158,13 +158,13 @@ public class Guard : EnemyBase
             EnemyNavigation.targetLastSeenPosition = Target.transform.position;
             EnemyNavigation.targetLastSeenTransform = Target.transform;
         }
-        EnemyAnimationController.TriggerEndSight();
+        EnemyAnimationController?.TriggerEndSight();
         SetTarget(null);
     }
 
     private void OnAttack()
     {
-        EnemyAnimationController.TriggerAttack();
+        EnemyAnimationController?.TriggerAttack();
     }
 
     private void OnNoiseReceived(Noise noise)
@@ -177,7 +177,7 @@ public class Guard : EnemyBase
     private void OnStunned(float stunDuration)
     {
         IsStunned = true;
-        EnemyAnimationController.TriggerStunned();
+        EnemyAnimationController?.TriggerStunned();
         StartCoroutine(RecoverFromStun(stunDuration));
     }
 
@@ -186,7 +186,7 @@ public class Guard : EnemyBase
         yield return new WaitForSeconds(stunDuration);
 
         IsStunned = false;
-        EnemyAnimationController.TriggerEndStunned();
+        EnemyAnimationController?.TriggerEndStunned();
     }
 
     public override void SetTarget(Transform target)

@@ -9,6 +9,7 @@ public class FieldOfView : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
+    private float halfViewAngle;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -35,6 +36,9 @@ public class FieldOfView : MonoBehaviour
         {
             this.guard = gameObject.GetComponent<Drone>();
         }
+
+        halfViewAngle = viewAngle / 2;
+
         StartCoroutine("FindTargetsWithDelay", .2f);
         StartCoroutine("FindTargetsGlobalAlertWithDelay", .5f);
     }
@@ -42,9 +46,9 @@ public class FieldOfView : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewRadius);  
-        Vector3 fovLine1 = Quaternion.AngleAxis(viewAngle, transform.up) * transform.forward * viewRadius;
-        Vector3 fovLine2 = Quaternion.AngleAxis(-viewAngle, transform.up) * transform.forward * viewRadius;
+        //Gizmos.DrawWireSphere(transform.position, viewRadius);  
+        Vector3 fovLine1 = Quaternion.AngleAxis(halfViewAngle, transform.up) * transform.forward * viewRadius;
+        Vector3 fovLine2 = Quaternion.AngleAxis(-halfViewAngle, transform.up) * transform.forward * viewRadius;
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, fovLine1);
         Gizmos.DrawRay(transform.position, fovLine2);
@@ -81,19 +85,19 @@ public class FieldOfView : MonoBehaviour
                 GameObject targetGO = targetsInViewRadius[i].gameObject;
                 Transform target;
                 target = targetsInViewRadius[i].transform;
-                Transform eyeTransform;
-                if(gameObject.GetComponentInParent(typeof(EnemyEyeMovement)) != null) 
-                {
-                    eyeTransform = ((EnemyEyeMovement)gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
-                }
-                else{
-                    eyeTransform = transform;
-                }
+                //Transform eyeTransform;
+                //if(gameObject.GetComponentInParent(typeof(EnemyEyeMovement)) != null) 
+                //{
+                //    eyeTransform = ((EnemyEyeMovement)gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                //}
+                //else{
+                //    eyeTransform = transform;
+                //}
 
-                var targetDirection = target.position - eyeTransform.position;
-                float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
+                var targetDirection = target.position - transform.position;
+                float angleToTarget = Vector3.SignedAngle(targetDirection.normalized, transform.forward, Vector3.up);
                 
-                if(CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, eyeTransform.position, eyeTransform.forward))
+                if(CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, transform.position, transform.forward))
                 {
                     visibleTargets.Add(new KeyValuePair<float, Transform>(angleToTarget, target));
                 }
@@ -111,11 +115,11 @@ public class FieldOfView : MonoBehaviour
                     GameObject targetGO = deadEnemiesInViewRadius[i].gameObject;
                     Debug.Log("targetGo : "+targetGO.name);
                     Transform target = deadEnemiesInViewRadius[i].transform;
-                    Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
+                    //Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                     
-                    float angleToTarget = Vector3.Angle((target.position - eyeTransform.position).normalized, eyeTransform.forward);
+                    float angleToTarget = Vector3.Angle((target.position - transform.position).normalized, transform.forward);
 
-                    if (CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, eyeTransform.position, eyeTransform.forward))
+                    if (CheckEnoughVisibilityPointOnSight(targetGO.GetComponent<VisibilityPointHandler>().GetAllVisibilityPoint(), 1, transform.position, transform.forward))
                     //if (targetGO.GetComponent<VisibilityPointHandler>().GetVisiblePointsFromTarget(eyeTransform, viewAngle, viewRadius, obstacleMask).Count > 1)
                     {
                         OnDeadBodyFound();
@@ -155,7 +159,7 @@ public class FieldOfView : MonoBehaviour
             Vector3 pointPosition = visibilityPoints[i].transform.position;
             Vector3 targetDirection = pointPosition - eyePosition;
             // float angleToTarget = Vector3.SignedAngle(targetDirection, eyeTransform.forward, Vector3.up);
-            if (Mathf.Abs(Vector3.SignedAngle(eyeDirection, targetDirection.normalized, Vector3.up)) < viewAngle)
+            if (Mathf.Abs(Vector3.SignedAngle(eyeDirection, targetDirection.normalized, Vector3.up)) < halfViewAngle)
             {
                 Debug.DrawRay(eyePosition, targetDirection, Color.magenta, 3);
                 Ray ray = new Ray(eyePosition, targetDirection);

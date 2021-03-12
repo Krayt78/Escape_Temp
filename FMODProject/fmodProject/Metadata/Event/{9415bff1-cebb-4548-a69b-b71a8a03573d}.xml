@@ -5,7 +5,7 @@
 			<value>Voice_Biome2-6</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{3071f634-60a9-4544-9a30-b4b76534b5c8}</destination>
@@ -56,7 +56,11 @@
 			<destination>{8d1f10ea-dea7-45a5-b556-aaa1e32d2307}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{70b5963f-6413-4bf9-847a-3c634c02de97}" />
+	<object class="EventAutomatableProperties" id="{70b5963f-6413-4bf9-847a-3c634c02de97}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{daf7800e-7c75-4bf9-ba55-1a43deae979f}" />
 	<object class="GroupTrack" id="{dcdfc8a3-30d0-4a94-8f95-81650fbf9136}">
 		<relationship name="modules">
@@ -114,7 +118,6 @@
 		<relationship name="effects">
 			<destination>{6539b51d-1980-4611-bf09-cf3556066f92}</destination>
 			<destination>{88223c89-d161-415c-9ccd-d4f2c67bf576}</destination>
-			<destination>{22a6f39b-664a-4272-a873-9a267ab4f992}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6ce120ab-20d1-4a86-ad1f-a4af7dbb2bba}" />
@@ -127,10 +130,5 @@
 	<object class="MixerBusPanner" id="{37656f96-f81c-4105-9792-2742002d877c}" />
 	<object class="SFXReverbEffect" id="{6539b51d-1980-4611-bf09-cf3556066f92}" />
 	<object class="MixerBusFader" id="{88223c89-d161-415c-9ccd-d4f2c67bf576}" />
-	<object class="SpatialiserEffect" id="{22a6f39b-664a-4272-a873-9a267ab4f992}">
-		<property name="maximumDistance">
-			<value>300</value>
-		</property>
-	</object>
 	<object class="MixerBusFader" id="{2bd7c36e-9989-4ca1-befe-c8f95c88dd5e}" />
 </objects>

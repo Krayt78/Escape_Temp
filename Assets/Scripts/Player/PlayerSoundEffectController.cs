@@ -88,6 +88,9 @@ public class PlayerSoundEffectController : MonoBehaviour
         textureToParamTableConvert.Add("Alien_Surface", 5);
         textureToParamTableConvert.Add("CellGrowth", 4);
 
+        textureToParamTableConvert.Add("NewLayer 1", 0);
+        textureToParamTableConvert.Add("NewLayer 2", 0);
+
         textureToParamTableConvert.Add("PMAT_Metal", 5);
         textureToParamTableConvert.Add("PMAT_Rock", 1);
         textureToParamTableConvert.Add("PMAT_Wood", 3);
