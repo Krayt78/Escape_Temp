@@ -69,7 +69,7 @@ public class PlayerSoundEffectController : MonoBehaviour
     [Space(10)]
 
     [Header("Voices")]
-    [SerializeField] string firstEatFoodEvent;
+    // [SerializeField] string firstEatFoodEvent;
 
     private Dictionary<string, int> textureToParamTableConvert;
 
@@ -453,8 +453,8 @@ public class PlayerSoundEffectController : MonoBehaviour
 
     private void PlayFirstEatFood(float amount)
     {
-        VoiceEvent firstEatVoiceEvent = new VoiceEvent(firstEatFoodEvent, VoiceManager.Priority.High);
-        VoiceManager.Instance.AddVoiceToQueue(firstEatVoiceEvent);
+        //VoiceEvent firstEatVoiceEvent = new VoiceEvent(firstEatFoodEvent, VoiceManager.Priority.High);
+        //VoiceManager.Instance.AddVoiceToQueue(firstEatVoiceEvent);
         GetComponent<PlayerEntityController>().OnEatDna -= PlayFirstEatFood;
     }
 }

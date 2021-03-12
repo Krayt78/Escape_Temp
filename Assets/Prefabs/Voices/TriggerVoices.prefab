@@ -59,6 +59,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idFmod: event:/BiomeVoices/Voice_Biome1-4
   eventPriority: 0
+--- !u!1 &6124953926982546363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8287974180742757677}
+  - component: {fileID: 4772210099069179994}
+  - component: {fileID: 5852898602967240155}
+  - component: {fileID: 7550941398659636857}
+  m_Layer: 0
+  m_Name: TriggerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8287974180742757677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124953926982546363}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -179.89, y: 36.99, z: -6.56}
+  m_LocalScale: {x: 5.3357, y: 5.3357, z: 5.3357}
+  m_Children: []
+  m_Father: {fileID: 8784303133751318565}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4772210099069179994
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124953926982546363}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &5852898602967240155
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124953926982546363}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.0229492
+  m_Height: 2.0458984
+  m_Direction: 1
+  m_Center: {x: -0.38671273, y: 0, z: 0.13623635}
+--- !u!114 &7550941398659636857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124953926982546363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be550d03a56b414cbc9cf232841a991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idFmod: event:/BiomeVoices/Voice_Biome1-1
+  eventPriority: 0
 --- !u!1 &6237742557727182919
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +288,7 @@ Transform:
   - {fileID: 8784303133940988736}
   - {fileID: 4581163049724774704}
   - {fileID: 6473009125250579406}
+  - {fileID: 8287974180742757677}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
