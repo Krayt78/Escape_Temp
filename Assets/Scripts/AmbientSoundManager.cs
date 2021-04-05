@@ -10,7 +10,7 @@ public class AmbientSoundManager : MonoBehaviour
     [SerializeField] Rigidbody bodyToFollow;
     [SerializeField] Terrain currentTerrain;
 
-    private string currentTerrainPath;
+    private string currentTerrainEvent;
 
 
     [SerializeField] string tutorialEvent;
@@ -64,18 +64,18 @@ public class AmbientSoundManager : MonoBehaviour
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
         if (isExterior)
-            currentTerrainPath = eventPath;
+            currentTerrainEvent = eventPath;
     }
 
     public void PlayCurrentTerrainAmbience()
     {
-        if (string.IsNullOrEmpty(currentTerrainPath))
+        if (string.IsNullOrEmpty(currentTerrainEvent))
             return;
 
         ambienceInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         ambienceInstance.release();
 
-        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(currentTerrainPath, bodyToFollow);
+        ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(currentTerrainEvent, bodyToFollow);
 
         float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
@@ -93,7 +93,7 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
-        currentTerrainPath = tutorialEvent;
+        currentTerrainEvent = tutorialEvent;
     }
 
     public void PlayForestAmbience()
@@ -107,7 +107,7 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
-        currentTerrainPath = forestEvent;
+        currentTerrainEvent = forestEvent;
     }
 
     public void PlayOceanAmbience()
@@ -121,7 +121,7 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
-        currentTerrainPath = oceanEvent;
+        currentTerrainEvent = oceanEvent;
     }
 
     public void PlayMainBaseAmbience()
@@ -135,7 +135,7 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
 
-        currentTerrainPath = tutorialEvent;
+        currentTerrainEvent = tutorialEvent;
     }
 
     public void PlayBuildingAmbience()

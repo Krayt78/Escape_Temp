@@ -2310,7 +2310,7 @@ Transform:
   m_GameObject: {fileID: 7664595787577341297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3.55, z: 0}
-  m_LocalScale: {x: 1.0807501, y: 1, z: 1.0807502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8430374723676341681}
   - {fileID: 876402276607829292}
@@ -2439,6 +2439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cd300895586c6438a801b16f475f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objToDisapear: {fileID: 0}
 --- !u!114 &1664066292939440392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2451,32 +2452,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd393f2763f2bc94d8e9e327cb161648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diesSFXPath: event:/Sentinel/Actions/Dies
-  hurtSFXPath: event:/Sentinel/Actions/Hurt
-  loadingFireSFXPath: 
-  fireAttackSFXPath: event:/Sentinel/Actions/FireAttack
-  projectileHitSmthSFXPath: event:/Sentinel/Actions/ProjectileHitSomething
-  projectileMovementSFXPath: event:/Sentinel/Actions/ProjectileMovement
-  ragdollCollisionSFXPath: event:/Sentinel/Actions/RagdollCollision
-  tentacleMovementSFXPath: event:/Sentinel/Actions/TentacleMovement
-  ennemiScannedSFXPath: event:/Sentinel/Actions/EnnemiScanned
-  motorAttackStateSFXPath: event:/Sentinel/Armor/MotorAttackState
-  motorPatrolStateSFXPath: event:/Sentinel/Armor/MotorPatrolState
-  motorSightedStateSFXPath: 
-  motorAlertedStateSFXPath: 
-  motorLostStateSFXPath: 
-  motorStopSFXPath: event:/Sentinel/Armor/MotorStop
-  enteringPatrolStateSFXPath: event:/Sentinel/States/PatrolState
-  enteringSightedStateSFXPath: 
-  enteringAlertedStateSFXPath: 
-  enteringAttackStateSFXPath: event:/Sentinel/States/EnteringAttackState
-  enteringLostStateSFXPath: 
-  patrolStateSFXPath: event:/Sentinel/States/EnteringPatrolState
-  sightedStateSFXPath: 
-  alertedStateSFXPath: 
-  attackStateSFXPath: event:/Sentinel/States/AttackState
-  lostStateSFXPath: 
-  stateTransition: 
+  diesSFXPath: event:/Ennemies/Drone/Actions/Dies
+  hurtSFXPath: event:/Ennemies/Drone/Actions/Hurt
+  loadingFireSFXPath: event:/Ennemies/Drone/Actions/LoadingShoot
+  fireAttackSFXPath: event:/Ennemies/Drone/Actions/FireAttack
+  projectileHitSmthSFXPath: event:/Ennemies/Drone/Actions/ProjectileHitSomething
+  projectileMovementSFXPath: event:/Ennemies/Drone/Actions/ProjectileMovement
+  ragdollCollisionSFXPath: event:/Ennemies/Drone/Actions/RagdollCollision
+  tentacleMovementSFXPath: event:/Ennemies/Drone/Actions/TentacleMovement
+  ennemiScannedSFXPath: event:/Ennemies/Drone/Actions/EnemyScanned
+  motorAttackStateSFXPath: event:/Ennemies/Drone/Armor/MotorAttackState
+  motorPatrolStateSFXPath: event:/Ennemies/Drone/Armor/MotorPatrolState
+  motorSightedStateSFXPath: event:/Ennemies/Drone/Armor/MotorSightedState
+  motorAlertedStateSFXPath: event:/Ennemies/Drone/Armor/MotorAlertedState
+  motorLostStateSFXPath: event:/Ennemies/Drone/Armor/MotorLostState
+  motorStopSFXPath: event:/Ennemies/Drone/Armor/MotorStop
+  enteringPatrolStateSFXPath: event:/Ennemies/Drone/States/EnteringPatrolState
+  enteringSightedStateSFXPath: event:/Ennemies/Drone/States/EnteringSightedState
+  enteringAlertedStateSFXPath: event:/Ennemies/Drone/States/EnteringAlertedState
+  enteringAttackStateSFXPath: event:/Ennemies/Drone/States/EnteringAttackState
+  enteringLostStateSFXPath: event:/Ennemies/Drone/States/EnteringSightedState
+  patrolStateSFXPath: event:/Ennemies/Drone/States/PatrolState
+  sightedStateSFXPath: event:/Ennemies/Drone/States/SightedState
+  alertedStateSFXPath: event:/Ennemies/Drone/States/AlertedState
+  attackStateSFXPath: event:/Ennemies/Drone/States/AttackState
+  lostStateSFXPath: event:/Ennemies/Drone/States/LostState
+  stateTransition: event:/Ennemies/Drone/States/StateTransition
 --- !u!114 &365754739683838908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,15 +3228,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f18915d1b42e940acb34b2ec616c06, type: 3}
---- !u!2083052967 &7993111070034410811 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 6289665163012083098, guid: e8f18915d1b42e940acb34b2ec616c06,
-    type: 3}
-  m_PrefabInstance: {fileID: 4153547077476462753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &634900343430564629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 4153547077476462753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!2083052967 &7993111070034410811 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 6289665163012083098, guid: e8f18915d1b42e940acb34b2ec616c06,
     type: 3}
   m_PrefabInstance: {fileID: 4153547077476462753}
   m_PrefabAsset: {fileID: 0}
@@ -3328,15 +3329,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f18915d1b42e940acb34b2ec616c06, type: 3}
---- !u!4 &6660889750187470640 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
-    type: 3}
-  m_PrefabInstance: {fileID: 7862150937175757956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &4202590432634444062 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 6289665163012083098, guid: e8f18915d1b42e940acb34b2ec616c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 7862150937175757956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6660889750187470640 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3561154819981540276, guid: e8f18915d1b42e940acb34b2ec616c06,
     type: 3}
   m_PrefabInstance: {fileID: 7862150937175757956}
   m_PrefabAsset: {fileID: 0}
