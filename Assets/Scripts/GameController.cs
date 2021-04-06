@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject loadingScreen;
+
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject gameOverMenu;
@@ -115,6 +117,28 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadScene(int sceneIndex)
+    {
+        Time.timeScale = 1;
+        
+        StartCoroutine(LoadSceneAsync(sceneIndex, loadingScreen));
+    }
+
+    IEnumerator LoadSceneAsync(int sceneIndex, GameObject loadingScreen)
+    {
+        mainMenu?.SetActive(false);
+        optionsMenu?.SetActive(false);
+        creditsMenu?.SetActive(false);
+        loadingScreen.SetActive(true);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 
     public void RestartScene()

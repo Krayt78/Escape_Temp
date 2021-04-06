@@ -31,7 +31,7 @@ public class AudioSettings : MonoBehaviour
     private void Awake()
     {
         MasterBus = FMODUnity.RuntimeManager.GetBus("bus:/Master");
-        EffectBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/General");
+        EffectBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/Effects");
         AmbienceBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/Ambience");
         VoiceBus = FMODUnity.RuntimeManager.GetBus("bus:/Master/Voices");
     }
