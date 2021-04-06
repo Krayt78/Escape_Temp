@@ -428,13 +428,13 @@ public class PlayerSoundEffectController : MonoBehaviour
         float currentValue = 0;
         float startCurrentValue;
 
-        FMOD.Studio.EventInstance ambienceInstance = AmbientSoundManager.Instance.ambienceInstance;
+        FMOD.Studio.EventInstance windInstance = AmbientSoundManager.Instance.windInstance;
         FMOD.Studio.PLAYBACK_STATE ambienceState;
         AmbientSoundManager.Instance.ambienceInstance.getPlaybackState(out ambienceState);
 
         if (ambienceState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
         {
-            ambienceInstance.getParameterByName("MovingInTheWind", out currentValue);
+            windInstance.getParameterByName("MovingInTheWind", out currentValue);
         }
         startCurrentValue = currentValue;
 
@@ -443,10 +443,10 @@ public class PlayerSoundEffectController : MonoBehaviour
         while(Time.time < startTime+transitionDuration)
         {
             currentValue = Mathf.Lerp(startCurrentValue, targetValue, (Time.time - startTime) / transitionDuration);
-            ambienceInstance.setParameterByName("MovingInTheWind", currentValue);
+            windInstance.setParameterByName("MovingInTheWind", currentValue);
             yield return null;
         }
-        ambienceInstance.setParameterByName("MovingInTheWind", targetValue);
+        windInstance.setParameterByName("MovingInTheWind", targetValue);
 
         modulatingWind = false;
     }

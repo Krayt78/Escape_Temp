@@ -143,7 +143,15 @@ public class MovementProvider : LocomotionProvider
         Vector3 rayOrigin = m_XRRig.transform.position;
         rayOrigin.y += .2f;
 
-        if (Physics.Raycast(rayOrigin, -Vector3.up, /*characterController.bounds.extents.y + */0.3f))
+        const float maxDistance = .3f;
+
+        bool rayContact = false;
+        RaycastHit hitResult;
+
+        rayContact = Physics.Raycast(rayOrigin, -Vector3.up, out hitResult);
+
+
+        if (rayContact && Vector3.Distance(hitResult.point, rayOrigin) <= maxDistance)
         {
             IsGrounded = true;
             if(!wasGrounded)
@@ -151,6 +159,8 @@ public class MovementProvider : LocomotionProvider
                 OnLand();
                 wasGrounded = true;
             }
+
+            AmbientSoundManager.Instance.playerAltitude = 0;
         }
         else
         {
@@ -160,6 +170,11 @@ public class MovementProvider : LocomotionProvider
                 OnLeaveGround();
                 wasGrounded = false;
             }
+
+            if (rayContact)
+                AmbientSoundManager.Instance.playerAltitude = Vector3.Distance(hitResult.point, rayOrigin);
+            else
+                AmbientSoundManager.Instance.playerAltitude = 9999;
         }
     }
 }

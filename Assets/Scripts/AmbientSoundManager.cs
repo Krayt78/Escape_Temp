@@ -17,7 +17,12 @@ public class AmbientSoundManager : MonoBehaviour
     [SerializeField] string forestEvent;
     [SerializeField] string oceanEvent;
 
+    [SerializeField] string windEvent;
+
     public FMOD.Studio.EventInstance ambienceInstance;
+    public FMOD.Studio.EventInstance windInstance;
+
+    public float playerAltitude = 0;
 
     private void Awake()
     {
@@ -35,15 +40,17 @@ public class AmbientSoundManager : MonoBehaviour
         //A changer en fonction du terrain
         //ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(forestEvent, bodyToFollow);
 
+        windInstance = FMODPlayerController.PlaySoundAttachedToGameObject(windEvent, bodyToFollow);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //transform.position = PlayerToFollow.position;
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        windInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude,0,20) / 20);
     }
 
     private void OnDestroy()
@@ -59,10 +66,11 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(eventPath, bodyToFollow);
 
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
 
+        windInstance.setParameterByName("isExterior", isExterior?0:1);
         if (isExterior)
             currentTerrainEvent = eventPath;
     }
@@ -77,9 +85,9 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(currentTerrainEvent, bodyToFollow);
 
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
     }
 
     public void PlayTutorialAmbience()
@@ -89,9 +97,9 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(tutorialEvent, bodyToFollow);
 
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
 
         currentTerrainEvent = tutorialEvent;
     }
@@ -103,9 +111,9 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(forestEvent, bodyToFollow);
 
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
 
         currentTerrainEvent = forestEvent;
     }
@@ -117,9 +125,9 @@ public class AmbientSoundManager : MonoBehaviour
 
         ambienceInstance = FMODPlayerController.PlaySoundAttachedToGameObject(oceanEvent, bodyToFollow);
 
-        float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
+        //float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
 
         currentTerrainEvent = oceanEvent;
     }
@@ -133,7 +141,7 @@ public class AmbientSoundManager : MonoBehaviour
 
         float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
 
         currentTerrainEvent = tutorialEvent;
     }
@@ -147,6 +155,6 @@ public class AmbientSoundManager : MonoBehaviour
 
         float playerAltitude = Mathf.Clamp(bodyToFollow.transform.position.y - currentTerrain.SampleHeight(bodyToFollow.transform.position), 0, 20);
 
-        ambienceInstance.setParameterByName("playerHeight", playerAltitude / 20);
+        ambienceInstance.setParameterByName("playerHeight", Mathf.Clamp(playerAltitude, 0, 20) / 20);
     }
 }
