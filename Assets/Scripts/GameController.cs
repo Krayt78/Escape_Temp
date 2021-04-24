@@ -41,7 +41,11 @@ public class GameController : MonoBehaviour
             playerInput.OnStart += OnPauseEvent;
             playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
         }
-    
+        else
+        {
+            ShowMenu();
+        }
+
         //Lorsque qu'on fait un restart, le timeScale restait a 0
         Time.timeScale = 1;
     }
@@ -57,10 +61,6 @@ public class GameController : MonoBehaviour
                 ResumeGame();
             else
                 ShowPauseMenu();
-        }
-        if(isMenu)
-        {
-            ShowMenu();
         }
     }
 
@@ -132,11 +132,29 @@ public class GameController : MonoBehaviour
         optionsMenu?.SetActive(false);
         creditsMenu?.SetActive(false);
         loadingScreen.SetActive(true);
+
+        LoadingScreenController textControl = loadingScreen.GetComponent<LoadingScreenController>();
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
 
-        // Wait until the asynchronous scene fully loads
+        asyncLoad.allowSceneActivation = false;
         while (!asyncLoad.isDone)
         {
+            if(asyncLoad.progress < 0.9f)
+            {
+                //Output the current progress
+                textControl.SetLoadingText(string.Format("Loading progress: {0:0.00} %", (asyncLoad.progress * 100)));
+            }            
+
+            // Check if the load has finished
+            else
+            {
+                //Change the Text to show the Scene is ready
+                textControl.SetLoadingText("Launching...");
+                //Wait to you press the space key to activate the Scene
+                asyncLoad.allowSceneActivation = true;
+            }
+
             yield return null;
         }
     }

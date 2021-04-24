@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FoodLifeController : FoodController
 {
-    private bool isGrabbed = false;
-
     public override void Use(GameObject user)
     {
         if (user.CompareTag("Player") && isGrabbed)

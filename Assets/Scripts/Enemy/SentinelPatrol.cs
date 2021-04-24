@@ -24,6 +24,15 @@ public class SentinelPatrol : EnemyPatrolBase
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        for(int i=0;i<WaypointPatrolList.Count; i++)
+        {
+            if(WaypointPatrolList[i]==null)
+            {
+                WaypointPatrolList.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -62,6 +71,17 @@ public class SentinelPatrol : EnemyPatrolBase
             currentWaypointNumber = 0;
         else currentWaypointNumber++;
 
+
+        if (WaypointPatrolList == null) { 
+
+            Debug.Log("NULL");
+            return;
+        }
+        if(WaypointPatrolList[currentWaypointNumber]==null)
+        {
+            Debug.Log("WAYPOINT NULL");
+            return;
+        }
         Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
 
         //newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + .5f;

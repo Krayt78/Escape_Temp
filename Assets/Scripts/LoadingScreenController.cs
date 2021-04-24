@@ -9,7 +9,7 @@ public class LoadingScreenController : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(AnimateLoading());
+        //StartCoroutine(AnimateLoading());
     }
 
     IEnumerator AnimateLoading()
@@ -23,5 +23,10 @@ public class LoadingScreenController : MonoBehaviour
             iteration = (iteration + 1) % 4;
             yield return new WaitForSeconds(.3f);
         }
+    }
+
+    public void SetLoadingText(string label)
+    {
+        text.text = label;
     }
 }

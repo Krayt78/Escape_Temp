@@ -21,7 +21,7 @@ public class FoodController : Interactable
 
     private XROffsetGrabbable xROffsetGrabbable;
 
-    private bool isGrabbed = false;
+    protected bool isGrabbed = false;
 
 
     public  void Start()
