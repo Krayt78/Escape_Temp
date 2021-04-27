@@ -27,7 +27,7 @@ public class VrGrapplinController : Ability
     private float maxRange = 150f;
     [SerializeField]
     float duration = 10f;
-    float grapplinSpeed = 3;
+    float grapplinSpeed = 10;
 
     RaycastHit hit;
     Ray ray;
@@ -44,6 +44,7 @@ public class VrGrapplinController : Ability
     GameObject grp;
     [SerializeField]
     LineRenderer GrapplinAbilityLine;
+
 
     public override void Awake()
     {
@@ -93,7 +94,8 @@ public class VrGrapplinController : Ability
 
         while (!Landed() && !hitSmth)
         {
-            characterController.Move((destination - movingPlayer.position).normalized * grapplinSpeed * Time.deltaTime);
+            //characterController.Move((destination - movingPlayer.position).normalized * grapplinSpeed * Time.deltaTime);
+            characterController.Move((destination - playerCamera.position).normalized * grapplinSpeed * Time.deltaTime);
 
             lrRope.SetPosition(0, grapplinPosition.position);
 
@@ -103,20 +105,24 @@ public class VrGrapplinController : Ability
         Vector3 direction = Vector3.zero;
         if (hitSmth)
         {
-            direction = GetCollisionDirection(characterController.transform.position, controllerHit.point);
+            //direction = GetCollisionDirection(characterController.transform.position, controllerHit.point);
+            direction = GetCollisionDirection(playerCamera.position, controllerHit.point);
         }
         else
         {
-            direction = GetCollisionDirection(characterController.transform.position, destination);
+            //direction = GetCollisionDirection(characterController.transform.position, destination);
+            direction = GetCollisionDirection(playerCamera.position, destination);
         }
         float characterHeight = characterController.height * characterController.transform.localScale.y;
-
+        Debug.Log("CHARACTER HEIGHT : " + characterHeight);
         Vector3 ledgeTargetPoint;
 
         if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
         {
+            Debug.Log("CLIMBABLE");
             yield return MakeCharacterClimbLedge(ledgeTargetPoint);
         }
+        Debug.Log("NOT CLIMBABLE");
 
         hitSmth = false;
 
@@ -207,9 +213,10 @@ public class VrGrapplinController : Ability
         return new Vector3(retour.x, 0, retour.z).normalized;
     }
 
-    public bool CheckForClimbableLedge(Vector3 ledgeDirection, float characterHeight, float maxHeightCheckFromControllerCenter, out Vector3 ledgeMoveToPoint, float ledgeDistanceCheck=1.3f)
+    public bool CheckForClimbableLedge(Vector3 ledgeDirection, float characterHeight, float maxHeightCheckFromControllerCenter, out Vector3 ledgeMoveToPoint, float ledgeDistanceCheck=.8f)
     {
-        Ray rayon = new Ray(characterController.transform.position/* + characterController.center*/ + ledgeDirection*ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
+        Ray rayon = new Ray(playerCamera.position/* + characterController.center*/ + ledgeDirection*ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
+        //Ray rayon = new Ray(characterController.transform.position/* + characterController.center*/ + ledgeDirection * ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
         RaycastHit hitInfo, hitInfo2;
 
         if (Physics.Raycast(rayon, out hitInfo, maxHeightCheckFromControllerCenter))
