@@ -34,6 +34,15 @@ public class VoiceManager : MonoBehaviour
         isPlayingVoice = false;
     }
 
+    public float PlayVoiceImmediate(VoiceEvent voiceEvent, bool deleteQueue = true)
+    {
+        if (deleteQueue)
+            voiceQueue.Clear();
+
+        voiceQueue.Insert(0, voiceEvent);
+        return playVoice(voiceEvent);
+    }
+
     public void AddVoiceToQueue(VoiceEvent newVoiceEvent)
     {
         // Si aucun son est joué actuellement on joue le nouveau son.
@@ -56,13 +65,14 @@ public class VoiceManager : MonoBehaviour
         }
     }
 
-    private void playVoice(VoiceEvent voice)
+    private float playVoice(VoiceEvent voice)
     {
         isPlayingVoice = true;
         lastVoiceEvent = voice;
         float lengthSound = FMODPlayerController.PlayVoice(voice.IdFmod, playerTransform.position);
         voiceQueue.Remove(voice);
         Invoke("playNextSound", lengthSound + 1);
+        return lengthSound + 1;
     }
 
     private void playNextSound()
