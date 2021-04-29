@@ -6,9 +6,11 @@ using UnityEngine.AI;
 
 public class DronePatrol : EnemyPatrolBase
 {
+    public GameObject wayPointPrefab;
+
     public event Action OnWaypointReached = delegate { };
     [SerializeField]
-    private List<GameObject> WaypointPatrolList = new List<GameObject>();
+    public List<GameObject> WaypointPatrolList = new List<GameObject>();
     private int currentWaypointNumber = 0;
     private bool canMove = false;
     private bool isMoving = false;
@@ -20,6 +22,31 @@ public class DronePatrol : EnemyPatrolBase
     [SerializeField] private float rotationalDamp = .5f;
     public bool isRotating = false;
 
+
+
+    private void OnDrawGizmosSelected()
+    {
+        if (WaypointPatrolList == null || WaypointPatrolList.Count == 0)
+            return;
+        Gizmos.color = Color.green;
+        foreach (var Waypoint in WaypointPatrolList)
+        {
+            if (Waypoint != null)
+            {
+                Gizmos.DrawWireSphere(Waypoint.transform.position, .5f);
+            }
+        }
+
+        Gizmos.color = Color.blue;
+        int waypointCount = WaypointPatrolList.Count;
+        for (int i = 0; i < waypointCount; i++)
+        {
+            if (WaypointPatrolList[i] != null && WaypointPatrolList[(i + 1) % waypointCount] != null)
+                Gizmos.DrawLine(WaypointPatrolList[i].transform.position,
+                    WaypointPatrolList[(i + 1) % waypointCount].transform.position);
+        }
+
+    }
 
     void Start()
     {
@@ -167,4 +194,9 @@ public class DronePatrol : EnemyPatrolBase
     }
 
 
+    public void AddWaypoint(WaypointController waypoint)
+    {
+        WaypointPatrolList.Add(waypoint.gameObject);
+        waypoint.parentList.Add(gameObject);
+    }
 }

@@ -62,7 +62,7 @@ public class SentinelPatrol : EnemyPatrolBase
     public void AddWaypoint(WaypointController waypoint)
     {
         WaypointPatrolList.Add(waypoint.gameObject);
-        waypoint.parentList.Add(this);
+        waypoint.parentList.Add(gameObject);
     }
 
     public override void GoToNextCheckpoint()
