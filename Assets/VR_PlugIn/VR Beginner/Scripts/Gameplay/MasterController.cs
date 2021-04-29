@@ -74,6 +74,8 @@ public class MasterController : MonoBehaviour
     private CharacterController characterController;
     public event Action<ControllerColliderHit> OnCharacterControllerHit = delegate { };
 
+    private bool headsetIsOn = true;
+
     void Awake()
     {
         s_Instance = this;
@@ -155,10 +157,26 @@ public class MasterController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //    Application.Quit();
+        if (!CheckHeadsetIsOn())
+            return;
 
         CheckForInputs();
+    }
+
+    private bool CheckHeadsetIsOn()
+    {
+        if(headsetIsOn && XRDevice.userPresence!=UserPresenceState.Present)
+        {
+            headsetIsOn = false;
+            GameController.Instance.ShowPauseMenu();
+        }
+        else if(!headsetIsOn && XRDevice.userPresence==UserPresenceState.Present)
+        {
+            headsetIsOn = true;
+        }
+        return headsetIsOn;
     }
 
     void CheckForInputs()

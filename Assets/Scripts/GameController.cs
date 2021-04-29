@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    private static GameController instance;
+    public static GameController Instance { get { return instance; } }
+
     [SerializeField] private bool isMenu = false;
     private PlayerInput playerInput;
     [SerializeField] private GameObject player;
@@ -26,6 +29,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private Animator mainMenuAnim;
 
     private PlayerAbilitiesController playerAbilitiesController;
+
+
+    private void Awake()
+    {
+        if(instance==null)
+        {
+            Destroy(this);
+            return;
+        }
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -75,18 +89,18 @@ public class GameController : MonoBehaviour
     {
         if (pauseMenu.activeInHierarchy)
         {
-            playerAbilitiesController.isAbilityActivated = true;
             ResumeGame();
         }
         else
         {
-            playerAbilitiesController.isAbilityActivated = false;
             ShowPauseMenu();
         }
     }
 
     public void ResumeGame()
     {
+        if(playerAbilitiesController!=null)
+            playerAbilitiesController.isAbilityActivated = true;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         Cursor.visible = false;
@@ -96,6 +110,8 @@ public class GameController : MonoBehaviour
 
     public void ShowPauseMenu()
     {
+        if (playerAbilitiesController != null)
+            playerAbilitiesController.isAbilityActivated = false;
         pauseMenu.SetActive(true);
         MenuLock();
         activateUiInteractor(true);

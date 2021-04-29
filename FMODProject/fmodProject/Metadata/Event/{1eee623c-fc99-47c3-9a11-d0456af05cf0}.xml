@@ -5,7 +5,7 @@
 			<value>VoiceInfo_UnlockGrapplin</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{336473e9-dafe-4261-85fb-0e39aa32395d}</destination>
@@ -66,18 +66,11 @@
 	</object>
 	<object class="MarkerTrack" id="{2915e928-4f4b-4219-8113-328589ab87d6}" />
 	<object class="GroupTrack" id="{d587a5d7-9785-44f3-bf41-27cadff59a56}">
-		<relationship name="modules">
-			<destination>{52f90b46-ce1e-4d6e-a007-73e9fc9d6058}</destination>
-		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{9cef08c4-d5d2-473c-a96b-2365475bfd91}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{81d77a21-e436-42bb-8ca9-f4178b589443}">
-		<relationship name="modules">
-			<destination>{52f90b46-ce1e-4d6e-a007-73e9fc9d6058}</destination>
-		</relationship>
-	</object>
+	<object class="Timeline" id="{81d77a21-e436-42bb-8ca9-f4178b589443}" />
 	<object class="EventMixerMaster" id="{55543aae-c0a9-4a21-b01b-4cba20f9b3fe}">
 		<relationship name="effectChain">
 			<destination>{2a584ab0-e847-41d6-a7ec-32a97a9e7781}</destination>
@@ -95,14 +88,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cd9b450a-1e84-444c-aa30-4573c68b4d9c}" />
-	<object class="SingleSound" id="{52f90b46-ce1e-4d6e-a007-73e9fc9d6058}">
-		<property name="length">
-			<value>14.442811791383219</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{eaac2b7d-f245-441e-b95a-abfcac1bc1d5}</destination>
-		</relationship>
-	</object>
 	<object class="EventMixerGroup" id="{9cef08c4-d5d2-473c-a96b-2365475bfd91}">
 		<property name="name">
 			<value>Audio 1</value>
