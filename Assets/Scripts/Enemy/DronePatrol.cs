@@ -14,7 +14,7 @@ public class DronePatrol : EnemyPatrolBase
     private int currentWaypointNumber = 0;
     private bool canMove = false;
     private bool isMoving = false;
-    private float speed = 1;
+    private float speed = 5;
     private Vector3 targetPosition;
     private bool onTarget = false;
     [SerializeField] private float rayCastOffset = 4f;
@@ -63,7 +63,7 @@ public class DronePatrol : EnemyPatrolBase
         {
             PathFinding();
             float step = speed * Time.deltaTime;
-            targetPosition.y = Terrain.activeTerrain.SampleHeight(targetPosition) + 10f;
+            //targetPosition.y = Terrain.activeTerrain.SampleHeight(targetPosition) + 10f;
             if(distance > 6f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
@@ -127,7 +127,7 @@ public class DronePatrol : EnemyPatrolBase
         else currentWaypointNumber++;
 
         Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;
-        newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + 5f;
+        //newPos.y = Terrain.activeTerrain.SampleHeight(newPos) + 5f;
         SetDestination(newPos);
         
         
@@ -184,7 +184,7 @@ public class DronePatrol : EnemyPatrolBase
         isMoving = true;
         canMove = false;
         onTarget = true;
-        pos.y = Terrain.activeTerrain.SampleHeight(pos) + 10f;
+        //pos.y = Terrain.activeTerrain.SampleHeight(pos) + 10f;
         targetPosition = pos;
     }
 
