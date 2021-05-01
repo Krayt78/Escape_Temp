@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance==null)
+        if(instance!=null)
         {
             Destroy(this);
             return;
@@ -69,6 +69,13 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
             RestartScene();
+        else if (Input.GetKeyDown(KeyCode.Keypad1))
+            SceneManager.LoadScene(0);
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+            SceneManager.LoadScene(1);
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+            SceneManager.LoadScene(2);
+
         if (Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenu.activeInHierarchy)
@@ -113,6 +120,7 @@ public class GameController : MonoBehaviour
         if (playerAbilitiesController != null)
             playerAbilitiesController.isAbilityActivated = false;
         pauseMenu.SetActive(true);
+        UIManager.Instance.InitializeMenu(pauseMenu);
         MenuLock();
         activateUiInteractor(true);
     }

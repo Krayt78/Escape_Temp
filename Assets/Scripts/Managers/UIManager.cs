@@ -108,6 +108,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void InitializeMenu(GameObject menu)
+    {
+        Vector3 cameraPosition = playerCamera.transform.position;
+        ray = new Ray(cameraPosition, playerCamera.transform.forward);
+        float offset = 0;
+        if (Physics.Raycast(ray, out hit, maxRangeDisplay))
+        {
+            offset = 2 - hit.distance;
+        }
+        moveUIInFrontOfPlayer(menu, cameraPosition, offset);
+    }
+
     private void moveUIInFrontOfPlayer(GameObject menu, Vector3 cameraPosition, float offset)
     {
         Vector3 direction = playerCamera.transform.forward;
