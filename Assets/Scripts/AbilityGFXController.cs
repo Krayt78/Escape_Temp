@@ -6,6 +6,7 @@ public class AbilityGFXController : MonoBehaviour
 {
     [SerializeField] GameObject grapplingPrefab;
     [SerializeField] GameObject dartLauncherPrefab;
+    [SerializeField] GameObject decoyLauncherPrefab;
 
     GameObject currentGFX;
 
@@ -28,20 +29,22 @@ public class AbilityGFXController : MonoBehaviour
     {
         if(newAbility.GetType() == typeof(VrGrapplinController))
         {
-            Destroy(currentGFX);
-            currentGFX = Instantiate(grapplingPrefab, transform);
-            currentGFX.transform.localPosition = Vector3.zero;
-            currentGFX.transform.localRotation = Quaternion.identity;
+            changeAbilityGfx(grapplingPrefab);
         }
         else if (newAbility.GetType() == typeof(DartAbilityController))
         {
-            Destroy(currentGFX);
-            currentGFX = Instantiate(dartLauncherPrefab, transform);
-            currentGFX.transform.localPosition = Vector3.zero;
-            currentGFX.transform.localRotation = Quaternion.identity;
+            changeAbilityGfx(dartLauncherPrefab);
         }else if (newAbility.GetType() == typeof(DecoyController))
         {
-            Destroy(currentGFX);
+            changeAbilityGfx(decoyLauncherPrefab);
         }
+    }
+
+    private void changeAbilityGfx(GameObject abilityGfx)
+    {
+        Destroy(currentGFX);
+        currentGFX = Instantiate(abilityGfx, transform);
+        currentGFX.transform.localPosition = Vector3.zero;
+        currentGFX.transform.localRotation = Quaternion.identity;
     }
 }
