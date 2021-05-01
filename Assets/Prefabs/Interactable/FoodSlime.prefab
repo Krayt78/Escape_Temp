@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3143914452187642901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5507165710829298029}
+  - component: {fileID: 674639337060381965}
+  - component: {fileID: 8409452554922775840}
+  m_Layer: 22
+  m_Name: SoundTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5507165710829298029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3143914452187642901}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7322982945074783474}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &674639337060381965
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3143914452187642901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 50
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8409452554922775840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3143914452187642901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d22bc0593699f488a70c676b055725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodIdleEvent: event:/Environment/FoodFishIdle
+  rb: {fileID: 7322982945074783475}
 --- !u!1 &7322982945074783477
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,8 +73,6 @@ GameObject:
   - component: {fileID: 7322982945074783478}
   - component: {fileID: 7322982945074783479}
   - component: {fileID: 7322982945074783476}
-  - component: {fileID: 2115189727855616697}
-  - component: {fileID: 1112345826830964310}
   m_Layer: 22
   m_Name: FoodSlime
   m_TagString: Untagged
@@ -36,6 +93,7 @@ Transform:
   m_Children:
   - {fileID: 7322982946027984490}
   - {fileID: 2367418952266408733}
+  - {fileID: 5507165710829298029}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -216,33 +274,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.50577104
   m_Center: {x: 0, y: 0.13574399, z: -0.0021010637}
---- !u!114 &2115189727855616697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322982945074783477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1d22bc0593699f488a70c676b055725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FoodIdleEvent: event:/Environment/FoodFishIdle
-  rb: {fileID: 7322982945074783475}
---- !u!135 &1112345826830964310
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322982945074783477}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 50
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7322982946027984491
 GameObject:
   m_ObjectHideFlags: 0
