@@ -53,7 +53,7 @@ public class PlayerCriticalState : BasePlayerState
         }
 
         //manager.gameObject.GetComponent<PlayerMovement>().stepByMoveSpeed = stepByMoveSpeed;
-        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Critical);
+        CameraFilter.Instance?.setVolumeProfile(CameraFilter.Profile.Critical);
     }
 
     public override Type Tick()
@@ -93,7 +93,7 @@ public class PlayerCriticalState : BasePlayerState
         if (playerDnaLevel)
         {
             playerDnaLevel.LoseDnaLevel(dnaLostSpeed * Time.deltaTime);
-            CameraFilter.Instance.CriticalFilterFluctation(playerDnaLevel.DnaLevel);
+            CameraFilter.Instance?.CriticalFilterFluctation(playerDnaLevel.DnaLevel);
         }
     }
 
@@ -102,7 +102,7 @@ public class PlayerCriticalState : BasePlayerState
         if (playerDnaLevel)
         {
             playerDnaLevel.LoseDnaLevel(damages/10*StateDefenseRatio);
-            CameraFilter.Instance.CriticalFilterFluctation(playerDnaLevel.DnaLevel);
+            CameraFilter.Instance?.CriticalFilterFluctation(playerDnaLevel.DnaLevel);
         }
     }
 }

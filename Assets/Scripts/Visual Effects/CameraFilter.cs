@@ -43,6 +43,21 @@ public class CameraFilter : Singleton<CameraFilter>
         Omega,
         Critical
     }
+
+    [Header("Tunneling")]
+    [SerializeField] Transform playerCamera;
+    private float currentVignetteIntensity=0;
+
+    Vector3 lastCameraPosition;
+    [SerializeField] float minCameraVelocity=0, maxCameraVelocity=10;
+    [SerializeField] float velocityVignetteStrenght=1;
+
+
+    private bool transitioningState = false;
+    private float targetVignetteIntensity = 0;
+    [SerializeField] float transitionVignetteSpeed = 1;
+    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -83,7 +98,63 @@ public class CameraFilter : Singleton<CameraFilter>
             betaVignette = tempVignette;
         }
     }
-    
+
+    private void Start()
+    {
+        if (playerCamera == null)
+            playerCamera = Camera.main.transform;
+
+        if(playerCamera!=null)
+            lastCameraPosition = playerCamera.position;
+    }
+
+    private void Update()
+    {
+        if (playerCamera == null)
+            return;
+
+        if (!transitioningState)
+        {
+            targetVignetteIntensity = UpdateTunneling();
+
+            currentVignetteIntensity = Mathf.Lerp(currentVignetteIntensity, targetVignetteIntensity, transitionVignetteSpeed*Time.deltaTime);
+            SetVignetteIntensity(currentVignetteIntensity);
+
+        }
+    }
+
+    private float UpdateTunneling()
+    {
+        if (playerCamera == null)
+            return targetVignetteIntensity;
+
+        float velocity = Vector3.Distance(playerCamera.position, lastCameraPosition) / Time.deltaTime;
+        float vignetteStrenght = Mathf.Clamp01(Mathf.InverseLerp(minCameraVelocity, maxCameraVelocity, velocity)) * velocityVignetteStrenght;
+
+        lastCameraPosition = playerCamera.position;
+
+        return vignetteStrenght;
+    }
+
+    private void SetVignetteIntensity(float intensity)
+    {
+        switch (currentProfile)
+        {
+            case Profile.Critical:
+                criticalVignette.intensity.value = intensity;
+                break;
+            case Profile.Omega:
+                omegaVignette.intensity.value = intensity;
+                break;
+            case Profile.Beta:
+                betaVignette.intensity.value = intensity;
+                break;
+            case Profile.Alpha:
+                alphaVignette.intensity.value = intensity;
+                break;
+        }
+    }
+
     public void setVolumeProfile(Profile profile)
     {
         if (currentProfile == profile)
@@ -166,13 +237,18 @@ public class CameraFilter : Singleton<CameraFilter>
 
     private IEnumerator TransitionToState(Vignette stateVignette)
     {
+        transitioningState = true;
         float i = 1;
-        while(i>0)
+        currentVignetteIntensity = 1;
+        SetVignetteIntensity(currentVignetteIntensity);
+        while(i>0 && i>targetVignetteIntensity)
         {
             i -= Time.deltaTime*5;
             i = Mathf.Clamp01(i);
+            currentVignetteIntensity = i;
             stateVignette.intensity.value = i;
             yield return null;
         }
+        transitioningState = false;
     }
 }

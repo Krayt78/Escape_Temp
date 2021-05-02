@@ -55,7 +55,7 @@ public class PlayerBetaState : BasePlayerState
         if (CameraFilter.Instance == null)
             Debug.LogError("CAMERA FILTER NULL");
 
-        CameraFilter.Instance.setVolumeProfile(CameraFilter.Profile.Beta);
+        CameraFilter.Instance?.setVolumeProfile(CameraFilter.Profile.Beta);
     }
 
     

@@ -11957,6 +11957,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 395172645632669872}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1154837005 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7267615933745429361, guid: 227dd6ad3a3430b4d82c6f796839c712,
+    type: 3}
+  m_PrefabInstance: {fileID: 395172645632669872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1220007780
 GameObject:
   m_ObjectHideFlags: 0
@@ -13095,6 +13101,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1220007781}
     m_Modifications:
+    - target: {fileID: 4621092762191633098, guid: 0b7fdbf521d15f349b4e739c05bf976f,
+        type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1154837005}
     - target: {fileID: 7695061053689483707, guid: 0b7fdbf521d15f349b4e739c05bf976f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13760,18 +13771,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
-      propertyPath: accelerationMax
-      value: 2.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
-        type: 3}
       propertyPath: useVelocity
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
-        type: 3}
-      propertyPath: velocityMax
-      value: 5.53
       objectReference: {fileID: 0}
     - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
@@ -13787,6 +13788,26 @@ PrefabInstance:
         type: 3}
       propertyPath: effectCoverage
       value: 0.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
+        type: 3}
+      propertyPath: irisZRejection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
+        type: 3}
+      propertyPath: maskMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
+        type: 3}
+      propertyPath: accelerationMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712,
+        type: 3}
+      propertyPath: velocityMax
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7267615934672020168, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
@@ -13858,7 +13879,8 @@ PrefabInstance:
       propertyPath: movementProvider
       value: 
       objectReference: {fileID: 427528970}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5346953536466641645, guid: 227dd6ad3a3430b4d82c6f796839c712, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 227dd6ad3a3430b4d82c6f796839c712, type: 3}
 --- !u!1001 &1579656741303139150
 PrefabInstance:
@@ -15618,7 +15640,7 @@ PrefabInstance:
     - target: {fileID: 5587190762547086757, guid: 9a42ef7eaa070754484c1945fa84e5d0,
         type: 3}
       propertyPath: useVr
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a42ef7eaa070754484c1945fa84e5d0, type: 3}
