@@ -167,7 +167,7 @@ public class MasterController : MonoBehaviour
 
     private bool CheckHeadsetIsOn()
     {
-        return true;
+        //return true;
 
         if(headsetIsOn && XRDevice.userPresence!=UserPresenceState.Present)
         {
