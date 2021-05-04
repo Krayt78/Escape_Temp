@@ -65,11 +65,13 @@ public class FoodController : Interactable
     public void StartGrab()
     {
         isGrabbed = true;
+        GetComponent<Collider>().isTrigger = true;
     }
 
     public void EndGrab()
     {
         isGrabbed = false;
+        GetComponent<Collider>().isTrigger = false;
     }
 }
 
