@@ -89,6 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8458832559254777283}
   - component: {fileID: 9011792959442107143}
+  - component: {fileID: 5583697383297092408}
+  - component: {fileID: 7617104976241077724}
   m_Layer: 0
   m_Name: MOD_ramp_02
   m_TagString: Untagged
@@ -142,6 +144,36 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7295134181579572883}
   m_Enabled: 1
+--- !u!64 &5583697383297092408
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843787140874985424}
+  m_Material: {fileID: 13400000, guid: 89f753e783a963e45827b6040c136788, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: -1
+  m_Mesh: {fileID: -656817923678527378, guid: 007d34f91df73f94cb47af3f96f7758e, type: 3}
+--- !u!54 &7617104976241077724
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843787140874985424}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5328756347871287725
 GameObject:
   m_ObjectHideFlags: 0
