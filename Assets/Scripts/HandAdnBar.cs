@@ -16,7 +16,6 @@ public class HandAdnBar : MonoBehaviour
 
     //Can be optimised by using bool on the colours instead 
     private void OnDnaLevelChanged(float e) {
-        Debug.Log(e);
         float percentage = e;
 
             AdnImage.fillAmount = e;

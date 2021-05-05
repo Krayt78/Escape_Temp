@@ -25,8 +25,6 @@ public class DartController : MonoBehaviour
     {
 
         // Optimisable par tags
-
-        Debug.Log("Collide with : " + other.gameObject.name);
         if (other.gameObject.GetComponentInChildren<PlayerEntityController>() || other.gameObject.GetComponentInParent<PlayerEntityController>())
             return;
 
@@ -35,7 +33,6 @@ public class DartController : MonoBehaviour
             controller = other.gameObject.GetComponentInParent<EnemyController>();
         if(controller != null)
         {
-            Debug.Log("ATTACK");
             controller.TakeDamages(damages);
             // controller.TakeDamages(damages);
             Destroy(gameObject);
@@ -46,7 +43,6 @@ public class DartController : MonoBehaviour
 
         if (other.tag.Equals("Dart_Interactible"))
         {
-            Debug.Log("Touched " + other.name);
             other.GetComponent<Dart_Interactible_Event_Caller>().OnTouchedByDart();
         }
     }

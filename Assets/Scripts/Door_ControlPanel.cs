@@ -25,16 +25,12 @@ public class Door_ControlPanel : MonoBehaviour
 
     public void DestroyConsole()
     {
-        Debug.Log("DestroyConsole");
         _meshRenderer.material = DeactivatedConsoleMat;
-        //_meshRenderer.materials[0] = DeactivatedConsoleMat;
         ActivateDoor();
     }
 
     public void RepairConsole()
     {
-       // _meshRenderer.materials[0] = ActivatedConsoleMat;
         _meshRenderer.material = DeactivatedConsoleMat;
-        //do something 
     }
 }

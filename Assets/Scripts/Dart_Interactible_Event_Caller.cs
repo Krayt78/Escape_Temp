@@ -10,7 +10,6 @@ public class Dart_Interactible_Event_Caller : MonoBehaviour
 
     public void OnTouchedByDart()
     {
-        Debug.Log("OntouchedByDart");
         myEvent.Invoke();
     }
 
