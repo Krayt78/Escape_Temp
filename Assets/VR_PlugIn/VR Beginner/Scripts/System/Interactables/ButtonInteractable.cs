@@ -13,7 +13,7 @@ public class ButtonInteractable : MonoBehaviour
     public float MaxDistance;
     public float ReturnSpeed = 10.0f;
 
-    public AudioClip ButtonPressAudioClip;
+    public string ButtonPressAudioClipPath;
     public AudioClip ButtonReleaseAudioClip;
     
     public ButtonPressedEvent OnButtonPressed;
@@ -58,23 +58,24 @@ public class ButtonInteractable : MonoBehaviour
         if (!m_Pressed && Mathf.Approximately(newDistance, MaxDistance))
         {//was just pressed
             m_Pressed = true;
-            SFXPlayer.Instance.PlaySFX(ButtonPressAudioClip, transform.position, new SFXPlayer.PlayParameters()
+            if (ButtonPressAudioClipPath != "")
             {
-                Pitch = Random.Range(0.9f, 1.1f),
-                SourceID = -1,
-                Volume = 1.0f
-            }, 0.0f);
+                FMODPlayerController.PlaySoundInstance(ButtonPressAudioClipPath, transform.position);
+            }
             OnButtonPressed.Invoke();
         }
         else if (m_Pressed && !Mathf.Approximately(newDistance, MaxDistance))
         {//was just released
             m_Pressed = false;
-            SFXPlayer.Instance.PlaySFX(ButtonReleaseAudioClip, transform.position, new SFXPlayer.PlayParameters()
+            if (ButtonReleaseAudioClip)
             {
-                Pitch = Random.Range(0.9f, 1.1f),
-                SourceID = -1,
-                Volume = 1.0f
-            }, 0.0f);
+                SFXPlayer.Instance.PlaySFX(ButtonReleaseAudioClip, transform.position, new SFXPlayer.PlayParameters()
+                {
+                    Pitch = Random.Range(0.9f, 1.1f),
+                    SourceID = -1,
+                    Volume = 1.0f
+                }, 0.0f);
+            }
             OnButtonReleased.Invoke();
         }
     }
