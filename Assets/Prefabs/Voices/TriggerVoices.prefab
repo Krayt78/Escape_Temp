@@ -1,64 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5546085732242022256
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6473009125250579406}
-  - component: {fileID: 8311084158426970183}
-  - component: {fileID: 7871981382240506238}
-  m_Layer: 0
-  m_Name: TriggerMapOutpost
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6473009125250579406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5546085732242022256}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.33, y: 17.77, z: 3.24}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8784303133751318565}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8311084158426970183
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5546085732242022256}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6.1852417, y: 7.705085, z: 7.405861}
-  m_Center: {x: 1.127533, y: 1.4785724, z: -0.29437637}
---- !u!114 &7871981382240506238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5546085732242022256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be550d03a56b414cbc9cf232841a991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idFmod: event:/BiomeVoices/Voice_Biome1-4
-  eventPriority: 0
 --- !u!1 &6124953926982546363
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +31,7 @@ Transform:
   m_LocalScale: {x: 5.3357, y: 5.3357, z: 5.3357}
   m_Children: []
   m_Father: {fileID: 8784303133751318565}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4772210099069179994
 MeshFilter:
@@ -287,7 +228,6 @@ Transform:
   - {fileID: 8784303133576508013}
   - {fileID: 8784303133940988736}
   - {fileID: 4581163049724774704}
-  - {fileID: 6473009125250579406}
   - {fileID: 8287974180742757677}
   m_Father: {fileID: 0}
   m_RootOrder: 0

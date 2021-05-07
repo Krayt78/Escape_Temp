@@ -9,6 +9,9 @@ public class DeskMapController : MonoBehaviour
     [SerializeField]
     private GameObject holoMap;
     private bool laserActivated;
+
+    [SerializeField]
+    private string voiceEventPath;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +26,17 @@ public class DeskMapController : MonoBehaviour
 
     public void onButtonPressed()
     {
-        if (laserActivated)
+        if (!laserActivated)
         {
             foreach (var laser in listLaser)
             {
                 laser.SetActive(true);
             }
+            if (voiceEventPath != "")
+            {
+                VoiceManager.Instance.AddVoiceToQueue(new VoiceEvent(voiceEventPath, VoiceManager.Priority.High));
+            }
+            laserActivated = true;
         }
         if (holoMap)
         {
