@@ -47,6 +47,7 @@ public class FoodController : Interactable
         //Destroy(gameObject);
         gameObject.SetActive(false);
         //Invoke("ReactiveFood", repopTime);
+
     }
 
     private void ReleaseHandInteraction()
