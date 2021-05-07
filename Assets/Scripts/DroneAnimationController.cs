@@ -17,8 +17,6 @@ public class DroneAnimationController : EnemyAnimationControllerBase
     {
         guard = GetComponentInParent<Drone>();
         SetAnimator();
-
-        // isTopCanonLastAttack = false;
     }
 
     private void SetAnimator()
@@ -26,26 +24,11 @@ public class DroneAnimationController : EnemyAnimationControllerBase
         this.animator = animatorDrone;
     }
 
-    // public void TriggerStunned()
-    // {
-    //     animator.SetTrigger("stunned");
-    // }
-
-    // public void TriggerEndStunned()
-    // {
-    //     animator.SetTrigger("endStunned");
-    // }
-
     public override void TriggerIdle()
     {
         Debug.Log("in trigger drone idle");
         animator.SetTrigger("idle");
     }
-
-    // public void TriggerDeath()
-    // {
-    //     animator.SetTrigger("death");
-    // }
 
     public override void TriggerAttack()
     {

@@ -441,7 +441,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.95
-  m_Speed: 3.5
+  m_Speed: 5.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -502,11 +502,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
-  isStunned: 0
+  isStunned: 1
   isDead: 0
   isStaticGuard: 0
   bodyFound: 0
-  alertFactor: 0.005
+  alertFactor: 0.012
 --- !u!114 &4356663782290958133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2900a47125b95344a9cb5f4880b47736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1.5
+  fireRate: 2.5
   cooldown: 0
   Bullet: {fileID: 4905676209591555903, guid: 544e41732924d3041874d16ec1c81a95, type: 3}
   FiringPoint: {fileID: 2173896597272665774}
@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c80a6d0b3616442bd494c9fb7d2141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 30
+  rotationSpeed: 45
 --- !u!114 &4884945960152327490
 MonoBehaviour:
   m_ObjectHideFlags: 0

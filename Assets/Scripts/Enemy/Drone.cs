@@ -140,10 +140,12 @@ public class Drone : EnemyBase
 
     private void OnTargetSighted()
     {
-        SetTarget(FieldOfView.visibleTargets[0].Value);
-        AngleToTarget = FieldOfView.visibleTargets[0].Key;
-        EnemyAIManager.Instance.AddEnemyOnSight(this);
-        // EnemyAnimationController.TriggerSight();
+        if(IsDead != true)
+        {
+            SetTarget(FieldOfView.visibleTargets[0].Value);
+            AngleToTarget = FieldOfView.visibleTargets[0].Key;
+            EnemyAIManager.Instance.AddEnemyOnSight(this);
+        }
     }
 
     private void OnDeadBodyFound()

@@ -61,7 +61,6 @@ public class DronePatrol : EnemyPatrolBase
 
         if (onTarget)
         {
-            PathFinding();
             float step = speed * Time.deltaTime;
             //targetPosition.y = Terrain.activeTerrain.SampleHeight(targetPosition) + 10f;
             if(distance > 6f)
@@ -72,6 +71,7 @@ public class DronePatrol : EnemyPatrolBase
             {
                 OrientationTowardsTarget();
             }
+            PathFinding();
         }
     }
 

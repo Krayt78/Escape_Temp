@@ -1177,6 +1177,7 @@ MonoBehaviour:
   mainMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   creditsMenu: {fileID: 0}
+  loadingScreen: {fileID: 0}
   pauseMenu: {fileID: 1865106607}
   winMenu: {fileID: 0}
   gameOverMenu: {fileID: 1414855474}
@@ -1375,12 +1376,12 @@ PrefabInstance:
     - target: {fileID: 3006553890822423423, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -57.9
       objectReference: {fileID: 0}
     - target: {fileID: 3006553890822423423, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 14.8
       objectReference: {fileID: 0}
     - target: {fileID: 7267615933731258560, guid: 227dd6ad3a3430b4d82c6f796839c712,
         type: 3}
@@ -4926,7 +4927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentList:
-  - {fileID: 1361681089}
+  - {fileID: 0}
 --- !u!4 &199506673
 Transform:
   m_ObjectHideFlags: 0
@@ -15660,7 +15661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentList:
-  - {fileID: 1361681089}
+  - {fileID: 0}
 --- !u!1001 &623754435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16762,12 +16763,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1662190061766855974, guid: 86a3e17b11edaef4ba75f43eb778f1fd,
     type: 3}
   m_PrefabInstance: {fileID: 666652588}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &671538092 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4869182772866362547, guid: 227dd6ad3a3430b4d82c6f796839c712,
-    type: 3}
-  m_PrefabInstance: {fileID: 41463991}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &675391057
 PrefabInstance:
@@ -18127,7 +18122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentList:
-  - {fileID: 1361681089}
+  - {fileID: 0}
 --- !u!4 &733586391
 Transform:
   m_ObjectHideFlags: 0
@@ -25133,7 +25128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 41463992}
-  uiFocalPoint: {fileID: 671538092}
+  uiFocalPoint: {fileID: 0}
   listMenu:
   - {fileID: 1865106607}
   - {fileID: 1414855474}
@@ -29011,18 +29006,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorSentinel: {fileID: 1361681086}
   animatorArmorSentinel: {fileID: 1398492669}
---- !u!114 &1361681089 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8262919992601365204, guid: 19157ec28907f20408712fc652069b85,
-    type: 3}
-  m_PrefabInstance: {fileID: 1361681085}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1361681087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c776afbd7da11e54685ebf1bbdca683b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1377235267
 GameObject:
   m_ObjectHideFlags: 0

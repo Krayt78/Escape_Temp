@@ -32,7 +32,7 @@ public class AttackState : BaseState
             {
                 return typeof(LostState);
             }
-            else if (lostTimer >= 5f)
+            else if (lostTimer >= 10f)
             {
                 if (!AIManager.HasEnemySighted())
                 {
@@ -76,14 +76,14 @@ public class AttackState : BaseState
         AIManager.SetGlobalAlertLevel(AIManager.GlobalAlertLevel + 10f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Attack);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
-        guard.EnemyPatrol.SetSpeed(5f);
+        guard.EnemyPatrol.SetSpeed(10f);
         guard.EnemyPatrol.ResumeMoving();
-        guard.EnemyAnimationController?.TriggerAttack();
+        guard.EnemyAnimationController.TriggerAttack();
     }
 
     public override void OnStateExit()
     {
         AIManager.onAttack -= 1;
-        guard.EnemyPatrol.SetSpeed(3.5f);
+        guard.EnemyPatrol.SetSpeed(5.5f);
     }
 }

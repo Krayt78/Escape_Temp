@@ -86,7 +86,7 @@ public class LostState : BaseState
         guard.EnemyPatrol.ResumeMoving();
         AIManager.RemoveEnemyOnSight(guard);
         AIManager.RemoveEnemyOnAlert(guard);
-        guard.EnemyPatrol.SetSpeed(1.5f);
+        guard.EnemyPatrol.SetSpeed(3.75f);
         guard.EnemyVisualFeedBack.setStateColor(EnemyVisualFeedBack.StateColor.Lost);
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringLostStateSFX();
         if(guard.AlertLevel >= 50 && guard.GetComponent<Drone>() != null){
@@ -102,6 +102,6 @@ public class LostState : BaseState
     public override void OnStateExit()
     {
         if(guard.EnemyPatrol.HasRandomWaypoints()) guard.EnemyPatrol.RestoreWaypoints();
-        guard.EnemyPatrol.SetSpeed(3.5f);
+        guard.EnemyPatrol.SetSpeed(6.5f);
     }
 }
