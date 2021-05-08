@@ -140,9 +140,11 @@ public class UIManager : MonoBehaviour
 
     public void onTabletGrab(OnTabletGrabEvent e)
     {
+#if UNITY_EDITOR
         Debug.Log("=======================================");
         Debug.Log(e.nom);
         Debug.Log("=======================================");
+#endif
         if (e.nom == NomTablet.tabletJungle)
         {
             checkJungleObjectif.SetActive(true);

@@ -36,8 +36,10 @@ public class SmoothTurnProvider : LocomotionProvider
             // Check for input, return the segment with positive or negative 
             targetTurnAmount = CheckForTurn(controller);
 
+            CameraFilter.Instance.cameraRotationSpeed = Mathf.Abs(targetTurnAmount);
+
             // If we actually got a value from input, try to turn
-            if(targetTurnAmount != 0.0f)
+            if (targetTurnAmount != 0.0f)
                 TrySmoothTurn();
         }
 

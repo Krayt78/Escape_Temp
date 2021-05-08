@@ -70,17 +70,23 @@ public class OldPlayerEntityController : EntityController
             GameObject hitObject = ray.transform.gameObject;
             if (hitObject.CompareTag("Player"))
             {
+#if UNITY_EDITOR
                 Debug.Log("Player hit");
+#endif
             }
             else if(hitObject.GetComponent<EntityController>())
             {
                 Attack(hitObject.GetComponent<EntityController>());
+#if UNITY_EDITOR
                 Debug.Log("Attack");
+#endif
             }
             else if(hitObject.GetComponent<Interactable>())
             {
                 hitObject.GetComponent<Interactable>().Use(this.gameObject);
+#if UNITY_EDITOR
                 Debug.Log("Interact with " + hitObject.ToString());
+#endif
             }
         }
 
@@ -121,7 +127,9 @@ public class OldPlayerEntityController : EntityController
     protected override void Dies()
     {
         CallOnDies();
+#if UNITY_EDITOR
         Debug.Log("dead");
+#endif
 
         playerInput.enabled = false;
         GetComponent<PlayerSoundEffectController>().enabled = false;

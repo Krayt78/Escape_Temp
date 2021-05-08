@@ -52,10 +52,13 @@ public class CameraFilter : Singleton<CameraFilter>
     [SerializeField] float minCameraVelocity=0, maxCameraVelocity=10;
     [SerializeField] float velocityVignetteStrenght=1;
 
+    public float cameraRotationSpeed;
+    [SerializeField] float rotationVignetteStrenght = 1;
+
 
     private bool transitioningState = false;
     private float targetVignetteIntensity = 0;
-    [SerializeField] float transitionVignetteSpeed = 1;
+    float transitionVignetteSpeed = 2;
     
 
     // Start is called before the first frame update
@@ -129,11 +132,11 @@ public class CameraFilter : Singleton<CameraFilter>
             return targetVignetteIntensity;
 
         float velocity = Vector3.Distance(playerCamera.position, lastCameraPosition) / Time.deltaTime;
-        float vignetteStrenght = Mathf.Clamp01(Mathf.InverseLerp(minCameraVelocity, maxCameraVelocity, velocity)) * velocityVignetteStrenght;
+        float vignetteVelocityStrenght = Mathf.Clamp01(Mathf.InverseLerp(minCameraVelocity, maxCameraVelocity, velocity)) * velocityVignetteStrenght;
 
         lastCameraPosition = playerCamera.position;
 
-        return vignetteStrenght;
+        return Mathf.Clamp01(vignetteVelocityStrenght + cameraRotationSpeed*rotationVignetteStrenght*Time.deltaTime);
     }
 
     private void SetVignetteIntensity(float intensity)

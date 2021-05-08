@@ -47,7 +47,9 @@ public class SightedState : BaseState
         // if the guard has lost trace of the enemy reset the timer, resume his movement capabilities and goto loststate
         if (!guard.Target && !AIManager.HasCurrentEnemyAlerted(guard))
         {
+#if UNITY_EDITOR
             Debug.Log("is in SightedState to Lost");
+#endif
             if(lostTimer >= 3f)
             {
                 return typeof(LostState);

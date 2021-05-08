@@ -81,7 +81,9 @@ public class RagdolToggle : MonoBehaviour
     {
         if (collision.relativeVelocity.sqrMagnitude <= 1.5f)
             return;
+#if UNITY_EDITOR
         Debug.Log("Velocity : " + collision.relativeVelocity.sqrMagnitude);
+#endif
         GetComponent<GuardSoundEffectController>().PlayRagdollColisionSFX(collision.contacts[0].point);
     }
 

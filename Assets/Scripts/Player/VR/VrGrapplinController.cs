@@ -114,15 +114,21 @@ public class VrGrapplinController : Ability
             direction = GetCollisionDirection(playerCamera.position, destination);
         }
         float characterHeight = characterController.height * characterController.transform.localScale.y;
+#if UNITY_EDITOR
         Debug.Log("CHARACTER HEIGHT : " + characterHeight);
+#endif
         Vector3 ledgeTargetPoint;
 
         if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
         {
+#if UNITY_EDITOR
             Debug.Log("CLIMBABLE");
+#endif
             yield return MakeCharacterClimbLedge(ledgeTargetPoint);
         }
+#if UNITY_EDITOR
         Debug.Log("NOT CLIMBABLE");
+#endif
 
         hitSmth = false;
 

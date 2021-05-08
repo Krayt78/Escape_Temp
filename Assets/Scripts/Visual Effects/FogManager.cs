@@ -21,8 +21,10 @@ public class FogManager : MonoBehaviour
         fogPlayerRenderer = fogPlayer.GetComponent<MeshRenderer>();
         alphaMax = fogPlayerRenderer.material.color.a;
         tempColor = fogPlayerRenderer.material.color;
+#if UNITY_EDITOR
         Debug.Log(fogPlayerRenderer.material.ToString());
         Debug.Log(alphaMax);
+#endif
     }
 
     // Update is called once per frame
@@ -38,9 +40,13 @@ public class FogManager : MonoBehaviour
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);
+#if UNITY_EDITOR
                 Debug.Log("StopCoCo");
+#endif
             }
+#if UNITY_EDITOR
             Debug.Log("EnterTrigger");
+#endif
             tempAlpha = fogPlayerRenderer.material.color.a;
             coroutine = StartCoroutine(lerpFogAlpha(true));
         }
@@ -53,9 +59,13 @@ public class FogManager : MonoBehaviour
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);
+#if UNITY_EDITOR
                 Debug.Log("StopCoCo");
+#endif
             }
+#if UNITY_EDITOR
             Debug.Log("ExitTrigger");
+#endif
             tempAlpha = fogPlayerRenderer.material.color.a;
             coroutine = StartCoroutine(lerpFogAlpha(false));
         }
@@ -63,7 +73,9 @@ public class FogManager : MonoBehaviour
 
     private IEnumerator lerpFogAlpha(bool isDecaying)
     {
+#if UNITY_EDITOR
         Debug.Log(tempAlpha);
+#endif
         deltaTime = 0;
         while (deltaTime < lerpDuration)
         {

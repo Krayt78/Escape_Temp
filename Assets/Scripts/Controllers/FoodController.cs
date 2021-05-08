@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FoodController : Interactable
 {
-    Transform initialTransform;
+    Vector3 initialPosition;
+    Quaternion initialRotation;
+
     private enum AbilityToUnlock 
     { 
         None, 
@@ -17,17 +19,26 @@ public class FoodController : Interactable
 
     [SerializeField] private AbilityToUnlock abilityToUnlock = new AbilityToUnlock();
     public float FoodValue { get { return foodValue; } }
-    [SerializeField] float repopTime = 100f;
+    float repopTime = 200f;
 
     private XROffsetGrabbable xROffsetGrabbable;
 
     protected bool isGrabbed = false;
 
+    protected Collider _collider;
+    protected Rigidbody _rigidbody;
+
+    private void Awake()
+    {
+        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
+        xROffsetGrabbable = GetComponent<XROffsetGrabbable>();
+    }
 
     public  void Start()
     {
-        initialTransform = this.transform;
-        xROffsetGrabbable = GetComponent<XROffsetGrabbable>();
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
     public override void Use(GameObject user)
     {
@@ -42,11 +53,13 @@ public class FoodController : Interactable
 
     public void DestroyFood()
     {
+#if UNITY_EDITOR
         Debug.Log("Eat");
+#endif
         ReleaseHandInteraction();
         //Destroy(gameObject);
         gameObject.SetActive(false);
-        //Invoke("ReactiveFood", repopTime);
+        Invoke("ReactiveFood", repopTime);
 
     }
 
@@ -55,24 +68,35 @@ public class FoodController : Interactable
         xROffsetGrabbable.CustomForceDrop(xROffsetGrabbable.selectingInteractor);
     }
 
-    private void ReactiveFood()
+    protected virtual void ReactiveFood()
     {
-        gameObject.transform.position = initialTransform.position;
-        gameObject.transform.rotation = initialTransform.rotation;
+        gameObject.transform.position = initialPosition;
+        gameObject.transform.rotation = initialRotation;
         gameObject.SetActive(true);
-
+        _rigidbody.useGravity = true;
+        _rigidbody.isKinematic = false;
+        _collider.isTrigger = false;
     }
 
     public void StartGrab()
     {
         isGrabbed = true;
-        GetComponent<Collider>().isTrigger = true;
+
+        _rigidbody.useGravity = false;
+        _rigidbody.isKinematic = true;
+        _collider.isTrigger = true;
     }
 
     public void EndGrab()
     {
+#if UNITY_EDITOR
+        Debug.Log("END GRAB");
+#endif
         isGrabbed = false;
-        GetComponent<Collider>().isTrigger = false;
+
+        _rigidbody.useGravity = true;
+        _rigidbody.isKinematic = false;
+        _collider.isTrigger = false;
     }
 }
 

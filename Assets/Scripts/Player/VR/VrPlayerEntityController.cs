@@ -68,7 +68,9 @@ public class VrPlayerEntityController : EntityController
             GameObject hitObject = ray.transform.gameObject;
             if (hitObject.CompareTag("Player"))
             {
+#if UNITY_EDITOR
                 Debug.Log("Player hit");
+#endif
                 UIManager.Instance.HideAbilityUI();
             }
             else if(hitObject.GetComponent<LineRenderer>()){
@@ -78,13 +80,17 @@ public class VrPlayerEntityController : EntityController
             {
                 Attack(hitObject.GetComponent<EntityController>());
                 UIManager.Instance.HideAbilityUI();
+#if UNITY_EDITOR
                 Debug.Log("Attack");
+#endif
             }
             else if(hitObject.GetComponent<Interactable>())
             {
                 UIManager.Instance.HideAbilityUI();
                 hitObject.GetComponent<Interactable>().Use(this.gameObject);
+#if UNITY_EDITOR
                 Debug.Log("Interact with " + hitObject.ToString());
+#endif
             }
         }
     }
@@ -92,7 +98,9 @@ public class VrPlayerEntityController : EntityController
     public void Attack(EntityController attacked)
     {
         attacked.TakeDamages(playerDamages);
+#if UNITY_EDITOR
         Debug.Log("Player damages : " + playerDamages);
+#endif
         OnAttack();
     }
 
@@ -119,7 +127,9 @@ public class VrPlayerEntityController : EntityController
     protected override void Dies()
     {
         CallOnDies();
+#if UNITY_EDITOR
         Debug.Log("dead");
+#endif
 
         playerInput.enabled = false;
         GetComponent<VrPlayerSoundEffectController>().enabled = false;

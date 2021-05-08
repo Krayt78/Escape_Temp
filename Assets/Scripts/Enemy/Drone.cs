@@ -168,7 +168,9 @@ public class Drone : EnemyBase
 
     private void OnAttack()
     {
+#if UNITY_EDITOR
         Debug.Log("drone onAttack");
+#endif
         EnemyAnimationController.TriggerAttack();
     }
 

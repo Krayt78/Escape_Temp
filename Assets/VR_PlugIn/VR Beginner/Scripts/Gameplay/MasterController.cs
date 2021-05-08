@@ -29,6 +29,7 @@ public class MasterController : MonoBehaviour
     public bool DisableSetupForDebug = false;
     public Transform StartingPosition;
     public GameObject TeleporterParent;
+    public bool PauseOnRemoveHeadset = true;
 
     [Header("Reference")]
     public XRRayInteractor RightTeleportInteractor;
@@ -167,6 +168,8 @@ public class MasterController : MonoBehaviour
 
     private bool CheckHeadsetIsOn()
     {
+        if (!PauseOnRemoveHeadset)
+            return true;
         //return true;
 
         if(headsetIsOn && XRDevice.userPresence!=UserPresenceState.Present)
@@ -254,7 +257,9 @@ public class MasterController : MonoBehaviour
 
         if (buttonInput)
         {
+#if UNITY_EDITOR
             Debug.Log("OnScanFunction");
+#endif
             playerInput.OnScanFunction();
         }
     }
