@@ -27,7 +27,8 @@ public class VrGrapplinController : Ability
     private float maxRange = 150f;
     [SerializeField]
     float duration = 10f;
-    float grapplinSpeed = 10;
+    [SerializeField]
+    float grapplinSpeed = 20;
 
     RaycastHit hit;
     Ray ray;
@@ -180,15 +181,16 @@ public class VrGrapplinController : Ability
         return canUseGrapplin;
     }
 
-    public override void UseAbility()
+    public override bool UseAbility()
     {
         if (canUseGrapplin)
         {
-            InitGrapplin();
+            return InitGrapplin();
         }
+        return false;
     }
 
-    private void InitGrapplin()
+    private bool InitGrapplin()
     {
         //VR : Ray traced from the hand
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
@@ -210,7 +212,9 @@ public class VrGrapplinController : Ability
             StartCoroutine(LaunchGrapplin(grp));
 
             //GetComponent<PlayerSoundEffectController>().PlayGrapplinSFX();
+            return true;
         }
+        return false;
     }
 
     public Vector3 GetCollisionDirection(Vector3 characterPos, Vector3 hitPoint)
@@ -224,6 +228,12 @@ public class VrGrapplinController : Ability
         Ray rayon = new Ray(playerCamera.position/* + characterController.center*/ + ledgeDirection*ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
         //Ray rayon = new Ray(characterController.transform.position/* + characterController.center*/ + ledgeDirection * ledgeDistanceCheck + Vector3.up * maxHeightCheckFromControllerCenter, -Vector3.up);
         RaycastHit hitInfo, hitInfo2;
+
+        if (Physics.Raycast(playerCamera.position, Vector3.up, characterHeight))
+        {
+            ledgeMoveToPoint = Vector3.zero;
+            return false;
+        }
 
         if (Physics.Raycast(rayon, out hitInfo, maxHeightCheckFromControllerCenter))
         {
@@ -245,17 +255,22 @@ public class VrGrapplinController : Ability
 
     private IEnumerator MakeCharacterClimbLedge(Vector3 targetPos, float maxMoveSpeed = 4)
     {
+        float maxDurationClimb = 2.5f;
+
         Transform charTransform = characterController.transform;
-        while(Mathf.Abs(charTransform.position.y-targetPos.y) > .2f)
+        while(Mathf.Abs(charTransform.position.y-targetPos.y) > .2f && maxDurationClimb>0)
         {
             characterController.Move(Vector3.MoveTowards(charTransform.position, new Vector3(charTransform.position.x, targetPos.y, charTransform.position.z), maxMoveSpeed * Time.deltaTime)
                                         - charTransform.position);
+
+            maxDurationClimb -= Time.deltaTime;
             yield return null;
         }
-        while (Vector3.Distance(charTransform.position, targetPos) > .2f)
+        while (Vector3.Distance(charTransform.position, targetPos) > .2f && maxDurationClimb > 0)
         {
             characterController.Move(Vector3.MoveTowards(charTransform.position, targetPos, maxMoveSpeed * Time.deltaTime)
                                         - charTransform.position);
+            maxDurationClimb -= Time.deltaTime;
             yield return null;
         }
     }

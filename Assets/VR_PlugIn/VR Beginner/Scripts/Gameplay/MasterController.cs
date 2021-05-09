@@ -16,7 +16,7 @@ public class MasterController : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private GameObject GrappliLineRenderer;
+    private AbilityLineController lineController;
 
     public PlayerInput playerInput;
 
@@ -216,9 +216,9 @@ public class MasterController : MonoBehaviour
         {
             if (!isGrapplinButtonPressed)
             {
-
                 isGrapplinButtonPressed = true;
-                GrappliLineRenderer.SetActive(true);
+
+                lineController.ActivateLine();                
             }
 
         }
@@ -228,7 +228,8 @@ public class MasterController : MonoBehaviour
             playerInput.OnUseAbilityFunction();
 
             isGrapplinButtonPressed = false;
-            GrappliLineRenderer.SetActive(false);
+
+            lineController.DeactivateLine();
         }
     }
 

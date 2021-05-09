@@ -18,15 +18,17 @@ public class DecoyController : Ability
     {
         return decoyStatus == null;
     }
-    public override void UseAbility()
+    public override bool UseAbility()
     {
         if (CanUseAbility())
         {
             Vector3 pos = this.GetComponentInChildren<Rigidbody>().position - this.GetComponentInChildren<Rigidbody>().transform.forward*2;
             pos = pos + this.GetComponentInChildren<Rigidbody>().transform.up*1.75f;
             decoyStatus = Instantiate(decoy, pos , rotation: this.transform.rotation);
-            
+
+            return true;
         }
+        return false;
     }
 
 }
