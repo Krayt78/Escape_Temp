@@ -87,13 +87,15 @@ public class VrGrapplinController : Ability
 
     IEnumerator MovePlayer(Vector3 destination, float duration)
     {
+        float maxDuration = 10;
+
         float time = 0;
         Vector3 startPosition = movingPlayer.position;
         playerSoundEffectController.PlayGrapplinRetractSFX();
 
         masterController.OnCharacterControllerHit += OnControllerHit;
 
-        while (!Landed() && !hitSmth)
+        while (!Landed() && !hitSmth && maxDuration > 0)
         {
             //characterController.Move((destination - movingPlayer.position).normalized * grapplinSpeed * Time.deltaTime);
             characterController.Move((destination - playerCamera.position).normalized * grapplinSpeed * Time.deltaTime);
@@ -101,6 +103,11 @@ public class VrGrapplinController : Ability
             lrRope.SetPosition(0, grapplinPosition.position);
 
             time += Time.deltaTime;
+
+            //Make sure we don't remain stuck
+            maxDuration -= Time.deltaTime;
+
+
             yield return null;
         }
         Vector3 direction = Vector3.zero;
@@ -159,7 +166,7 @@ public class VrGrapplinController : Ability
         while (grp.transform.position != hit.point)
         {
             lrRope.SetPosition(0, grapplinPosition.position);
-            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, grapplinThrowSpeed * Time.deltaTime);
+            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, 2* grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
         }
