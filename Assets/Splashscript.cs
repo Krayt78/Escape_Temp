@@ -22,23 +22,23 @@ public class Splashscript : MonoBehaviour
     private IEnumerator SplashscreenCoroutine() {
         // peut etre remplacer foreach par for, si liste sons
         foreach (Image image in images) {
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2.25f);
             // apparition du sprite
             FadeIn(image);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(4f);
             // fondu au noir
             FadeOut(image);
         }
-        GameController.LoadScene(1);
+        GameController.Instance.LoadScene(1);
         yield return null;
     } 
 
     private void FadeIn(Image image) {
-        image.CrossFadeAlpha(1, 2.5f, false);
+        image.CrossFadeAlpha(1, 1.5f, false);
     }
 
     private void FadeOut(Image image) {
-        image.CrossFadeAlpha(0, 2.5f, false);
+        image.CrossFadeAlpha(0, 1.5f, false);
     }
 
 }

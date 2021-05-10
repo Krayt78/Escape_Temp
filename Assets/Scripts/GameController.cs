@@ -50,10 +50,12 @@ public class GameController : MonoBehaviour
         }
         if(!isMenu)
         {
-            player.GetComponent<EntityController>().OnDies += OnPlayerDies;
-            playerInput = player.GetComponent<PlayerInput>();
-            playerInput.OnStart += OnPauseEvent;
-            playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
+            if(player != null) {
+                player.GetComponent<EntityController>().OnDies += OnPlayerDies;
+                playerInput = player.GetComponent<PlayerInput>();
+                playerInput.OnStart += OnPauseEvent;
+                playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
+            }
         }
         else
         {
@@ -152,9 +154,9 @@ public class GameController : MonoBehaviour
 
     IEnumerator LoadSceneAsync(int sceneIndex, GameObject loadingScreen)
     {
-        mainMenu?.SetActive(false);
-        optionsMenu?.SetActive(false);
-        creditsMenu?.SetActive(false);
+        if(mainMenu != null) mainMenu?.SetActive(false);
+        if(optionsMenu != null) optionsMenu?.SetActive(false);
+        if(creditsMenu != null) creditsMenu?.SetActive(false);
         loadingScreen.SetActive(true);
 
         LoadingScreenController textControl = loadingScreen.GetComponent<LoadingScreenController>();
