@@ -66,6 +66,7 @@ public class DronePatrol : EnemyPatrolBase
             if(distance > 6f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+                transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, targetPosition.y + 3f, Mathf.Infinity), transform.position.z);
             }
             if(!isRotating)
             {
