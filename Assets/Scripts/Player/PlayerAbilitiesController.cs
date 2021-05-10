@@ -33,8 +33,8 @@ public class PlayerAbilitiesController : MonoBehaviour
         }
         else if(CurrentAbility.DnaConsumed <= playerDNALevel.DnaLevel && CurrentAbility.CanUseAbility() && isAbilityActivated)
         {
-            CurrentAbility.UseAbility();
-            playerDNALevel.LoseDnaLevel(CurrentAbility.DnaConsumed);
+            if(CurrentAbility.UseAbility())
+                playerDNALevel.LoseDnaLevel(CurrentAbility.DnaConsumed);
         }else if(CurrentAbility.DnaConsumed > playerDNALevel.DnaLevel)
         {
             onNoDNAForUsingCapacity = FMODPlayerController.PlaySoundAttachedToGameObject(noDNAForCapacitySoundFXPath, GetComponentInChildren<Rigidbody>()); 

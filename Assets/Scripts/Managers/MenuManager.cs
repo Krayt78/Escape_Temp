@@ -76,13 +76,17 @@ namespace STUDENT_NAME
 
 		void OpenPanel(GameObject panel)
 		{
-            Debug.Log("OpenPanel : "+ panel);
+#if UNITY_EDITOR
+			Debug.Log("OpenPanel : "+ panel);
+#endif
             foreach (var item in m_AllPanels)
                 if (item)
                 {
                     if (item == panel)
-                    {
-                        Debug.Log("Opening "+ item);
+					{
+#if UNITY_EDITOR
+						Debug.Log("Opening "+ item);
+#endif
                         item.SetActive(true);
                     }
                     else item.SetActive(false);

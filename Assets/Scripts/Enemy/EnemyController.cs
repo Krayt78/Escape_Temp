@@ -13,7 +13,9 @@ public class EnemyController : EntityController
 
     public override void TakeDamages(float damages)
     {
+#if UNITY_EDITOR
         Debug.Log("TAKE DAMAGES");
+#endif
         
         if(damages <= 1)
         {
@@ -22,7 +24,9 @@ public class EnemyController : EntityController
         }
         else if(damages > 1)
         {
+#if UNITY_EDITOR
             Debug.Log("DIES");
+#endif
             Dies();
         }
     }

@@ -110,10 +110,14 @@ public class FieldOfView : MonoBehaviour
         if(deadEnemiesInViewRadius.Length > 0){
             for (int i = 0; i < deadEnemiesInViewRadius.Length; i++)
             {
+#if UNITY_EDITOR
                 Debug.Log("bodyFound : "+deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound);
+#endif
                 if(!deadEnemiesInViewRadius[i].GetComponent<Guard>().bodyFound){
                     GameObject targetGO = deadEnemiesInViewRadius[i].gameObject;
+#if UNITY_EDITOR
                     Debug.Log("targetGo : "+targetGO.name);
+#endif
                     Transform target = deadEnemiesInViewRadius[i].transform;
                     //Transform eyeTransform = ((EnemyEyeMovement) gameObject.GetComponentInParent(typeof(EnemyEyeMovement))).GetEyeDirection();
                     

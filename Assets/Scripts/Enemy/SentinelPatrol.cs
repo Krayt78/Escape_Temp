@@ -72,14 +72,18 @@ public class SentinelPatrol : EnemyPatrolBase
         else currentWaypointNumber++;
 
 
-        if (WaypointPatrolList == null) { 
+        if (WaypointPatrolList == null) {
 
+#if UNITY_EDITOR
             Debug.Log("NULL");
+#endif
             return;
         }
         if(WaypointPatrolList[currentWaypointNumber]==null)
         {
+#if UNITY_EDITOR
             Debug.Log("WAYPOINT NULL");
+#endif
             return;
         }
         Vector3 newPos = WaypointPatrolList[currentWaypointNumber].transform.position;

@@ -43,6 +43,7 @@ public class PlayerEntityController : EntityController
     public Animator handAnimator;
 
 
+#if UNITY_EDITOR
     private void OnGUI()
     {
         string printString = "LifePoint : " + lifePoint + "\n"
@@ -53,10 +54,17 @@ public class PlayerEntityController : EntityController
         myStyle.normal.textColor = Color.white;
         GUI.Label(new Rect(200, 50, 300, 500), printString, myStyle);
     }
+#endif
 
 
     private void Awake()
     {
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+	Debug.unityLogger.logEnabled = false;
+#endif
+
         playerInput = GetComponent<PlayerInput>();
         playerDNALevel = GetComponent<PlayerDNALevel>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -160,7 +168,9 @@ public class PlayerEntityController : EntityController
     {
         if (!canTakeDamages || !DEV_ONLY_canTakeDamages)
             return;
+#if UNITY_EDITOR
         Debug.Log("DAMAGES : " + damages + " - RATIOED : " + playerCarateristic.defenseRatio);
+#endif
         lifePoint -= (damages * playerCarateristic.defenseRatio);
         CallOnTakeDamages(damages);
         if (lifePoint <= 0)
@@ -183,7 +193,9 @@ public class PlayerEntityController : EntityController
     protected override void Dies()
     {
         CallOnDies();
+#if UNITY_EDITOR
         Debug.Log("dead");
+#endif
 
         playerInput.enabled = false;
         GetComponent<PlayerSoundEffectController>().enabled = false;

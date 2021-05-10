@@ -40,7 +40,9 @@ namespace STUDENT_NAME
         {
             if (Input.GetButton("SkipLevelHandlerXbox") && !isPressing)
             {
+#if UNITY_EDITOR
                 Debug.Log("A");
+#endif
                 StartCoroutine(LoadNextLevel());
                 isPressing = true;
             }
@@ -51,7 +53,9 @@ namespace STUDENT_NAME
 
             if (Input.GetButtonDown("SkipLevelHandler"))
             {
+#if UNITY_EDITOR
                 Debug.Log("B");
+#endif
 
                 //triangle
                 StartCoroutine(LoadNextLevel());
@@ -95,7 +99,9 @@ namespace STUDENT_NAME
 
         protected override void GameOver(GameOverEvent e)
         {
+#if UNITY_EDITOR
             Debug.Log("gameOver");
+#endif
             StartCoroutine(GoBackToMenu());
 
         }
@@ -108,7 +114,9 @@ namespace STUDENT_NAME
 
         private void LevelWon(LevelWonEvent e)
         {
+#if UNITY_EDITOR
             Debug.Log("won");
+#endif
 
             if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings)
             {
@@ -121,7 +129,9 @@ namespace STUDENT_NAME
 
         private void LevelWithdraw(LevelWithdrawEvent e)
         {
+#if UNITY_EDITOR
             Debug.Log("withraw");
+#endif
 
             StartCoroutine(RestartLevel());
         }
@@ -129,7 +139,9 @@ namespace STUDENT_NAME
         private IEnumerator RestartLevel()
         {
             EventManager.Instance.Raise(new ChangingSceneEvent());
+#if UNITY_EDITOR
             Debug.Log("Restarting Level");
+#endif
             GameObject.Find("HudCanvas").GetComponentInChildren<Text>().text = "Perdu !";
             yield return new WaitForSeconds(1.0f);
 
@@ -139,7 +151,9 @@ namespace STUDENT_NAME
 
         private IEnumerator GoBackToMenu()
         {
+#if UNITY_EDITOR
             Debug.Log("GoBackToMenu");
+#endif
             EventManager.Instance.Raise(new ChangingSceneEvent());
             EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
             GameObject.Find("HudCanvas").GetComponentInChildren<Text>().text = "Menu !";
@@ -152,7 +166,9 @@ namespace STUDENT_NAME
 
         private IEnumerator LoadNextLevel()
         {
+#if UNITY_EDITOR
             Debug.Log("LoadNextLevel");
+#endif
             EventManager.Instance.Raise(new ChangingSceneEvent());
             GameObject.Find("HudCanvas").GetComponentInChildren<Text>().text = "You Won ! Loading Next Level!";
             yield return new WaitForSeconds(1.0f);
@@ -166,7 +182,9 @@ namespace STUDENT_NAME
 
         public void LoadFirstLevel() // used by the mainb menu button to load first scene
         {
+#if UNITY_EDITOR
             Debug.Log("LoadFirstLevel");
+#endif
             EventManager.Instance.Raise(new ChangingSceneEvent());
             SceneManager.LoadScene(1, LoadSceneMode.Single);
 

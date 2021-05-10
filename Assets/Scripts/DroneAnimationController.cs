@@ -26,16 +26,22 @@ public class DroneAnimationController : EnemyAnimationControllerBase
 
     public override void TriggerIdle()
     {
+#if UNITY_EDITOR
         Debug.Log("in trigger drone idle");
+#endif
         animator.SetTrigger("idle");
     }
 
     public override void TriggerAttack()
     {
+#if UNITY_EDITOR
         Debug.Log("in trigger drone attack");
+#endif
         AnimatorClipInfo[] m_CurrentClipInfo;
         m_CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
+#if UNITY_EDITOR
         Debug.Log("clip name : "+m_CurrentClipInfo[0].clip.name);
+#endif
         if(m_CurrentClipInfo[0].clip.name != "ANIM_Attack_Drone")
         {
             animator.SetTrigger("attack");

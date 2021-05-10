@@ -178,17 +178,18 @@ public class Grapplin : Ability
         return canUseGrapplin;
     }
 
-    public override void UseAbility()
+    public override bool UseAbility()
     {
         if (canUseGrapplin)
         {
             
-            InitGrapplin();
+            return InitGrapplin();
             
         }
+        return false;
     }
 
-    private void InitGrapplin()
+    private bool InitGrapplin()
     {
         //ray = new Ray(playerCamera.position, playerCamera.forward);
         //VR : Ray traced from the hand
@@ -220,11 +221,12 @@ public class Grapplin : Ability
             {
                 Debug.LogError("Not found");
             }
+            return true;
         }
         else
         {
             Debug.LogError("Hit nothing");
-
+            return false;
         }
     }
 

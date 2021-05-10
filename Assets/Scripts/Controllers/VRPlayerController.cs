@@ -26,7 +26,6 @@ public class VRPlayerController : MonoBehaviour
         }
         else if(input.axis != Vector2.zero && echo.isActive)
         {
-            Debug.Log("fuck");
             echo.DeactivateXray();
         }
     }

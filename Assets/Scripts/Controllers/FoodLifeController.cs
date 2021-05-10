@@ -13,13 +13,10 @@ public class FoodLifeController : FoodController
         }
     }
 
-    public void StartGrab()
+    protected override void ReactiveFood()
     {
-        isGrabbed = true;
-    }
-
-    public void EndGrab()
-    {
-        isGrabbed = false;
+        base.ReactiveFood();
+        _rigidbody.useGravity = false;
+        _rigidbody.isKinematic = true;
     }
 }

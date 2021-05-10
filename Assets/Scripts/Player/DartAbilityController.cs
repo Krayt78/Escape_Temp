@@ -27,15 +27,17 @@ public class DartAbilityController : Ability
         return Time.time >= lastTimeFired + fireRate;
     }
 
-    public override void UseAbility()
+    public override bool UseAbility()
     {
         if (!CanUseAbility())
-            return;
+            return false;
 
         Instantiate(DartObject, FirePoint.position, FirePoint.rotation);
         lastTimeFired = Time.time;
 
         playerSoundEffectController.PlayDartLaunchSFX();
+
+        return true;
     }
 
     public override void AssimilateFood(string ability,float assimilationRate)

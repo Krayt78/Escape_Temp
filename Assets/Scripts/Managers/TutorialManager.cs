@@ -13,11 +13,15 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_EDITOR
         Debug.Log("START");
+#endif
         if (enemies == null)
             return;
 
+#if UNITY_EDITOR
         Debug.Log("NOT NULL : " + enemies.Length);
+#endif
         enemyLeft = enemies.Length;
 
         for(int i=0;i<enemies.Length;i++)
@@ -29,14 +33,18 @@ public class TutorialManager : MonoBehaviour
     private void EnemyDies()
     {
         enemyLeft--;
+#if UNITY_EDITOR
         Debug.Log("Enemy left : " + enemyLeft);
+#endif
         if (enemyLeft <= 0)
             LoadNextLevel();
     }
 
     private void LoadNextLevel()
     {
+#if UNITY_EDITOR
         Debug.Log("LETS LOAD");
+#endif
         StartCoroutine(LoadingLevel());
         endVoiceTime = Time.time + VoiceManager.Instance.PlayVoiceImmediate(new VoiceEvent(endVoice, VoiceManager.Priority.High));
     }

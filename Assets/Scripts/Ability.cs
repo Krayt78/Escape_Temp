@@ -58,5 +58,5 @@ public abstract class Ability : MonoBehaviour
         }
     }
     public abstract bool CanUseAbility();
-    public abstract void UseAbility();
+    public abstract bool UseAbility();
 }

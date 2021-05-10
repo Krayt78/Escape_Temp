@@ -11555,6 +11555,7 @@ MonoBehaviour:
     type: 3}
   dartLauncherPrefab: {fileID: 8700208698942486978, guid: 9cbb855635804984b84bf5be8edcbdc2,
     type: 3}
+  decoyLauncherPrefab: {fileID: 0}
 --- !u!4 &3525349945703249326
 Transform:
   m_ObjectHideFlags: 0
@@ -18965,7 +18966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7267615934222711507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -16.2, z: 0}
+  m_LocalPosition: {x: 0, y: -14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7267615933469996115}
@@ -19024,11 +19025,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3006553891446856563}
-  GrappliLineRenderer: {fileID: 0}
+  lineController: {fileID: 0}
   playerInput: {fileID: 0}
   DisableSetupForDebug: 1
   StartingPosition: {fileID: 395172643850686099}
   TeleporterParent: {fileID: 395172644207576840}
+  PauseOnRemoveHeadset: 1
   RightTeleportInteractor: {fileID: 5603323733913596034}
   LeftTeleportInteractor: {fileID: 6341866280998704235}
   RightDirectInteractor: {fileID: 7267615933014563035}

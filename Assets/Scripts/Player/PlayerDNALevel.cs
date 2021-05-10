@@ -10,6 +10,8 @@ public class PlayerDNALevel : MonoBehaviour
     private PlayerCarateristicController playerCaracteristicController;
 
     [SerializeField] float startDnaLevel = 1;
+    [SerializeField] float alphaMinDna = .8f;
+
     private float dnaLevel;
     public float DnaLevel { get { return dnaLevel; } set { dnaLevel = Mathf.Clamp(0, 1, value); } }
     [SerializeField] private int currentEvolutionLevel;
@@ -154,7 +156,7 @@ public class PlayerDNALevel : MonoBehaviour
 
     public void GoAlpha()
     {
-        if (dnaLevel < 1)
+        if (dnaLevel < alphaMinDna)
         {
             return;
         }

@@ -16,7 +16,7 @@ public class MasterController : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private GameObject GrappliLineRenderer;
+    private AbilityLineController lineController;
 
     public PlayerInput playerInput;
 
@@ -29,6 +29,7 @@ public class MasterController : MonoBehaviour
     public bool DisableSetupForDebug = false;
     public Transform StartingPosition;
     public GameObject TeleporterParent;
+    public bool PauseOnRemoveHeadset = true;
 
     [Header("Reference")]
     public XRRayInteractor RightTeleportInteractor;
@@ -167,6 +168,8 @@ public class MasterController : MonoBehaviour
 
     private bool CheckHeadsetIsOn()
     {
+        if (!PauseOnRemoveHeadset)
+            return true;
         //return true;
 
         if(headsetIsOn && XRDevice.userPresence!=UserPresenceState.Present)
@@ -213,9 +216,9 @@ public class MasterController : MonoBehaviour
         {
             if (!isGrapplinButtonPressed)
             {
-
                 isGrapplinButtonPressed = true;
-                GrappliLineRenderer.SetActive(true);
+
+                lineController.ActivateLine();                
             }
 
         }
@@ -225,7 +228,8 @@ public class MasterController : MonoBehaviour
             playerInput.OnUseAbilityFunction();
 
             isGrapplinButtonPressed = false;
-            GrappliLineRenderer.SetActive(false);
+
+            lineController.DeactivateLine();
         }
     }
 
@@ -254,7 +258,9 @@ public class MasterController : MonoBehaviour
 
         if (buttonInput)
         {
+#if UNITY_EDITOR
             Debug.Log("OnScanFunction");
+#endif
             playerInput.OnScanFunction();
         }
     }

@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 6688025836974751617}
   - component: {fileID: 1147342012069462904}
   - component: {fileID: 6103985532025839708}
+  - component: {fileID: 193746631353995125}
   m_Layer: 0
   m_Name: FruitTree
   m_TagString: Untagged
@@ -42,7 +43,7 @@ Transform:
   m_GameObject: {fileID: 1716147949179402148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.1376143, y: 0.000000059604645, z: 0.36292624}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 6812030793917414611}
   - {fileID: 4511063822565226123}
@@ -113,20 +114,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!138 &702906620
-FixedJoint:
+--- !u!136 &193746631353995125
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7553214092130832064}
-  m_ConnectedBody: {fileID: 6103985532025839708}
-  m_BreakForce: 200
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_GameObject: {fileID: 1716147949179402148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.05
+  m_Height: 1.0018327
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!138 &1426860978
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -148,23 +149,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2417204499451774391}
     m_Modifications:
-    - target: {fileID: 187463236676892980, guid: 96dcdcb82454b1f4b861770cf92bccb8,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.15831423
-      objectReference: {fileID: 0}
-    - target: {fileID: 187463236676892980, guid: 96dcdcb82454b1f4b861770cf92bccb8,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.60533017
-      objectReference: {fileID: 0}
-    - target: {fileID: 187463236676892980, guid: 96dcdcb82454b1f4b861770cf92bccb8,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.059373766
-      objectReference: {fileID: 0}
-    - target: {fileID: 187463236676892980, guid: 96dcdcb82454b1f4b861770cf92bccb8,
-        type: 3}
+    - target: {fileID: 702906620, guid: 96dcdcb82454b1f4b861770cf92bccb8, type: 3}
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6103985532025839708}
@@ -230,12 +215,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96dcdcb82454b1f4b861770cf92bccb8, type: 3}
---- !u!1 &7553214092130832064 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5190544181446222780, guid: 96dcdcb82454b1f4b861770cf92bccb8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2367464434420182396}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6812030793917414611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9102863046698881455, guid: 96dcdcb82454b1f4b861770cf92bccb8,

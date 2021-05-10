@@ -35,7 +35,9 @@ public class HandHealthBar : MonoBehaviour
     //Can be optimised by using bool on the colours instead 
     private void OnHealthUpdated(OnHealthUpdatedEvent e)
     {
+#if UNITY_EDITOR
         Debug.Log("health/max :" + e.Health +"/"+ e.MaxHealth);
+#endif
         float percentage = e.Health / e.MaxHealth;
 
         if (percentage > 0)
