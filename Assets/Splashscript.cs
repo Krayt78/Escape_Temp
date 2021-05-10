@@ -29,7 +29,7 @@ public class Splashscript : MonoBehaviour
             // fondu au noir
             FadeOut(image);
         }
-        GameController.LoadScene(1);
+        GameController.Instance.LoadScene(1);
         yield return null;
     } 
 

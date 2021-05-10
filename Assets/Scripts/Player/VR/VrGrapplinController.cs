@@ -34,6 +34,11 @@ public class VrGrapplinController : Ability
     Ray ray;
     private Vector3 destination = new Vector3();
 
+
+    Transform enemyHit;
+    bool hitObjectWasEnemy = false;
+
+
     bool canUseGrapplin = true;
 
     bool hitSmth = false;
@@ -97,6 +102,12 @@ public class VrGrapplinController : Ability
 
         while (!Landed() && !hitSmth && maxDuration > 0)
         {
+            if (hitObjectWasEnemy)
+            {
+                destination = enemyHit.position;
+                grp.transform.position = destination;
+                lrRope.SetPosition(1, destination);
+            }
             //characterController.Move((destination - movingPlayer.position).normalized * grapplinSpeed * Time.deltaTime);
             characterController.Move((destination - playerCamera.position).normalized * grapplinSpeed * Time.deltaTime);
 
@@ -122,21 +133,15 @@ public class VrGrapplinController : Ability
             direction = GetCollisionDirection(playerCamera.position, destination);
         }
         float characterHeight = characterController.height * characterController.transform.localScale.y;
-#if UNITY_EDITOR
-        Debug.Log("CHARACTER HEIGHT : " + characterHeight);
-#endif
         Vector3 ledgeTargetPoint;
 
-        if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
+        if(!hitObjectWasEnemy)
         {
-#if UNITY_EDITOR
-            Debug.Log("CLIMBABLE");
-#endif
-            yield return MakeCharacterClimbLedge(ledgeTargetPoint);
+            if (CheckForClimbableLedge(direction, characterHeight, characterHeight, out ledgeTargetPoint))
+            {
+                yield return MakeCharacterClimbLedge(ledgeTargetPoint);
+            }
         }
-#if UNITY_EDITOR
-        Debug.Log("NOT CLIMBABLE");
-#endif
 
         hitSmth = false;
 
@@ -157,23 +162,25 @@ public class VrGrapplinController : Ability
 
         playerMovement.disableMovement = true;
 
-        lrRope.SetPosition(0, movingPlayer.position);
+        //lrRope.SetPosition(0, movingPlayer.position);
 
         playerSoundEffectController.PlayGrapplinThrowSFX();
 
         lrRope.SetPosition(0, grapplinPosition.position);
 
-        while (grp.transform.position != hit.point)
+        while (grp.transform.position != destination)
         {
+            if (hitObjectWasEnemy)
+                destination = enemyHit.position;
             lrRope.SetPosition(0, grapplinPosition.position);
-            grp.transform.position = Vector3.MoveTowards(grp.transform.position, hit.point, 2* grapplinThrowSpeed * Time.deltaTime);
+            grp.transform.position = Vector3.MoveTowards(grp.transform.position, destination, 2* grapplinThrowSpeed * Time.deltaTime);
             lrRope.SetPosition(1, grp.transform.position);
             yield return null;
         }
 
         playerSoundEffectController.StopGrapplinSFX();
         playerSoundEffectController.PlayGrapplinStickFX(grp.transform.position);
-        StartCoroutine(MovePlayer(hit.point, duration));
+        StartCoroutine(MovePlayer(destination, duration));
     }
 
     public override void AssimilateFood(string ability, float assimilationRate)
@@ -203,11 +210,23 @@ public class VrGrapplinController : Ability
         ray = new Ray(grapplinPosition.position, grapplinPosition.forward);
         if (Physics.Raycast(ray, out hit, maxRange))
         {
-            if (hit.collider.GetComponentInParent<Guard>())
+
+            EnemyController enemyController = hit.collider.GetComponent<EnemyController>();
+            if (enemyController == null)
             {
-                destination = hit.collider.transform.position;
+                enemyController = hit.collider.GetComponentInParent<EnemyController>();
             }
-            destination = hit.point;
+            if (enemyController != null)
+            {
+                enemyHit = enemyController.transform;
+                destination = hit.collider.transform.position;
+                hitObjectWasEnemy = true;
+            }
+            else
+            {
+                destination = hit.point;
+                hitObjectWasEnemy = false;
+            }
 
             canUseGrapplin = false;
 
