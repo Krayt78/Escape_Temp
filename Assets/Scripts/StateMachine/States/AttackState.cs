@@ -78,7 +78,7 @@ public class AttackState : BaseState
         manager.gameObject.GetComponent<GuardSoundEffectController>().PlayEnteringAttackStateSFX();
         guard.EnemyPatrol.SetSpeed(10f);
         guard.EnemyPatrol.ResumeMoving();
-        guard.EnemyAnimationController.TriggerAttack();
+        guard.EnemyAnimationController?.TriggerAttack();
     }
 
     public override void OnStateExit()
