@@ -7,6 +7,7 @@ public class EndSoundOnTrigger : MonoBehaviour
 {
     public string eventPath = "event:/Tutorial/Tutorial_Voice_";
     public bool played = false;
+    [SerializeField]
     private LevelFade levelFade;
 
     [SerializeField] public bool shouldGoNextScene;
