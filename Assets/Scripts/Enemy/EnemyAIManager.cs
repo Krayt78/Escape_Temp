@@ -20,13 +20,13 @@ public class EnemyAIManager : MonoBehaviour
     private List<EnemyBase> EnemiesOnSight = new List<EnemyBase>();
 
 
-    private void OnGUI()
-    {
-            string printString = "Global Level Alert : " + this.globalAlertLevel;
-            GUIStyle myStyle = new GUIStyle();
-            myStyle.fontSize = 20;
-            GUI.Label(new Rect(450, 50, 300, 500), printString, myStyle);
-    }
+    //private void OnGUI()
+    //{
+    //        string printString = "Global Level Alert : " + this.globalAlertLevel;
+    //        GUIStyle myStyle = new GUIStyle();
+    //        myStyle.fontSize = 20;
+    //        GUI.Label(new Rect(450, 50, 300, 500), printString, myStyle);
+    //}
 
     private void Awake()
     {
