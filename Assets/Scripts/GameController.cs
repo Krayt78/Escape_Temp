@@ -229,8 +229,15 @@ public class GameController : MonoBehaviour
 
     private void ShowMenu()
     {
-        mainMenu.SetActive(true);
-        MenuLock();
+        if (mainMenu)
+        {
+            mainMenu.SetActive(true);
+            MenuLock();
+        }
+        else if (winMenu)
+        {
+            winMenu.SetActive(true);
+        }
         activateUiInteractor(true);
 
     }

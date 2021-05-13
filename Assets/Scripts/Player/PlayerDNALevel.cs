@@ -35,6 +35,7 @@ public class PlayerDNALevel : MonoBehaviour
     public event Action<int> OnSwitchState = delegate { };
     public event Action OnEvolveToAlpha = delegate { };
 
+    private bool playerIsDead = false;
 
     public bool printDebug=true;
 
@@ -106,8 +107,11 @@ public class PlayerDNALevel : MonoBehaviour
 
         if (dnaLevel <= 0 && CurrentEvolutionLevel == maxEvolutionLevel)
             LoseLevel();
-        else if (dnaLevel <= 0 && CurrentEvolutionLevel == 0)
+        else if (dnaLevel <= 0 && CurrentEvolutionLevel == 0 && !playerIsDead)
+        {
             OnDies();
+            playerIsDead = true;
+        }
 
         OnDnaLevelChanged(dnaLevel);
     }

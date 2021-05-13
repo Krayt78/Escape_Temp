@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 550217785979359756}
   - component: {fileID: 550217785979359757}
+  - component: {fileID: 721668052}
   m_Layer: 0
   m_Name: BoidController
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550217785979359759}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 253.02, y: 171.99, z: 655.7012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -43,14 +44,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d944a59141883b14584da41c915671cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boidPrefab: {fileID: 100000, guid: d5ab5d391779876479d33a61102d64a5, type: 3}
+  boidPrefab: {fileID: 6432687096002937657, guid: d0aa7b9a6c623af44a2664ccedde069b,
+    type: 3}
   spawnCount: 30
   spawnRadius: 2
   velocity: 6
   velocityVariation: 0.5
   rotationCoeff: 4
-  neighborDist: 2
+  neighborDist: 5
   searchLayer:
     serializedVersion: 2
     m_Bits: 262144
   flockingSoundPath: event:/Ambiance/Birds
+--- !u!114 &721668052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550217785979359759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8462df057abb94f9593eae118a064e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Checkpoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  movementSpeed: 5
+  minimumDistanceForBeingAtCheckpoint: 0.5
