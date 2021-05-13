@@ -102,14 +102,14 @@ public class Drone : EnemyBase
         GetComponent<EnemyController>().OnDies += OnDies;
         GetComponent<EnemyAttack>().OnFireAtTarget += OnAttack;
 
-        if (debugMode)
-        {
-            ActivateDebugMode();
-        }
-        else
-        {
-            DeactivateDebugMode();
-        }
+        // if (debugMode)
+        // {
+        //     ActivateDebugMode();
+        // }
+        // else
+        // {
+        //     DeactivateDebugMode();
+        // }
     }
 
     private void InitializeStateMachine()
