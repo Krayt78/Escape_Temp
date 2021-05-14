@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class AbilityGFXController : MonoBehaviour
 {
+    /*
     [SerializeField] GameObject grapplingPrefab;
     [SerializeField] GameObject dartLauncherPrefab;
-    [SerializeField] GameObject decoyLauncherPrefab;
+    [SerializeField] GameObject decoyLauncherPrefab;*/
 
-    GameObject currentGFX;
+    [SerializeField] GameObject grappling;
+    [SerializeField] GameObject dartLaunche;
+    [SerializeField] GameObject decoyLauncher;
+
+    //GameObject currentGFX;
 
     private void Start()
     {
@@ -27,24 +32,31 @@ public class AbilityGFXController : MonoBehaviour
 
     private void AbilityWasChanged(Ability newAbility)
     {
+        grappling.SetActive(false);
+        dartLaunche.SetActive(false);
+        decoyLauncher.SetActive(false);
+
         if(newAbility.GetType() == typeof(VrGrapplinController))
         {
-            changeAbilityGfx(grapplingPrefab);
+            //changeAbilityGfx(grapplingPrefab);
+            grappling.SetActive(true);
         }
         else if (newAbility.GetType() == typeof(DartAbilityController))
         {
-            changeAbilityGfx(dartLauncherPrefab);
-        }else if (newAbility.GetType() == typeof(DecoyController))
+            // changeAbilityGfx(dartLauncherPrefab);
+            dartLaunche.SetActive(true);
+        } else if (newAbility.GetType() == typeof(DecoyController))
         {
-            changeAbilityGfx(decoyLauncherPrefab);
+            // changeAbilityGfx(decoyLauncherPrefab);
+            decoyLauncher.SetActive(true);
         }
     }
-
+    /*
     private void changeAbilityGfx(GameObject abilityGfx)
     {
         Destroy(currentGFX);
-        currentGFX = Instantiate(abilityGfx, transform);
+        currentGFX = Instantiate(abilityGfx, abilityGfx.transform.position, abilityGfx.transform.rotation, transform);
         currentGFX.transform.localPosition = Vector3.zero;
         currentGFX.transform.localRotation = Quaternion.identity;
-    }
+    }*/
 }
