@@ -6,6 +6,7 @@ public class FoodController : Interactable
 {
     Vector3 initialPosition;
     Quaternion initialRotation;
+    private Animator _animator;
 
     private enum AbilityToUnlock 
     { 
@@ -33,6 +34,7 @@ public class FoodController : Interactable
         _collider = GetComponent<Collider>();
         _rigidbody = GetComponent<Rigidbody>();
         xROffsetGrabbable = GetComponent<XROffsetGrabbable>();
+        _animator = GetComponent<Animator>();
     }
 
     public  void Start()
@@ -85,6 +87,10 @@ public class FoodController : Interactable
         _rigidbody.useGravity = false;
         _rigidbody.isKinematic = true;
         _collider.isTrigger = true;
+        if (_animator)
+        {
+            _animator.enabled = false;
+        }
     }
 
     public void EndGrab()
@@ -97,6 +103,10 @@ public class FoodController : Interactable
         _rigidbody.useGravity = true;
         _rigidbody.isKinematic = false;
         _collider.isTrigger = false;
+        if (_animator)
+        {
+            _animator.enabled = true;
+        }
     }
 }
 
