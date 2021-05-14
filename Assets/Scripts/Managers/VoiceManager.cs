@@ -15,6 +15,9 @@ public class VoiceManager : MonoBehaviour
 
     private VoiceEvent lastVoiceEvent;
 
+    [SerializeField]
+    private List<VoiceEvent> listVoicesPlayOnStart;
+
     public enum Priority
     {
         High,
@@ -32,6 +35,17 @@ public class VoiceManager : MonoBehaviour
         instance = this;
         voiceQueue = new List<VoiceEvent>();
         isPlayingVoice = false;
+    }
+
+    private void Start()
+    {
+        if (listVoicesPlayOnStart.Count > 0)
+        {
+            foreach (var voice in listVoicesPlayOnStart)
+            {
+                voice.PlayVoice();
+            }
+        }
     }
 
     public float PlayVoiceImmediate(VoiceEvent voiceEvent, bool deleteQueue = true)

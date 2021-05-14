@@ -27,14 +27,17 @@ public class VoiceEvent : MonoBehaviour
     {
         if (other.tag == "Player" && !alreadyPlayed)
         {
-            alreadyPlayed = true;
             PlayVoice();
-            Destroy(this.gameObject);
         }
     }
 
     public void PlayVoice()
     {
+        alreadyPlayed = true;
         VoiceManager.Instance.AddVoiceToQueue(this);
+        if (this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
