@@ -13,11 +13,15 @@ public class RagdolToggle : MonoBehaviour
     protected Collider[] childrensCollider;
     protected Rigidbody[] childrensRigibody;
 
+    [SerializeField]
+    private bool isDrone = false;
+
     private void Awake()
     {
         animators = GetComponentsInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
+
         if(GetComponent<SentinelPatrol>() != null)
         {
             enemyPatrol = GetComponent<SentinelPatrol>();
@@ -27,8 +31,6 @@ public class RagdolToggle : MonoBehaviour
         else 
         {
             enemyPatrol = GetComponent<DronePatrol>();
-            childrensCollider = GetComponentsInChildren<Collider>();
-            childrensRigibody = GetComponentsInChildren<Rigidbody>();
         }
     }
 
@@ -40,40 +42,36 @@ public class RagdolToggle : MonoBehaviour
     // Fonction permettant d'activer le ragdoll de la sentinel
     public void RagdollActive(bool active)
     {
-        // Sentinel bones
-        foreach (var collider in childrensCollider)
-        {
-            collider.enabled = active;
-        }
-
-        foreach (var rigibody in childrensRigibody)
-        {
-            rigibody.detectCollisions = active;
-            rigibody.isKinematic = !active;
-        }
-
-        if(GetComponent<Drone>() != null)
-        {
+        if(isDrone) {
+            enemyPatrol.enabled = !active;
             rigidbody.useGravity = active;
+            rigidbody.freezeRotation = !active;
+
+        } else {
+            // Sentinel bones
+            foreach(var collider in childrensCollider) {
+                collider.enabled = active;
+            }
+
+            foreach(var rigibody in childrensRigibody) {
+                rigibody.detectCollisions = active;
+                rigibody.isKinematic = !active;
+            }
+            
+            // Guard root
+            foreach(var animator in animators) {
+                animator.enabled = !active;
+            }
+            if(objToDisapear != null) {
+                Destroy(objToDisapear, 0.2f);
+            }
+            // animator.enabled = !active;
+            rigidbody.detectCollisions = !active;
+
+            sphereCollider.enabled = !active;
+            enemyPatrol.enabled = !active;
         }
-        else
-        {
-            rigidbody.isKinematic = active;
-        }
-        // Guard root
-        foreach (var animator in animators)
-        {
-            animator.enabled = !active;
-        }
-        if(objToDisapear != null)
-        {
-            Destroy(objToDisapear, 0.2f);
-        }
-        // animator.enabled = !active;
-        rigidbody.detectCollisions = !active;
-        
-        sphereCollider.enabled = !active;
-        enemyPatrol.enabled = !active;
+       
     }
 
 
