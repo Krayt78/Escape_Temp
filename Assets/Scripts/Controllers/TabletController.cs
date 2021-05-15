@@ -14,6 +14,7 @@ public class TabletController : Interactable
 
     [SerializeField] private string tabletPickUpSoundPath;
     [SerializeField] private string tabletVoicePickUpPath;
+    [SerializeField] private List<GameObject> laserList;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,15 @@ public class TabletController : Interactable
             VoiceEvent pickUpProof1 = new VoiceEvent(tabletVoicePickUpPath, VoiceManager.Priority.High);
             VoiceManager.Instance.AddVoiceToQueue(pickUpProof1);
         }
+
+        if (laserList.Count > 0)
+        {
+            foreach (var laser in laserList)
+            {
+                laser.SetActive(true);
+            }
+        }
+
         this.gameObject.SetActive(false);
     }
 }
