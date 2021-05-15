@@ -125,7 +125,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088464002548885802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2439558953998810616}
@@ -133,8 +133,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00057, y: 0}
-  m_SizeDelta: {x: 0.32882127, y: 0.1}
+  m_AnchoredPosition: {x: 0.00057, y: -0.03478}
+  m_SizeDelta: {x: 0.32882127, y: 0.16956317}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &174696064348145915
 CanvasRenderer:
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The specials properties of the Zorglub DNA could be use in order to create
-    the best weapons.
+  m_text: "Les propri\xE9t\xE9es sp\xE9ciales de l'adn Zorglub pourrait \xEAtre utilis\xE9
+    pour cr\xE9er de meilleurs armes."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 43
+  m_firstOverflowCharacterIndex: 79
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -233,10 +233,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 5691446700136005544}
-    characterCount: 92
+    characterCount: 95
     spriteCount: 0
-    spaceCount: 16
-    wordCount: 17
+    spaceCount: 13
+    wordCount: 14
     linkCount: 0
     lineCount: 5
     pageCount: 1
@@ -421,6 +421,7 @@ MonoBehaviour:
   nom: 0
   tabletPickUpSoundPath: event:/Player/Interactions/PickUpTablet
   tabletVoicePickUpPath: event:/BiomeVoices/Voice_Biome1-9
+  laserList: []
 --- !u!65 &2068433330873857470
 BoxCollider:
   m_ObjectHideFlags: 0
