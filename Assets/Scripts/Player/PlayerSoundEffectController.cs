@@ -172,7 +172,7 @@ public class PlayerSoundEffectController : MonoBehaviour
 
         RaycastHit hitResult;
        // if (Physics.Raycast(new Ray(rigTransform.position, -Vector3.up), out hitResult, 3f))
-        if (Physics.Raycast(new Ray(rayOrigin, -Vector3.up), out hitResult, /*characterController.bounds.extents.y + */0.3f))
+        if (Physics.Raycast(new Ray(rayOrigin, -Vector3.up), out hitResult, /*characterController.bounds.extents.y + */1f))
         {
 
             TerrainManager terrain = hitResult.transform.GetComponent<TerrainManager>();
