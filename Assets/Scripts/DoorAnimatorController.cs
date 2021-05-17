@@ -28,14 +28,19 @@ public class DoorAnimatorController : MonoBehaviour
     private void CloseDoor()
     {
         _animator.SetTrigger("Closing");
+  
     }
 
     //no need to look at who triggers since the layer only reacts to the player
 
     private void OnTriggerEnter(Collider other)
     {
-        if(IsDoorActivated)
-         OpenDoor();
+        if(other.gameObject.tag != "Untagged")
+        {
+            if (IsDoorActivated)
+                OpenDoor();
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
