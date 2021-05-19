@@ -121,7 +121,7 @@ public class GameController : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        if (!isDead)
+        if (!isDead && !isMenu)
         {
             if (playerAbilitiesController != null)
                 playerAbilitiesController.isAbilityActivated = false;
@@ -172,8 +172,6 @@ public class GameController : MonoBehaviour
         if(creditsMenu != null) creditsMenu?.SetActive(false);
 
         loadingScreen.SetActive(showLoadingScreen);
-        if(showLoadingScreen)
-            UIManager.Instance.InitializeMenu(pauseMenu);
 
         LoadingScreenController textControl = null;
         if (showLoadingScreen)

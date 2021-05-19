@@ -29,7 +29,7 @@ public class MasterController : MonoBehaviour
     public bool DisableSetupForDebug = false;
     public Transform StartingPosition;
     public GameObject TeleporterParent;
-    public bool PauseOnRemoveHeadset = true;
+    private bool PauseOnRemoveHeadset = true;
 
     [Header("Reference")]
     public XRRayInteractor RightTeleportInteractor;
