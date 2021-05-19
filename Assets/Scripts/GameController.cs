@@ -203,9 +203,9 @@ public class GameController : MonoBehaviour
                     asyncLoad.allowSceneActivation = true;
                 }
 
+                yield return null;
             }
         }
-        yield return null;
     }
 
     public void RestartScene()
