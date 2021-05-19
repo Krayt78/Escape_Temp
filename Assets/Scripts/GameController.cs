@@ -155,17 +155,29 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1;
         
-        StartCoroutine(LoadSceneAsync(sceneIndex, loadingScreen));
+        StartCoroutine(LoadSceneAsync(sceneIndex, loadingScreen, true));
     }
 
-    IEnumerator LoadSceneAsync(int sceneIndex, GameObject loadingScreen)
+    public void LoadScene(int sceneIndex, bool showLoadingScreen)
+    {
+        Time.timeScale = 1;
+
+        StartCoroutine(LoadSceneAsync(sceneIndex, loadingScreen, showLoadingScreen));
+    }
+
+    IEnumerator LoadSceneAsync(int sceneIndex, GameObject loadingScreen, bool showLoadingScreen=true)
     {
         if(mainMenu != null) mainMenu?.SetActive(false);
         if(optionsMenu != null) optionsMenu?.SetActive(false);
         if(creditsMenu != null) creditsMenu?.SetActive(false);
-        loadingScreen.SetActive(true);
 
-        LoadingScreenController textControl = loadingScreen.GetComponent<LoadingScreenController>();
+        loadingScreen.SetActive(showLoadingScreen);
+        if(showLoadingScreen)
+            UIManager.Instance.InitializeMenu(pauseMenu);
+
+        LoadingScreenController textControl = null;
+        if (showLoadingScreen)
+            textControl = loadingScreen.GetComponent<LoadingScreenController>();
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
 
@@ -175,14 +187,16 @@ public class GameController : MonoBehaviour
             if(asyncLoad.progress < 0.9f)
             {
                 //Output the current progress
-                textControl.SetLoadingText(string.Format("Loading progress: {0:0.00} %", (asyncLoad.progress * 100)));
+                if (showLoadingScreen)
+                    textControl.SetLoadingText(string.Format("Chargement: {0:0.00} %", (asyncLoad.progress * 100)));
             }            
 
             // Check if the load has finished
             else
             {
                 //Change the Text to show the Scene is ready
-                textControl.SetLoadingText("Launching...");
+                if (showLoadingScreen)
+                    textControl.SetLoadingText("Lancement...");
                 //Wait to you press the space key to activate the Scene
                 asyncLoad.allowSceneActivation = true;
             }
@@ -194,7 +208,8 @@ public class GameController : MonoBehaviour
     public void RestartScene()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitApplication()
