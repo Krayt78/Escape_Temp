@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void HideAllUi()
+    public void HideAllUi()
     {
         foreach (var menu in listMenu)
         {
