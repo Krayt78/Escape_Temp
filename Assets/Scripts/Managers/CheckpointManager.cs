@@ -48,7 +48,9 @@ public class CheckpointManager : MonoBehaviour
         {
             playerTransform.position = lastCheckpoint.position;
             playerTransform.rotation = lastCheckpoint.rotation;
-            Time.timeScale = 1;
+            GameController.Instance.ResumeGame();
+            // Pour le menu game over
+            UIManager.Instance.HideAllUi();
             transformIsReseting = false;
         }
     }
