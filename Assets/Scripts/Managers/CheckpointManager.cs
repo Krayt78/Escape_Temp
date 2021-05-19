@@ -51,6 +51,7 @@ public class CheckpointManager : MonoBehaviour
             GameController.Instance.ResumeGame();
             // Pour le menu game over
             UIManager.Instance.HideAllUi();
+            GameController.Instance.revivePlayer();
             transformIsReseting = false;
         }
     }

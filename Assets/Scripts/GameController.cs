@@ -29,8 +29,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private Animator mainMenuAnim;
 
     private PlayerAbilitiesController playerAbilitiesController;
+    private PlayerEntityController playerEntityController;
 
-
+    private bool isDead = false;
     private void Awake()
     {
         if(instance!=null)
@@ -55,6 +56,7 @@ public class GameController : MonoBehaviour
                 playerInput = player.GetComponent<PlayerInput>();
                 playerInput.OnStart += OnPauseEvent;
                 playerAbilitiesController = player.GetComponent<PlayerAbilitiesController>();
+                playerEntityController = player.GetComponent<PlayerEntityController>();
             }
         }
         else
@@ -119,12 +121,15 @@ public class GameController : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        if (playerAbilitiesController != null)
-            playerAbilitiesController.isAbilityActivated = false;
-        pauseMenu.SetActive(true);
-        UIManager.Instance.InitializeMenu(pauseMenu);
-        MenuLock();
-        activateUiInteractor(true);
+        if (!isDead)
+        {
+            if (playerAbilitiesController != null)
+                playerAbilitiesController.isAbilityActivated = false;
+            pauseMenu.SetActive(true);
+            UIManager.Instance.InitializeMenu(pauseMenu);
+            MenuLock();
+            activateUiInteractor(true);
+        }
     }
 
     public void PlayerWon()
@@ -134,6 +139,7 @@ public class GameController : MonoBehaviour
 
     public void PlayerLoose()
     {
+        isDead = true;
         gameOverMenu.SetActive(true);
         MenuLock();
         activateUiInteractor(true);
@@ -284,4 +290,10 @@ public class GameController : MonoBehaviour
             optionsMenu.SetActive(false);
     }
     
+    public void revivePlayer()
+    {
+        isDead = false;
+        playerEntityController.EatHealth(10f);
+        playerEntityController.EatDNA(1f);
+    }
 }
