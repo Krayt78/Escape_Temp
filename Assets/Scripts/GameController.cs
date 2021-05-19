@@ -171,36 +171,41 @@ public class GameController : MonoBehaviour
         if(optionsMenu != null) optionsMenu?.SetActive(false);
         if(creditsMenu != null) creditsMenu?.SetActive(false);
 
-        loadingScreen.SetActive(showLoadingScreen);
+        if (loadingScreen)
+        {
+            loadingScreen.SetActive(showLoadingScreen);
+        }
 
         LoadingScreenController textControl = null;
-        if (showLoadingScreen)
+        if (showLoadingScreen && loadingScreen)
             textControl = loadingScreen.GetComponent<LoadingScreenController>();
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
-
-        asyncLoad.allowSceneActivation = false;
-        while (!asyncLoad.isDone)
+        if (loadingScreen && showLoadingScreen)
         {
-            if(asyncLoad.progress < 0.9f)
+            asyncLoad.allowSceneActivation = false;
+            while (!asyncLoad.isDone)
             {
-                //Output the current progress
-                if (showLoadingScreen)
-                    textControl.SetLoadingText(string.Format("Chargement: {0:0.00} %", (asyncLoad.progress * 100)));
-            }            
+                if(asyncLoad.progress < 0.9f)
+                {
+                    //Output the current progress
+                    if (showLoadingScreen)
+                        textControl.SetLoadingText(string.Format("Chargement: {0:0.00} %", (asyncLoad.progress * 100)));
+                }            
 
-            // Check if the load has finished
-            else
-            {
-                //Change the Text to show the Scene is ready
-                if (showLoadingScreen)
-                    textControl.SetLoadingText("Lancement...");
-                //Wait to you press the space key to activate the Scene
-                asyncLoad.allowSceneActivation = true;
+                // Check if the load has finished
+                else
+                {
+                    //Change the Text to show the Scene is ready
+                    if (showLoadingScreen)
+                        textControl.SetLoadingText("Lancement...");
+                    //Wait to you press the space key to activate the Scene
+                    asyncLoad.allowSceneActivation = true;
+                }
+
             }
-
-            yield return null;
         }
+        yield return null;
     }
 
     public void RestartScene()
