@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!65 &6645160536191472192
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211679896665626482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7365255, y: 1.4752136, z: 0.9977887}
+  m_Center: {x: 0, y: 0.73760575, z: -0.13149366}
+--- !u!114 &740740199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211679896665626482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b9773e68b347e4096b1c18bb4ecf58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 740740200}
+        m_MethodName: DestroyConsole
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &740740200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211679896665626482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a23f5c328a53e847b6a51c9190c7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myDoor: {fileID: 0}
+  ActivatedConsoleMat: {fileID: 2100000, guid: 564e563b2f382c04fa3eac379d5d59df, type: 2}
+  DeactivatedConsoleMat: {fileID: 2100000, guid: 0fc597b9e32cdad4eaa982ddca60f031,
+    type: 2}
+--- !u!1001 &8211679896665657810
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_Name
+      value: Destructible_Control_Panel (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_TagString
+      value: Dart_Interactible
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -13.054
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 564e563b2f382c04fa3eac379d5d59df, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88, type: 3}
+--- !u!1 &8211679896665626482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: fd1ef5ff24fdeb6468abc6362d5a7c88,
+    type: 3}
+  m_PrefabInstance: {fileID: 8211679896665657810}
+  m_PrefabAsset: {fileID: 0}
